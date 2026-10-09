@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /portal.html
-Disallow: /crew.html
 Sitemap: https://roasryan.github.io/houston-templates/pool-service/sitemap.xml
