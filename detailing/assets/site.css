@@ -1210,6 +1210,12 @@ input.checking{background-image:linear-gradient(90deg,transparent,rgba(255,212,0
 
 .calx{margin:14px 0 6px;display:flex;flex-direction:column;gap:8px}.calx-l{font-weight:800;font-size:15px}.calx .row{display:flex;gap:8px;flex-wrap:wrap}
 
+/* area pages + linked area lists (Oct 9 SEO pass) */
+.aprose{max-width:72ch}.aprose p{font-size:19px;line-height:1.6;margin:0 0 16px}
+.areas a,.chiplist a{color:inherit;text-decoration:none}.areas a:hover,.chiplist a:hover{text-decoration:underline}
+.areas-more{margin:12px 0 0;color:var(--soft);font-size:16px}
+.ftcols .ar a{color:inherit}
+
 /* ---------- service-site kit: one hero photo + "What’s going on?" picker (the bold interaction) ---------- */
 .khero{position:relative;min-height:100svh;padding:calc(var(--bh,72px) + 28px) 0 40px;color:#fff;display:flex;align-items:center;overflow:hidden;background:#1F2A33}
 .khero picture,.khimg{position:absolute;inset:0;width:100%;height:100%}
