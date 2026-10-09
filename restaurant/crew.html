@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1F2A33">
+<title>Server · Magnolia &amp; Mesquite Kitchen</title>
+<meta name="robots" content="noindex,nofollow"><meta name="description" content="Magnolia &amp; Mesquite Kitchen team schedule.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<style>:root{--bg:#EEF1F4;--card:#fff;--ink:#14202A;--soft:#46535F;--line:#D3DAE0;--y:#E8A35C;--y2:#F2C800;--sl:#1F2A33;--blue:#1C5BD0;--green:#147A49;--red:#C0371C;--amber:#FFF3BF;--display:'Archivo',system-ui,sans-serif}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--ink);font:500 17px/1.45 var(--display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ci{width:22px;height:22px;flex:none}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+/* sign-in */
+.csign{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px;background:var(--sl)}
+.csign-top{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:14px}
+.clang{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1.5px solid rgba(255,255,255,.4);border-radius:12px;background:none;color:#fff;font-weight:800;cursor:pointer}
+.ccard{background:var(--card);border-radius:18px;padding:18px 16px;box-shadow:0 1px 0 var(--line),0 6px 18px rgba(20,32,42,.06)}
+.csign-card{width:100%;max-width:400px;padding:26px 22px;box-shadow:0 0 0 4px var(--y),0 20px 50px rgba(0,0,0,.35)}
+.csign-card h1{margin:16px 0 4px;font:900 28px/1.1 var(--display)}
+.cbrand{display:flex;align-items:center;gap:10px;font:900 20px/1 var(--display)}.cbrand small{display:block;font-size:13px;color:var(--soft);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.cbrand .clogo{width:44px;height:44px;padding:6px;border-radius:12px;background:var(--sl)}
+.cmuted{color:var(--soft);margin:0 0 12px}.csm{font-size:15px;margin-top:8px}
+.cfield{display:block;margin:14px 0}.cfield>span{display:block;font-weight:800;margin-bottom:6px}
+.cfield input,.cfield textarea{width:100%;min-height:52px;padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:#fff;font-size:18px}
+.cfield input:focus,.cfield textarea:focus{border-color:var(--sl);outline:none}
+.ccode{text-align:center;font:900 34px/1 var(--display)!important;letter-spacing:.3em}
+.ctog{display:flex;align-items:center;gap:12px;margin:10px 0 14px;font-weight:700;cursor:pointer}
+.ctog input{width:26px;height:26px;flex:none;accent-color:var(--sl);margin:0}
+.cerr{margin:0 0 12px;padding:10px 12px;border-radius:12px;background:#FDE8E3;color:var(--red);font-weight:800}
+/* buttons */
+.cb{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 16px;border-radius:14px;border:2px solid transparent;font:800 17px/1.15 var(--display);text-decoration:none;cursor:pointer;text-align:center;transition:transform .1s}
+.cb:active{transform:scale(.97)}.cb[disabled]{opacity:.6}
+.cb-main{background:var(--y);color:var(--sl);border-color:var(--y2);box-shadow:0 3px 0 var(--y2)}
+.cb-go{background:var(--green);color:#fff;box-shadow:0 3px 0 #0E5A35}
+.cb-line{background:#fff;color:var(--ink);border-color:var(--line)}
+.cb-ghost{background:none;color:var(--soft)}
+.cb-wide{display:flex;width:100%;margin-top:10px}
+.cb-big{display:flex;width:100%;min-height:64px;font-size:20px;margin-top:14px}
+#cGo{width:100%}
+/* top bar */
+.ctop{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 10px;background:var(--sl);color:#fff;box-shadow:0 2px 0 var(--y)}
+.ctop-t{flex:1;min-width:0}.ctop-t small{display:block;color:#C9D3DA;font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctop h1{margin:0;font:900 22px/1.15 var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cicon,.cmebtn{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;flex:none;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;padding:0}
+.cmebtn{background:none;border-radius:50%}
+.cback{display:inline-flex;align-items:center;gap:2px;min-height:46px;padding:0 10px 0 4px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer}
+.cav{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;background:var(--y);color:var(--sl);flex:none;box-shadow:0 0 0 2px #fff}
+.cav img{width:100%;height:100%;object-fit:cover}.cav b{font-weight:900;font-size:1.1em}
+/* list */
+.cmain{max-width:640px;margin:0 auto;padding:14px 12px calc(30px + env(safe-area-inset-bottom,0px))}
+.cday h2{margin:14px 4px 8px;font:900 15px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+.cday-old{opacity:.75}
+.cjob{position:relative;margin:0 0 12px;padding:14px 14px 14px 18px;background:#fff;border-radius:18px;box-shadow:0 1px 0 var(--line),0 6px 18px rgba(20,32,42,.06);cursor:pointer;overflow:hidden}
+.cjob::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--line)}
+.cjob.st-onway::before,.cjob.st-arrived::before{background:var(--y)}.cjob.st-done::before{background:var(--green)}
+.cjob h3{margin:4px 0 2px;font:900 22px/1.15 var(--display)}
+.cjob-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.ctype{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:900;font-size:14px;background:#E3ECFB;color:#163F8C}
+.ct-work{background:var(--amber);color:#5A4600}.ct-inspection{background:#E3ECFB;color:#163F8C}.ct-followup{background:#E4F4EC;color:#0E5A35}.ct-estimate{background:#F1E6FA;color:#5B2A86}
+.cst{font-weight:800;font-size:14px;color:var(--soft)}
+.cs-onway,.cs-arrived{color:#5A4600;background:var(--y);padding:3px 10px;border-radius:999px}.cs-done{color:var(--green)}
+.cwhen{display:flex;align-items:center;gap:6px;margin:10px 0 0;font:900 19px/1.2 var(--display)}
+.caddr{display:flex;align-items:center;gap:6px;margin:2px 0 0;color:var(--soft);font-weight:700}
+.caddr .ci,.cwhen .ci{width:19px;height:19px}
+.cjob-acts{display:grid;grid-template-columns:1.25fr 1fr;gap:8px;margin-top:12px}.cjob-acts .cb{padding:0 10px;font-size:16px}.cjob-acts .cb:only-child{grid-column:1/-1}
+.cempty{text-align:center;padding:48px 16px}.cempty .clogo{width:64px;height:64px;padding:10px;border-radius:16px;background:var(--sl)}.cempty h2{margin:14px 0 4px;font:900 22px var(--display)}.cempty p{color:var(--soft);margin:0}
+.cstamp{text-align:center;color:var(--soft);font-size:14px;margin:14px 0 0}
+.cdemo{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:var(--amber);font-weight:700;font-size:15px}
+/* job page */
+.cjobpage .ccard{margin-bottom:12px}
+.cjobpage h3{display:flex;align-items:center;gap:8px;margin:0 0 10px;font:900 18px/1.2 var(--display)}
+.chero h2{margin:8px 0 0;font:900 28px/1.1 var(--display)}
+.chero.st-onway,.chero.st-arrived{box-shadow:0 0 0 3px var(--y),0 6px 18px rgba(20,32,42,.06)}
+.cnote{margin:8px 0 0;padding:10px 12px;border-radius:12px;background:var(--amber);font-weight:700}
+.cbigaddr{margin:0 0 12px;font:800 20px/1.3 var(--display)}
+.cgrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.cgrid3 .cb{padding:0 6px;font-size:15.5px}
+.cgrid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cname{margin:0 0 10px;font:900 20px/1.2 var(--display)}
+.csaid{margin-top:12px;padding:12px;border-radius:12px;background:var(--bg)}.csaid p{margin:4px 0 0}
+.csub{margin:14px 0 6px;font-weight:900}
+.citems{list-style:none;margin:0;padding:0}.citems li{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--bg)}.citems .ci{color:var(--green);width:20px;height:20px;margin-top:2px}
+.cmats{list-style:none;margin:0;padding:0}.cmats label{display:flex;gap:12px;align-items:center;min-height:52px;padding:6px 0;border-bottom:1px solid var(--bg);cursor:pointer}
+.cmats input{width:28px;height:28px;flex:none;accent-color:var(--green);margin:0}.cmats input:checked+span{text-decoration:line-through;color:var(--soft)}
+.ccrew{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:12px}.ccrew li{display:flex;align-items:center;gap:10px}.ccrew small{display:block;color:var(--soft)}
+.cthumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.cthumbs:empty{display:none}
+.cth{display:block;aspect-ratio:1;border:0;padding:0;border-radius:10px;overflow:hidden;background:var(--bg);cursor:pointer}.cth img{width:100%;height:100%;object-fit:cover;display:block}
+/* sheets */
+#clayer .cscrim{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,16,22,.55);animation:cfade .18s}
+#clayer .csheet{width:100%;max-width:520px;max-height:92dvh;overflow:auto;background:#fff;border-radius:22px 22px 0 0;padding:20px 16px calc(18px + env(safe-area-inset-bottom,0px));animation:cup .22s cubic-bezier(.2,.9,.3,1)}
+.csheet h2{margin:0 0 8px;font:900 24px/1.15 var(--display)}
+.cstack{display:grid;gap:8px}.ceta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 4px}.ceta .cb{min-height:62px;font-size:20px}
+.cmebig{display:flex;justify-content:center;margin:6px 0 12px}
+.czoom{display:block;width:100%;border-radius:14px}
+@media (min-width:600px){#clayer .cscrim{align-items:center}#clayer .csheet{border-radius:22px}}
+@keyframes cfade{from{opacity:0}}@keyframes cup{from{transform:translateY(40px);opacity:0}}
+.ctoast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:30;transform:translateX(-50%);max-width:calc(100% - 32px);padding:12px 18px;border-radius:14px;background:var(--sl);color:#fff;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:opacity .4s}
+.ctoast.out{opacity:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* job steps (Oct 8) */
+.cnext{margin:4px 0 14px}.cnext small{display:block;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);margin-bottom:6px}
+.cgrid-n{display:grid;grid-template-columns:1fr 64px;gap:8px}.cgrid-n .cb-big{margin:0;font-size:19px;justify-content:flex-start;text-align:left}
+.cb-cam{min-height:64px;padding:0;cursor:pointer}.cb-cam .ci{width:28px;height:28px}
+.cdone{display:flex;align-items:center;gap:8px;margin:4px 0 12px;padding:12px;border-radius:12px;background:#E4F4EC;color:var(--green);font-weight:800}
+.cstl{list-style:none;margin:0;padding:0}
+.cstl li{display:flex;align-items:center;gap:6px;border-top:1px solid var(--bg)}
+.cstl li>button{flex:1;display:flex;align-items:center;gap:12px;min-height:56px;padding:6px 0;border:0;background:none;text-align:left;cursor:pointer}
+.cst-b{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;flex:none;border-radius:50%;border:2px solid #B9C3CB;color:transparent}
+.cstl li.done .cst-b{background:var(--green);border-color:var(--green);color:#fff}
+.cstl b{display:block;font-weight:700}.cstl li.done b{color:var(--soft)}.cstl small{color:var(--soft);font-size:14px}
+.cst-cam{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:12px;border:1.5px solid var(--line);color:var(--ink);cursor:pointer}
+:root{--hivis:#E8A35C;--sodium:#E8A35C;--on-sodium:#10202B}</style></head><body><div id="capp"></div><div id="clayer"></div><script>/* ============ Ridgeline crew screen (crew.html) — Oct 8 ============
+   For employees on their phone. Sign in with the code the owner gave them. See today's jobs: what kind of job, when,
+   where (one tap to Google Maps / Apple Maps / Waze), who the customer is, what to do. Tap "On my way" / "I'm here" / "Done".
+   Add photos if the owner allows it. English / Español. Live: shared job store on the backend. Demo: this browser. */
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CFG={"biz": "Magnolia & Mesquite Kitchen", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};const BIZ_PHONE="+17135550166";
+const REMOTE=!!(CFG&&CFG.backend);
+const S={get:k=>{try{return localStorage.getItem(k)||sessionStorage.getItem(k)||''}catch(x){return''}},set:(k,v,keep)=>{try{localStorage.removeItem(k);sessionStorage.removeItem(k);if(v)(keep?localStorage:sessionStorage).setItem(k,v)}catch(x){}}};
+let LANG=S.get('krestaur-crew-lang')||((navigator.language||'').startsWith('es')?'es':'en');
+let CODE=S.get('krestaur-crew'),V=null,OPEN='',busy=false;
+const W={en:{
+  title:'Team',signin:'Team sign-in',signP:'Type the code your boss gave you.',code:'Your team code',keep:'Keep me signed in on this phone',go:'Sign in',
+  bad:'That code doesn’t work. Check it with your boss.',locked:'Too many tries. Wait 15 minutes.',net:'No connection. Check your signal and try again.',
+  hi:n=>`Hi ${n}`,today:'Today',tomorrow:'Tomorrow',yesterday:'Yesterday',none:'Nothing on your schedule.',noneP:'New jobs show up here as soon as the office books them.',refresh:'Refresh',updated:'Updated',
+  vt:{inspection:'Reservation',work:'Work day',followup:'Follow-up',estimate:'Estimate walk-through'},
+  st:{scheduled:'Scheduled',confirmed:'Confirmed',onway:'On the way',arrived:'On site',done:'Done',cancelled:'Cancelled'},
+  next:{scheduled:'I’m on my way',confirmed:'I’m on my way',onway:'I’m here',arrived:'Done for today'},
+  eta:'How long until you get there?',min:n=>`${n} min`,etaP:'The customer sees this on their page.',cancel:'Cancel',
+  directions:'Directions',gmaps:'Google Maps',amaps:'Apple Maps',waze:'Waze',copy:'Copy address',copied:'Address copied',noAddr:'No address yet. Call the office.',
+  customer:'Customer',call:'Call',text:'Text',noPhone:'Ask the office for the customer’s number.',said:'What they told us',
+  work:'The job',items:'What we’re doing',changes:'Approved changes',mats:'Materials',matsP:'Tap to check off what’s on the truck.',crew:'Team on this job',
+  photos:'Photos',addPh:'Take or add photos',caption:'Short note (optional)',share:'Show the customer too',send:'Send',sent:'Sent to the office.',
+  photosOff:'Your boss handles photos for this job.',recent:'Recent photos',
+  note:'Note to the office',noteP:'Problems, extra damage, missing material…',noteSent:'Note sent.',
+  callOffice:'Call the office',back:'Back',me:'My photo',meP:'Customers see this photo before you arrive. Take it in good light.',take:'Take my photo',
+  lang:'Español',out:'Sign out',busy:'One moment…',fail:'Didn’t go through. Try again.',demo:'Demo: showing jobs saved on this device.',
+  done:'Marked done. Nice work.',onway:'Customer can see you’re on the way.',here:'Customer knows you’re here.',
+  win:(a,b)=>b?`${a} – ${b}`:a,photoN:n=>`${n} photo${n===1?'':'s'}`,tooBig:'Photo too large. Try again.',
+  steps:'Job steps',stepsP:'Tap when it’s done. The customer and the office see it right away.',withPhoto:'Add photo',nextUp:'Next',allDone:'All steps done. Nice work.',unchecked:'Unchecked.',
+  sk:{mat_delivered:'Materials delivered',dumpster:'Dumpster dropped off',protect:'Yard, AC and pool covered',arrived:'Team arrived',tearoff:'Old visit torn off',decking:'Decking checked',dryin:'Dried in (underlayment on)',shingles:'Shingles on',ridge:'Ridge, vents and flashing done',cleanup:'Cleanup and magnet sweep',walkthrough:'Final walkthrough with the customer'}
+},es:{
+  title:'Equipo',signin:'Entrada del equipo',signP:'Escriba el código que le dio su jefe.',code:'Su código de equipo',keep:'Mantener mi sesión en este teléfono',go:'Entrar',
+  bad:'Ese código no funciona. Confírmelo con su jefe.',locked:'Demasiados intentos. Espere 15 minutos.',net:'Sin conexión. Revise su señal e intente otra vez.',
+  hi:n=>`Hola ${n}`,today:'Hoy',tomorrow:'Mañana',yesterday:'Ayer',none:'No tiene nada programado.',noneP:'Los trabajos nuevos aparecen aquí en cuanto la oficina los agenda.',refresh:'Actualizar',updated:'Actualizado',
+  vt:{inspection:'Inspección',work:'Día de trabajo',followup:'Seguimiento',estimate:'Repaso del presupuesto'},
+  st:{scheduled:'Programado',confirmed:'Confirmado',onway:'En camino',arrived:'En el sitio',done:'Terminado',cancelled:'Cancelado'},
+  next:{scheduled:'Voy en camino',confirmed:'Voy en camino',onway:'Ya llegué',arrived:'Terminé por hoy'},
+  eta:'¿Cuánto falta para llegar?',min:n=>`${n} min`,etaP:'El cliente lo ve en su página.',cancel:'Cancelar',
+  directions:'Cómo llegar',gmaps:'Google Maps',amaps:'Apple Maps',waze:'Waze',copy:'Copiar dirección',copied:'Dirección copiada',noAddr:'Todavía no hay dirección. Llame a la oficina.',
+  customer:'Cliente',call:'Llamar',text:'Texto',noPhone:'Pida a la oficina el número del cliente.',said:'Lo que nos dijo',
+  work:'El trabajo',items:'Lo que vamos a hacer',changes:'Cambios aprobados',mats:'Materiales',matsP:'Toque para marcar lo que ya está en la troca.',crew:'Equipo en este trabajo',
+  photos:'Fotos',addPh:'Tomar o agregar fotos',caption:'Nota corta (opcional)',share:'Mostrar también al cliente',send:'Enviar',sent:'Enviado a la oficina.',
+  photosOff:'Su jefe se encarga de las fotos de este trabajo.',recent:'Fotos recientes',
+  note:'Nota para la oficina',noteP:'Problemas, más daño, falta material…',noteSent:'Nota enviada.',
+  callOffice:'Llamar a la oficina',back:'Atrás',me:'Mi foto',meP:'Los clientes ven esta foto antes de que usted llegue. Tómela con buena luz.',take:'Tomar mi foto',
+  lang:'English',out:'Salir',busy:'Un momento…',fail:'No se envió. Intente otra vez.',demo:'Demo: muestra trabajos guardados en este dispositivo.',
+  done:'Marcado como terminado. Buen trabajo.',onway:'El cliente ve que va en camino.',here:'El cliente sabe que ya llegó.',
+  win:(a,b)=>b?`${a} – ${b}`:a,photoN:n=>`${n} foto${n===1?'':'s'}`,tooBig:'Foto muy grande. Intente otra vez.',
+  steps:'Pasos del trabajo',stepsP:'Toque cuando esté listo. El cliente y la oficina lo ven al instante.',withPhoto:'Con foto',nextUp:'Sigue',allDone:'Todos los pasos listos. Buen trabajo.',unchecked:'Desmarcado.',
+  sk:{mat_delivered:'Materiales entregados',dumpster:'Contenedor entregado',protect:'Patio, A/C y alberca cubiertos',arrived:'Llegó el equipo',tearoff:'Techo viejo retirado',decking:'Madera revisada',dryin:'Techo protegido (underlayment puesto)',shingles:'Tejas puestas',ridge:'Cumbrera, ventilas y tapajuntas listos',cleanup:'Limpieza y barrido de clavos con imán',walkthrough:'Revisión final con el cliente'}
+}};
+{const SK={"contract": "Reservation confirmed", "deposit": "Deposit paid", "menu": "Menu and allergies noted", "count": "Final count confirmed", "arrived": "Guests checked in", "seated": "Seated", "served": "Food served", "dessert": "Dessert and check", "walkthrough": "Manager table visit", "invoice": "Check or invoice sent", "paid": "Paid", "thanks": "Thank-you note sent", "review": "Review asked"},VT={"inspection": "Room tour and tasting", "work": "Reservation", "followup": "Follow-up call", "estimate": "Private event quote"};for(const L of ['en','es']){W[L].sk=Object.assign({},W[L].sk,SK);W[L].vt=Object.assign({},W[L].vt,VT)}}
+LANG='en';const T=()=>W[LANG];const LOC=()=>LANG==='es'?'es-US':'en-US';
+document.documentElement.lang=LANG;
+const iso=d=>{const p=x=>String(x).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())};
+const tm=hm=>{if(!hm)return'';const[h,m]=hm.split(':').map(Number),d=new Date();d.setHours(h,m||0,0,0);return d.toLocaleTimeString(LOC(),{hour:'numeric',minute:m?'2-digit':undefined})};
+const dayName=ds=>{const t=T(),now=new Date(),d=new Date(ds+'T12:00');if(ds===iso(now))return t.today;const tmw=new Date(now);tmw.setDate(now.getDate()+1);if(ds===iso(tmw))return t.tomorrow;const y=new Date(now);y.setDate(now.getDate()-1);if(ds===iso(y))return t.yesterday;return d.toLocaleDateString(LOC(),{weekday:'long',month:'short',day:'numeric'})};
+const digits=s=>String(s||'').replace(/\D/g,'');
+const pretty=p=>{const d=digits(p).replace(/^1(?=\d{10}$)/,'');return d.length===10?`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`:p};
+const isApple=/iPhone|iPad|Macintosh/i.test(navigator.userAgent);
+const smsHref=(n,b)=>`sms:${n}${isApple?'&':'?'}body=${encodeURIComponent(b||'')}`;
+const BIZ_PRETTY=pretty(BIZ_PHONE);
+
+/* ---------- icons ---------- */
+const P={pin:'<path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/>',phone:'<path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z"/>',
+  chat:'<path d="M4 5h16v11H9l-5 4z"/>',cam:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',back:'<path d="M15 5l-7 7 7 7"/>',
+  truck:'<path d="M2 7h12v9H2zM14 10h4l3 3v3h-7z"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',check:'<path d="M5 12.5 10 17l9-10"/>',
+  refresh:'<path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/>',
+  list:'<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',note:'<path d="M5 3h10l4 4v14H5z"/><path d="M9 12h6M9 16h6"/>',copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>',globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',out:'<path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/>'};
+const ic=(n,c='')=>`<svg class="ci ${c}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
+const LOGO=`<svg viewBox="0 0 32 32" aria-hidden="true" class="clogo"><path d="M3 17 16 6l13 11" fill="none" stroke="#FFD400" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 15v11h16V15" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></svg>`;
+const av=(m,s=44)=>`<span class="cav" style="width:${s}px;height:${s}px">${m&&m.photo?`<img src="${esc(m.photo)}" alt="">`:`<b>${esc(((m&&m.name)||'?')[0])}</b>`}</span>`;
+
+/* ---------- data: backend (live) or this browser (demo) ---------- */
+function ldb(){try{return JSON.parse(localStorage.getItem('krestaur-db')||'null')||{customers:[]}}catch(x){return{customers:[]}}}
+function lsave(DB){try{localStorage.setItem('krestaur-db',JSON.stringify(DB))}catch(x){}}
+function lview(DB,me){const p=me.perms||{},d0=new Date(Date.now()-864e5),d1=new Date(Date.now()+21*864e5),from=iso(d0),to=iso(d1),crew=DB.crew||[],out=[];
+  (DB.customers||[]).forEach(c=>{const j=c.job||{};(j.visits||[]).forEach(v=>{if(v.status==='cancelled'||v.date<from||v.date>to)return;if(!p.allJobs&&(v.crew||[]).indexOf(me.id)<0)return;
+    const e=c.estimate,pick=e&&e.status==='approved'?e.opts[e.pick||0]:null;
+    out.push({jid:c.id,vid:v.id,type:v.type,date:v.date,from:v.from,to:v.to,status:v.status||'scheduled',eta:v.eta||0,note:v.note||'',crew:(v.crew||[]).map(id=>crew.find(m=>m.id===id)).filter(Boolean).map(m=>({id:m.id,name:m.name,role:m.role,photo:m.photo})),
+      name:c.name,addr:c.addr||'',phone:p.phone!==false?c.phone:'',email:p.phone!==false?(c.email||''):'',msg:c.msg||'',stage:c.stage,work:pick?{name:pick.name,items:pick.items}:null,
+      changes:(j.changes||[]).filter(o=>o.status==='approved'||o.status==='paid').map(o=>o.title),mats:(c.matPlan||[]).map(m=>({desc:m.desc,qty:m.qty,unit:m.unit})),
+      steps:(c.prod||{}).done||{},photos:p.photos!==false?(c.updates||[]).filter(u=>(u.photos||[]).length).slice(-6).map(u=>({t:u.t,text:u.text,by:u.by||'',photos:u.photos.slice(0,4)})):[]})})});
+  out.sort((a,b)=>(a.date+a.from).localeCompare(b.date+b.from));return{ok:true,me:{id:me.id,name:me.name,role:me.role,photo:me.photo,perms:p},visits:out,demo:true}}
+function local(o){const DB=ldb(),me=(DB.crew||[]).find(m=>m.code&&String(m.code)===String(o.code)&&m.active!==false);if(!me)return{ok:false,reason:'code'};
+  const p=me.perms||{};if(o.action==='crew_get')return lview(DB,me);
+  if(o.act==='selfie'){me.photo=o.photo;me.photoT=Date.now();lsave(DB);return lview(DB,me)}
+  const c=(DB.customers||[]).find(x=>x.id===o.jid),v=c&&((c.job||{}).visits||[]).find(x=>x.id===o.vid);if(!v)return{ok:false,reason:'visit'};let msg='';
+  if(o.act==='status'){if(p.status===false)return{ok:false,reason:'perm'};v.status=o.status;v.statusT=Date.now();v.by=me.name;if(o.eta)v.eta=o.eta;
+    if(o.status==='done'&&v.type==='inspection'&&['lead','booked'].includes(c.stage))c.stage='inspected';if((o.status==='onway'||o.status==='arrived')&&v.type==='work'&&c.stage==='approved')c.stage='work';
+    msg=`${me.name}: ${{confirmed:'confirmed',onway:'on the way',arrived:'arrived',done:'done for today'}[o.status]}`}
+  else if(o.act==='photo'){if(p.photos===false)return{ok:false,reason:'perm'};c.updates=(c.updates||[]).concat([{t:Date.now(),text:o.text||'',photos:o.photos||[],by:me.name,crew:true}]);c.show=c.show||{};if(o.share)c.show.updates=true;msg=`${me.name} posted ${(o.photos||[]).length} photos`}
+  else if(o.act==='step'){if(p.status===false)return{ok:false,reason:'perm'};c.prod=c.prod||{};c.prod.done=c.prod.done||{};if(o.undo){delete c.prod.done[o.k];msg=`${me.name} unchecked ${o.k}`}else{c.prod.done[o.k]={t:Date.now(),by:me.name};if((o.photos||[]).length){c.updates=(c.updates||[]).concat([{t:Date.now(),text:o.label||o.k,photos:o.photos,by:me.name,crew:true,step:o.k}]);c.show=c.show||{};c.show.updates=true}if(['arrived','tearoff'].includes(o.k)&&c.stage==='approved')c.stage='work';msg=`${me.name}: ${o.label||o.k} ✓`}}
+  else if(o.act==='note'){c.crewNotes=(c.crewNotes||[]).concat([{t:Date.now(),by:me.name,text:o.text||''}]);msg=`${me.name} left a note`}
+  c.fresh=true;DB.activity=(DB.activity||[]).concat([{t:Date.now(),cid:c.id,text:msg+' · '+c.name,seen:false}]).slice(-200);lsave(DB);return lview(DB,me)}
+async function api(o){o=Object.assign({code:CODE},o);
+  if(!REMOTE)return local(o);
+  try{const r=await(await fetch(CFG.backend,{method:'POST',body:JSON.stringify(o)})).json();if(r.ok)return r;
+    if(r.reason==='code'){const L=local(o);if(L.ok)return L}return r}
+  catch(x){const L=local(o);if(L.ok)return L;return{ok:false,reason:'net'}}}
+
+/* ---------- small UI helpers ---------- */
+function toast(m){$$('.ctoast').forEach(x=>x.remove());const t=document.createElement('div');t.className='ctoast';t.setAttribute('role','status');t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.classList.add('out'),2600);setTimeout(()=>t.remove(),3100)}
+function sheet(html){const L=$('#clayer');L.innerHTML=`<div class="cscrim"><div class="csheet" role="dialog" aria-modal="true">${html}</div></div>`;const prev=document.activeElement;
+  const close=()=>{L.innerHTML='';document.removeEventListener('keydown',k);if(prev&&prev.focus)prev.focus()};const k=e=>{if(e.key==='Escape')close()};document.addEventListener('keydown',k);
+  $('.cscrim',L).onclick=e=>{if(e.target.classList.contains('cscrim'))close()};$$('[data-close]',L).forEach(b=>b.onclick=close);const f=$('button,a,input',L);f&&f.focus();return close}
+function readPhoto(file,max,q){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const im=new Image();im.onerror=no;im.onload=()=>{let k=Math.min(1,max/Math.max(im.width,im.height)),u='';
+  for(let i=0;i<4;i++){const cv=document.createElement('canvas');cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);u=cv.toDataURL('image/jpeg',q);if(u.length<260000)break;k*=.75}ok(u)};im.src=r.result};r.readAsDataURL(file)})}
+function faceCrop(file){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const im=new Image();im.onerror=no;im.onload=()=>{const s=Math.min(im.width,im.height),cv=document.createElement('canvas');cv.width=cv.height=360;
+  cv.getContext('2d').drawImage(im,(im.width-s)/2,Math.max(0,(im.height-s)/2-s*.08),s,s,0,0,360,360);ok(cv.toDataURL('image/jpeg',.8))};im.src=r.result};r.readAsDataURL(file)})}
+const maps=a=>{const e=encodeURIComponent(a),L=[['amaps',`https://maps.apple.com/?daddr=${e}`],['gmaps',`https://www.google.com/maps/dir/?api=1&destination=${e}`],['waze',`https://waze.com/ul?q=${e}&navigate=yes`]];return isApple?L:[L[1],L[0],L[2]]};
+
+/* ---------- sign-in ---------- */
+function signIn(msg){const t=T();V=null;
+  $('#capp').innerHTML=`<main class="csign"><div class="csign-top"><button type="button" class="clang" id="cLang" hidden>${ic('globe')}${t.lang}</button></div>
+    <form class="ccard csign-card" id="cF" novalidate><div class="cbrand">${LOGO}<span>Magnolia & Mesquite<small>${t.title}</small></span></div>
+    <h1>${t.signin}</h1><p class="cmuted">${t.signP}</p>
+    <label class="cfield"><span>${t.code}</span><input id="cCode" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="one-time-code" class="ccode" value=""></label>
+    <label class="ctog"><input type="checkbox" id="cKeep" checked><span>${t.keep}</span></label>
+    <p class="cerr" id="cErr" role="alert" ${msg?'':'hidden'}>${esc(msg||'')}</p>
+    <button class="cb cb-main" type="submit" id="cGo">${t.go}</button></form></main>`;
+  $('#cLang').onclick=()=>{setLang(LANG==='es'?'en':'es');signIn()};
+  const i=$('#cCode');i.oninput=()=>{i.value=digits(i.value).slice(0,8)};setTimeout(()=>i.focus(),60);
+  $('#cF').onsubmit=async e=>{e.preventDefault();const c=digits(i.value),b=$('#cGo'),err=$('#cErr');if(c.length<4){err.textContent=t.bad;err.hidden=false;return}
+    b.disabled=true;b.textContent=t.busy;CODE=c;const r=await api({action:'crew_get'});
+    if(r.ok){S.set('krestaur-crew',c,$('#cKeep').checked);V=r;home()}else{CODE='';b.disabled=false;b.textContent=t.go;err.textContent=r.reason==='locked'?t.locked:r.reason==='net'?t.net:t.bad;err.hidden=false;i.select()}}}
+function setLang(l){LANG=l;document.documentElement.lang=l;try{localStorage.setItem('krestaur-crew-lang',l)}catch(x){}}
+
+/* ---------- home: today + coming up ---------- */
+function nextBtn(v,big){const t=T(),p=(V.me.perms||{});if(p.status===false||!t.next[v.status||'scheduled'])return'';const s=v.status||'scheduled';if(big&&s==='arrived'&&v.type==='work'&&CSTEPS.some(k=>!(v.steps||{})[k]))big=false;
+  return `<button type="button" class="cb ${s==='arrived'?(big?'cb-go':'cb-line'):'cb-main'} ${big?'cb-big':''}" data-next="${v.jid}|${v.vid}">${ic(s==='onway'?'flag':s==='arrived'?'check':'truck')}${t.next[s]}</button>`}
+function card(v){const t=T(),s=v.status||'scheduled',street=(v.addr||'').split(',')[0];
+  return `<article class="cjob st-${s}" data-open="${v.jid}|${v.vid}" tabindex="0" role="button" aria-label="${esc(t.vt[v.type]||'')} · ${esc(v.name)}">
+    <div class="cjob-top"><span class="ctype ct-${esc(v.type)}">${esc(t.vt[v.type]||t.vt.work)}</span><span class="cst cs-${s}">${t.st[s]}</span></div>
+    <p class="cwhen">${ic('clock')}${t.win(tm(v.from),tm(v.to))}</p>
+    <h3>${esc(v.name)}</h3><p class="caddr">${ic('pin')}${esc(street||t.noAddr)}</p>
+    <div class="cjob-acts">${nextBtn(v)}${v.addr?`<button type="button" class="cb cb-line" data-dir="${v.jid}|${v.vid}">${ic('pin')}${t.directions}</button>`:''}</div></article>`}
+function home(){const t=T(),m=V.me;OPEN='';const today=iso(new Date());
+  const vis=V.visits.filter(v=>v.date>=today||v.status==='onway'||v.status==='arrived');const old=V.visits.filter(v=>v.date<today&&v.status!=='onway'&&v.status!=='arrived');
+  const days=[...new Set(vis.map(v=>v.date))];
+  $('#capp').innerHTML=`<header class="ctop"><button type="button" class="cmebtn" id="cMe" aria-label="${t.me}">${av(m,40)}</button><div class="ctop-t"><small>${esc(CFG.biz)}</small><h1>${esc(t.hi((m.name||'').split(' ')[0]))}</h1></div>
+      <button type="button" class="cicon" id="cRef" aria-label="${t.refresh}">${ic('refresh')}</button><button type="button" class="cicon" id="cMenu" aria-label="Menu">${ic('list')}</button></header>
+    <main class="cmain">${V.demo&&REMOTE?`<p class="cdemo">${t.demo}</p>`:''}
+      ${days.length?days.map(d=>`<section class="cday"><h2>${esc(dayName(d))}</h2>${vis.filter(v=>v.date===d).map(card).join('')}</section>`).join('')
+        :`<section class="cempty">${LOGO}<h2>${t.none}</h2><p>${t.noneP}</p></section>`}
+      ${old.length?`<section class="cday cday-old"><h2>${t.yesterday}</h2>${old.map(card).join('')}</section>`:''}
+      <a class="cb cb-line cb-wide" href="tel:${BIZ_PHONE}">${ic('phone')}${t.callOffice} · ${BIZ_PRETTY}</a>
+      <p class="cstamp">${t.updated} ${new Date().toLocaleTimeString(LOC(),{hour:'numeric',minute:'2-digit'})}</p></main>`;
+  bindCommon();
+  $$('[data-open]').forEach(a=>{a.onclick=e=>{if(e.target.closest('button,a'))return;job(a.dataset.open)};a.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target===a){e.preventDefault();job(a.dataset.open)}}})}
+function bindCommon(){const t=T();
+  $('#cRef').onclick=()=>reload(true);$('#cMe').onclick=meSheet;
+  $('#cMenu').onclick=()=>{const cl=sheet(`<h2>${esc(V.me.name)}</h2><div class="cstack"><button type="button" class="cb cb-line" id="mMe">${ic('cam')}${t.me}</button><button type="button" class="cb cb-line" id="mLang">${ic('globe')}${t.lang}</button><a class="cb cb-line" href="tel:${BIZ_PHONE}">${ic('phone')}${t.callOffice}</a><button type="button" class="cb cb-line" id="mOut">${ic('out')}${t.out}</button><button type="button" class="cb cb-ghost" data-close>${t.cancel}</button></div>`);
+    $('#mMe').onclick=()=>{cl();meSheet()};$('#mLang').onclick=()=>{cl();setLang(LANG==='es'?'en':'es');rerender()};$('#mOut').onclick=()=>{cl();S.set('krestaur-crew','');CODE='';signIn()}};
+  $$('[data-next]').forEach(b=>b.onclick=e=>{e.stopPropagation();advance(b.dataset.next)});
+  $$('[data-dir]').forEach(b=>b.onclick=e=>{e.stopPropagation();dirSheet(find(b.dataset.dir))})}
+const find=k=>{const[j,vi]=k.split('|');return V.visits.find(v=>v.jid===j&&v.vid===vi)};
+const rerender=()=>{if(!V)return signIn();if(OPEN&&find(OPEN))job(OPEN,true);else home()};
+
+/* ---------- actions ---------- */
+async function act(o,ok){if(busy)return;busy=true;toast(T().busy);const r=await api(Object.assign({action:'crew_act'},o));busy=false;
+  if(r.ok){V=r;if(ok)toast(ok);rerender();return true}if(r.reason==='code'){S.set('krestaur-crew','');signIn(T().bad);return}toast(T().fail);return false}
+function advance(k){const v=find(k),t=T();if(!v)return;const s=v.status||'scheduled';
+  if(s==='scheduled'||s==='confirmed'){const cl=sheet(`<h2>${t.eta}</h2><p class="cmuted">${t.etaP}</p><div class="ceta">${[10,15,20,30,45,60].map(n=>`<button type="button" class="cb cb-line" data-eta="${n}">${t.min(n)}</button>`).join('')}</div><button type="button" class="cb cb-ghost cb-wide" data-close>${t.cancel}</button>`);
+    $$('[data-eta]').forEach(b=>b.onclick=()=>{cl();act({act:'status',jid:v.jid,vid:v.vid,status:'onway',eta:+b.dataset.eta},t.onway)});return}
+  if(s==='onway')return act({act:'status',jid:v.jid,vid:v.vid,status:'arrived'},t.here);
+  if(s==='arrived')return act({act:'status',jid:v.jid,vid:v.vid,status:'done'},t.done)}
+function dirSheet(v){const t=T();if(!v||!v.addr)return toast(t.noAddr);
+  const cl=sheet(`<h2>${t.directions}</h2><p class="cbigaddr">${esc(v.addr)}</p><div class="cstack">${maps(v.addr).map(([n,u])=>`<a class="cb cb-line cb-map m-${n}" href="${u}" target="_blank" rel="noopener">${ic('pin')}${t[n]}</a>`).join('')}
+    <button type="button" class="cb cb-ghost" id="dCopy">${ic('copy')}${t.copy}</button><button type="button" class="cb cb-ghost" data-close>${t.cancel}</button></div>`);
+  $('#dCopy').onclick=()=>{(navigator.clipboard?navigator.clipboard.writeText(v.addr):Promise.reject()).then(()=>toast(t.copied)).catch(()=>{});cl()}}
+function meSheet(){const t=T(),m=V.me;const cl=sheet(`<h2>${t.me}</h2><div class="cmebig">${av(m,140)}</div><p class="cmuted">${t.meP}</p><label class="cb cb-main cb-wide">${ic('cam')}${t.take}<input type="file" accept="image/*" capture="user" id="meF" hidden></label><button type="button" class="cb cb-ghost cb-wide" data-close>${t.cancel}</button>`);
+  $('#meF').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const u=await faceCrop(f);cl();act({act:'selfie',photo:u},'✓')}catch(x){toast(t.tooBig)}}}
+
+/* ---------- one job ---------- */
+function job(k,keep){const v=find(k),t=T();if(!v)return home();OPEN=k;const p=V.me.perms||{},s=v.status||'scheduled',y=keep?scrollY:0;
+  const matKey='krestaur-crew-mats-'+v.jid;let got={};try{got=JSON.parse(localStorage.getItem(matKey)||'{}')}catch(x){}
+  $('#capp').innerHTML=`<header class="ctop"><button type="button" class="cback" id="cBack">${ic('back')}<span>${t.back}</span></button><div class="ctop-t"><small>${esc(dayName(v.date))} · ${t.win(tm(v.from),tm(v.to))}</small><h1>${esc(t.vt[v.type]||t.vt.work)}</h1></div>
+      <button type="button" class="cicon" id="cRef" aria-label="${t.refresh}">${ic('refresh')}</button><button type="button" class="cicon" id="cMenu" aria-label="Menu">${ic('list')}</button><button type="button" id="cMe" hidden></button></header>
+    <main class="cmain cjobpage">
+      <section class="ccard chero st-${s}"><div class="cjob-top"><span class="ctype ct-${esc(v.type)}">${esc(t.vt[v.type]||t.vt.work)}</span><span class="cst cs-${s}">${t.st[s]}${s==='onway'&&v.eta?` · ${t.min(v.eta)}`:''}</span></div>
+        <h2>${esc(v.name)}</h2>${v.note?`<p class="cnote">${esc(v.note)}</p>`:''}${nextBtn(v,true)}</section>
+      ${stepsCard(v)}
+      <section class="ccard"><h3>${ic('pin')}${t.directions}</h3>${v.addr?`<p class="cbigaddr">${esc(v.addr)}</p><div class="cgrid3">${maps(v.addr).map(([n,u])=>`<a class="cb cb-line cb-map m-${n}" href="${u}" target="_blank" rel="noopener">${t[n]}</a>`).join('')}</div>`:`<p class="cmuted">${t.noAddr}</p>`}</section>
+      <section class="ccard"><h3>${ic('user')}${t.customer}</h3><p class="cname">${esc(v.name)}</p>
+        ${v.phone?`<div class="cgrid2"><a class="cb cb-main" href="tel:${esc(v.phone)}">${ic('phone')}${t.call}</a><a class="cb cb-line" href="${smsHref(v.phone,'')}">${ic('chat')}${t.text}</a></div><p class="cmuted csm">${esc(pretty(v.phone))}${v.email?' · '+esc(v.email):''}</p>`:`<p class="cmuted">${t.noPhone}</p>`}
+        ${v.msg?`<div class="csaid"><b>${t.said}</b><p>${esc(v.msg)}</p></div>`:''}</section>
+      ${v.work||v.changes.length?`<section class="ccard"><h3>${ic('list')}${t.work}</h3>${v.work?`<p class="cname">${esc(v.work.name)}</p><ul class="citems">${(v.work.items||[]).map(i=>`<li>${ic('check')}${esc(typeof i==='string'?i:(i.desc||i.name||''))}</li>`).join('')}</ul>`:''}
+        ${v.changes.length?`<p class="csub">${t.changes}</p><ul class="citems">${v.changes.map(i=>`<li>${ic('check')}${esc(i)}</li>`).join('')}</ul>`:''}</section>`:''}
+      ${v.mats.length?`<section class="ccard"><h3>${ic('truck')}${t.mats}</h3><p class="cmuted csm">${t.matsP}</p><ul class="cmats">${v.mats.map((m,i)=>`<li><label><input type="checkbox" data-mat="${i}" ${got[i]?'checked':''}><span><b>${esc(m.qty||'')} ${esc(m.unit||'')}</b> ${esc(m.desc||'')}</span></label></li>`).join('')}</ul></section>`:''}
+      ${v.crew.length?`<section class="ccard"><h3>${ic('user')}${t.crew}</h3><ul class="ccrew">${v.crew.map(m=>`<li>${av(m,48)}<span><b>${esc(m.name)}</b><small>${esc(m.role||'')}</small></span></li>`).join('')}</ul></section>`:''}
+      <section class="ccard"><h3>${ic('cam')}${t.photos}</h3>${p.photos!==false?`<label class="cb cb-main cb-wide">${ic('cam')}${t.addPh}<input type="file" accept="image/*" capture="environment" multiple id="phF" hidden></label>
+        <div class="cthumbs" id="phTh"></div><div id="phMore" hidden><label class="cfield"><span>${t.caption}</span><input id="phT" maxlength="300"></label><label class="ctog"><input type="checkbox" id="phS" checked><span>${t.share}</span></label><button type="button" class="cb cb-go cb-wide" id="phGo">${ic('check')}${t.send}</button></div>
+        ${v.photos.length?`<p class="csub">${t.recent}</p><div class="cthumbs">${v.photos.flatMap(u=>u.photos).slice(-8).map(u=>`<button type="button" class="cth" data-zoom="${esc(u)}"><img src="${esc(u)}" alt=""></button>`).join('')}</div>`:''}`:`<p class="cmuted">${t.photosOff}</p>`}</section>
+      <section class="ccard"><h3>${ic('note')}${t.note}</h3><label class="cfield"><span class="sr">${t.note}</span><textarea id="nT" rows="3" placeholder="${t.noteP}"></textarea></label><button type="button" class="cb cb-line cb-wide" id="nGo">${t.send}</button></section>
+      <a class="cb cb-line cb-wide" href="tel:${BIZ_PHONE}">${ic('phone')}${t.callOffice} · ${BIZ_PRETTY}</a>
+    </main>`;
+  scrollTo(0,y);bindCommon();bindSteps(v);$('#cBack').onclick=()=>{home();scrollTo(0,0)};
+  $$('[data-mat]').forEach(c=>c.onchange=()=>{got[c.dataset.mat]=c.checked;try{localStorage.setItem(matKey,JSON.stringify(got))}catch(x){}});
+  $$('[data-zoom]').forEach(b=>b.onclick=()=>sheet(`<img class="czoom" src="${esc(b.dataset.zoom)}" alt=""><button type="button" class="cb cb-line cb-wide" data-close>${t.cancel}</button>`));
+  const pics=[];const f=$('#phF');if(f){f.onchange=async()=>{for(const x of [...f.files].slice(0,6-pics.length)){try{pics.push(await readPhoto(x,1280,.72))}catch(e){toast(t.tooBig)}}
+      $('#phTh').innerHTML=pics.map(u=>`<span class="cth"><img src="${u}" alt=""></span>`).join('');$('#phMore').hidden=!pics.length;f.value=''};
+    $('#phGo').onclick=()=>{if(!pics.length)return;act({act:'photo',jid:v.jid,vid:v.vid,photos:pics,text:$('#phT').value.trim(),share:$('#phS').checked},t.sent)}}
+  $('#nGo').onclick=()=>{const x=$('#nT').value.trim();if(!x)return $('#nT').focus();act({act:'note',jid:v.jid,vid:v.vid,text:x},t.noteSent)}}
+
+/* ---------- job steps (Oct 8): one tap = done; camera button = done + photo. Customer portal + owner + Slack update right away ---------- */
+const CSTEPS=["menu", "count", "arrived", "seated", "served", "dessert", "walkthrough"];
+function stepsCard(v){const t=T(),p=V.me.perms||{};if(p.status===false||!(v.type==='work'||Object.keys(v.steps||{}).length))return'';const d=v.steps||{},nx=CSTEPS.find(k=>!d[k]);
+  return `<section class="ccard csteps"><h3>${ic('check')}${t.steps}</h3><p class="cmuted csm">${t.stepsP}</p>
+    ${nx?`<div class="cnext"><small>${t.nextUp}</small><div class="cgrid-n"><button type="button" class="cb cb-go cb-big" data-stp="${nx}">${ic('check')}${esc(t.sk[nx])}</button>${p.photos!==false?`<label class="cb cb-line cb-cam" aria-label="${t.withPhoto}: ${esc(t.sk[nx])}">${ic('cam')}<input type="file" accept="image/*" capture="environment" data-stpc="${nx}" hidden></label>`:''}</div></div>`:`<p class="cdone">${ic('check')}${t.allDone}</p>`}
+    <ul class="cstl">${CSTEPS.map(k=>`<li class="${d[k]?'done':''}"><button type="button" data-stp="${k}" ${d[k]?'data-undo="1"':''} aria-pressed="${!!d[k]}"><span class="cst-b">${ic('check')}</span><span><b>${esc(t.sk[k])}</b>${d[k]?`<small>${new Date(d[k].t).toLocaleTimeString(LOC(),{hour:'numeric',minute:'2-digit'})} · ${esc(d[k].by||'')}</small>`:''}</span></button>${!d[k]&&p.photos!==false?`<label class="cst-cam" aria-label="${t.withPhoto}">${ic('cam')}<input type="file" accept="image/*" capture="environment" data-stpc="${k}" hidden></label>`:''}</li>`).join('')}</ul></section>`}
+function bindSteps(v){const t=T();
+  $$('[data-stp]').forEach(b=>b.onclick=()=>{const k=b.dataset.stp,undo=!!b.dataset.undo;act({act:'step',jid:v.jid,vid:v.vid,k,label:t.sk[k],undo},undo?t.unchecked:'✓ '+t.sk[k])});
+  $$('[data-stpc]').forEach(i=>i.onchange=async()=>{const f=i.files[0];if(!f)return;const k=i.dataset.stpc;try{const u=await readPhoto(f,1280,.72);act({act:'step',jid:v.jid,vid:v.vid,k,label:t.sk[k],photos:[u]},'✓ '+t.sk[k])}catch(x){toast(t.tooBig)}})}
+
+/* ---------- start + stay fresh ---------- */
+async function reload(manual){if(!CODE)return;if(!manual&&($('#clayer .csheet')||busy||document.hidden))return;
+  if(!manual&&document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  const r=await api({action:'crew_get'});if(r.ok){const was=JSON.stringify(V);V=r;if(manual||JSON.stringify(V)!==was)rerender();if(manual)toast(T().updated)}else if(r.reason==='code'){S.set('krestaur-crew','');signIn(T().bad)}else if(manual)toast(T().net)}
+setInterval(reload,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)reload()});
+addEventListener('storage',e=>{if(e.key==='krestaur-db'&&V&&V.demo)reload()});
+if(CODE){$('#capp').innerHTML=`<main class="csign"><div class="ccard csign-card"><div class="cbrand">${LOGO}<span>Magnolia & Mesquite<small>${T().title}</small></span></div><p class="cmuted">${T().busy}</p></div></main>`;
+  api({action:'crew_get'}).then(r=>{if(r.ok){V=r;home()}else{if(r.reason==='code')S.set('krestaur-crew','');signIn(r.reason==='net'?T().net:'')}})}
+else signIn();
+})();
+</script></body></html>
