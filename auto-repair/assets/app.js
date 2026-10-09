@@ -868,6 +868,16 @@ window.closeQuote=null;
 function me(){try{return JSON.parse(localStorage.getItem('kautorep-me')||'null')}catch(x){return null}}
 function startSheet(){if(window.openInspect){if(window.closeQuote)window.closeQuote();window.openInspect();return}location.href='index.html#inspect'}
 $$('[data-start]').forEach(b=>b.onclick=e=>{e.preventDefault();startSheet()});
+/* ---------- add to calendar (Oct 9): Google Calendar link + .ics file for Apple/Outlook. No sign-in, works on any phone. ---------- */
+const CALX={};
+function calButtons(title,start,mins,where,details){const end=new Date(start.getTime()+(mins||60)*6e4),z=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+  const g='https://calendar.google.com/calendar/render?'+new URLSearchParams({action:'TEMPLATE',text:title,dates:z(start)+'/'+z(end),details:details||'',location:where||''}).toString();
+  const k='c'+Math.random().toString(36).slice(2,8);CALX[k]={title,start,end,where,details,z};
+  return`<div class="calx"><span class="calx-l">Add to my calendar</span><div class="row"><a class="btn btn-line btn-sm" href="${g}" target="_blank" rel="noopener">Google Calendar</a><button class="btn btn-line btn-sm" type="button" data-icsx="${k}">Apple or Outlook</button></div></div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-icsx]');if(!b)return;const c=CALX[b.dataset.icsx];if(!c)return;const q=v=>String(v||'').replace(/([,;\\])/g,'\\$1').replace(/\n/g,'\\n');
+  const txt=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//'+CFG.biz+'//Booking//EN','BEGIN:VEVENT','UID:'+b.dataset.icsx+Date.now()+'@site','DTSTAMP:'+c.z(new Date()),'DTSTART:'+c.z(c.start),'DTEND:'+c.z(c.end),'SUMMARY:'+q(c.title),'LOCATION:'+q(c.where),'DESCRIPTION:'+q(c.details),'BEGIN:VALARM','TRIGGER:-PT1H','ACTION:DISPLAY','DESCRIPTION:Reminder','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const u=URL.createObjectURL(new Blob([txt],{type:'text/calendar'})),l=document.createElement('a');l.href=u;l.download='appointment.ics';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),3000)});
+window.calButtons=calButtons;
 /* ---------- free inspection form on the homepage: full details + day/time, then an instant confirmation ---------- */
 
 /* ---------- availability: the owner sets hours once (Owner view → Availability); the booking calendar only offers real, future times ----------
@@ -1012,6 +1022,7 @@ function bindAvail(){const S=AV.S;let view=new Date();view.setDate(1);
         :`<p class="idsub">${best==='Call'?'We’ll call you':'We’ll text you'} at ${esc(D.phone)} to confirm.</p>`}
       <p class="idemo">${CFG.backend?'The owner already has your request. If the time ever needs to move, you’ll hear from us the way you picked.':'Demo: on a live site the confirmation goes out the way the customer picked (text, call or email) and the owner gets an instant alert.'}</p>
       <ul class="iperks"><li><b>Appointment:</b> ${when}</li><li><b>You need:</b> ${esc(D.issue)}</li>${q&&q.touched&&q.range?`<li><b>Your price held 30 days:</b> ${esc(q.name)}, ${esc(q.range)}</li>`:''}<li><b>We’ll reach you by:</b> ${best.toLowerCase()}</li></ul>
+      ${(()=>{const st=new Date(selD);const[hh,mm]=String(selS).split(':').map(Number);st.setHours(hh||9,mm||0,0,0);return calButtons('Appointment · '+CFG.biz,st,AV.S.len||60,D.addr,'You need: '+D.issue+'. Questions? Call or text '+BIZ_PRETTY)})()}
       <div class="row"><button class="btn btn-main" type="button" id="iDoneX">Done</button><button class="btn btn-line" type="button" id="iEdit">Change something</button></div>`;
     f.hidden=true;$('.imsteps').hidden=true;$('#imH').textContent='You’re booked';$('#iDone').hidden=false;MD.querySelector('.impanel').scrollTop=0;
     $('#iEdit').onclick=()=>{f.hidden=false;$('#iDone').hidden=true;$('.imsteps').hidden=false;iStep(2)};$('#iDoneX').onclick=closeIM;
@@ -1299,7 +1310,7 @@ window.addrCheck=addrCheck;
   const bindX=()=>{const x=$('#apX');if(x)x.onclick=close};
   function gone(msg){shell('This link has expired',`<p>${msg||'This booking was already changed, cancelled, or it has passed.'}</p><a class="btn btn-main" href="#inspect" id="apNew">Book a new time</a>`);bindX();$('#apNew').onclick=()=>close()}
   function view(v){if(v.past)return gone('This appointment already happened. Need another look?');
-    shell(`Your appointment, ${esc(v.name)}`,`<p class="apwhen">${esc(v.when)}</p>${v.addr?`<p class="muted">${esc(v.addr)} · You don’t need to be home.</p>`:''}
+    shell(`Your appointment, ${esc(v.name)}`,`<p class="apwhen">${esc(v.when)}</p>${v.addr?`<p class="muted">${esc(v.addr)} · You don’t need to be home.</p>`:''}${v.start&&window.calButtons?calButtons('Appointment · '+CFG.biz,new Date(v.start),(AV.S&&AV.S.len)||60,v.addr||'',''):''}
       ${v.late?`<p class="muted">It’s too close to change online. Call us: ${tel(v.phone)}</p>`:`<div class="apbtns"><button class="btn btn-main" type="button" id="apMove">Pick a new time</button><button class="btn btn-line" type="button" id="apCx">Cancel appointment</button></div>`}
       <div id="apPick" hidden><h3>Pick a new time</h3><div class="ical" id="apCal"></div><div class="islots" id="apSlots" role="radiogroup" aria-label="Time"></div><p class="err" id="apErr" role="alert" hidden></p><button class="btn btn-main" type="button" id="apGo" disabled>Move my appointment</button></div>
       <p class="err" id="apErr2" role="alert" hidden></p>`);bindX();
