@@ -1208,6 +1208,8 @@ input.checking{background-image:linear-gradient(90deg,transparent,rgba(255,212,0
 @keyframes achk{from{background-position:200% 0}to{background-position:-200% 0}}
 #appt .ical .calhead b,#appt .ical .calhead{color:#1F2A33}
 
+.calx{margin:14px 0 6px;display:flex;flex-direction:column;gap:8px}.calx-l{font-weight:800;font-size:15px}.calx .row{display:flex;gap:8px;flex-wrap:wrap}
+
 /* ---------- service-site kit: one hero photo + "What’s going on?" picker (the bold interaction) ---------- */
 .khero{position:relative;min-height:100svh;padding:calc(var(--bh,72px) + 28px) 0 40px;color:#fff;display:flex;align-items:center;overflow:hidden;background:#1F2A33}
 .khero picture,.khimg{position:absolute;inset:0;width:100%;height:100%}
