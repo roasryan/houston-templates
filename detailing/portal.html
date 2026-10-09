@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1F2A33">
+<title>Your project · Gulf Coast Gloss Mobile Detailing</title>
+<meta name="robots" content="noindex,nofollow"><meta name="description" content="Private page for Gulf Coast Gloss Mobile Detailing customers.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<style>:root{--slate:#1F2A33;--deck:#24313B;--raised:#2E3D48;--hivis:#7FB2FF;--text:#F4F7F8;--muted:#B7C3CB;--ok:#2BB673;--bad:#E8603F;--line:rgba(255,255,255,.12);--card:rgba(36,49,59,.9);--r:22px;--display:'Archivo',system-ui,sans-serif}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:#141E27;color:var(--text);font:400 18px/1.5 var(--display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+#wall{position:fixed;inset:0;z-index:0;pointer-events:none;background-color:#141E27;background-image:radial-gradient(ellipse at 50% 30%,rgba(20,30,39,0) 40%,rgba(8,13,18,.55) 100%),url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22260%22 viewBox=%220 0 260 260%22%3E%3Cg transform=%22translate%2865 58%29 scale%281.6%29 translate%28-16 -16%29%22%3E%3Cpath d=%22M3 17 16 6l13 11%22 fill=%22none%22 stroke=%22%23FFD400%22 stroke-opacity=%22.26%22 stroke-width=%223.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M8 15v11h16V15%22 fill=%22none%22 stroke=%22%23fff%22 stroke-opacity=%22.12%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3C/g%3E%3Ctext x=%2265%22 y=%2298%22 text-anchor=%22middle%22 font-family=%22Arial%2CHelvetica%2Csans-serif%22 font-weight=%22800%22 font-size=%2211%22 letter-spacing=%223%22 fill=%22%23fff%22 fill-opacity=%22.08%22%3ERIDGELINE%3C/text%3E%3Cg transform=%22translate%28195 188%29 scale%281.6%29 translate%28-16 -16%29%22%3E%3Cpath d=%22M3 17 16 6l13 11%22 fill=%22none%22 stroke=%22%23FFD400%22 stroke-opacity=%22.34%22 stroke-width=%223.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M8 15v11h16V15%22 fill=%22none%22 stroke=%22%23fff%22 stroke-opacity=%22.16%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3C/g%3E%3Ctext x=%22195%22 y=%22228%22 text-anchor=%22middle%22 font-family=%22Arial%2CHelvetica%2Csans-serif%22 font-weight=%22800%22 font-size=%2211%22 letter-spacing=%223%22 fill=%22%23fff%22 fill-opacity=%22.11%22%3ERIDGELINE%3C/text%3E%3C/svg%3E");background-size:auto,260px 260px;background-position:center,center top}
+#wall{animation:drift 90s linear infinite}
+@keyframes drift{to{background-position:center,260px 520px}}
+@media (max-width:640px){@keyframes drift{to{background-position:center,200px 400px}}}
+#papp{position:relative;z-index:1}
+a{color:inherit}button{font:inherit;color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--hivis);outline-offset:3px;border-radius:10px}
+svg{display:block}
+
+/* ---------- language switch ---------- */
+.plang{display:inline-flex;align-items:center;gap:4px;background:rgba(20,30,39,.75);border:1px solid var(--line);border-radius:999px;padding:4px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.plang-i{width:22px;height:22px;margin:0 2px 0 6px;color:var(--muted)}
+.plang button{border:0;background:none;padding:9px 14px;min-height:44px;border-radius:999px;font-weight:700;font-size:16px;cursor:pointer;color:var(--muted);transition:background .2s,color .2s}
+.plang button[aria-pressed="true"]{background:var(--hivis);color:var(--slate)}
+
+/* ---------- PIN ---------- */
+.pin{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 28px;gap:18px;transition:opacity .45s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.pin.leave{opacity:0;transform:scale(1.06)}
+.pin-top{position:absolute;top:16px;right:16px;left:16px;display:flex;justify-content:center}
+.pin-card{width:min(420px,100%);margin-top:56px;background:linear-gradient(180deg,rgba(46,61,72,.94),rgba(31,42,51,.96));border:1px solid var(--line);border-radius:28px;padding:26px 22px 22px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(26px) scale(.97)}}
+.pin-brand{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:900;font-size:22px;letter-spacing:.02em;text-transform:uppercase}
+.pin-brand .lg{width:38px;height:38px}.pin-brand small{display:block;font-size:11px;letter-spacing:.32em;color:var(--hivis);font-weight:800;text-align:left}
+.lg-r,.lg-h{stroke-dasharray:60;stroke-dashoffset:60;animation:draw 1.1s .25s cubic-bezier(.6,0,.2,1) forwards}.lg-h{animation-delay:.6s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.pin-lockwrap{width:74px;height:74px;margin:18px auto 6px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,rgba(255,212,0,.22),rgba(255,212,0,0) 70%);color:var(--hivis)}
+.lock{width:46px;height:46px}.shackle{transform-origin:33px 22px;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+.pin-card.ok .shackle{transform:translateY(-5px) rotate(28deg)}
+.pin-card.ok .pin-lockwrap{color:var(--ok);background:radial-gradient(circle,rgba(43,182,115,.3),rgba(43,182,115,0) 70%);animation:pop .5s}
+@keyframes pop{50%{transform:scale(1.15)}}
+.pin-kick{margin:6px 0 0;color:var(--hivis);font-weight:800;font-size:14px;letter-spacing:.14em;text-transform:uppercase}
+.pin h1{font-size:clamp(25px,6.4vw,30px);line-height:1.15;margin:6px 0 6px;font-weight:850}
+.pin-help{color:var(--muted);margin:0 auto 16px;max-width:30ch;font-size:17px}
+.pin-dots{display:flex;justify-content:center;gap:16px;margin:4px 0 6px}
+.pin-dots i{width:20px;height:20px;border-radius:50%;border:2.5px solid rgba(244,247,248,.55);transition:transform .2s,background .2s,border-color .2s}
+.pin-dots i.on{background:var(--hivis);border-color:var(--hivis);transform:scale(1.18)}
+.pin-dots i.ok{background:var(--ok);border-color:var(--ok)}
+.pin-card.shake{animation:shake .42s}
+@keyframes shake{20%,60%{transform:translateX(-12px)}40%,80%{transform:translateX(12px)}}
+.pin-in{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.pin-err{min-height:26px;margin:4px 0 6px;color:#FF9C85;font-weight:700;font-size:16px}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}
+.pt-key{position:relative;overflow:hidden;min-height:68px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,#34454F,#2A3943);font-size:30px;font-weight:750;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.35);transition:transform .08s,background .2s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;display:grid;place-items:center;text-decoration:none}
+.pt-key:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.pt-key.hit::after{content:'';position:absolute;inset:0;margin:auto;width:20px;height:20px;border-radius:50%;background:rgba(255,212,0,.45);animation:ripple .45s ease-out forwards}
+@keyframes ripple{to{transform:scale(9);opacity:0}}
+.pt-txt{font-size:13px;font-weight:700;line-height:1.2;padding:6px;color:var(--muted);background:transparent;box-shadow:none;border-style:dashed}
+.pt-del{font-size:26px;background:transparent;box-shadow:none}
+.pin-site{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-weight:700;padding:12px 14px;min-height:48px}
+.pin-site svg{width:20px;height:20px}
+@media (hover:hover){.pt-key:hover{background:linear-gradient(180deg,#3B4D58,#2E3E49)}}
+
+/* ---------- buttons ---------- */
+.pbtn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:14px 22px;border-radius:16px;font-weight:800;font-size:18px;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:transform .12s,filter .2s,background .2s;text-align:center;line-height:1.2}
+.pbtn svg{width:22px;height:22px;flex:none}.pbtn:active{transform:scale(.98)}
+.pbtn-main{background:var(--hivis);color:var(--slate);box-shadow:0 8px 24px rgba(255,212,0,.22)}
+.pbtn-main:hover{filter:brightness(1.06)}
+.pbtn-line{background:rgba(255,255,255,.04);border-color:rgba(244,247,248,.35);color:var(--text)}
+.pbtn.sm{min-height:50px;font-size:16px;padding:10px 16px}
+.prow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.prow .pbtn{flex:1 1 220px}
+.plink{display:inline-block;margin-top:12px;color:var(--text);font-weight:700;padding:8px 0}
+
+/* ---------- portal shell ---------- */
+.pwrap{max-width:680px;margin:0 auto;padding:0 16px 40px}
+.ptop{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:12px 0;margin:0 -16px;padding-left:16px;padding-right:16px;background:linear-gradient(180deg,rgba(20,30,39,.96),rgba(20,30,39,.82));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.pbrand{display:flex;align-items:center;gap:8px;font-weight:900;text-transform:uppercase;letter-spacing:.03em;text-decoration:none;font-size:19px;margin-right:auto}
+.pbrand .lg{width:30px;height:30px}
+.ptop .plang button{padding:7px 11px;min-height:40px;font-size:15px}.ptop .plang-i{display:none}
+.plock{border:1px solid var(--line);background:none;border-radius:999px;padding:9px 14px;min-height:44px;font-weight:700;font-size:15px;color:var(--muted);cursor:pointer}
+@media (max-width:420px){.pbrand span{display:none}}
+.pmain{display:flex;flex-direction:column;gap:16px;padding-top:18px}
+[data-anim]{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1);transition-delay:calc(min(var(--i,0),6) * 70ms)}
+[data-anim].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}[data-anim]{opacity:1;transform:none}}
+
+.hello{display:flex;align-items:center;gap:16px;padding:6px 2px}
+.hello h1{font-size:clamp(30px,8vw,40px);line-height:1.05;margin:0;font-weight:900;letter-spacing:-.01em}
+.addr{margin:6px 0 0;color:var(--muted);font-size:17px}
+.ring{position:relative;width:92px;height:92px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}.ring-bg{stroke:rgba(255,255,255,.1)}
+.ring-fg{stroke:var(--hivis);stroke-linecap:round;stroke-dasharray:var(--c);stroke-dashoffset:var(--c);animation:fill 1.6s .3s cubic-bezier(.3,.8,.2,1) forwards;filter:drop-shadow(0 0 6px rgba(255,212,0,.5))}
+@keyframes fill{to{stroke-dashoffset:var(--o)}}
+.ring span{position:absolute;inset:0;display:grid;place-items:center}.ring span svg{width:40px;height:40px;transform:none}
+
+.steps{list-style:none;margin:0;padding:14px 6px;display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border:1px solid var(--line);border-radius:var(--r);position:relative}
+.steps li{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:clamp(10.5px,2.8vw,14px);letter-spacing:-.015em;hyphens:auto;color:var(--muted);font-weight:700;position:relative}
+.steps li:not(:last-child)::after{content:'';position:absolute;top:15px;left:calc(50% + 18px);right:calc(-50% + 18px);height:3px;border-radius:3px;background:rgba(255,255,255,.14)}
+.steps li.done:not(:last-child)::after{background:var(--hivis)}
+.steps i{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2)}
+.steps i svg{width:18px;height:18px;color:var(--slate)}
+.steps .done i{background:var(--hivis);border-color:var(--hivis)}
+.steps .now i{border-color:var(--hivis);box-shadow:0 0 0 0 rgba(255,212,0,.6);animation:beat 1.8s infinite}
+.steps .now i::after{content:'';width:12px;height:12px;border-radius:50%;background:var(--hivis)}
+.steps .now span{color:var(--text)}
+@keyframes beat{70%{box-shadow:0 0 0 12px rgba(255,212,0,0)}100%{box-shadow:0 0 0 0 rgba(255,212,0,0)}}
+
+.pc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 18px;box-shadow:0 18px 50px rgba(0,0,0,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.pc h2{font-size:25px;line-height:1.15;margin:0 0 4px;font-weight:850}
+.pc h3{font-size:21px;line-height:1.2;margin:6px 0 8px;font-weight:800}
+.pc p{margin:8px 0}
+.pk{margin:0;color:var(--hivis);font-weight:800;font-size:13.5px;letter-spacing:.12em;text-transform:uppercase}
+.pm{color:var(--muted)}.pm.sm,.sm{font-size:15px}
+.pc-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);font-weight:800;font-size:14.5px}
+.pill svg{width:16px;height:16px}
+.pill-ok,.pill-confirmed{background:rgba(43,182,115,.16);border-color:rgba(43,182,115,.5);color:#7FE0B0}
+.pill-onway,.pill-arrived{background:rgba(255,212,0,.16);border-color:rgba(255,212,0,.55);color:var(--hivis)}
+.dotlive{width:9px;height:9px;border-radius:50%;background:currentColor;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* visit card */
+.pc-visit{position:relative;overflow:hidden}
+.pc-visit.live{border-color:rgba(255,212,0,.5);box-shadow:0 0 0 1px rgba(255,212,0,.25),0 22px 60px rgba(0,0,0,.4)}
+.pc-visit::before{content:'';position:absolute;inset:-40% -20% auto auto;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,212,0,.13),transparent 65%);pointer-events:none}
+.vbig{display:flex;gap:16px;align-items:center;margin:14px 0 6px}
+.vcal{flex:none;width:86px;border-radius:18px;overflow:hidden;text-align:center;background:var(--text);color:var(--slate);box-shadow:0 10px 26px rgba(0,0,0,.35);transform-origin:top;animation:flip .8s .35s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes flip{from{transform:perspective(400px) rotateX(-80deg);opacity:0}}
+.vcal small{display:block;background:var(--hivis);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:14px;padding:5px 0}
+.vcal b{display:block;font-size:40px;line-height:1.05;font-weight:900;padding-top:4px}
+.vcal span{display:block;font-size:14px;font-weight:700;padding-bottom:8px;text-transform:capitalize}
+.vwhen{margin:2px 0;font-weight:700;text-transform:capitalize}
+.vwin{margin:2px 0;font-size:20px;font-weight:800;color:var(--hivis)}
+.vcount{display:inline-block;margin:6px 0 0;padding:4px 10px;border-radius:8px;background:rgba(255,255,255,.08);font-weight:800;font-size:15px}
+.vlive{font-size:20px;font-weight:800;margin:6px 0 4px}
+.route{position:relative;height:74px;margin:10px 0 2px}
+.road{position:absolute;left:6px;right:52px;top:44px;height:8px;border-radius:8px;background:rgba(255,255,255,.12);overflow:hidden}
+.road i{position:absolute;inset:0;width:62%;background:linear-gradient(90deg,rgba(255,212,0,.15),var(--hivis));border-radius:8px;animation:go 2.4s cubic-bezier(.3,.6,.3,1) forwards}
+.road.full i{width:100%;animation:none}
+.road::after{content:'';position:absolute;inset:3px 0 auto;height:2px;background:repeating-linear-gradient(90deg,rgba(20,30,39,.7) 0 10px,transparent 10px 22px);animation:dash 1s linear infinite}
+@keyframes go{from{width:0}}@keyframes dash{to{background-position:22px 0}}
+.truck{position:absolute;top:8px;left:calc(62% - 60px);width:66px;animation:drive 2.4s cubic-bezier(.3,.6,.3,1) forwards,bob .5s ease-in-out infinite}
+.truck.parked{left:auto;right:58px;animation:none}
+@keyframes drive{from{left:-10px}}@keyframes bob{50%{transform:translateY(-2px)}}
+.home{position:absolute;right:0;top:12px;width:50px;height:50px}
+.home.pulse{border-radius:50%;animation:homeglow 1.6s infinite}
+@keyframes homeglow{0%{box-shadow:0 0 0 0 rgba(255,212,0,.5)}100%{box-shadow:0 0 0 20px rgba(255,212,0,0)}}
+.who{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.who h3{font-size:19px;margin:0 0 10px}
+.crew{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px}
+.crew li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;animation:rise .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d) + .4s)}
+.av{position:relative;width:96px;height:96px;border-radius:50%;padding:4px;border:0;cursor:zoom-in;background:conic-gradient(from 0deg,var(--hivis),#FFB000,rgba(255,212,0,.15),var(--hivis));animation:spin 6s linear infinite}
+.av img,.av span{width:100%;height:100%;border-radius:50%;object-fit:cover;display:grid;place-items:center;background:var(--raised);border:3px solid #24313B;font-size:34px;font-weight:900;animation:spin 6s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.crew b{font-size:17px;line-height:1.2;margin-top:4px}.crew small{color:var(--muted);font-size:14.5px}
+.crew em{font-style:normal;color:var(--slate);background:var(--hivis);border-radius:999px;padding:2px 8px;font-weight:800;font-size:12.5px}
+.teamph{margin:0 0 14px}.teamph button{padding:0;border:0;background:none;cursor:zoom-in;display:block;width:100%}
+.teamph img{width:100%;max-height:340px;object-fit:cover;border-radius:18px;display:block;box-shadow:0 14px 36px rgba(0,0,0,.4)}
+.teamph figcaption{display:flex;flex-direction:column;margin-top:8px}.teamph figcaption span{color:var(--muted)}
+.whosoon{display:flex;gap:10px;align-items:flex-start}
+
+/* to-do + change orders */
+.todo{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:18px;background:linear-gradient(90deg,rgba(255,212,0,.2),rgba(255,212,0,.06));border:1px solid rgba(255,212,0,.5);font-weight:800;font-size:19px}
+.todo-n{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--hivis);color:var(--slate);font-size:21px;animation:pop 1s .8s}
+.pc-co.waiting{border-color:rgba(255,212,0,.45)}
+.pc-co.declined{opacity:.75}
+.price{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:12px 0 2px;padding:12px 14px;border-radius:14px;background:rgba(0,0,0,.2)}
+.price small{color:var(--muted);font-size:15px}.price b{font-size:28px;font-weight:900;color:var(--text)}
+.price.big{justify-content:flex-start}.price.big b{font-size:34px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin:10px 0}
+.pgrid button{padding:0;border:0;background:none;cursor:zoom-in;border-radius:12px;overflow:hidden;aspect-ratio:1}
+.pgrid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}.pgrid button:hover img{transform:scale(1.06)}
+.opt{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px}.opt.on{border-color:var(--ok);background:rgba(43,182,115,.08)}
+.opt-h{display:flex;justify-content:space-between;gap:10px;font-size:19px}.opt-h span{font-weight:900;color:var(--hivis)}
+.opt ul,.mats{margin:8px 0 10px;padding-left:20px}.opt li{margin:3px 0}
+.mats{list-style:none;padding:0}.mats li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.mats span{color:var(--muted)}
+.xgrid{display:grid;gap:12px;margin-top:10px}
+.x{display:flex;gap:14px;align-items:flex-start;padding:12px;border-radius:18px;background:rgba(0,0,0,.18);border:1px solid var(--line);transition:border-color .3s,background .3s}
+.x.on{border-color:rgba(43,182,115,.55);background:rgba(43,182,115,.08)}
+.x img{width:96px;height:96px;object-fit:cover;border-radius:14px;flex:none}
+.x b{font-size:18.5px}.x p{margin:4px 0;color:var(--muted);font-size:16px}
+.xp{display:block;font-size:22px;font-weight:900;margin:4px 0 8px}
+.x .pill{margin-right:8px}.x .pbtn{margin-top:4px}
+.tl{list-style:none;margin:10px 0 0;padding:0 0 0 18px;border-left:3px solid rgba(255,212,0,.35)}
+.tl li{position:relative;padding:0 0 16px 6px}.tl li::before{content:'';position:absolute;left:-27px;top:5px;width:15px;height:15px;border-radius:50%;background:var(--hivis);border:3px solid #24313B}
+.tl small{color:var(--muted);font-weight:700;text-transform:capitalize}.tl p{margin:2px 0}
+.pc-warr{background:linear-gradient(135deg,rgba(43,182,115,.18),rgba(36,49,59,.9))}
+.pc-more{display:grid;gap:10px;padding:12px}
+.more{display:flex;flex-direction:column;padding:14px 16px;border-radius:16px;text-decoration:none;background:rgba(255,255,255,.04);border:1px solid var(--line);transition:background .2s,transform .2s}
+.more:hover{background:rgba(255,212,0,.08);transform:translateX(4px)}
+.more b{font-size:19px}.more b::after{content:' →';color:var(--hivis)}.more span{color:var(--muted);font-size:16px}
+.pcontact{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:560px){.pcontact{grid-template-columns:1fr 1fr}}
+.pdemo{text-align:center;color:var(--muted);font-size:14px;margin:6px 0 0}
+
+/* sheets */
+.pscrim{position:fixed;inset:0;z-index:50;background:rgba(8,13,18,.72);display:flex;align-items:flex-end;justify-content:center;padding:12px;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.psheet{width:min(560px,100%);max-height:92vh;overflow:auto;background:#24313B;border:1px solid var(--line);border-radius:24px;padding:22px 18px;animation:up .35s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+@media (min-width:700px){.pscrim{align-items:center}}
+.psheet h2{margin:0 0 8px;font-size:24px}
+.pfield{display:flex;flex-direction:column;gap:6px;margin:14px 0 4px;font-weight:700}
+.pfield input{font:inherit;font-size:20px;padding:14px;border-radius:14px;border:2px solid rgba(244,247,248,.35);background:#1A252E;color:var(--text);min-height:58px}
+.pfield input:focus{border-color:var(--hivis);outline:none}
+.sheet-x{display:flex;gap:14px;align-items:flex-start}.sheet-x img{width:110px;height:110px;object-fit:cover;border-radius:14px}
+.pzoom{display:flex;flex-direction:column;gap:12px}.pzoom img{width:100%;max-height:72vh;object-fit:contain;border-radius:14px}
+.ptoast{position:fixed;left:50%;bottom:24px;z-index:60;transform:translateX(-50%);background:var(--text);color:var(--slate);padding:14px 20px;border-radius:14px;font-weight:800;box-shadow:0 12px 30px rgba(0,0,0,.4);animation:up .3s;max-width:calc(100% - 32px);text-align:center}
+.ptoast.out{opacity:0;transition:opacity .3s}
+.confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70}
+
+.again .pin-card,.again .lg-r,.again .lg-h,.again .vcal,.again .crew li,.again .ring-fg{animation:none!important;stroke-dashoffset:0}
+.again .ring-fg{stroke-dashoffset:var(--o)}
+.again [data-anim]{opacity:1;transform:none;transition:none}
+.pin-card.busy .pin-dots i{animation:pdot .8s ease-in-out infinite alternate}.pin-card.busy .pin-dots i:nth-child(2){animation-delay:.15s}.pin-card.busy .pin-dots i:nth-child(3){animation-delay:.3s}.pin-card.busy .pin-dots i:nth-child(4){animation-delay:.45s}@keyframes pdot{to{opacity:.35;transform:scale(.8)}}
+/* step-by-step progress (Oct 8) */
+.psteps{list-style:none;margin:10px 0 0;padding:0;position:relative}
+.psteps li{position:relative;display:flex;gap:14px;align-items:flex-start;padding:0 0 16px}
+.psteps li:not(:last-child)::before{content:"";position:absolute;left:15px;top:32px;bottom:0;width:2px;background:var(--line)}
+.psteps li.done:not(:last-child)::before{background:var(--hivis)}
+.pst-b{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:none;border-radius:50%;border:2px solid var(--muted);color:var(--slate)}
+.pst-b svg{width:18px;height:18px}
+.psteps li.done .pst-b{background:var(--hivis);border-color:var(--hivis)}
+.psteps li.now .pst-b{border-color:var(--hivis);box-shadow:0 0 0 6px rgba(255,212,0,.18);animation:pnow 1.6s ease-in-out infinite}
+@keyframes pnow{50%{box-shadow:0 0 0 10px rgba(255,212,0,.06)}}
+.psteps b{display:block;font-weight:800;line-height:1.3}.psteps li:not(.done):not(.now) b{color:var(--muted);font-weight:600}
+.psteps small{display:block;color:var(--muted);font-size:15px}
+.psteps li.now small{color:var(--hivis);font-weight:800}
+@media (prefers-reduced-motion:reduce){.psteps li.now .pst-b{animation:none}}
+/* the pay button (Oct 9): opens their QuickBooks / Square page */
+.paybtn{position:relative;display:flex;align-items:center;gap:14px;margin:12px 0 6px;padding:16px 18px;border-radius:20px;text-decoration:none;color:#1F2A33;background:linear-gradient(135deg,#FFE45C,#7FB2FF 45%,#F2B800);box-shadow:0 10px 28px rgba(255,212,0,.32),inset 0 1px 0 rgba(255,255,255,.6);overflow:hidden;transition:transform .15s}
+.paybtn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);animation:payshine 3.2s ease-in-out infinite}
+@keyframes payshine{60%,100%{transform:translateX(120%)}}
+.paybtn:active{transform:scale(.98)}
+.paybtn-i{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;flex:none;border-radius:14px;background:rgba(31,42,51,.12)}.paybtn-i svg{width:28px;height:28px}
+.paybtn-t{flex:1;min-width:0}.paybtn-t b{display:block;font:900 20px/1.2 var(--display)}.paybtn-t small{display:block;font-weight:700;opacity:.75}
+.paybtn-a{font:900 28px/1 var(--display);transition:transform .2s}.paybtn:hover .paybtn-a{transform:translateX(4px)}
+.paybtn-line{background:rgba(255,255,255,.06);color:var(--text);box-shadow:inset 0 0 0 1.5px var(--line)}.paybtn-line::after{display:none}.paybtn-line .paybtn-i{background:rgba(255,255,255,.08)}
+.paid-big{display:flex;align-items:center;gap:10px;margin:8px 0;padding:14px 16px;border-radius:16px;background:rgba(43,182,115,.16);color:#7EE2B0}.paid-big svg{width:26px;height:26px}.paid-big b{font:900 19px/1.2 var(--display)}
+@media (prefers-reduced-motion:reduce){.paybtn::after{animation:none}}
+:root{--hivis:#7FB2FF;--sodium:#7FB2FF;--on-sodium:#10202B}</style></head><body><div id="wall" aria-hidden="true"></div><div id="papp"></div><div id="player"></div><script>/* ============ Ridgeline customer portal (portal.html?j=JOB) — Oct 7, round 1 ============
+   Separate screen for customers on a current job. PIN unlock, English/Español, arrival window + who's coming,
+   change orders and add-ons they can approve and pay, invoice, job photos. Owner sets everything up in Owner → customer.
+   Data: same store as the website ('kdetaili-db'). Demo: this browser. Live: synced through the backend (next step). */
+(()=>{
+/* ---------- blank slate: bump RESET to wipe every saved customer, crew, job and setting in each browser once ---------- */
+{const RESET='R1-2026-10-07';try{if(localStorage.getItem('kdetaili-reset')!==RESET){[localStorage,sessionStorage].forEach(S=>Object.keys(S).filter(k=>k.indexOf('kdetaili-')===0).forEach(k=>S.removeItem(k)));localStorage.setItem('kdetaili-reset',RESET)}}catch(x){}}
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CFG={"biz": "Gulf Coast Gloss Mobile Detailing", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};const BIZ_PHONE="+17135550150";
+const BIZ_PRETTY=BIZ_PHONE.replace(/^\+1(\d{3})(\d{3})(\d{4})$/,'($1) $2-$3');
+/* TEMPORARY demo master PIN: opens any customer portal on this device. Remove before a real client goes live. */
+const MASTER_PIN='0000';
+const qs=new URLSearchParams(location.search),JOB=qs.get('j')||'';
+
+/* ---------- words ---------- */
+const W={en:{
+  portal:'Your project portal',enterPin:'Enter your 4-digit PIN',pinHelp:'It’s in the text we sent you with this link.',wrong:'That PIN doesn’t match. Try again.',
+  locked:s=>`Too many tries. Try again in ${s} seconds.`,forgot:'Forgot your PIN? Text us',del:'Delete',show:'Type it instead',open:'Open',
+  noJob:'We couldn’t find this project.',noJobP:'The link may be old. Text us and we’ll send you a new one.',
+  hi:n=>`Hi, ${n}`,yourRoof:'Your car project',website:'Our website',logout:'Lock',
+  steps:['Request','Booking','Estimate','Approved'],stepNow:'Where your project is',
+  next:'Your next visit',arrive:(a,b)=>`Arriving between ${a} and ${b}`,arriveAt:a=>`Arriving around ${a}`,
+  vt:{inspection:'Booking',work:'Work day',followup:'Follow-up visit',estimate:'Estimate walk-through',adjuster:'Insurance adjuster visit'},
+  st:{scheduled:'Scheduled',confirmed:'Confirmed',onway:'On the way',arrived:'We’re here',done:'Done for today'},
+  inDays:n=>n===0?'Today':n===1?'Tomorrow':`In ${n} days`,
+  onwayP:m=>m?`About ${m} minutes away.`:'Heading to your home now.',arrivedP:'Our detailer is at your home.',doneP:'All done for today. Updates and photos are below.',
+  notHome:'You don’t need to be home unless we ask.',diffTime:'Need a different time? Text us',addCal:'Add to my calendar',
+  who:'Who’s coming',lead:'Detailer lead',whoSoon:'We add photos of who’s coming before we head out, so you know who’s at your door.',teamCap:'Your detailer today',
+  todo:'Needs your OK',todoN:n=>n===1?'1 thing needs your OK':`${n} things need your OK`,
+  co:'Change to your job',coWhy:'Why',coAdd:'Adds to your price',approve:'Approve',notNow:'Not now',ask:'Ask a question',
+  signT:'Approve this change',signL:'Type your full name to sign',signErr:'Type your full name.',signBtn:'Approve and sign',
+  approved:'Approved',declined:'You said not now',paid:'Paid',payNow:a=>`Pay ${a} now`,payLater:'It goes on your final invoice.',
+  payNote:'Opens our secure payment page. Card or bank.',thanksApp:'Thank you. We got your OK.',thanksDec:'Got it. We won’t do this change.',
+  extras:'Add to your job',extrasP:'While the detailer is here, these cost less than a separate visit.',addIt:'Add to my job',added:'Requested',
+  addT:'Add this to your job?',addBtn:'Yes, add it',addOk:'Added. We’ll confirm it with you.',
+  est:'Your estimate',choose:'Choose this option',signedBy:n=>`Signed by ${n}.`,viewEst:'Open the estimate',yes:'Yes, go ahead',estT:'Go ahead with this estimate?',estYes:(n,d)=>`You said yes${n?' ('+n+')':''} on ${d}. Thank you!`,estFrom:s=>`From ${s}`,
+  viewInv:'View and pay your invoice',paySafe:'Opens our secure payment page',opensNew:'Opens in a new tab',viewInvOnly:'Open the invoice',invLeft:a=>`${a} left to pay`,invWait:'Waiting for payment',invNum:n=>`Invoice #${n}`,
+  prog:'Your car, step by step',progP:(n,o)=>`${n} of ${o} done`,progNext:'Next',allPhotos:'See every photo',
+  sk:{contract:'Contract signed',claim:'Insurance approved',hoa:'HOA approved',permit:'Permit approved',mat_delivered:'Materials delivered',dumpster:'Dumpster dropped off',arrived:'Detailer arrived',tearoff:'Old car torn off',decking:'Decking checked',dryin:'Dried in (your home is protected from rain)',shingles:'New products on',ridge:'Ridge, vents and flashing done',cleanup:'Cleanup and magnet sweep for nails',walkthrough:'Final walkthrough',inspection:'City booking passed',warranty:'Warranty registered'},
+  inv:'Your bill',invPaid:d=>`Paid ${d}. Thank you!`,
+  ups:'Photos and notes',report:'What we found',mats:'What’s going on your car',matsP:'Everything we order for your home.',
+  warr:'10-year workmanship warranty',warrP:'If anything we did leaks, text us and we come back free.',
+  book:'Book another service',bookP:'Gutters, attic vents, storm checks and more.',visit:'Visit our website',
+  text:'Text us',call:'Call',close:'Close',photo:'Photo',nothing:'We’re on it. Your visit time, photos and updates will show up here.',
+  lang:'Language',langEn:'English',langEs:'Español',checking:'Checking…',lockedLong:'Too many tries. Wait 15 minutes or text us.',err:'Couldn’t connect. Check your signal and try again.',sending:'Sending…',loading:'Opening your project…',demo:'Demo: this page shows what’s saved on this device.',
+  sms:{diff:(n,d)=>`Hi Gulf Coast Gloss, it’s ${n}. I need a different time for my visit on ${d}.`,q:n=>`Hi Gulf Coast Gloss, it’s ${n}. I have a question about my car job.`,co:(n,t)=>`Hi Gulf Coast Gloss, it’s ${n}. Question about the change “${t}”.`,pin:'Hi Gulf Coast Gloss, I need my portal PIN again.'}
+},es:{
+  portal:'Su portal del proyecto',enterPin:'Escriba su PIN de 4 dígitos',pinHelp:'Está en el mensaje de texto que le enviamos con este enlace.',wrong:'Ese PIN no coincide. Intente otra vez.',
+  locked:s=>`Demasiados intentos. Intente de nuevo en ${s} segundos.`,forgot:'¿Olvidó su PIN? Envíenos un texto',del:'Borrar',show:'Escribirlo con el teclado',open:'Abrir',
+  noJob:'No encontramos este proyecto.',noJobP:'Es posible que el enlace sea antiguo. Envíenos un texto y le mandamos uno nuevo.',
+  hi:n=>`Hola, ${n}`,yourRoof:'Su proyecto de techo',website:'Nuestro sitio web',logout:'Bloquear',
+  steps:['Solicitud','Inspección','Presupuesto','Aprobado'],stepNow:'Cómo va su proyecto',
+  next:'Su próxima visita',arrive:(a,b)=>`Llegamos entre las ${a} y las ${b}`,arriveAt:a=>`Llegamos alrededor de las ${a}`,
+  vt:{inspection:'Inspección de techo gratis',work:'Día de trabajo',followup:'Visita de seguimiento',estimate:'Repaso del presupuesto',adjuster:'Visita del ajustador del seguro'},
+  st:{scheduled:'Programada',confirmed:'Confirmada',onway:'En camino',arrived:'Ya llegamos',done:'Terminado por hoy'},
+  inDays:n=>n===0?'Hoy':n===1?'Mañana':`En ${n} días`,
+  onwayP:m=>m?`A unos ${m} minutos.`:'Vamos camino a su casa.',arrivedP:'Nuestro equipo está en su casa.',doneP:'Terminamos por hoy. Las novedades y fotos están abajo.',
+  notHome:'No necesita estar en casa, a menos que se lo pidamos.',diffTime:'¿Necesita otro horario? Envíenos un texto',addCal:'Agregar a mi calendario',
+  who:'Quién va a llegar',lead:'Jefe de equipo',whoSoon:'Antes de salir agregamos fotos de quién va, para que sepa quién toca a su puerta.',teamCap:'Su equipo de hoy',
+  todo:'Necesita su aprobación',todoN:n=>n===1?'1 cosa necesita su aprobación':`${n} cosas necesitan su aprobación`,
+  co:'Cambio en su trabajo',coWhy:'Por qué',coAdd:'Se suma a su precio',approve:'Aprobar',notNow:'Ahora no',ask:'Hacer una pregunta',
+  signT:'Aprobar este cambio',signL:'Escriba su nombre completo para firmar',signErr:'Escriba su nombre completo.',signBtn:'Aprobar y firmar',
+  approved:'Aprobado',declined:'Usted dijo que ahora no',paid:'Pagado',payNow:a=>`Pagar ${a} ahora`,payLater:'Se agrega a su factura final.',
+  payNote:'Abre nuestra página de pago segura. Tarjeta o banco.',thanksApp:'Gracias. Recibimos su aprobación.',thanksDec:'Entendido. No haremos este cambio.',
+  extras:'Agregar a su trabajo',extrasP:'Mientras el equipo está aquí, esto cuesta menos que una visita aparte.',addIt:'Agregar a mi trabajo',added:'Solicitado',
+  addT:'¿Agregar esto a su trabajo?',addBtn:'Sí, agregarlo',addOk:'Agregado. Lo confirmaremos con usted.',
+  est:'Su presupuesto',choose:'Elegir esta opción',signedBy:n=>`Firmado por ${n}.`,viewEst:'Abrir el presupuesto',yes:'Sí, adelante',estT:'¿Seguimos con este presupuesto?',estYes:(n,d)=>`Usted dijo que sí${n?' ('+n+')':''} el ${d}. ¡Gracias!`,estFrom:s=>`De ${s}`,
+  viewInv:'Ver y pagar su factura',paySafe:'Abre nuestra página de pago segura',opensNew:'Se abre en otra pestaña',viewInvOnly:'Abrir la factura',invLeft:a=>`Falta pagar ${a}`,invWait:'Pendiente de pago',invNum:n=>`Factura #${n}`,
+  prog:'Su techo, paso a paso',progP:(n,o)=>`${n} de ${o} listos`,progNext:'Sigue',allPhotos:'Ver todas las fotos',
+  sk:{contract:'Contrato firmado',claim:'Seguro aprobado',hoa:'HOA aprobó',permit:'Permiso aprobado',mat_delivered:'Materiales entregados',dumpster:'Contenedor de basura entregado',arrived:'Llegó el equipo',tearoff:'Techo viejo retirado',decking:'Madera del techo revisada',dryin:'Techo protegido contra lluvia',shingles:'Tejas nuevas puestas',ridge:'Cumbrera, ventilas y tapajuntas listos',cleanup:'Limpieza y barrido de clavos con imán',walkthrough:'Revisión final con usted',inspection:'Inspección de la ciudad aprobada',warranty:'Garantía registrada'},
+  inv:'Su cuenta',invPaid:d=>`Pagado el ${d}. ¡Gracias!`,
+  ups:'Fotos y notas',report:'Lo que encontramos',mats:'Lo que va en su techo',matsP:'Todo lo que pedimos para su casa.',
+  warr:'Garantía de mano de obra de 10 años',warrP:'Si algo que hicimos gotea, envíenos un texto y regresamos gratis.',
+  book:'Reservar otro servicio',bookP:'Canaletas, ventilación del ático, revisión por tormenta y más.',visit:'Visitar nuestro sitio web',
+  text:'Enviar texto',call:'Llamar',close:'Cerrar',photo:'Foto',nothing:'Ya estamos trabajando en ello. Aquí aparecerán la hora de su visita, fotos y novedades.',
+  lang:'Idioma',langEn:'English',langEs:'Español',checking:'Verificando…',lockedLong:'Demasiados intentos. Espere 15 minutos o envíenos un texto.',err:'No pudimos conectar. Revise su señal e intente otra vez.',sending:'Enviando…',loading:'Abriendo su proyecto…',demo:'Demo: esta página muestra lo guardado en este dispositivo.',
+  sms:{diff:(n,d)=>`Hola Gulf Coast Gloss, soy ${n}. Necesito otro horario para mi visita del ${d}.`,q:n=>`Hola Gulf Coast Gloss, soy ${n}. Tengo una pregunta sobre mi trabajo de techo.`,co:(n,t)=>`Hola Gulf Coast Gloss, soy ${n}. Pregunta sobre el cambio “${t}”.`,pin:'Hola Gulf Coast Gloss, necesito mi PIN del portal otra vez.'}
+}};
+let DB={customers:[]};try{DB=JSON.parse(localStorage.getItem('kdetaili-db')||'null')||DB}catch(x){}
+/* live (v10): with a backend the PIN is checked on the server and the job comes from the shared store, so it works on the customer's own phone */
+const REMOTE=!!(CFG&&CFG.backend);let LIVE=false,PIN='';try{PIN=sessionStorage.getItem('kdetaili-ptpin-'+JOB)||''}catch(x){}
+const save=()=>{if(LIVE)return;try{localStorage.setItem('kdetaili-db',JSON.stringify(DB))}catch(x){}};
+let C=(DB.customers||[]).find(c=>c.id===JOB);const LOCALC=C;if(!C&&REMOTE&&JOB)C={id:JOB,name:'',job:{},ph:1};
+async function api(o){const r=await fetch(CFG.backend,{method:'POST',body:JSON.stringify(Object.assign({j:JOB,pin:PIN},o))});return r.json()}
+function takeView(r){C=r.c;C.job=C.job||{};DB={customers:[C],crew:r.crew||[],addons:r.addons||[]};LIVE=true}
+let LANG=(()=>{let l='';try{l=localStorage.getItem('kdetaili-lang')||''}catch(x){}return l||(C&&C.job&&C.job.lang)||((navigator.language||'').startsWith('es')?'es':'en')})();
+{const SK={"contract": "Booking confirmed", "deposit": "Deposit paid", "access": "Driveway, water and power confirmed", "arrived": "Detailer arrived", "decon": "Wash and decontamination", "interior": "Interior vacuumed and cleaned", "correction": "Polish or paint correction", "protect": "Sealant or coating applied", "walkthrough": "Walk-around with you", "photos": "Final photos sent", "invoice": "Invoice sent", "paid": "Paid", "review": "Review asked"},VT={"inspection": "Free paint check", "work": "Detail day", "followup": "Touch-up visit", "estimate": "Coating quote"};for(const L of ['en','es']){W[L].sk=Object.assign({},W[L].sk,SK);W[L].vt=Object.assign({},W[L].vt,VT)}Object.assign(W.en,{yourRoof:"Your booking with Gulf Coast Gloss",prog:'Your job, step by step',mats:'What we’re bringing',book:'Book another service',bookP:"Maintenance wash, Full detail, inside and out, Interior detail and more.",warr:"Fix it if you spot it",warrP:"Spot something we missed? Tell us in 48 hours and we come back at no charge."})}
+LANG='en';const T=()=>W[LANG];const LOC=()=>LANG==='es'?'es-US':'en-US';
+const usd=n=>'$'+Math.round(+n||0).toLocaleString('en-US');
+const first=n=>String(n||'').trim().split(/\s+/)[0]||'';
+const dayLong=t=>new Date(t).toLocaleDateString(LOC(),{weekday:'long',month:'long',day:'numeric'});
+const dayShort=t=>new Date(t).toLocaleDateString(LOC(),{weekday:'short',month:'short',day:'numeric'});
+const tm=hm=>{if(!hm)return'';const[h,m]=hm.split(':').map(Number),d=new Date();d.setHours(h,m||0,0,0);return d.toLocaleTimeString(LOC(),{hour:'numeric',minute:m?'2-digit':undefined})};
+const at=(date,hm)=>{const[y,mo,d]=date.split('-').map(Number),[h,m]=(hm||'08:00').split(':').map(Number);return new Date(y,mo-1,d,h,m||0).getTime()};
+const isPhone=()=>/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&innerWidth<900);
+const smsHref=b=>`sms:${BIZ_PHONE}${/iPhone|iPad|Mac/i.test(navigator.userAgent)?'&':'?'}body=${encodeURIComponent(b)}`;
+const setLang=l=>{LANG=l;try{localStorage.setItem('kdetaili-lang',l)}catch(x){}document.documentElement.lang=l;if(C){C.job=C.job||{};if(C.job.lang!==l){C.job.lang=l;if(LIVE)api({action:'portal_act',act:'lang',lang:l}).catch(()=>{});else save()}}};
+document.documentElement.lang=LANG;
+
+/* ---------- icons ---------- */
+const LOGO=`<svg viewBox="0 0 32 32" aria-hidden="true" class="lg"><path class="lg-r" d="M3 17 16 6l13 11" fill="none" stroke="#FFD400" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path class="lg-h" d="M8 15v11h16V15" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></svg>`;
+const I={doc:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12h6M9 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  card:`<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M7 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,lock:`<svg viewBox="0 0 48 48" aria-hidden="true" class="lock"><path class="shackle" d="M15 22v-6a9 9 0 0 1 18 0v6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><rect x="10" y="22" width="28" height="20" rx="5" fill="currentColor"/><circle cx="24" cy="31" r="3" fill="#1F2A33"/><path d="M24 33v4" stroke="#1F2A33" stroke-width="3" stroke-linecap="round"/></svg>`,
+  truck:`<svg viewBox="0 0 64 36" aria-hidden="true"><rect x="2" y="8" width="36" height="20" rx="3" fill="#FFD400"/><path d="M38 14h12l8 8v6H38z" fill="#F4F7F8"/><path d="M42 16h7l5 5h-12z" fill="#2B3944"/><circle cx="14" cy="30" r="5" fill="#1F2A33" stroke="#F4F7F8" stroke-width="2"/><circle cx="48" cy="30" r="5" fill="#1F2A33" stroke="#F4F7F8" stroke-width="2"/><path d="M8 4h22l-4 4" fill="none" stroke="#F4F7F8" stroke-width="2" stroke-linecap="round"/></svg>`,
+  house:`<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 20 20 7l15 13" fill="none" stroke="#FFD400" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 18v15h20V18" fill="none" stroke="#F4F7F8" stroke-width="2.6" stroke-linejoin="round"/><rect x="17" y="24" width="6" height="9" fill="#F4F7F8"/></svg>`,
+  cal:`<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  chat:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  phone:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  check:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17l9-10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  back:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  globe:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="currentColor" stroke-width="2"/></svg>`};
+
+/* ---------- small UI helpers ---------- */
+function toast(m){const t=document.createElement('div');t.className='ptoast';t.setAttribute('role','status');t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.classList.add('out'),2600);setTimeout(()=>t.remove(),3000)}
+function sheet(html,focus){const L=$('#player');L.innerHTML=`<div class="pscrim"><div class="psheet" role="dialog" aria-modal="true">${html}</div></div>`;const prev=document.activeElement;
+  const close=()=>{L.innerHTML='';document.removeEventListener('keydown',k);prev&&prev.focus&&prev.focus()};const k=e=>{if(e.key==='Escape')close()};document.addEventListener('keydown',k);
+  $('.pscrim',L).addEventListener('click',e=>{if(e.target.classList.contains('pscrim'))close()});$$('[data-close]',L).forEach(b=>b.onclick=close);
+  const f=$(focus||'button',L);f&&f.focus();return close}
+function confetti(){if(reduce)return;const cv=document.createElement('canvas');cv.className='confetti';document.body.appendChild(cv);const x=cv.getContext('2d'),dpr=devicePixelRatio||1;cv.width=innerWidth*dpr;cv.height=innerHeight*dpr;x.scale(dpr,dpr);
+  const cols=['#FFD400','#F4F7F8','#1E9E63','#3D7BFF','#FFB000'],P=Array.from({length:130},()=>({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*14,vy:-Math.random()*15-4,r:Math.random()*6+4,c:cols[Math.random()*5|0],a:Math.random()*6,s:(Math.random()-.5)*.3}));let f=0;
+  (function step(){x.clearRect(0,0,innerWidth,innerHeight);P.forEach(p=>{p.vy+=.42;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.a+=p.s;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++f<150)requestAnimationFrame(step);else cv.remove()})()}
+const langSeg=()=>'';const langSeg0=()=>`<div class="plang" role="group" aria-label="${T().lang}"><span class="plang-i">${I.globe}</span>${[['en',T().langEn],['es',T().langEs]].map(([k,l])=>`<button type="button" data-lang="${k}" aria-pressed="${LANG===k}" lang="${k}">${l}</button>`).join('')}</div>`;
+function bindLang(rerender){$$('[data-lang]').forEach(b=>b.onclick=()=>{if(LANG===b.dataset.lang)return;setLang(b.dataset.lang);rerender()})}
+
+/* ---------- PIN screen ---------- */
+const KEY='kdetaili-pt-'+JOB;
+const unlocked=()=>{try{return sessionStorage.getItem(KEY)==='1'}catch(x){return false}};
+let tries=0,lockUntil=0;try{const s=JSON.parse(sessionStorage.getItem('kdetaili-pt-tries')||'{}');tries=s.n||0;lockUntil=s.u||0}catch(x){}
+const saveTries=()=>{try{sessionStorage.setItem('kdetaili-pt-tries',JSON.stringify({n:tries,u:lockUntil}))}catch(x){}};
+function pinScreen(){const t=T();let v='';
+  $('#papp').innerHTML=`<main class="pin" id="pin">
+    <div class="pin-top">${langSeg()}</div>
+    <section class="pin-card" aria-labelledby="pinH">
+      <div class="pin-brand">${LOGO}<span>Gulf Coast Gloss<small>Mobile detailing</small></span></div>
+      <div class="pin-lockwrap">${I.lock}</div>
+      <p class="pin-kick">${C?t.portal:''}</p>
+      <h1 id="pinH">${C?t.enterPin:t.noJob}</h1>
+      ${C?`<p class="pin-help">${t.pinHelp}</p>
+      <div class="pin-dots" aria-hidden="true">${'<i></i>'.repeat(4)}</div>
+      <label class="sr" for="pinIn">${t.enterPin}</label><input id="pinIn" class="pin-in" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" aria-describedby="pinErr">
+      <p class="pin-err" id="pinErr" role="alert" aria-live="assertive"></p>
+      <div class="pin-pad" role="group" aria-label="${t.enterPin}">${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" class="pt-key" data-k="${n}">${n}</button>`).join('')}<a class="pt-key pt-txt" href="${smsHref(t.sms.pin)}">${t.forgot}</a><button type="button" class="pt-key" data-k="0">0</button><button type="button" class="pt-key pt-del" data-k="del" aria-label="${t.del}">⌫</button></div>`
+      :`<p class="pin-help">${t.noJobP}</p><a class="pbtn pbtn-main" href="${smsHref(t.sms.pin)}">${I.chat}${t.text} ${BIZ_PRETTY}</a><a class="pbtn pbtn-line" href="index.html">${t.visit}</a>`}
+    </section>
+    <a class="pin-site" href="index.html">${I.back}${t.visit}</a>
+  </main>`;
+  bindLang(()=>{pinScreen();$('#pin').classList.add('again')});if(!C)return;
+  const dots=$$('.pin-dots i'),err=$('#pinErr'),inp=$('#pinIn'),card=$('.pin-card');
+  const draw=()=>dots.forEach((d,i)=>d.classList.toggle('on',i<v.length));
+  const lockMsg=()=>{const s=Math.ceil((lockUntil-Date.now())/1000);if(s>0){err.textContent=t.locked(s);setTimeout(lockMsg,1000);return true}err.textContent='';return false};
+  const good=()=>{tries=0;saveTries();try{sessionStorage.setItem(KEY,'1')}catch(x){}card.classList.add('ok');dots.forEach(d=>d.classList.add('ok'));setTimeout(()=>{$('#pin').classList.add('leave');setTimeout(portal,reduce?0:520)},reduce?0:650)};
+  const localOk=x=>LOCALC&&(x===String((LOCALC.job||{}).pin||'')||x===MASTER_PIN);
+  const check=()=>{if(Date.now()<lockUntil){lockMsg();v='';draw();return}
+    if(REMOTE){const x=v;card.classList.add('busy');err.textContent=t.checking;
+      api({action:'portal_get',pin:x}).then(r=>{card.classList.remove('busy');err.textContent='';
+        if(r.ok){PIN=x;try{sessionStorage.setItem('kdetaili-ptpin-'+JOB,x)}catch(e){}takeView(r);good();return}
+        if(r.reason==='nojob'&&localOk(x)){C=LOCALC;good();return}
+        if(r.reason==='locked'){err.textContent=t.lockedLong;v='';inp.value='';draw();return}
+        if(r.reason==='nojob'){err.textContent=t.noJobP;v='';inp.value='';draw();return}
+        bad()}).catch(()=>{card.classList.remove('busy');if(localOk(x)){C=LOCALC;good();return}err.textContent=t.err;v='';inp.value='';draw()});return}
+    if(localOk(v)){good();return}bad()};
+  const bad=()=>{tries++;if(tries>=5){lockUntil=Date.now()+60e3;tries=0}saveTries();card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');if(navigator.vibrate)navigator.vibrate([60,40,60]);
+    err.textContent=Date.now()<lockUntil?'':t.wrong;if(Date.now()<lockUntil)lockMsg();setTimeout(()=>{v='';inp.value='';draw()},380)};
+  const push=k=>{if(k==='del'){v=v.slice(0,-1)}else if(v.length<4){v+=k}inp.value=v;draw();err.textContent=err.textContent===t.wrong?'':err.textContent;if(v.length===4)check()};
+  $$('.pt-key[data-k]').forEach(b=>b.addEventListener('click',()=>{b.classList.remove('hit');void b.offsetWidth;b.classList.add('hit');push(b.dataset.k)}));
+  inp.addEventListener('input',()=>{v=inp.value.replace(/\D/g,'').slice(0,4);inp.value=v;draw();if(v.length===4)check()});
+  document.onkeydown=e=>{if(!$('#pin'))return;if(/^\d$/.test(e.key)&&document.activeElement!==inp)push(e.key);else if(e.key==='Backspace'&&document.activeElement!==inp)push('del')};
+  if(!isPhone())inp.focus();lockMsg()}
+
+/* ---------- portal ---------- */
+const PSTEPS=[['lead'],['booked','inspected'],['estimate'],['approved','work','invoiced','paid']];
+function curVisit(){const V=((C.job||{}).visits||[]).filter(v=>v.status!=='cancelled'),now=Date.now();
+  const live=V.find(v=>v.status==='onway'||v.status==='arrived');if(live)return live;
+  const up=V.filter(v=>at(v.date,v.to||v.from)>now-3*36e5&&v.status!=='done').sort((a,b)=>at(a.date,a.from)-at(b.date,b.from));if(up[0])return up[0];
+  const today=V.filter(v=>v.status==='done'&&now-at(v.date,v.to||v.from)<18*36e5);return today[0]||null}
+const crewOf=v=>(v.crew||[]).map(id=>(DB.crew||[]).find(m=>m.id===id)).filter(Boolean);
+function visitCard(v){const t=T(),st=v.status||'scheduled',start=at(v.date,v.from),dd=Math.round((new Date(v.date+'T12:00').getTime()-new Date(new Date().toDateString()+' 12:00').getTime())/864e5);
+  const live=st==='onway'||st==='arrived';
+  const route=st==='onway'?`<div class="route" aria-hidden="true"><div class="road"><i></i></div><div class="truck">${I.truck}</div><div class="home">${I.house}</div></div>`
+    :st==='arrived'?`<div class="route here" aria-hidden="true"><div class="road full"><i></i></div><div class="home pulse">${I.house}</div><div class="truck parked">${I.truck}</div></div>`:'';
+  const crew=crewOf(v),team=v.team&&v.team.photo;
+  return `<section class="pc pc-visit ${live?'live':''} st-${st}" data-anim>
+    <div class="pc-head"><p class="pk">${t.next}</p><span class="pill pill-${st}">${st==='onway'||st==='arrived'?'<b class="dotlive"></b>':''}${t.st[st]}</span></div>
+    <div class="vbig"><div class="vcal" aria-hidden="true"><small>${new Date(start).toLocaleDateString(LOC(),{month:'short'})}</small><b>${new Date(start).getDate()}</b><span>${new Date(start).toLocaleDateString(LOC(),{weekday:'short'})}</span></div>
+      <div><h2>${esc(t.vt[v.type]||t.vt.work)}</h2><p class="vwhen">${dayLong(start)}</p><p class="vwin">${v.to?t.arrive(tm(v.from),tm(v.to)):t.arriveAt(tm(v.from))}</p>${st==='scheduled'||st==='confirmed'?`<p class="vcount">${t.inDays(Math.max(0,dd))}</p>`:''}</div></div>
+    ${route}
+    ${st==='onway'?`<p class="vlive">${t.onwayP(v.eta)}</p>`:st==='arrived'?`<p class="vlive">${t.arrivedP}</p>`:st==='done'?`<p class="vlive">${t.doneP}</p>`:`<p class="pm">${esc(v.note||t.notHome)}</p>`}
+    <div class="who"><h3>${t.who}</h3>
+      ${team?`<figure class="teamph"><button type="button" class="zoomable" data-zoom="${esc(v.team.photo)}"><img src="${esc(v.team.photo)}" alt="${t.teamCap}"></button><figcaption><b>${t.teamCap}</b>${v.team.names?`<span>${esc(v.team.names)}</span>`:''}</figcaption></figure>`:''}
+      ${crew.length?`<ul class="crew">${crew.map((m,i)=>`<li style="--d:${i*90}ms"><button type="button" class="av zoomable" ${m.photo?`data-zoom="${esc(m.photo)}"`:''} aria-label="${t.photo}: ${esc(m.name)}">${m.photo?`<img src="${esc(m.photo)}" alt="">`:`<span>${esc((m.name||'?')[0])}</span>`}</button><b>${esc(m.name)}</b><small>${m.id===v.lead?`<em>${t.lead}</em>`:esc(m.role||'')}</small></li>`).join('')}</ul>`:''}
+      ${!team&&!crew.length?`<p class="pm whosoon">${t.whoSoon}</p>`:''}</div>
+    <div class="prow">${st==='scheduled'||st==='confirmed'?`<button type="button" class="pbtn pbtn-line" data-ics="${v.id}">${I.cal}${t.addCal}</button>`:''}<a class="pbtn pbtn-line" href="${smsHref(t.sms.diff(C.name,dayShort(start)))}">${I.chat}${t.diffTime}</a></div>
+  </section>`}
+function coCard(o,i){const t=T(),done=o.status!=='waiting';
+  return `<article class="pc pc-co ${o.status}" data-anim><div class="pc-head"><p class="pk">${t.co}</p>${o.status==='approved'?`<span class="pill pill-ok">${I.check}${t.approved}</span>`:o.status==='paid'?`<span class="pill pill-ok">${I.check}${t.paid}</span>`:o.status==='declined'?`<span class="pill">${t.declined}</span>`:''}</div>
+    <h3>${esc(o.title)}</h3>${o.why?`<p><b>${t.coWhy}:</b> ${esc(o.why)}</p>`:''}
+    ${(o.photos||[]).length?`<div class="pgrid">${o.photos.map(u=>`<button type="button" class="zoomable" data-zoom="${esc(u)}"><img src="${esc(u)}" alt="${t.photo}"></button>`).join('')}</div>`:''}
+    <div class="price"><small>${t.coAdd}</small><b>${usd(o.price)}</b></div>
+    ${!done?`<div class="prow"><button type="button" class="pbtn pbtn-main" data-coa="${i}">${I.check}${t.approve}</button><button type="button" class="pbtn pbtn-line" data-cod="${i}">${t.notNow}</button></div><a class="plink" href="${smsHref(t.sms.co(C.name,o.title))}">${t.ask}</a>`
+      :o.status==='approved'||o.status==='paid'?`<p class="pm">${t.payLater}</p>`+(o.signed&&o.signed[0]!=='('?`<p class="pm sm">${t.signedBy(esc(o.signed))}</p>`:''):''}
+  </article>`}
+let shown=false;
+function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{},s=c.show||{};document.onkeydown=null;
+  const cur=Math.max(0,PSTEPS.findIndex(p=>p.includes(c.stage)));
+  const v=curVisit();const changes=(j.changes||[]);const waiting=changes.filter(o=>o.status==='waiting').length+(c.estimate&&s.estimate&&c.estimate.status==='sent'?1:0)+(c.invoice&&s.invoice&&c.invoice.status==='sent'?1:0);
+  const addons=(DB.addons||[]).filter(a=>(j.addons||[]).includes(a.id));const picks=j.picks||[];
+  const est=c.estimate&&s.estimate&&c.estimate.status!=='draft'?c.estimate:null,inv=c.invoice&&s.invoice&&c.invoice.status!=='draft'?c.invoice:null,rep=c.report&&(s.report||s.updates)?c.report:null,ups=(s.updates?(c.updates||[]):[]).concat(rep?[{t:rep.t,text:rep.notes,photos:rep.photos||[]}]:[]).sort((a,b)=>a.t-b.t);
+  const dn=(c.prod||{}).done||{},CORE=['contract','mat_delivered','arrived','tearoff','decking','dryin','shingles','cleanup','walkthrough','inspection'];
+  const SK=['contract','claim','hoa','permit','mat_delivered','dumpster','arrived','tearoff','decking','dryin','shingles','ridge','cleanup','walkthrough','inspection','warranty'].filter(k=>k==='claim'?!!(c.ins&&c.ins.on):k==='hoa'?!!(c.prod&&c.prod.hoa):CORE.includes(k)||!!(c.prod&&c.prod.all));
+  const nDone=SK.filter(k=>dn[k]).length,nx=SK.find(k=>!dn[k]),building=['approved','work','invoiced','paid'].includes(c.stage),pct=building?Math.max(8,Math.round(nDone/Math.max(1,SK.length)*100)):[8,30,55,100][cur];
+  const prog=nDone||['approved','work','invoiced','paid'].includes(c.stage)?`<section class="pc pc-prog" data-anim><div class="pc-head"><p class="pk">${t.prog}</p><span class="pill">${t.progP(nDone,SK.length)}</span></div><ol class="psteps">${SK.map(k=>`<li class="${dn[k]?'done':k===nx?'now':''}"><span class="pst-b">${dn[k]?I.check:''}</span><span><b>${esc(t.sk[k])}</b>${dn[k]?`<small>${dayShort(dn[k].t)} · ${new Date(dn[k].t).toLocaleTimeString(LOC(),{hour:'numeric',minute:'2-digit'})}</small>`:k===nx?`<small>${t.progNext}</small>`:''}</span></li>`).join('')}</ol></section>`:'';
+  const P=[];
+  if(v)P.push(visitCard(v));
+  if(waiting)P.push(`<div class="todo" data-anim><b class="todo-n">${waiting}</b><span>${t.todoN(waiting)}</span></div>`);
+  changes.map((o,i)=>[o,i]).sort((a,b)=>(a[0].status==='waiting'?0:1)-(b[0].status==='waiting'?0:1)||b[0].t-a[0].t).forEach(([o,i])=>P.push(coCard(o,i)));
+  const doc=d=>d.link||d.file||'';
+  if(prog)P.push(prog);
+  if(est&&doc(est)){const ap=est.status==='approved';P.push(`<section class="pc pc-doc" data-anim><p class="pk">${t.est}</p>
+    <a class="paybtn paybtn-line" href="${esc(doc(est))}" target="_blank" rel="noopener"><span class="paybtn-i">${I.doc}</span><span class="paybtn-t"><b>${t.viewEst}</b><small>${t.opensNew}</small></span><span class="paybtn-a" aria-hidden="true">→</span></a>
+    ${ap?`<span class="pill pill-ok">${I.check}${t.estYes(est.okBy&&est.okBy[0]!=='('?esc(est.okBy):'',dayShort(est.okT||Date.now()))}</span>`:est.status==='sent'?`<button type="button" class="pbtn pbtn-main" data-est="0">${I.check}${t.yes}</button><a class="plink" href="${smsHref(t.sms.q(c.name))}">${t.ask}</a>`:''}</section>`)}
+  if(inv&&(doc(inv)||inv.status==='paid')){const pd=inv.status==='paid';P.push(`<section class="pc pc-inv ${pd?'is-paid':''}" data-anim><p class="pk">${t.inv}</p>
+    ${pd?`<div class="paid-big">${I.check}<b>${t.invPaid(dayShort(inv.paidT||Date.now()))}</b></div>`:''}
+    ${doc(inv)?`<a class="paybtn ${pd?'paybtn-line':''}" href="${esc(doc(inv))}" target="_blank" rel="noopener"><span class="paybtn-i">${pd?I.doc:I.card}</span><span class="paybtn-t"><b>${pd?t.viewInvOnly:t.viewInv}</b><small>${pd?t.opensNew:t.paySafe}</small></span><span class="paybtn-a" aria-hidden="true">→</span></a>`:''}</section>`)}
+  if(addons.length)P.push(`<section class="pc pc-extras" data-anim><p class="pk">${t.extras}</p><p class="pm">${t.extrasP}</p><div class="xgrid">${addons.map(a=>{const pk=picks.find(p=>p.addon===a.id);return`<article class="x ${pk?'on':''}">${a.photo?`<img src="${esc(a.photo)}" alt="">`:''}<div><b>${esc(a.name)}</b>${a.desc?`<p>${esc(a.desc)}</p>`:''}<span class="xp">${usd(a.price)}</span>
+    ${pk?(pk.status==='paid'?`<span class="pill pill-ok">${I.check}${t.paid}</span>`:`<span class="pill pill-ok">${I.check}${t.added}</span><p class="pm sm">${t.payLater}</p>`):`<button type="button" class="pbtn pbtn-line sm" data-add="${a.id}">${t.addIt}</button>`}</div></article>`}).join('')}</div></section>`);
+  if(ups.length||c.camLink)P.push(`<section class="pc" data-anim><p class="pk">${t.ups}</p>${c.camLink?`<a class="pbtn pbtn-line" href="${esc(c.camLink)}" target="_blank" rel="noopener">${t.allPhotos}</a>`:''}<ol class="tl">${ups.slice().reverse().map(u=>`<li><small>${dayShort(u.t)}</small><p>${esc(u.text)}</p>${(u.photos||[]).length?`<div class="pgrid">${u.photos.map(p=>`<button type="button" class="zoomable" data-zoom="${esc(p)}"><img src="${esc(p)}" alt="${t.photo}"></button>`).join('')}</div>`:''}</li>`).join('')}</ol></section>`);
+  if(c.matPlan&&c.matPlan.length&&s.materials)P.push(`<section class="pc" data-anim><p class="pk">${t.mats}</p><p class="pm">${t.matsP}</p><ul class="mats">${c.matPlan.map(m=>`<li><b>${esc(m.desc)}</b><span>${m.qty} ${esc(m.unit)}</span></li>`).join('')}</ul></section>`);
+  if(c.stage==='paid')P.push(`<section class="pc pc-warr" data-anim><p class="pk">${t.warr}</p><p>${t.warrP}</p></section>`);
+  if(!P.length)P.push(`<section class="pc" data-anim><p class="pm">${t.nothing}</p></section>`);
+  const R=54,CIRC=2*Math.PI*R;
+  $('#papp').innerHTML=`<div class="pwrap ${again?'again':''}" id="pwrap">
+    <header class="ptop"><a class="pbrand" href="index.html" aria-label="Gulf Coast Gloss Mobile Detailing, ${t.website}">${LOGO}<span>Gulf Coast Gloss</span></a>${langSeg()}<button type="button" class="plock" id="pLock" aria-label="${t.logout}">${t.logout}</button></header>
+    <main class="pmain">
+      <section class="hello" data-anim><div class="ring" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" class="ring-bg"/><circle cx="60" cy="60" r="${R}" class="ring-fg" style="--c:${CIRC};--o:${CIRC*(1-pct/100)}"/></svg><span>${I.house}</span></div>
+        <div><h1>${esc(t.hi(first(c.name)))}</h1><p class="addr">${esc(c.addr||t.yourRoof)}</p></div></section>
+      ${building?'':`<ol class="steps" aria-label="${t.stepNow}" data-anim>${t.steps.map((x,i)=>`<li class="${i<cur?'done':i===cur?'now':''}" ${i===cur?'aria-current="step"':''}><i>${i<cur?I.check:''}</i><span>${x}</span></li>`).join('')}</ol>`}
+      ${P.join('')}
+      <section class="pc pc-more" data-anim><a class="more" href="index.html#inspect"><b>${t.book}</b><span>${t.bookP}</span></a><a class="more" href="index.html"><b>${t.visit}</b><span>ridgeline · ${esc(CFG.city)}</span></a></section>
+      <div class="pcontact" data-anim><a class="pbtn pbtn-main" href="${smsHref(t.sms.q(c.name))}">${I.chat}${t.text}</a><a class="pbtn pbtn-line" href="tel:${BIZ_PHONE}">${I.phone}${t.call} ${BIZ_PRETTY}</a></div>
+      ${REMOTE&&!LIVE?`<p class="pdemo">${t.demo}</p>`:''}
+    </main></div>`;
+  bindLang(portal);
+  $('#pLock').onclick=()=>{try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen()};
+  $$('[data-anim]').forEach((el,i)=>{el.style.setProperty('--i',i)});
+  $$('.zoomable[data-zoom]').forEach(b=>b.onclick=()=>{const cl=sheet(`<div class="pzoom"><img src="${esc(b.dataset.zoom)}" alt="${t.photo}"><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`)});
+  $$('[data-ics]').forEach(b=>b.onclick=()=>ics(j.visits.find(x=>x.id===b.dataset.ics)));
+  $$('[data-coa]').forEach(b=>b.onclick=()=>signSheet(t.signT,changes[+b.dataset.coa],n=>{if(LIVE)return remoteAct({act:'co_ok',i:+b.dataset.coa,name:n},t.thanksApp,1);Object.assign(changes[+b.dataset.coa],{status:'approved',signed:n,signedT:Date.now()});log(`Approved change: ${changes[+b.dataset.coa].title} (${usd(changes[+b.dataset.coa].price)})`);confetti();toast(t.thanksApp);portal()}));
+  $$('[data-cod]').forEach(b=>b.onclick=()=>{if(LIVE)return remoteAct({act:'co_no',i:+b.dataset.cod},t.thanksDec);const o=changes[+b.dataset.cod];o.status='declined';o.decT=Date.now();log(`Said not now to change: ${o.title}`);toast(t.thanksDec);portal()});
+  $$('[data-est]').forEach(b=>b.onclick=()=>signSheet(t.estT,{title:''},n=>{if(LIVE)return remoteAct({act:'est_ok',name:n},t.thanksApp,1);Object.assign(c.estimate,{status:'approved',okBy:n,okT:Date.now()});if(['lead','booked','inspected','estimate'].includes(c.stage))c.stage='approved';log('Said yes to the estimate');confetti();toast(t.thanksApp);portal()}));
+  $$('[data-add]').forEach(b=>b.onclick=()=>{const a=(DB.addons||[]).find(x=>x.id===b.dataset.add);const cl=sheet(`<h2>${t.addT}</h2><div class="sheet-x">${a.photo?`<img src="${esc(a.photo)}" alt="">`:''}<div><b>${esc(a.name)}</b><p class="pm">${esc(a.desc||'')}</p><p class="price big"><b>${usd(a.price)}</b></p></div></div><div class="prow"><button type="button" class="pbtn pbtn-main" id="addGo">${I.check}${t.addBtn}</button><button type="button" class="pbtn pbtn-line" data-close>${t.notNow}</button></div>`,'#addGo');
+    $('#addGo').onclick=()=>{if(LIVE){cl();return remoteAct({act:'extra',id:a.id},t.addOk,1)}j.picks=(j.picks||[]).concat([{addon:a.id,name:a.name,price:a.price,status:'requested',t:Date.now()}]);log(`Added extra: ${a.name} (${usd(a.price)})`);cl();confetti();toast(t.addOk);portal()}});
+  if(!reduce&&!again){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});$$('[data-anim]').forEach(el=>io.observe(el))}else $$('[data-anim]').forEach(el=>el.classList.add('in'));
+  requestAnimationFrame(()=>$('#pwrap').classList.add('ready'))}
+function log(text){const c=C;c.job.log=(c.job.log||[]).concat([{t:Date.now(),text}]);c.fresh=true;DB.activity=(DB.activity||[]).concat([{t:Date.now(),cid:c.id,text,seen:false}]).slice(-200);save();
+  /* live: also POST {action:'portal'} to the backend so the owner gets an alert (backend v9, next step) */}
+function signSheet(title,o,done){const t=T();const cl=sheet(`<h2>${esc(title)}</h2>${o.title&&o.title!==title?`<p class="pm">${esc(o.title)}</p>`:''}${o.price!=null?`<p class="price big"><b>${usd(o.price)}</b></p>`:""}<label class="pfield"><span>${t.signL}</span><input id="sgN" autocomplete="name" value=""></label><p class="pin-err" id="sgE" role="alert"></p><div class="prow"><button type="button" class="pbtn pbtn-main" id="sgGo">${I.check}${t.signBtn}</button><button type="button" class="pbtn pbtn-line" data-close>${t.notNow}</button></div>`,'#sgN');
+  $('#sgGo').onclick=()=>{const n=$('#sgN').value.trim();if(n.length<3){$('#sgE').textContent=t.signErr;return}cl();done(n)}}
+function ics(v){if(!v)return;const p=x=>String(x).padStart(2,'0'),f=ms=>{const d=new Date(ms);return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'T'+p(d.getHours())+p(d.getMinutes())+'00'};
+  const a=at(v.date,v.from),b=v.to?at(v.date,v.to):a+36e5,txt=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Gulf Coast Gloss//Portal//EN','BEGIN:VEVENT','UID:'+v.id+'@ridgeline','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(a),'DTEND:'+f(b),'SUMMARY:Gulf Coast Gloss Mobile Detailing: '+(T().vt[v.type]||''),'LOCATION:'+(C.addr||'').replace(/,/g,'\\,'),'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const u=URL.createObjectURL(new Blob([txt],{type:'text/calendar'})),l=document.createElement('a');l.href=u;l.download='ridgeline-visit.ics';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
+
+/* live refresh: when the owner changes something in another tab on this device, update without a reload */
+addEventListener('storage',e=>{if(LIVE||e.key!=='kdetaili-db'||!unlocked())return;try{const n=JSON.parse(e.newValue||'null');if(!n)return;DB=n;const c=(DB.customers||[]).find(x=>x.id===JOB);if(c){Object.keys(C).forEach(k=>delete C[k]);Object.assign(C,c);DB.customers[DB.customers.indexOf(c)]=C;portal()}}catch(x){}});
+async function remoteAct(o,msg,party){const t=T();toast(t.sending);
+  try{const r=await api(Object.assign({action:'portal_act'},o));if(r.ok){takeView(r);if(party)confetti();toast(msg);portal();return}
+    if(r.reason==='pin'||r.reason==='locked'){try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen();return}toast(t.err)}catch(x){toast(t.err)}}
+/* customer's phone: pull fresh info every minute and when they come back to the page */
+async function refresh(){if(!LIVE||document.hidden||!unlocked()||$('#player .psheet'))return;
+  try{const r=await api({action:'portal_get'});if(r.ok){const was=JSON.stringify([C,DB.crew,DB.addons]);takeView(r);if(JSON.stringify([C,DB.crew,DB.addons])!==was)portal()}else if(r.reason==='pin'){try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen()}}catch(x){}}
+if(REMOTE){setInterval(refresh,60000);document.addEventListener('visibilitychange',refresh)}
+if(REMOTE&&JOB&&unlocked()&&PIN){$('#papp').innerHTML=`<main class="pin" id="pin"><section class="pin-card"><div class="pin-brand">${LOGO}<span>Gulf Coast Gloss<small>Mobile detailing</small></span></div><p class="pin-help">${T().loading}</p></section></main>`;
+  api({action:'portal_get'}).then(r=>{if(r.ok){takeView(r);portal()}else if(r.reason==='nojob'&&LOCALC){C=LOCALC;portal()}else{try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen()}}).catch(()=>{if(LOCALC){C=LOCALC;portal()}else pinScreen()})}
+else if(C&&unlocked()&&!C.ph)portal();else pinScreen();
+})();
+</script></body></html>
