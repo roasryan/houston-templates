@@ -1019,8 +1019,8 @@ function bindAvail(){const S=AV.S;let view=new Date();view.setDate(1);
     $('#iDone').innerHTML=`<p class="ikick">You’re booked</p><h2>See you ${fmt(selD)}, ${esc(first)}.</h2>
       ${nt==='sms'?`<p class="idsub">A confirmation text is on its way to ${esc(D.phone)}:</p><div class="ibubble"><small>Magnolia & Main Hair Studio · text</small>Hi ${esc(first)}, you’re booked for your appointment on ${when}. Need to change it? Use the link in this text. Reply STOP to opt out.</div>`
         :nt==='email'?`<p class="idsub">Your confirmation just went to ${esc(D.email)}.</p>`
-        :`<p class="idsub">${best==='Call'?'We’ll call you':'We’ll text you'} at ${esc(D.phone)} to confirm.</p>`}
-      <p class="idemo">${CFG.backend?'The owner already has your request. If the time ever needs to move, you’ll hear from us the way you picked.':'Demo: on a live site the confirmation goes out the way the customer picked (text, call or email) and the owner gets an instant alert.'}</p>
+        :`<p class="idsub">${window.CATALOG_NOTE?'On a live site we’d '+(best==='Call'?'call':best==='Email'?'email':'text')+' you to confirm.':(best==='Call'?'We’ll call you':'We’ll text you')+' at '+esc(D.phone)+' to confirm.'}</p>`}
+      <p class="idemo">${window.CATALOG_NOTE?window.CATALOG_NOTE:CFG.backend?'The owner already has your request. If the time ever needs to move, you’ll hear from us the way you picked.':'Demo: on a live site the confirmation goes out the way the customer picked (text, call or email) and the owner gets an instant alert.'}</p>
       <ul class="iperks"><li><b>Appointment:</b> ${when}</li><li><b>You need:</b> ${esc(D.issue)}</li>${q&&q.touched&&q.range?`<li><b>Your price held 30 days:</b> ${esc(q.name)}, ${esc(q.range)}</li>`:''}<li><b>We’ll reach you by:</b> ${best.toLowerCase()}</li></ul>
       ${(()=>{const st=new Date(selD);const[hh,mm]=String(selS).split(':').map(Number);st.setHours(hh||9,mm||0,0,0);return calButtons('Appointment · '+CFG.biz,st,AV.S.len||60,D.addr,'You need: '+D.issue+'. Questions? Call or text '+BIZ_PRETTY)})()}
       <div class="row"><button class="btn btn-main" type="button" id="iDoneX">Done</button><button class="btn btn-line" type="button" id="iEdit">Change something</button></div>`;
@@ -1229,7 +1229,7 @@ new MutationObserver(()=>{['#ja','#oaddr'].forEach(s=>{const e=$(s);if(e)addrTyp
     const first=D.name.split(' ')[0],how=best==='Email'?'email you at '+esc(D.email):best==='Call'?'call you at '+esc(D.phone):'text you at '+esc(D.phone);
     F.hidden=true;MD.querySelector('.imsteps').hidden=true;$('#amH').textContent='Got it, '+first+'.';
     $('#aDone').hidden=false;$('#aDone').innerHTML=`<p class="idsub">We’ll ${how} about “${esc(C.name)}”, usually within a few business hours. </p>
-      <p class="idemo">${CFG.backend?'The owner already has your question.':'Demo: on a live site the owner gets an instant alert and replies the way you picked.'}</p>
+      <p class="idemo">${window.CATALOG_NOTE?window.CATALOG_NOTE:CFG.backend?'The owner already has your question.':'Demo: on a live site the owner gets an instant alert and replies the way you picked.'}</p>
       <div class="imnav"><button class="btn btn-line" type="button" data-aclose2>Done</button><button class="btn btn-main" type="button" data-start2>Book an appointment too</button></div>`;
     $('#aDone [data-aclose2]').onclick=closeAsk;$('#aDone [data-start2]').onclick=()=>{closeAsk();setTimeout(()=>window.openInspect&&window.openInspect(),reduce?0:240)}})}}
 
@@ -1246,7 +1246,7 @@ new MutationObserver(()=>{['#ja','#oaddr'].forEach(s=>{const e=$(s);if(e)addrTyp
   try{const q=JSON.parse(localStorage.getItem('khairsal-quote')||'{}');q.locked=until;q.code=code;q.touched=true;localStorage.setItem('khairsal-quote',JSON.stringify(q))}catch(x){}
   const nt=(res&&res.notified)||'',ph=pretty(m.phone);
   const how=nt==='email'?`Confirmation emailed to <b>${esc(m.email)}</b>.`:nt==='sms'?`Confirmation texted to <b>${esc(ph)}</b>.`
-    :!CFG.backend?`Demo: the live site ${best==='Email'?'emails it to '+esc(m.email):'texts it to '+esc(ph)}.`
+    :(!CFG.backend||window.CATALOG_NOTE)?`Catalog demo: the live site ${best==='Email'?'emails it to '+esc(m.email):'texts it to '+esc(ph)}.`
     :best==='Email'?`Confirmation is on its way to <b>${esc(m.email)}</b>.`:best==='Call'?`We’ll call <b>${esc(ph)}</b> to go over it.`:`We’ll text it to <b>${esc(ph)}</b> shortly.`;
   const box=$('#qLock');box.innerHTML=`<span class="okpill">Price locked</span><p class="qlk"><b>${esc(lock.range)}</b> held until <b>${until}</b><br><small>Lock code ${code}</small></p><p class="qlh">${how}</p><button class="btn btn-main" type="button" id="qLockBook">Book my appointment</button>`;
   box.hidden=false;bk.hidden=true;bk.disabled=false;bk.textContent=bt;$('#qLockBook').onclick=()=>startSheet();if(M&&!reduce)M.animate(box,{opacity:[0,1],y:[10,0]},{duration:.3})}}}
@@ -1354,7 +1354,7 @@ $$('[data-join]').forEach(b=>b.onclick=()=>{const p=PL[+b.dataset.join];const cl
     const bad=!n?'Add your name.':!okP?'Add your 10-digit mobile number.':!okM?'Add your email.':(NA&&a.length<5)?'Add your home address.':'';
     if(bad){$('#je').textContent=bad;$('#je').hidden=false;return}
     const c=upsert({name:n,phone:ph,email:m,best:'Text',addr:a,source:p.name,club:{plan:p.name+', '+p.price}});c.portal=true;save();
-    $('#layer .sheet').innerHTML=`<span class="okpill">You’re in</span><h3>Welcome, ${esc(first(n))}.</h3><p class="muted">We’ll text you to set up your first visit. You can see your plan any time under Customer login.</p><button class="btn btn-line" type="button" id="jDone">Done</button>`;$('#jDone').onclick=close}})}
+    $('#layer .sheet').innerHTML=`<span class="okpill">You’re in</span><h3>Welcome, ${esc(first(n))}.</h3><p class="muted">We’ll text you to set up your first visit. You can see your plan any time under Customer login.</p>${window.CATALOG_NOTE?'<p class="muted" style="font-size:13.5px">'+window.CATALOG_NOTE+'</p>':''}<button class="btn btn-line" type="button" id="jDone">Done</button>`;$('#jDone').onclick=close}})}
 
 apply();routeHash();
 })();
