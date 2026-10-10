@@ -1445,3 +1445,4 @@ summary::after{color:var(--L-acc)!important}
 .mchips{background:var(--L-card)!important}.mchips a{border-color:var(--L-line)!important;color:var(--L-ink)!important}
 .mcat li{border-bottom-color:var(--L-line)!important}
 .mtag{background:var(--L-acc)!important;color:var(--L-accink)!important}
+.qo>h1,.qo>.lede,.qo>.fine{color:var(--L-ink)!important}
