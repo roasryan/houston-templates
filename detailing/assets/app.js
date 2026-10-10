@@ -1327,7 +1327,17 @@ window.addrCheck=addrCheck;
   post({action:'appt_get'}).then(r=>r.ok?view(r):gone()).catch(()=>gone('Couldn’t connect. Check your signal and refresh this page.'))})();
 
 /* ---------- kit: "What’s going on?" picker → booking with that need picked ---------- */
-$$('[data-pick]').forEach(b=>b.onclick=()=>{const v=b.dataset.pick;$$('#iJobs button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.ij===v)));const h=$('#iIssue');if(h)h.value=v;$$('[data-pick]').forEach(x=>x.classList.toggle('on',x===b));startSheet()});
+/* a service button books THAT service: the drawer names it; generic buttons show the generic visit */
+const SVCK={"Maintenance wash": {"k": "Maintenance wash", "t": "Maintenance wash", "l": "A careful hand wash and spray sealant that keeps clean paint clean,…"}, "Full interior and exterior": {"k": "Full detail, inside and out", "t": "Full interior and exterior", "l": "Deep clean of the seats, carpet and plastics, plus a clay bar, wash…"}, "Interior only": {"k": "Interior detail", "t": "Interior only", "l": "Vacuum, steam and shampoo for spills, crumbs and kid messes, with…"}, "Paint correction": {"k": "Paint correction", "t": "Paint correction", "l": "Polishing that removes swirls and light scratches so the paint…"}, "Ceramic coating": {"k": "Ceramic coating", "t": "Ceramic coating", "l": "A 5-year coating that makes the paint slick, glossy and easier to wash"}, "Pet hair or odor": {"k": "Pet hair, odor and bug damage", "t": "Pet hair or odor", "l": "Pet hair lifted, odors treated, and lovebug and water-spot etching…"}};
+function svcHead(v){const md=$('#iModal');if(!md)return;const k=md.querySelector('.imhead .ikick');if(k&&!k.dataset.def)k.dataset.def=k.textContent;let f=$('#iFor');
+  if(!f){f=document.createElement('p');f.id='iFor';f.className='ifor';const h=md.querySelector('.imhead h2');h&&h.after(f)}
+  const s=v&&SVCK[v];if(!s){if(k)k.textContent=k.dataset.def;f.hidden=true;md.classList.remove('is-svc');return}
+  if(k)k.textContent=s.k;f.innerHTML='<b></b><span></span> <button type="button" class="linkbtn" id="iForChg">Change</button>';f.querySelector('b').textContent=s.t;f.querySelector('span').textContent=s.l?' · '+s.l:'';f.hidden=false;md.classList.add('is-svc');
+  $('#iForChg').onclick=()=>{svcHead(null);$$('#iJobs button').forEach(x=>x.setAttribute('aria-pressed','false'));$$('[data-pick]').forEach(x=>x.classList.remove('on'));if(window.closeInspect)window.closeInspect();const pk=$('.kpicker')||$('#iJobs');pk&&pk.scrollIntoView({behavior:'smooth',block:'center'})}}
+function pickSvc(v){$$('#iJobs button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.ij===v)));const h=$('#iIssue');if(h)h.value=v;$$('[data-pick]').forEach(x=>x.classList.toggle('on',x.dataset.pick===v))}
+$$('[data-pick]').forEach(b=>b.onclick=()=>{const v=b.dataset.pick;pickSvc(v);if(window.openInspect){startSheet();svcHead(v)}else location.href='index.html?svc='+encodeURIComponent(v)+'#inspect'});
+document.addEventListener('click',e=>{if(e.target.closest('[data-start],#iOpen,a[href$="#inspect"],[data-go="start"]'))svcHead(null)},true);
+{const q=new URLSearchParams(location.search).get('svc');if(q&&SVCK[q]&&window.openInspect){pickSvc(q);setTimeout(()=>{window.openInspect();svcHead(q)},50)}}
 /* ---------- kit: review screen (placeholder until GoHighLevel sends review requests after a job) ---------- */
 {const f=$('#rvForm');if(f){const n=new URLSearchParams(location.search).get('n');if(n){$('#rvN').value=n;$('#rvH').textContent='How did we do, '+n.split(' ')[0]+'?'}
   const g=$('#rvG');if(g)g.onclick=()=>{$('#rvNote').hidden=false};
@@ -1376,8 +1386,8 @@ function dragCmp(onMove){cmpFn=onMove;if(cmpBound)return;cmpBound=true;let on=fa
 
 /* ---- slide: handle starts near the right edge; dragging left reveals the result ---- */
 function initSlide(){box.classList.add('is-cmp');after.hidden=false;setCmp(88);
-  if(!reduce){let t=0;const wig=setInterval(()=>{t++;setCmp(88-Math.sin(t/3)*6);if(t>18){clearInterval(wig);setCmp(88)}},60)}
-  let seen=false;dragCmp(p=>{setCmp(p);if(!seen&&p<45){seen=true;finish()}})}
+  clearInterval(window.__kxWig);if(!reduce){let t=0;window.__kxWig=setInterval(()=>{t++;setCmp(88-Math.sin(t/3)*6);if(t>18){clearInterval(window.__kxWig);setCmp(88)}},60)}
+  let seen=false;dragCmp(p=>{clearInterval(window.__kxWig);setCmp(p);if(!seen&&p<45){seen=true;finish()}})}
 
 /* ---- wipe: scrub the "before" photo away on a canvas ---- */
 function initWipe(){after.hidden=false;after.style.clipPath='';box.classList.remove('is-cmp');
@@ -1419,4 +1429,13 @@ document.getElementById('kxShow')&&document.getElementById('kxShow').addEventLis
 function hideHint(){const h=$('.kxhint');if(h)h.hidden=true}
 function init(){const h=$('.kxhint');if(h)h.hidden=false;if(X.mode==='slide')initSlide();else if(X.mode==='wipe')initWipe();else initFind()}
 init();
+
+/* tabs (Oct 10, detailing): several before/after pairs of the same truck; tap an issue, drag to see it fixed */
+if(X.tabs&&X.tabs.length){const tabs=[...document.querySelectorAll('[data-kxtab]')];
+  const setImg=(el,base,k,alt)=>{el.src=`${base}-${k}.webp`;el.srcset=`${base}-${k}-m.webp 800w, ${base}-${k}.webp 1200w`;if(alt)el.alt=(k==='b'?'Before: ':'After: ')+alt};
+  tabs.forEach(t=>t.addEventListener('click',()=>{const T=X.tabs[+t.dataset.kxtab];tabs.forEach(x=>x.setAttribute('aria-selected',String(x===t)));
+    setImg(before,T.img,'b',T.alt);setImg(after,T.img,'a',T.alt);
+    const it=document.getElementById('kxIt'),id=document.getElementById('kxId'),ip=document.getElementById('kxIp'),ib=document.getElementById('kxIbook');
+    if(it)it.textContent=T.t;if(id)id.textContent=T.d;if(ip)ip.textContent=T.p||'';if(ib)ib.dataset.pick=T.chip;
+    const bar=t.parentElement;bar.scrollTo({left:t.offsetLeft-bar.clientWidth/2+t.offsetWidth/2,behavior:reduce?'auto':'smooth'});reset()}))}
 })();
