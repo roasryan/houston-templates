@@ -1348,3 +1348,75 @@ $$('[data-join]').forEach(b=>b.onclick=()=>{const p=PL[+b.dataset.join];const cl
 
 apply();routeHash();
 })();
+
+/* ---------- kit interactive hero (Oct 10): wipe · find · slide. Config: window.KX ---------- */
+(function(){
+const X=window.KX;const box=document.getElementById('kx');if(!X||!box)return;
+const $=s=>box.querySelector(s),act=document.getElementById('kxAct');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const show=(id,on)=>{const el=document.getElementById(id);if(el)el.hidden=!on};
+const before=$('.kxb'),after=$('.kxa');
+let done=false;
+function finish(){if(done)return;done=true;box.classList.add('is-done');show('kxStart',false);show('kxDone',true);
+  try{window.dispatchEvent(new CustomEvent('kx:done',{detail:X.mode}))}catch(e){}}
+function reset(){done=false;box.classList.remove('is-done','is-fixed');show('kxStart',true);show('kxDone',false);show('kxFixed',false);init()}
+document.getElementById('kxReset')&&document.getElementById('kxReset').addEventListener('click',reset);
+document.getElementById('kxAgain')&&document.getElementById('kxAgain').addEventListener('click',reset);
+
+/* compare handle (after a wipe or a fix): drag to see before vs after */
+const cmp=$('.kxcmp');
+function setCmp(p){p=Math.max(0,Math.min(100,p));after.style.clipPath=`inset(0 0 0 ${p}%)`;cmp.style.left=p+'%';cmp.setAttribute('aria-valuenow',Math.round(p))}
+let cmpFn=null,cmpBound=false;
+function dragCmp(onMove){cmpFn=onMove;if(cmpBound)return;cmpBound=true;let on=false;const at=e=>{const r=box.getBoundingClientRect();return (e.clientX-r.left)/r.width*100};
+  cmp.addEventListener('pointerdown',e=>{on=true;cmp.setPointerCapture(e.pointerId);e.preventDefault()});
+  cmp.addEventListener('pointermove',e=>{if(on)cmpFn(at(e))});
+  cmp.addEventListener('pointerup',()=>on=false);cmp.addEventListener('pointercancel',()=>on=false);
+  box.addEventListener('pointerdown',e=>{if(!box.classList.contains('is-cmp')||e.target===cmp||e.target.closest('.kxspot'))return;cmpFn(at(e))});
+  cmp.addEventListener('keydown',e=>{const v=+cmp.getAttribute('aria-valuenow')||50;if(e.key==='ArrowLeft'){cmpFn(v-5);e.preventDefault()}if(e.key==='ArrowRight'){cmpFn(v+5);e.preventDefault()}})}
+
+/* ---- slide: handle starts near the right edge; dragging left reveals the result ---- */
+function initSlide(){box.classList.add('is-cmp');after.hidden=false;setCmp(88);
+  if(!reduce){let t=0;const wig=setInterval(()=>{t++;setCmp(88-Math.sin(t/3)*6);if(t>18){clearInterval(wig);setCmp(88)}},60)}
+  let seen=false;dragCmp(p=>{setCmp(p);if(!seen&&p<45){seen=true;finish()}})}
+
+/* ---- wipe: scrub the "before" photo away on a canvas ---- */
+function initWipe(){after.hidden=false;after.style.clipPath='';box.classList.remove('is-cmp');
+  let cv=$('canvas.kxcv');if(!cv){cv=document.createElement('canvas');cv.className='kxcv';cv.setAttribute('aria-hidden','true');box.insertBefore(cv,$('.kxshade'))}
+  const ctx=cv.getContext('2d');const img=new Image();img.decoding='async';img.src=before.currentSrc||before.src;
+  const fit=()=>{const r=box.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);
+    ctx.globalCompositeOperation='source-over';const s=Math.max(cv.width/img.naturalWidth,cv.height/img.naturalHeight),w=img.naturalWidth*s,h=img.naturalHeight*s;ctx.drawImage(img,(cv.width-w)/2,(cv.height-h)/2,w,h);before.style.visibility='hidden'};
+  img.onload=fit;if(img.complete&&img.naturalWidth)fit();
+  let on=false,last=null,moves=0;const brush=()=>Math.max(28,cv.width*0.07);
+  const pt=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)/r.width*cv.width,(e.clientY-r.top)/r.height*cv.height]};
+  const scrub=p=>{ctx.globalCompositeOperation='destination-out';ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=brush()*2;ctx.beginPath();ctx.moveTo(...(last||p));ctx.lineTo(...p);ctx.stroke();last=p;
+    if(++moves%12===0)check()};
+  const check=()=>{const w=cv.width,h=cv.height,step=Math.max(4,Math.round(w/60));const d=ctx.getImageData(0,0,w,h).data;let n=0,c=0;
+    for(let y=0;y<h;y+=step)for(let x=0;x<w;x+=step){n++;if(d[(y*w+x)*4+3]<20)c++}
+    const pc=c/n;const m=$('.kxmeter i');if(m)m.style.width=Math.min(100,pc/0.55*100)+'%';
+    if(pc>0.55&&!done){cv.style.transition='opacity .6s';cv.style.opacity='0';setTimeout(()=>{cv.remove();before.style.visibility='';box.classList.add('is-cmp');setCmp(100);dragCmp(setCmp)},620);finish()}};
+  cv.addEventListener('pointerdown',e=>{on=true;last=null;cv.setPointerCapture(e.pointerId);hideHint();scrub(pt(e));e.preventDefault()});
+  cv.addEventListener('pointermove',e=>{if(on)scrub(pt(e))});
+  ['pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,()=>{on=false;last=null;check()}));
+  addEventListener('resize',()=>{if(!done&&cv.isConnected)fit()},{passive:true})}
+
+/* ---- find: tap the hidden problems, each one shows a card; then see the fix ---- */
+function initFind(){box.classList.remove('is-cmp');after.hidden=true;after.style.clipPath='';
+  $('.kxspots').innerHTML='';const tray=document.getElementById('kxTray');tray.innerHTML='';let found=0;
+  const S=X.spots||[];const cnt=document.getElementById('kxCount');if(cnt)cnt.textContent=`0 of ${S.length} found`;
+  S.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.className='kxspot';b.style.left=s.x*100+'%';b.style.top=s.y*100+'%';
+    b.setAttribute('aria-label','Look here');b.addEventListener('click',()=>{if(b.classList.contains('on'))return;b.classList.add('on');found++;hideHint();
+      const c=document.createElement('div');c.className='kxcard';c.innerHTML=`<b></b><span></span>`;c.querySelector('b').textContent=s.t;c.querySelector('span').textContent=s.d;tray.prepend(c);
+      if(cnt)cnt.textContent=`${found} of ${S.length} found`;if(found===S.length)finish()});$('.kxspots').appendChild(b)});
+  // a miss tap anywhere else shows a gentle nudge
+  box.onclick=e=>{if(done||e.target.closest('.kxspot'))return;const n=$('.kxnudge');if(!n)return;n.hidden=false;clearTimeout(n._t);n._t=setTimeout(()=>n.hidden=true,1200)}}
+const fixBtn=document.getElementById('kxFix');
+if(fixBtn)fixBtn.addEventListener('click',()=>{if(X.noafter){const s=document.querySelector('[data-start]');s&&s.click();return}
+  after.hidden=false;box.classList.add('is-fixed');after.style.transition='opacity .8s';after.style.opacity='0';requestAnimationFrame(()=>after.style.opacity='1');
+  show('kxDone',false);show('kxFixed',true);$('.kxspots').innerHTML='';setTimeout(()=>{after.style.transition='';box.classList.add('is-cmp');setCmp(50);dragCmp(setCmp)},850)});
+document.getElementById('kxShow')&&document.getElementById('kxShow').addEventListener('click',()=>box.querySelectorAll('.kxspot:not(.on)').forEach(b=>b.click()));
+
+/* hint hand */
+function hideHint(){const h=$('.kxhint');if(h)h.hidden=true}
+function init(){const h=$('.kxhint');if(h)h.hidden=false;if(X.mode==='slide')initSlide();else if(X.mode==='wipe')initWipe();else initFind()}
+init();
+})();

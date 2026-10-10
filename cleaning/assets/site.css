@@ -1256,6 +1256,63 @@ input.checking{background-image:linear-gradient(90deg,transparent,rgba(255,212,0
 .kcard .ic svg{stroke:var(--hivis)}
 .offer .guar{grid-template-columns:1fr}
 #wall{display:none!important}
+
+/* Oct 10: Ridgeline's .topic a (whole-card link) must not style the small "Learn more" link inside kit cards */
+.topic .kcard a.kmore{display:inline-block;grid-template-columns:none;padding:0;background:none;box-shadow:none;min-height:0;border-radius:0;transform:none;text-decoration:underline;text-underline-offset:3px;color:var(--ink)}
+
+/* ---------- Oct 10: interactive hero (Ridgeline layout: headline + interaction left, booking card right; options below) ---------- */
+.khero2{background:radial-gradient(120% 80% at 20% 0%,#2A3843 0%,#1F2A33 55%,#182129 100%);color:#fff;padding:calc(var(--bh,72px) + 22px) 0 36px}
+.kx-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:28px;align-items:start;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.kx-left{display:grid;gap:14px;min-width:0}
+.kx-left h1{font-size:clamp(36px,5.2vw,64px);max-width:16ch;text-wrap:balance;margin:0}
+.kqbook{display:none;align-items:center;gap:12px;flex-wrap:wrap}.kqbook span{color:#D5DEE3;font-size:15px}
+.kx{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#11181E;box-shadow:0 24px 60px -30px #000;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.kx img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.kx .kxa[hidden]{display:none}
+.kxcv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.kxshade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(16,24,31,.35),transparent 30%)}
+.kxspots{position:absolute;inset:0;pointer-events:none}.kxspots .kxspot{pointer-events:auto}
+.kxspot{position:absolute;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0}
+.kxspot.on{border:3px solid var(--hivis);box-shadow:0 0 0 6px rgba(0,0,0,.35),0 0 0 9px rgba(255,255,255,.25);animation:kxpop .35s ease}
+@keyframes kxpop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.kxnudge{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);margin:0;background:rgba(16,24,31,.85);padding:6px 12px;border-radius:999px;font-size:14px}
+.kxhint{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;pointer-events:none;animation:kxhand 2.2s ease-in-out infinite}
+.kxhint svg{width:100%;height:100%;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+@keyframes kxhand{0%,100%{transform:translate(-40px,10px) rotate(-8deg)}50%{transform:translate(40px,-6px) rotate(6deg)}}
+.kx[data-mode="find"] .kxhint{animation:kxtap 1.6s ease-in-out infinite}
+@keyframes kxtap{0%,100%{transform:scale(1)}50%{transform:scale(.86)}}
+.kx.is-done .kxhint,.kx.is-cmp .kxhint{display:none}
+.kxmeter{position:absolute;left:14px;bottom:14px;background:rgba(16,24,31,.82);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.kxmeter i{display:block;width:0;height:6px;border-radius:9px;background:var(--hivis);min-width:2px;max-width:90px;flex:none}
+.kx:not([data-mode="wipe"]) .kxmeter,.kx.is-done .kxmeter{display:none}
+.kxcmp{position:absolute;top:0;bottom:0;left:50%;width:44px;margin-left:-22px;cursor:ew-resize;display:none;touch-action:none}
+.kx.is-cmp .kxcmp{display:block}
+.kxcmp i{position:absolute;left:50%;top:0;bottom:0;width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 12px rgba(0,0,0,.5)}
+.kxcmp i::after{content:'⟷';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--hivis);color:var(--on-sodium);display:grid;place-items:center;font-weight:900;font-size:20px}
+.kxcmp .ct{position:absolute;top:12px;font:800 12px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;background:rgba(16,24,31,.8);padding:6px 9px;border-radius:6px;white-space:nowrap}
+.kxcmp .ct.b{right:30px}.kxcmp .ct.a{left:30px}
+.kxact{display:grid;gap:10px;min-height:64px}
+.kxact b{font:850 22px/1.15 var(--display);font-variation-settings:'wdth' 112}
+.kxact .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.kxact .linkbtn{background:none;border:0;color:#C9D3D9;text-decoration:underline;font:600 15px var(--body);padding:4px 0;cursor:pointer;justify-self:start}
+#kxStart{color:#D5DEE3;font-size:17px}#kxStart b{color:#fff;margin-right:6px}
+#kxCount{display:inline-block;margin-left:8px;font-weight:700;color:var(--hivis);font-size:15px}
+.kxtray{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;min-width:0}
+.kxtray:empty{display:none}
+.kxcard{scroll-snap-align:start;background:#fff;color:var(--ink);border-radius:14px;padding:14px;border-left:4px solid var(--hivis)}
+.kxcard b{display:block;font:800 17px/1.2 var(--display);color:var(--ink)}.kxcard span{color:var(--soft);font-size:15px}
+.khero2 .tform{position:relative}.khero2 .icard{color:var(--ink)}
+.kpick-wrap{margin-top:26px}
+.khero2 .kpicker{max-width:none}
+.khero2 .kpgrid{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media (max-width:1100px){.khero2 .kpgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:900px){.kx-grid{grid-template-columns:1fr}.kqbook{display:flex}.khero2 .tform{order:3}}
+@media (max-width:600px){.khero2{padding-top:calc(var(--bh,64px) + 14px)}.kx-left h1{font-size:38px}.khero2 .kpgrid{grid-template-columns:1fr 1fr}.kx{border-radius:14px}}
+@media (prefers-reduced-motion:reduce){.kxhint,.kxspot.on{animation:none}}
+.khero{flex-direction:column;align-items:stretch}.khero .kpick-wrap .kpicker{max-width:none}
+.khero .kpgrid{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media (max-width:1100px){.khero .kpgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:600px){.khero .kpgrid{grid-template-columns:1fr 1fr}}
 :root{--hivis:#5EE0D0;--sodium:#5EE0D0;--on-sodium:#10202B}/* ---------- kit SEO pages ---------- */
 .kprose{max-width:820px}.kprose p{max-width:68ch}
 .kopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0}
