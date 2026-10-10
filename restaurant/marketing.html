@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Customers and messages · Magnolia &amp; Mesquite Kitchen</title><meta name="robots" content="noindex,nofollow"><meta name="description" content="Customers and messages at Magnolia &amp; Mesquite Kitchen.">
+<link rel="stylesheet" href="assets/site.css"><style>
+.qo{max-width:560px;margin:0 auto;padding:calc(var(--bh,64px) + 18px) 16px 60px}
+.qo .card{background:#fff;color:var(--ink);border-radius:20px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.18);margin-top:14px}
+.qo h1{font-size:clamp(32px,8vw,46px);line-height:1.05;margin:6px 0 10px}
+.qo .lede{font-size:18px;margin:0 0 6px}.qo .fine{font-size:14px;color:var(--soft)}
+.qo label{display:block;font-weight:700;margin:14px 0 6px}.qo input[type=text],.qo input[type=tel],.qo input[type=email]{width:100%;box-sizing:border-box;min-height:52px;font-size:18px;padding:0 14px;border:2px solid #D5DEE3;border-radius:12px}
+.qo .ck{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;margin:14px 0 0;font-size:14px;line-height:1.45;color:var(--soft);font-weight:400}
+.qo .ck input{width:22px;height:22px;margin:2px 0 0}
+.qo .go{width:100%;min-height:58px;font-size:20px;margin-top:18px}
+.qo .err{color:#B3261E;font-weight:700;margin:12px 0 0}
+.qo .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.qcode{font:900 44px/1 var(--display);letter-spacing:.08em;text-align:center;background:var(--concrete,#F2F5F7);border-radius:16px;padding:18px 10px;margin:12px 0}
+.qst{display:inline-block;font:800 14px/1 var(--body);text-transform:uppercase;letter-spacing:.06em;padding:8px 12px;border-radius:999px}
+.qst.valid{background:#DFF3E7;color:#14532D}.qst.used{background:#FDE3DC;color:#8A1C10}.qst.expired{background:#EEF2F4;color:#55636E}
+.qdates{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.qdates div{background:var(--concrete,#F2F5F7);border-radius:12px;padding:10px 12px;font-size:14px;color:var(--soft)}.qdates b{display:block;color:var(--ink);font-size:16px}
+.qqr{display:flex;justify-content:center;margin:8px 0}.qqr svg{width:150px;height:150px}
+.qrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.qrow .btn{flex:1 1 160px;justify-content:center}
+.qstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.qstats div{background:var(--concrete,#F2F5F7);border-radius:12px;padding:10px;text-align:center;font-size:13px;color:var(--soft)}.qstats b{display:block;font-size:26px;color:var(--ink)}
+.qlist{list-style:none;margin:10px 0 0;padding:0;max-height:340px;overflow:auto}.qlist li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #E5EAEE;font-size:15px}.qlist li span{color:var(--soft);font-size:13px;display:block}
+.qo textarea{width:100%;box-sizing:border-box;min-height:110px;font:inherit;font-size:17px;padding:12px;border:2px solid #D5DEE3;border-radius:12px}
+.qtabs{display:flex;gap:8px;margin:6px 0}.qtabs button{flex:1;min-height:46px;border-radius:12px;border:2px solid #D5DEE3;background:#fff;font:800 16px var(--body);cursor:pointer}.qtabs button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qideas{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.qideas button{border:1.5px solid #D5DEE3;background:#fff;border-radius:999px;padding:8px 12px;font:700 14px var(--body);cursor:pointer}
+.qo>h1,.qo>.lede,.qo>.fine{color:#F4F7F8}.qo>.ikick{color:var(--hivis)}
+.qnote{color:#4A3B00;background:#FFF6CC;border-radius:12px;padding:10px 12px;font-size:14px;margin:10px 0 0}
+.tent{display:none}
+@media print{body>*:not(.tent){display:none!important}.tent{display:flex!important;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:Georgia,serif;padding:40px;color:#111}.tent h2{font-size:40px;margin:0 0 10px}.tent p{font-size:20px;margin:6px 0}.tent svg{width:320px;height:320px;margin:20px 0}}
+</style></head><body>
+<header class="bar solid" id="bar"><div class="bar1"><a class="logo" href="index.html">Magnolia &amp; Mesquite Kitchen</a></div></header>
+<main class="qo"><p class="ikick">Owner</p><h1>Customers and messages</h1><p class="lede">Everyone who scanned the table QR, and one place to text or email the ones who said yes.</p>
+<div class="card" id="mGate" hidden><p>Please sign in on your owner view first, then come back.</p><a class="btn btn-main" href="index.html#owner">Owner sign-in</a></div>
+<div id="mApp" hidden><p class="qnote" id="mDemo" hidden>Demo: sign-ups from this browser. Nothing is really sent.</p>
+<div class="card"><h2 style="margin:0">This month</h2><div class="qstats" id="mStats"></div></div>
+<div class="card"><h2 style="margin:0">Send a deal</h2><p class="fine">Only to people who ticked the box. Texts go out 9 AM to 9 PM (noon on Sundays), the Texas rule.</p>
+<div class="qtabs"><button type="button" data-ch="sms" aria-pressed="true">Text</button><button type="button" data-ch="email" aria-pressed="false">Email</button></div>
+<p class="fine" style="margin:8px 0 0">Ideas</p><div class="qideas" id="mIdeas"></div>
+<div id="mSubjRow" hidden><label for="mSubj">Email subject</label><input id="mSubj" type="text"></div>
+<label for="mMsg">Message</label><textarea id="mMsg" placeholder="Tuesday special: 2-for-1 shrimp skewers, 5 to 9 PM. Show this text."></textarea><p class="fine" id="mCnt"></p>
+<p class="qnote" id="mQuiet" hidden></p>
+<label class="ck"><input type="checkbox" id="mSure"><span>I checked the message. Send it.</span></label>
+<div class="qrow"><button class="btn btn-line" type="button" id="mTest">Send me a test</button><button class="btn btn-main" type="button" id="mSend">Send</button></div><p class="lede" id="mOut" aria-live="polite" style="font-size:16px"></p></div>
+<div class="card"><h2 style="margin:0">Table QR</h2><p class="fine">Print it for table tents, menus and the front door. It opens your offer page.</p><div class="qqr" id="mQr"></div><div class="qrow"><button class="btn btn-main" type="button" id="mPrint">Print table tent</button><a class="btn btn-line" href="offer.html?src=table">Open offer page</a><a class="btn btn-line" href="redeem.html">Staff screen</a></div></div>
+<div class="card"><h2 style="margin:0">Latest sign-ups</h2><ul class="qlist" id="mList"></ul></div></div>
+<div class="tent"><h2>A free appetizer, on us</h2><p>Pick any starter on the menu (up to $17) on your next dinner with us.</p><div class="tq"></div><p>Scan with your phone camera</p><p style="font-size:14px">One per guest. Dine-in only. Good for 14 days after you sign up. Not valid with other offers.</p></div></main>
+<script src="assets/qrcode.js"></script><script>
+const $=s=>document.querySelector(s);const BACKEND="",BIZ="Magnolia & Mesquite Kitchen",OFFER={"name": "Free appetizer", "days": 14, "url": "https://roasryan.github.io/houston-templates/restaurant/offer.html?src=table"},PFX="krestaur";
+const post=o=>fetch(BACKEND,{method:'POST',body:JSON.stringify(o)}).then(r=>r.json());
+const day=d=>new Date(d).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+/* demo mode: same rules as offers.gs, kept in this browser */
+const DB={get(){try{return JSON.parse(localStorage.getItem(PFX+'-offers')||'[]')}catch(x){return[]}},set(a){try{localStorage.setItem(PFX+'-offers',JSON.stringify(a))}catch(x){}}};
+const emailKey=e=>{e=String(e||'').trim().toLowerCase();const at=e.lastIndexOf('@');if(at<1)return'';let u=e.slice(0,at),d=e.slice(at+1);if(d==='googlemail.com')d='gmail.com';u=u.split('+')[0];if(d==='gmail.com')u=u.replace(/\./g,'');return u+'@'+d};
+const phoneKey=p=>String(p||'').replace(/\D/g,'').slice(-10);
+const ABC='ACDEFGHJKLMNPQRTUVWXY34679';const newCode=()=>{let c='';for(let i=0;i<6;i++)c+=ABC[Math.floor(Math.random()*ABC.length)];return c.slice(0,3)+'-'+c.slice(3)};
+const normCode=c=>{c=String(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'');return c.length===6?c.slice(0,3)+'-'+c.slice(3):''};
+const view=x=>({ok:true,status:x.status==='redeemed'?'used':(x.exp<Date.now()?'expired':'valid'),code:x.code,first:x.name.split(' ')[0],offer:x.offer,claimed:day(x.t),expires:day(x.exp),redeemed:x.red?new Date(x.red).toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):''});
+const DISPOSABLE=['mailinator.com','guerrillamail.com','10minutemail.com','tempmail.com','temp-mail.org','yopmail.com','trashmail.com','sharklasers.com','getnada.com','maildrop.cc'];
+const local={
+ offer_claim(L){const pk=phoneKey(L.phone),ek=emailKey(L.email);if(L.hp||(L.ms&&L.ms<3000))return{ok:false,reason:'try_again'};if(String(L.name||'').trim().length<2)return{ok:false,reason:'name'};
+  if(pk.length!==10||/^(\d)\1{9}$/.test(pk))return{ok:false,reason:'phone'};if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(L.email||''))return{ok:false,reason:'email'};if(DISPOSABLE.includes(ek.split('@')[1]))return{ok:false,reason:'disposable'};
+  const a=DB.get();const d=a.find(x=>x.pk===pk||x.ek===ek);if(d)return{ok:false,reason:'dup',how:d.pk===pk?'phone':'email',claimed:day(d.t)};
+  let code;do code=newCode();while(a.some(x=>x.code===code));const t=Date.now(),x={t,code,name:String(L.name).trim(),phone:pk,email:String(L.email).trim(),ek,pk,sms:!!L.smsOk,mail:!!L.emailOk,status:'issued',exp:t+OFFER.days*864e5,offer:OFFER.name};a.push(x);DB.set(a);
+  return{ok:true,code,first:x.name.split(' ')[0],claimed:day(t),expires:day(x.exp),texted:false,emailed:false,offer:OFFER.name,demo:true}},
+ offer_status(L){const c=normCode(L.c),x=DB.get().find(y=>y.code===c);return x?view(x):{ok:false,reason:'not_found'}},
+ offer_redeem(L){if(String(L.staff_pin||'')!=='1234')return{ok:false,reason:'auth'};const a=DB.get(),c=normCode(L.c),x=a.find(y=>y.code===c);if(!x)return{ok:false,reason:'not_found'};const v=view(x);if(v.status!=='valid')return Object.assign(v,{ok:false,reason:v.status});x.status='redeemed';x.red=Date.now();DB.set(a);return Object.assign(view(x),{ok:true,done:true})},
+ offers_list(){const a=DB.get(),now=Date.now(),s={total:a.length,redeemed:0,active:0,expired:0,sms:0,email:0,week:0};a.forEach(x=>{if(x.status==='redeemed')s.redeemed++;else if(x.exp<now)s.expired++;else s.active++;if(x.sms)s.sms++;if(x.mail)s.email++;if(now-x.t<7*864e5)s.week++});
+  return{ok:true,stats:s,recent:a.slice(-50).reverse().map(x=>({t:x.t,code:x.code,name:x.name,phone:x.phone,email:x.email,sms:x.sms,mail:x.mail,status:view(x).status})),quiet:'',demo:true}},
+ broadcast(L){const a=DB.get().filter(x=>L.channel==='sms'?x.sms:x.mail);return{ok:true,sent:L.test?1:a.length,failed:0,stopped:0,total:L.test?1:a.length,demo:true}}};
+const call=o=>BACKEND?post(o).catch(()=>({ok:false,reason:'net'})):Promise.resolve(local[o.action](o));
+function qrSvg(t){try{const q=qrcode(0,'M');q.addData(t);q.make();return q.createSvgTag({cellSize:4,margin:2,scalable:true})}catch(x){return''}}
+
+const TOK=localStorage.getItem(PFX+'-otok')||'';let CH='sms',DATA=null;
+const IDEAS=[["Slow Tuesday", "Tuesday only: 2-for-1 grilled Gulf shrimp skewers, 5 to 9 PM. Show this text to your server."], ["New on the menu", "New tonight: smoked short rib over jalapeño cheddar grits. Book a table or just come by."], ["Weekend brunch", "Brunch is back Sat and Sun, 10 to 2. Biscuits, chicken and waffles, and the mimosa bar."], ["Private room", "Planning a party of 12+? The private room has open dates this month. Reply or call to hold one."], ["We miss you", "It’s been a while! Your next appetizer is on us this week. Show this text."]];
+function load(){if(BACKEND&&!TOK){$('#mGate').hidden=false;return}call({action:'offers_list',token:TOK}).then(r=>{if(!r.ok){$('#mGate').hidden=false;return}DATA=r;$('#mApp').hidden=false;const s=r.stats;
+ $('#mStats').innerHTML=`<div><b>${s.total}</b>sign-ups</div><div><b>${s.redeemed}</b>codes used</div><div><b>${s.week}</b>this week</div><div><b>${s.sms}</b>get texts</div><div><b>${s.email}</b>get emails</div><div><b>${s.active}</b>codes open</div>`;
+ $('#mList').innerHTML=r.recent.length?r.recent.map(x=>`<li><div><b>${x.name}</b><span>${x.phone} · ${x.email}</span></div><div style="text-align:right">${x.code}<span>${x.status}${x.sms?' · text':''}${x.mail?' · email':''}</span></div></li>`).join(''):'<li>No sign-ups yet. Put the QR on the tables.</li>';
+ if(r.quiet)$('#mQuiet').textContent=r.quiet,$('#mQuiet').hidden=false;aud();if(r.demo)$('#mDemo').hidden=false})}
+function aud(){if(!DATA)return;const n=CH==='sms'?DATA.stats.sms:DATA.stats.email;$('#mSend').textContent=`Send to ${n} ${n===1?'person':'people'}`;$('#mSubjRow').hidden=CH!=='email';cnt()}
+function cnt(){const m=$('#mMsg').value,full=CH==='sms'?`${BIZ}: ${m} Reply STOP to opt out.`:m;$('#mCnt').textContent=CH==='sms'?`${full.length} characters · ${full.length<=160?1:Math.ceil(full.length/153)} text${full.length>160?'s':''} each (STOP line added for you)`:'Unsubscribe link and your address are added for you.'}
+document.querySelectorAll('[data-ch]').forEach(b=>b.onclick=()=>{CH=b.dataset.ch;document.querySelectorAll('[data-ch]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));aud()});
+$('#mMsg').addEventListener('input',cnt);
+$('#mIdeas').innerHTML=IDEAS.map((x,i)=>`<button type="button" data-i="${i}">${x[0]}</button>`).join('');document.querySelectorAll('#mIdeas button').forEach(b=>b.onclick=()=>{const x=IDEAS[+b.dataset.i];$('#mMsg').value=x[1];$('#mSubj').value=x[0];cnt()});
+function send(test){const msg=$('#mMsg').value.trim();if(msg.length<5){$('#mOut').textContent='Write the message first.';return}
+ if(!test&&!$('#mSure').checked){$('#mOut').textContent='Tick the box to confirm, then send.';return}
+ $('#mOut').textContent='Sending…';call({action:'broadcast',token:TOK,channel:CH,msg,subject:$('#mSubj').value,test}).then(r=>{
+  $('#mOut').textContent=r.ok?(test?'Test sent to you.':`Sent to ${r.sent} of ${r.total}.${r.stopped?' '+r.stopped+' had opted out.':''}${r.more?' '+r.more+' more go out on the next send.':''}${r.demo?' (Demo: nothing actually sent.)':''}`):({quiet:r.note,sms_off:'Texting isn’t switched on yet.',auth:'Please sign in again.'})[r.reason]||'Something went wrong.'})}
+$('#mTest').onclick=()=>send(true);$('#mSend').onclick=()=>send(false);$('#mPrint').onclick=()=>print();
+$('#mQr').innerHTML=qrSvg(OFFER.url);document.querySelector('.tent .tq').innerHTML=qrSvg(OFFER.url);load();
+</script></body></html>
