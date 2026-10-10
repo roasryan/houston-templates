@@ -1365,7 +1365,7 @@ document.getElementById('kxAgain')&&document.getElementById('kxAgain').addEventL
 
 /* compare handle (after a wipe or a fix): drag to see before vs after */
 const cmp=$('.kxcmp');
-function setCmp(p){p=Math.max(0,Math.min(100,p));after.style.clipPath=`inset(0 0 0 ${p}%)`;cmp.style.left=p+'%';cmp.setAttribute('aria-valuenow',Math.round(p))}
+function setCmp(p){if(!after||!cmp)return;p=Math.max(0,Math.min(100,p));after.style.clipPath=`inset(0 0 0 ${p}%)`;cmp.style.left=p+'%';cmp.setAttribute('aria-valuenow',Math.round(p))}
 let cmpFn=null,cmpBound=false;
 function dragCmp(onMove){cmpFn=onMove;if(cmpBound)return;cmpBound=true;let on=false;const at=e=>{const r=box.getBoundingClientRect();return (e.clientX-r.left)/r.width*100};
   cmp.addEventListener('pointerdown',e=>{on=true;cmp.setPointerCapture(e.pointerId);e.preventDefault()});
@@ -1400,7 +1400,7 @@ function initWipe(){after.hidden=false;after.style.clipPath='';box.classList.rem
   addEventListener('resize',()=>{if(!done&&cv.isConnected)fit()},{passive:true})}
 
 /* ---- find: tap the hidden problems, each one shows a card; then see the fix ---- */
-function initFind(){box.classList.remove('is-cmp');after.hidden=true;after.style.clipPath='';
+function initFind(){box.classList.remove('is-cmp');if(after){after.hidden=true;after.style.clipPath=''}
   $('.kxspots').innerHTML='';const tray=document.getElementById('kxTray');tray.innerHTML='';let found=0;
   const S=X.spots||[];const cnt=document.getElementById('kxCount');if(cnt)cnt.textContent=`0 of ${S.length} found`;
   S.forEach((s,i)=>{const b=document.createElement('button');b.type='button';b.className='kxspot';b.style.left=s.x*100+'%';b.style.top=s.y*100+'%';
