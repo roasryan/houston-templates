@@ -1380,3 +1380,7 @@ input.checking{background-image:linear-gradient(90deg,transparent,rgba(255,169,7
 .okmsg{font-weight:700;color:var(--ok)}
 .krv h1{font-size:clamp(36px,6vw,60px)}
 .ibook .tform{max-width:520px;margin:0 auto}
+
+html{background-image:url(engrave.svg)!important;background-size:600px 600px!important;background-repeat:repeat!important}
+.sec:not(.offer):not(.end)>.wrap{position:relative;isolation:isolate}
+.sec:not(.offer):not(.end)>.wrap::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;background:url(engrave-ink.svg) 0 0/600px 600px repeat;-webkit-mask-image:radial-gradient(85% 70% at 100% 0%,#000 0%,transparent 70%),radial-gradient(70% 60% at 0% 100%,#000 0%,transparent 70%);mask-image:radial-gradient(85% 70% at 100% 0%,#000 0%,transparent 70%),radial-gradient(70% 60% at 0% 100%,#000 0%,transparent 70%)}
