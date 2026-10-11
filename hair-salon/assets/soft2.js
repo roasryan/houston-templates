@@ -34,12 +34,12 @@
   if(FINE&&window.Lenis){var len=new Lenis({lerp:.11,smoothWheel:true});function raf(t){len.raf(t);requestAnimationFrame(raf)}requestAnimationFrame(raf);if(window.ScrollTrigger)len.on('scroll',ScrollTrigger.update)}
   /* hero entrance */
   var tl=gsap.timeline({defaults:{ease:'back.out(1.7)'}});
-  tl.from('.khero2 h1 .w',{y:34,opacity:0,rotate:3,duration:.8,stagger:.055})
+  tl.from('.khero2 h1 .w',{y:26,opacity:.25,rotate:2,duration:.7,stagger:.045})
     .to('.h1sw path',{strokeDashoffset:0,duration:.9,ease:'power2.inOut'},'-=.35')
     .from('.spk',{scale:0,rotate:-90,duration:.6,stagger:.12},'-=.6')
-    .from('.kqbook',{y:16,opacity:0,duration:.6},'-=.7')
-    .from('#kx',{y:30,scale:.96,opacity:0,duration:.9,ease:'expo.out'},'-=.6')
-    .from('.icard',matchMedia('(min-width:900px)').matches?{x:30,rotate:2,opacity:0,duration:.9}:{y:30,opacity:0,duration:.9},'-=.75');
+    .from('.kqbook',{y:14,duration:.6},'-=.7')
+    .from('#kx',{y:24,scale:.97,duration:.9,ease:'expo.out'},0)
+    .from('.icard',matchMedia('(min-width:900px)').matches?{x:26,rotate:2,opacity:.3,duration:.9}:{y:24,duration:.9},.15);
   gsap.set('.h1sw path',{strokeDasharray:1,strokeDashoffset:1});
   document.querySelectorAll('.spk').forEach(function(s,i){gsap.to(s,{scale:.55,rotate:'+=45',opacity:.6,duration:1.3+i*.35,ease:'sine.inOut',yoyo:true,repeat:-1,delay:1.6+i*.3})});
   gsap.to('#kx',{y:-7,duration:3.2,ease:'sine.inOut',yoyo:true,repeat:-1,delay:1.8});
