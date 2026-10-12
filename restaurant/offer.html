@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Free appetizer · Magnolia &amp; Mesquite Kitchen</title><meta name="robots" content="noindex,nofollow"><meta name="description" content="Free appetizer at Magnolia &amp; Mesquite Kitchen.">
-<link rel="stylesheet" href="assets/site.css"><style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/luxe2.css">
+<style id="luxe2-theme">:root{--lx-night:#1C1511;--lx-hi:#E8A35C}</style><style>
 .qo{max-width:560px;margin:0 auto;padding:calc(var(--bh,64px) + 18px) 16px 60px}
 .qo .card{background:#fff;color:var(--ink);border-radius:20px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.18);margin-top:14px}
 .qo h1{font-size:clamp(32px,8vw,46px);line-height:1.05;margin:6px 0 10px}
@@ -83,4 +86,5 @@ $('#qForm').addEventListener('submit',ev=>{ev.preventDefault();const err=$('#qEr
   btn.disabled=false;btn.textContent='Get my code';
   if(r.ok)return showCode(Object.assign({status:'valid'},r),true);
   err.textContent=r.reason==='dup'?`This ${r.how==='phone'?'mobile number':'email'} already claimed this offer on ${r.claimed}. It’s one per guest, but you’ll still get our best deals if you opted in.`:(MSG[r.reason]||MSG.try_again);err.hidden=false})});
-</script></body></html>
+</script><script src="assets/luxe2.js" defer></script>
+</body></html>
