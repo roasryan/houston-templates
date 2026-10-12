@@ -92,3 +92,18 @@ footer{border-radius:40px 40px 0 0}
 @keyframes spk{to{transform:scale(.55) rotate(45deg);opacity:.6}}
 .btn:active,.kpick:active{transform:scale(.96)!important;transition-duration:.08s!important}
 @media (prefers-reduced-motion:reduce){.h1sw path{animation:none;stroke-dashoffset:0}.spk{animation:none}}
+/* no active-section underline in the top bar */
+.qi.on{box-shadow:none!important;border-color:transparent!important;text-decoration:none!important}
+/* headings inside pop-up panels (menu, sheets) follow the panel's own text color */
+#layer h2,#layer h3,.sec.end h2,.band h2{color:inherit}
+
+/* grouped menu (Oct 12) */
+.menu .mtwo{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.menu details{border-radius:14px}
+.menu details>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:60px;padding:0 16px;border-radius:14px;border:1.5px solid rgba(127,127,127,.35);font:700 19px var(--body);cursor:pointer}
+.menu details>summary::-webkit-details-marker{display:none}
+.menu details>summary::after{content:'+';font-size:22px;line-height:1;opacity:.7}
+.menu details[open]>summary::after{content:'–'}
+.menu details>div{display:grid;gap:6px;padding:8px 0 4px 10px}
+.menu details>div a{min-height:48px!important;font-size:16px!important;font-weight:600!important}
+.menu .mlogin{min-height:40px!important;background:none!important;border:0!important;justify-content:center!important;font-size:14px!important;font-weight:600!important;opacity:.75;text-decoration:underline!important}
