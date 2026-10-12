@@ -8,10 +8,12 @@
 <link rel="canonical" href="https://roasryan.github.io/houston-templates/hvac/review.html">
 <meta property="og:title" content="How did we do? | Gulf Breeze Air &amp; Heat"><meta property="og:description" content="Tell Gulf Breeze Air &amp; Heat how your visit went and leave a Google review."><meta property="og:type" content="website"><meta property="og:image" content="https://roasryan.github.io/houston-templates/hvac/img/hx-hvac-a.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
 <script>window.CATALOG_NOTE="Catalog demo: confirmation texts and emails, reminders and the owner CRM are turned on for your business during your discovery call. This demo won\u2019t text or email you.";</script><script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/luxe2.css">
+<style id="luxe2-theme">:root{--lx-night:#0F2132;--lx-hi:#5CC8FF}</style>
 </head><body>
 <a class="skip" href="#top" style="position:absolute;left:-9999px">Skip to content</a>
 <div id="wall" aria-hidden="true"></div>
@@ -28,14 +30,14 @@
 <div class="hcta"><button class="btn btn-main" type="button" id="rvG">Leave a Google review</button></div><p class="kfine" id="rvNote" hidden>Demo: on a live site this opens the business’s Google review page. Review requests are sent automatically after a job is marked done.</p>
 <h2>Something we should fix?</h2><p>Tell us directly too. The owner reads every note. You can still leave a Google review either way.</p>
 <form id="rvForm" class="kform" novalidate><div class="field"><label for="rvN">Your name</label><input id="rvN" autocomplete="name"></div><div class="field"><label for="rvT">Your note</label><textarea id="rvT" rows="4"></textarea></div><p class="err" id="rvE" role="alert" hidden></p><button class="btn btn-line" type="submit">Send to the owner</button></form><p class="okmsg" id="rvOk" hidden>Thanks. The owner has your note.</p>
-</div></section><section class="sec ibook" aria-label="Book a free estimate"><div class="wrap"><aside class="tform" id="inspect" aria-labelledby="iH">
-      <div class="icard" id="iCard"><p class="ikick">Free in-home estimate</p><h2 id="iH">Book it in 60 seconds</h2>
+</div></section><section class="sec ibook" aria-label="Have a technician come out"><div class="wrap"><aside class="tform" id="inspect" aria-labelledby="iH">
+      <div class="icard" id="iCard"><p class="ikick">Technician visit</p><h2 id="iH">Book it in 60 seconds</h2>
         <ul class="iperks"><li><b>Written options with prices</b> before we touch anything</li><li><b>Tech texts when he’s on the way</b> with his photo</li></ul>
         <p class="inext" id="iNext" hidden></p>
         <button class="btn btn-main ibtn" type="button" id="iOpen">Pick a day and time</button>
-        <p class="ifine">No cost, no obligation. AC out right now? Call us: same-day repair in summer.</p><div class="ibooked" id="iBooked" hidden></div></div>
+        <p class="ifine">AC out right now? Call us: same-day repair in summer.</p><div class="ibooked" id="iBooked" hidden></div></div>
       <div class="imodal" id="iModal" hidden role="dialog" aria-modal="true" aria-labelledby="imH"><div class="imscrim" data-iclose></div>
-        <div class="impanel"><div class="imhead"><div><p class="ikick">Free in-home estimate</p><h2 id="imH">Pick a day and time</h2></div><button type="button" class="imx" data-iclose aria-label="Close">×</button></div>
+        <div class="impanel"><div class="imhead"><div><p class="ikick">Technician visit</p><h2 id="imH">Pick a day and time</h2></div><button type="button" class="imx" data-iclose aria-label="Close">×</button></div>
           <div class="imsteps" aria-hidden="true"><i class="on"></i><i></i></div>
           <form id="iForm" novalidate>
             <section class="istep" data-s="1"><div class="ical" id="iCal"></div><div class="islots" id="iSlots" role="radiogroup" aria-label="Time"></div><p class="err" id="iErr1" role="alert" hidden></p><button class="btn btn-main ibtn" type="button" id="iNext1">Next</button></section>
@@ -45,9 +47,9 @@
               <div class="field"><label for="iAddr">Home address</label><input id="iAddr" autocomplete="street-address" placeholder="Street, city, ZIP"></div>
               <div class="field"><span class="flabel" id="iIssueL">What do you need? Pick all that apply</span><input type="hidden" id="iIssue"><div class="chips ijobs" id="iJobs" role="group" aria-label="What do you need"><button type="button" aria-pressed="false" data-ij="AC not cooling">AC not cooling</button><button type="button" aria-pressed="false" data-ij="No heat">No heat</button><button type="button" aria-pressed="false" data-ij="Tune-up">Tune-up</button><button type="button" aria-pressed="false" data-ij="New AC system">New AC system</button><button type="button" aria-pressed="false" data-ij="Strange noise or smell">Strange noise or smell</button><button type="button" aria-pressed="false" data-ij="Water leaking inside">Water leaking inside</button><button type="button" aria-pressed="false" data-ij="Thermostat">Thermostat</button><button type="button" aria-pressed="false" data-ij="Not sure, just check it">Not sure, just check it</button></div></div>
               <div class="field"><span class="flabel">Best way to reach you</span><div class="chips" id="iBest" role="radiogroup" aria-label="Best way to reach you"><button type="button" role="radio" aria-checked="true" data-best="Text">Text</button><button type="button" role="radio" aria-checked="false" data-best="Call">Call</button><button type="button" role="radio" aria-checked="false" data-best="Email">Email</button></div></div>
-              <label class="smsc" id="iSmsC"><input type="checkbox" id="iSms"> <span>Text me about my free estimate from Gulf Breeze Air &amp; Heat (confirmation, reminder, time changes). Optional, not required to book. About 1–4 texts per request, no marketing. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. <a href="sms-terms.html" target="_blank">SMS terms</a> · <a href="privacy.html" target="_blank">Privacy</a></span></label><p class="catnote" style="display:block;margin:10px 0 2px;padding:9px 12px;border-radius:10px;font-size:13.5px;line-height:1.45;background:rgba(127,127,127,.13);border-left:3px solid currentColor;opacity:.92">Catalog demo: confirmation texts and emails, reminders and the owner CRM are turned on for your business during your discovery call. This demo won’t text or email you.</p>
+              <label class="smsc" id="iSmsC"><input type="checkbox" id="iSms"> <span>Text me about my booking from Gulf Breeze Air &amp; Heat (confirmation, reminder, time changes). Optional, not required to book. About 1–4 texts per request, no marketing. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. <a href="sms-terms.html" target="_blank">SMS terms</a> · <a href="privacy.html" target="_blank">Privacy</a></span></label><p class="catnote" style="display:block;margin:10px 0 2px;padding:9px 12px;border-radius:10px;font-size:13.5px;line-height:1.45;background:rgba(127,127,127,.13);border-left:3px solid currentColor;opacity:.92">Catalog demo: confirmation texts and emails, reminders and the owner CRM are turned on for your business during your discovery call. This demo won’t text or email you.</p>
               <p class="err" id="iErr" role="alert" hidden></p>
-              <div class="imnav"><button class="btn btn-line" type="button" id="iBack">Back</button><button class="btn btn-main ibtn" type="submit">Book my free estimate</button></div></section>
+              <div class="imnav"><button class="btn btn-line" type="button" id="iBack">Back</button><button class="btn btn-main ibtn" type="submit">Book my technician visit</button></div></section>
           </form><div id="iDone" hidden></div></div></div>
     </aside></div></section></main>
 <footer><div class="wrap"><div class="ftcols">
@@ -73,4 +75,5 @@
 <p class="err" id="aErr" role="alert" hidden></p>
 <div class="imnav"><button class="btn btn-line" type="button" id="aBack">Back</button><button class="btn btn-main ibtn" type="submit">Send my question</button></div></section>
 </form><div id="aDone" hidden></div></div></div><script src="assets/app.js"></script>
+<script src="assets/luxe2.js" defer></script>
 </body></html>

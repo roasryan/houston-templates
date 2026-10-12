@@ -49,7 +49,7 @@ h1{line-height:1.02!important}
 .kpick:hover{border-color:var(--lx-hair2)!important;background:color-mix(in srgb,var(--lx-hi) 8%,transparent)!important;transform:translateY(-2px)}
 .kpick .ic,.kcard .ic{background:color-mix(in srgb,var(--lx-hi) 14%,transparent)!important;color:var(--lx-hi)!important;border-radius:10px!important}
 /* sections: dark glass panels, text re-pointed */
-.sec:not(.offer):not(.end)>.wrap{--ink:var(--lx-text);--soft:var(--lx-soft);--line:var(--lx-hair);--slate:var(--lx-text);
+.sec:not(.offer):not(.end)>.wrap{--ink:var(--lx-text);--soft:var(--lx-soft);--line:var(--lx-hair);--slate:var(--lx-text);--concrete:color-mix(in srgb,var(--lx-card) 60%,#2a2f35);
   background:var(--lx-glass),color-mix(in srgb,var(--lx-card) 82%,transparent)!important;color:var(--lx-text)!important;border-radius:26px!important;box-shadow:var(--lx-edge)!important}
 .sec h2,.sec h3,.sec b,.sec summary{color:var(--lx-text)!important}
 .sec .lede,.sec p,.sec li,.sec span{color:inherit}
@@ -86,3 +86,24 @@ footer{background:color-mix(in srgb,var(--lx-bg) 90%,#000)!important;border-top:
 .sec .ktable th{background:color-mix(in srgb,var(--lx-hi) 16%,var(--lx-card))!important;color:var(--lx-text)!important}
 .sec .ktable td{border-bottom-color:var(--lx-hair)!important}
 .sec .smsx{background:rgba(255,255,255,.05)!important;color:var(--lx-text)!important;border-color:var(--lx-hair)!important}
+/* no active-section underline in the top bar */
+.qi.on{box-shadow:none!important;border-color:transparent!important;text-decoration:none!important}
+.qi-main{text-decoration:none!important;color:var(--lx-hi)!important}
+.sec .mchips{background:color-mix(in srgb,var(--lx-card) 96%,transparent)!important}
+.sec .mchips a{border-color:var(--lx-hair)!important;color:var(--lx-text)!important}
+.sec .mchips a:hover{border-color:var(--lx-hi)!important}
+.sec .rvc,.sec .mcard,.sec .mpkg{border:1px solid var(--lx-hair)}
+.icard .iurg{background:color-mix(in srgb,var(--lx-hi) 14%,var(--lx-card))!important;border-color:var(--lx-hair2)!important;color:var(--lx-text)!important}
+.icard .iurg p,.icard .iurg b{color:var(--lx-text)!important}
+.sec .mtag{color:color-mix(in srgb,var(--lx-night) 80%,#000)!important}
+
+/* grouped menu (Oct 12) */
+.menu .mtwo{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.menu details{border-radius:14px}
+.menu details>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:60px;padding:0 16px;border-radius:14px;border:1.5px solid rgba(127,127,127,.35);font:700 19px var(--body);cursor:pointer}
+.menu details>summary::-webkit-details-marker{display:none}
+.menu details>summary::after{content:'+';font-size:22px;line-height:1;opacity:.7}
+.menu details[open]>summary::after{content:'–'}
+.menu details>div{display:grid;gap:6px;padding:8px 0 4px 10px}
+.menu details>div a{min-height:48px!important;font-size:16px!important;font-weight:600!important}
+.menu .mlogin{min-height:40px!important;background:none!important;border:0!important;justify-content:center!important;font-size:14px!important;font-weight:600!important;opacity:.75;text-decoration:underline!important}
