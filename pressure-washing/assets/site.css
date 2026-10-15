@@ -1384,3 +1384,10 @@ input.checking{background-image:linear-gradient(90deg,transparent,rgba(79,216,19
 html{background-image:url(engrave.svg)!important;background-size:600px 600px!important;background-repeat:repeat!important}
 .sec:not(.offer):not(.end)>.wrap{position:relative;isolation:isolate}
 .sec:not(.offer):not(.end)>.wrap::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;background:url(engrave-ink.svg) 0 0/600px 600px repeat;-webkit-mask-image:radial-gradient(85% 70% at 100% 0%,#000 0%,transparent 70%),radial-gradient(70% 60% at 0% 100%,#000 0%,transparent 70%);mask-image:radial-gradient(85% 70% at 100% 0%,#000 0%,transparent 70%),radial-gradient(70% 60% at 0% 100%,#000 0%,transparent 70%)}
+
+/* booking done: confirmation sent + plan offer (Oct 15) */
+.isent{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,#2BB673 12%,transparent);font-weight:700;font-size:15px}
+.isent-e{width:30px;height:21px;flex:none;animation:isent .9s .2s cubic-bezier(.3,.7,.3,1) both}.isent-e svg{width:100%;height:100%}.isent-e rect,.isent-e path{fill:none;stroke:#2BB673;stroke-width:2.6;stroke-linejoin:round}
+@keyframes isent{0%{transform:translate(-26px,6px) rotate(-12deg);opacity:0}60%{transform:translate(3px,-3px) rotate(4deg);opacity:1}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.isent-e{animation:none}}
+.iplan{margin:12px 0 16px;padding:14px;border:1.5px solid var(--hivis);border-radius:16px;display:grid;gap:6px}.iplan b{font-size:18px}.iplan ul{margin:0;padding-left:18px;display:grid;gap:3px;font-size:15px}.iplan small{opacity:.75;font-size:13px}.iplan .btn{justify-self:start}

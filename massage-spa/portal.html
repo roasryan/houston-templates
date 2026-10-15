@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#1F2A33">
-<title>Your project · Cypress Creek Massage &amp; Day Spa</title>
+<title>Your visits · Cypress Creek Massage &amp; Day Spa</title>
 <meta name="robots" content="noindex,nofollow"><meta name="description" content="Private page for Cypress Creek Massage &amp; Day Spa customers.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
@@ -28,7 +28,7 @@ svg{display:block}
 /* ---------- PIN ---------- */
 .pin{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 28px;gap:18px;transition:opacity .45s,transform .5s cubic-bezier(.2,.8,.2,1)}
 .pin.leave{opacity:0;transform:scale(1.06)}
-.pin-top{position:absolute;top:16px;right:16px;left:16px;display:flex;justify-content:center}
+.pin-top{position:absolute;top:16px;right:16px;left:16px;display:flex;justify-content:flex-end;gap:8px}
 .pin-card{width:min(420px,100%);margin-top:56px;background:linear-gradient(180deg,rgba(46,61,72,.94),rgba(31,42,51,.96));border:1px solid var(--line);border-radius:28px;padding:26px 22px 22px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
 @keyframes rise{from{opacity:0;transform:translateY(26px) scale(.97)}}
 .pin-brand{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:900;font-size:22px;letter-spacing:.02em;text-transform:uppercase}
@@ -240,19 +240,106 @@ svg{display:block}
 .paybtn-line{background:rgba(255,255,255,.06);color:var(--text);box-shadow:inset 0 0 0 1.5px var(--line)}.paybtn-line::after{display:none}.paybtn-line .paybtn-i{background:rgba(255,255,255,.08)}
 .paid-big{display:flex;align-items:center;gap:10px;margin:8px 0;padding:14px 16px;border-radius:16px;background:rgba(43,182,115,.16);color:#7EE2B0}.paid-big svg{width:26px;height:26px}.paid-big b{font:900 19px/1.2 var(--display)}
 @media (prefers-reduced-motion:reduce){.paybtn::after{animation:none}}
-:root{--hivis:#9CD3B0;--sodium:#9CD3B0;--on-sodium:#10202B}#wall{display:none!important}</style></head><body><div id="wall" aria-hidden="true"></div><div id="papp"></div><div id="player"></div><script>/* ============ Ridgeline customer portal (portal.html?j=JOB) — Oct 7, round 1 ============
+
+/* ---------- portal kinds (Oct 15): plan offer, rebook, event, policy, sample banner ---------- */
+.psample{margin:0 0 4px;padding:10px 14px;border-radius:14px;background:rgba(255,212,0,.12);border:1px dashed rgba(255,212,0,.55);color:var(--text);font-size:15px}
+.ppol{margin-top:8px}.ppol summary{cursor:pointer;color:var(--muted);font-weight:700;font-size:15px;min-height:44px;display:flex;align-items:center}
+.pc-plan .plans{display:grid;gap:12px;margin-top:10px}
+@media (min-width:640px){.pc-plan .plans{grid-template-columns:1fr 1fr}}
+.plan{border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;background:rgba(20,30,39,.45)}
+.plan.best{border-color:var(--hivis);box-shadow:0 0 0 1px var(--hivis) inset}
+.plan h3{margin:0;font-size:20px}.plp{margin:0;font-size:26px;font-weight:900;color:var(--hivis)}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}.plan li{display:grid;grid-template-columns:20px 1fr;gap:8px;font-size:16px;line-height:1.35}.plan li svg{width:18px;height:18px;color:var(--ok);margin-top:2px}
+.plan .pbtn{margin-top:auto}
+.plbonus{margin:12px 0 0;font-size:15px;color:var(--muted)}.plbonus b{color:var(--text)}
+.pc-event h2{margin:4px 0 10px;font-size:26px}
+.evdl{display:grid;gap:10px;margin:0 0 14px}.evdl div{display:grid;grid-template-columns:96px 1fr;gap:10px}.evdl dt{color:var(--muted);font-weight:700}.evdl dd{margin:0;font-weight:700}
+.evpay{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:8px}.evpay li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px}
+.evpay li b{font-size:20px}.evpay li small{grid-column:1/-1;color:var(--muted);display:flex;gap:6px;align-items:center}.evpay li small svg{width:16px;height:16px;color:var(--ok)}.evpay li.ok{border-color:rgba(43,182,115,.5)}
+.pc-rebook p{margin:6px 0 12px}
+.pdep{display:flex;align-items:center;gap:8px}.pdep-i svg{width:18px;height:18px;color:var(--ok)}
+
+/* ---------- light theme (Oct 15, Ryan: lighter by default; dark stays as an option) ---------- */
+:root[data-theme="light"]{--text:#17222B;--muted:#56636D;--line:rgba(23,34,43,.13);--card:#FFFFFF;--raised:#EEF2F5;--deck:#F6F8FA;color-scheme:light}
+[data-theme="light"] body{background:#F2F4F6}
+[data-theme="light"] .pc{box-shadow:0 1px 2px rgba(23,34,43,.06),0 10px 30px rgba(23,34,43,.07);backdrop-filter:none;-webkit-backdrop-filter:none}
+[data-theme="light"] .ptop{background:linear-gradient(180deg,rgba(242,244,246,.97),rgba(242,244,246,.88));border-bottom-color:var(--line)}
+[data-theme="light"] .plang,[data-theme="light"] .plock,[data-theme="light"] .pthm{background:#fff}
+[data-theme="light"] .pin-card{background:#fff;box-shadow:0 20px 60px rgba(23,34,43,.12)}
+[data-theme="light"] .pt-key{background:linear-gradient(180deg,#FFFFFF,#F1F4F6);box-shadow:0 2px 0 rgba(23,34,43,.12)}
+@media (hover:hover){[data-theme="light"] .pt-key:hover{background:linear-gradient(180deg,#FFFFFF,#E9EEF2)}}
+[data-theme="light"] .pt-txt,[data-theme="light"] .pt-del{background:transparent}
+[data-theme="light"] .pbtn-line{background:#fff;border-color:rgba(23,34,43,.25)}
+[data-theme="light"] .steps li:not(:last-child)::after{background:rgba(23,34,43,.12)}
+[data-theme="light"] .steps i{background:#F1F4F6;border-color:rgba(23,34,43,.2)}
+[data-theme="light"] .pill,[data-theme="light"] .vcount{background:#F1F4F6}
+[data-theme="light"] .pill-ok,[data-theme="light"] .pill-confirmed{background:rgba(43,182,115,.12);color:#137A4A}
+[data-theme="light"] .paid-big{color:#137A4A;background:rgba(43,182,115,.12)}
+[data-theme="light"] .road{background:#E6EBEF}
+[data-theme="light"] .home svg path,[data-theme="light"] .home svg rect{stroke:var(--text)}[data-theme="light"] .home svg rect{fill:var(--text)}
+[data-theme="light"] .av span{background:#EEF2F5;border-color:#fff;color:var(--text)}
+[data-theme="light"] .tl li::before{border-color:#fff}
+[data-theme="light"] .price,[data-theme="light"] .x,[data-theme="light"] .plan,[data-theme="light"] .more,[data-theme="light"] .paybtn-line,[data-theme="light"] .paybtn-line .paybtn-i{background:#F6F8FA}
+[data-theme="light"] .pc-warr{background:linear-gradient(135deg,rgba(43,182,115,.12),#fff)}
+[data-theme="light"] .psheet{background:#fff}[data-theme="light"] .pscrim{background:rgba(23,34,43,.45)}
+[data-theme="light"] .pfield input{background:#F6F8FA;border-color:rgba(23,34,43,.25)}
+[data-theme="light"] .ptoast{background:#17222B;color:#fff}
+[data-theme="light"] .vcal{background:#fff;color:#17222B;box-shadow:0 6px 18px rgba(23,34,43,.12);border:1px solid var(--line)}
+[data-theme="light"] .lg-h,[data-theme="light"] .pbrand .lg path:last-child{stroke:var(--text)}
+[data-theme="light"] .pin-brand small,[data-theme="light"] .pin-kick,[data-theme="light"] .pk,[data-theme="light"] .vwin,[data-theme="light"] .opt-h span,[data-theme="light"] .more b::after,[data-theme="light"] .psteps li.now small,[data-theme="light"] .plp,[data-theme="light"] .pill-onway,[data-theme="light"] .pill-arrived,[data-theme="light"] .pin-lockwrap{color:var(--hi-ink,#7A5F00)}
+[data-theme="light"] .todo{background:linear-gradient(90deg,color-mix(in srgb,var(--hivis) 22%,#fff),#fff)}
+[data-theme="light"] .psample{background:color-mix(in srgb,var(--hivis) 14%,#fff)}
+[data-theme="light"] .pc-visit::before{opacity:.5}
+[data-theme="light"] .ring-bg{stroke:#E6EBEF}
+.pthm{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer}.pthm svg{width:20px;height:20px}
+
+/* ---------- branded invoice ---------- */
+.pinv{position:relative;background:#fff;color:#17222B;border-radius:18px;padding:22px 18px;border:1px solid rgba(23,34,43,.12);overflow:hidden;font-size:16px}
+.pinv-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:3px solid var(--hivis)}
+.pinv-brand{display:flex;gap:10px;align-items:flex-start}.pinv-brand .lg{width:40px;height:40px;flex:none}.pinv-brand .lg path:last-child{stroke:#17222B}
+.pinv-brand b{display:block;font-size:18px}.pinv-brand small{display:block;color:#56636D;font-size:14px}
+.pinv-t h2{margin:0 0 6px;font-size:24px;letter-spacing:.06em;text-transform:uppercase}
+.pinv-t dl,.pinv-sum{margin:0;display:grid;gap:4px}.pinv-t dl div,.pinv-sum div{display:flex;justify-content:space-between;gap:16px}.pinv-t dt,.pinv-sum dt{color:#56636D}.pinv-t dd,.pinv-sum dd{margin:0;font-weight:700}
+.pinv-to{margin:16px 0;display:grid;gap:2px}.pinv-to small{color:#56636D;text-transform:uppercase;letter-spacing:.08em;font-weight:800;font-size:12px}.pinv-to span{color:#56636D}
+.pinv-tb{width:100%;border-collapse:collapse;margin:0 0 12px}.pinv-tb th{text-align:left;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#56636D;padding:8px 0;border-bottom:1px solid rgba(23,34,43,.15)}
+.pinv-tb th:last-child,.pinv-tb td:last-child{text-align:right;white-space:nowrap}.pinv-tb td{padding:10px 0;border-bottom:1px solid rgba(23,34,43,.08);vertical-align:top}
+.pinv-sum{margin-left:auto;max-width:280px}.pinv-sum .tot{margin-top:6px;padding-top:8px;border-top:2px solid #17222B;font-size:20px}.pinv-sum .tot dt{color:#17222B;font-weight:800}
+.pinv-note{margin:14px 0 0;color:#56636D;font-size:15px}.pinv-thx{margin:14px 0 0;font-weight:800}
+.pinv-stamp{position:absolute;top:58%;right:-6px;transform:rotate(-14deg);border:4px solid #1E9E63;color:#1E9E63;font:900 34px/1 var(--display);letter-spacing:.12em;padding:6px 14px;border-radius:10px;opacity:.85}
+.pinv-acts{margin-top:14px;flex-wrap:wrap}
+@media print{body.printing-inv *{visibility:hidden!important}body.printing-inv #pinvDoc,body.printing-inv #pinvDoc *{visibility:visible!important}body.printing-inv #pinvDoc{position:fixed;inset:0;border:0;border-radius:0}}
+/* ---------- thank-you screen ---------- */
+.ty{min-height:100vh;min-height:100dvh;max-width:560px;margin:0 auto;padding:28px 16px 40px;display:grid;gap:16px;align-content:start}
+.ty>.pthm{justify-self:center}
+.ty-card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:28px 20px 22px;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.12)}
+.ty-card h1{margin:4px 0 6px;font-size:34px;line-height:1.1}.ty-p{margin:0;color:var(--muted)}
+.ty-check{width:84px;height:84px;margin:0 auto 10px}.ty-check svg{width:100%;height:100%}.ty-check circle{fill:none;stroke:var(--ok);stroke-width:3;stroke-dasharray:151;stroke-dashoffset:151}.ty-check path{fill:none;stroke:var(--ok);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40}
+.ty-card.go .ty-check circle{animation:tyc .5s ease-out forwards}.ty-card.go .ty-check path{animation:tyc .35s .45s ease-out forwards}@keyframes tyc{to{stroke-dashoffset:0}}
+.ty-mail{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px auto 4px;padding:10px 14px;border-radius:14px;background:color-mix(in srgb,var(--ok) 12%,transparent);font-weight:700;font-size:15px;max-width:420px}
+.ty-env{width:34px;height:24px;flex:none}.ty-env svg{width:100%;height:100%}.ty-env rect,.ty-env path{fill:none;stroke:var(--ok);stroke-width:2.4;stroke-linejoin:round}
+.ty-card.go .ty-env{animation:tyenv .9s .7s cubic-bezier(.3,.7,.3,1) both}@keyframes tyenv{0%{transform:translate(-30px,6px) rotate(-12deg);opacity:0}60%{transform:translate(4px,-3px) rotate(4deg);opacity:1}100%{transform:none}}
+.ty-card.still .ty-check circle,.ty-card.still .ty-check path{stroke-dashoffset:0}
+.ty-h2{margin:20px 0 8px;font-size:18px;text-align:left}.ty-next{list-style:none;margin:0;padding:0;display:grid;gap:8px;text-align:left}.ty-next li{display:grid;grid-template-columns:22px 1fr;gap:10px}.ty-next svg{width:20px;height:20px;color:var(--ok);margin-top:2px}
+.ty-cta{margin-top:18px;width:100%}
+.ty-plan h2{margin:4px 0 8px;font-size:22px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}.ty-plan ul{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:7px}.ty-plan li{display:grid;grid-template-columns:20px 1fr;gap:8px}.ty-plan li svg{width:18px;height:18px;color:var(--ok);margin-top:3px}
+.ty-ref p{margin:0 0 10px}
+:root{--hivis:#9CD3B0;--sodium:#9CD3B0;--on-sodium:#10202B;--hi-ink:#4A6554}#wall{display:none!important}</style></head><body><div id="wall" aria-hidden="true"></div><div id="papp"></div><div id="player"></div><script>/* ============ Ridgeline customer portal (portal.html?j=JOB) — Oct 7, round 1 ============
    Separate screen for customers on a current job. PIN unlock, English/Español, arrival window + who's coming,
    change orders and add-ons they can approve and pay, invoice, job photos. Owner sets everything up in Owner → customer.
    Data: same store as the website ('kmassage-db'). Demo: this browser. Live: synced through the backend (next step). */
 (()=>{
-/* ---------- blank slate: bump RESET to wipe every saved customer, crew, job and setting in each browser once ---------- */
+/* ---------- blank slate (Ryan, Oct 7 11:38 PM): bump RESET to wipe every saved customer, crew, job and setting in each browser once ---------- */
 {const RESET='R1-2026-10-07';try{if(localStorage.getItem('kmassage-reset')!==RESET){[localStorage,sessionStorage].forEach(S=>Object.keys(S).filter(k=>k.indexOf('kmassage-')===0).forEach(k=>S.removeItem(k)));localStorage.setItem('kmassage-reset',RESET)}}catch(x){}}
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const CFG={"biz": "Cypress Creek Massage & Day Spa", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};const BIZ_PHONE="+12815550142";
+const CFG={"biz": "Cypress Creek Massage & Day Spa", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};const BIZ_PHONE="+12815550142";const PKCFG={"kind": "appt", "atShop": false, "addr": "12020 Louetta Rd, Suite 140, Houston, TX 77070", "steps": [["contract", "Appointment confirmed", 1], ["deposit", "Deposit received", 0], ["intake", "Health form signed", 1], ["arrived", "Checked in", 1], ["consult", "Consult with your therapist", 1], ["session", "Session started", 1], ["finished", "Session finished", 1], ["walkthrough", "Aftercare tips with you", 1], ["notes", "Session notes saved", 1], ["invoice", "Receipt sent", 0], ["paid", "Paid", 0], ["rebook", "Next visit booked", 0], ["review", "Review asked", 0]], "plans": [{"name": "Essential Massage", "price": "$79/mo", "perks": ["One 60-minute massage a month", "Unused credits roll over while active", "Extra 60-minute sessions at $69"]}, {"name": "Wellness 90", "price": "$119/mo", "perks": ["One 90-minute massage a month", "Rollover while active", "10% off take-home products"]}], "joinBonus": "your first month is free.", "rebookWeeks": 4, "policy": "Please give us 24 hours’ notice to cancel or move your appointment so we can offer the spot to someone else.", "crewWord": "Therapist"};
+/* ---------- portal kind (Oct 15): project | service | appt | event. Kit sites pass PKCFG; Ridgeline = project ---------- */
+const PK=Object.assign({kind:'project',atShop:false,steps:null,plans:[],joinBonus:'',rebookWeeks:0,policy:'',crewWord:'',visitWord:''},typeof PKCFG!=='undefined'?PKCFG:{});
+const DEMO=new URLSearchParams(location.search).has('demo');
+let THEME='light';try{THEME=localStorage.getItem('kmassage-theme')||'light'}catch(x){}document.documentElement.dataset.theme=THEME;
 const BIZ_PRETTY=BIZ_PHONE.replace(/^\+1(\d{3})(\d{3})(\d{4})$/,'($1) $2-$3');
-/* TEMPORARY demo master PIN: opens any customer portal on this device. Remove before a real client goes live. */
+/* TEMPORARY demo master PIN (Ryan, Oct 7): opens any customer portal on this device. Remove before a real client goes live. */
 const MASTER_PIN='0000';
 const qs=new URLSearchParams(location.search),JOB=qs.get('j')||'';
 
@@ -260,7 +347,7 @@ const qs=new URLSearchParams(location.search),JOB=qs.get('j')||'';
 const W={en:{
   portal:'Your project portal',enterPin:'Enter your 4-digit PIN',pinHelp:'It’s in the text we sent you with this link.',wrong:'That PIN doesn’t match. Try again.',
   locked:s=>`Too many tries. Try again in ${s} seconds.`,forgot:'Forgot your PIN? Text us',del:'Delete',show:'Type it instead',open:'Open',
-  noJob:'We couldn’t find this project.',noJobP:'The link may be old. Text us and we’ll send you a new one.',
+  noJob:'We couldn’t find your page.',noJobP:'The link may be old. Text us and we’ll send you a new one.',
   hi:n=>`Hi, ${n}`,yourRoof:'Your session project',website:'Our website',logout:'Lock',
   steps:['Request','Appointment','Estimate','Approved'],stepNow:'Where your project is',
   next:'Your next visit',arrive:(a,b)=>`Arriving between ${a} and ${b}`,arriveAt:a=>`Arriving around ${a}`,
@@ -320,11 +407,34 @@ const W={en:{
   lang:'Idioma',langEn:'English',langEs:'Español',checking:'Verificando…',lockedLong:'Demasiados intentos. Espere 15 minutos o envíenos un texto.',err:'No pudimos conectar. Revise su señal e intente otra vez.',sending:'Enviando…',loading:'Abriendo su proyecto…',demo:'Demo: esta página muestra lo guardado en este dispositivo.',
   sms:{diff:(n,d)=>`Hola Cypress Creek, soy ${n}. Necesito otro horario para mi visita del ${d}.`,q:n=>`Hola Cypress Creek, soy ${n}. Tengo una pregunta sobre mi trabajo de techo.`,co:(n,t)=>`Hola Cypress Creek, soy ${n}. Pregunta sobre el cambio “${t}”.`,pin:'Hola Cypress Creek, necesito mi PIN del portal otra vez.'}
 }};
+Object.assign(W.en,{nextAppt:'Your next appointment',nextEvent:'Your event',yourPro:w=>`Your ${w||'pro'}`,where:'Where',directions:'Directions',late:'Running late? Text us',resched:'Need to reschedule? Text us',
+  depPaid:a=>`Deposit paid: ${a}`,depOnFile:'Card on file to hold your spot',policy:'Cancellation policy',
+  planBefore:'Add a plan to protect it',planAfter:'Keep it running like new',planAfterAppt:'Save on every visit',planMember:n=>`You’re a ${n} member`,planJoin:n=>`Join ${n}`,planAsk:n=>`Hi, I’d like to join ${n}.`,planSent:'Got it. We’ll set up your plan and text you.',planBonus:'Join today',perMonth:'',
+  rebook:'Book your next visit',rebookP:w=>w?`Most clients come back every ${w} weeks. Pick your next time now so your spot is saved.`:'Pick your next time now so your spot is saved.',rebookBtn:'See open times',
+  evWhen:'Date',evGuests:'Guests',evPlace:'Venue',evMenu:'Menu',evPay:'Payments',evDep:'Deposit',evBal:'Balance',evDue:d=>`Due ${d}`,
+  stepsAppt:['Booked','Confirmed','Your visit','Done'],progEvent:'Your event, step by step',stepsEvent:['Inquiry','Tasting','Booked','Event day'],stepsService:['Request','Visit','Estimate','Approved'],
+  sample:'Sample portal: this is what your customers see. Names and numbers are made up.',shop:'Our shop',
+  invTitle:'Invoice',invNo:'Invoice #',invDate:'Date',invDue:'Due',billTo:'Bill to',item:'Description',amount:'Amount',subtotal:'Subtotal',depLess:'Deposit paid',totalDue:'Total due',paidStamp:'PAID',
+  viewMyInv:'View your invoice',saveInv:'Save or print',payInv:a=>`Pay ${a}`,invThanks:'Thank you for your business!',
+  tyPaid:'Payment received',tyBooked:'You’re booked',tyPaidP:'Thank you! Your payment went through.',tyBookedP:'We saved your spot. See you soon!',receipt:e=>e?`Receipt sent to ${e}`:'Your receipt is on its way to your email',
+  tyNext:'What happens next',tyPortal:'Open your portal',tyRefer:'Know someone who needs us?',tyReferBtn:'Text them our link',tyReferMsg:u=>`I just used ${CFG.biz}. Thought you might need them too: ${u}`,tyAdd:'One more thing',tyHome:'Back to our website'});
+Object.assign(W.es,{nextAppt:'Su próxima cita',nextEvent:'Su evento',yourPro:w=>`Su ${w||'profesional'}`,where:'Dónde',directions:'Cómo llegar',late:'¿Va tarde? Envíenos un texto',resched:'¿Necesita cambiar la cita? Envíenos un texto',
+  depPaid:a=>`Depósito pagado: ${a}`,depOnFile:'Tarjeta guardada para apartar su lugar',policy:'Política de cancelación',
+  planBefore:'Agregue un plan para protegerlo',planAfter:'Manténgalo funcionando como nuevo',planAfterAppt:'Ahorre en cada visita',planMember:n=>`Usted es miembro de ${n}`,planJoin:n=>`Unirme a ${n}`,planAsk:n=>`Hola, quiero unirme a ${n}.`,planSent:'Listo. Preparamos su plan y le enviamos un texto.',planBonus:'Únase hoy',perMonth:'',
+  rebook:'Reserve su próxima visita',rebookP:w=>w?`La mayoría regresa cada ${w} semanas. Elija su próxima hora ahora para guardar su lugar.`:'Elija su próxima hora ahora para guardar su lugar.',rebookBtn:'Ver horarios',
+  evWhen:'Fecha',evGuests:'Invitados',evPlace:'Lugar',evMenu:'Menú',evPay:'Pagos',evDep:'Depósito',evBal:'Saldo',evDue:d=>`Vence ${d}`,
+  stepsAppt:['Reservada','Confirmada','Su visita','Lista'],progEvent:'Su evento, paso a paso',stepsEvent:['Consulta','Degustación','Reservado','Día del evento'],stepsService:['Solicitud','Visita','Presupuesto','Aprobado'],
+  sample:'Portal de muestra: así lo ven sus clientes. Los nombres y números son inventados.',shop:'Nuestro local',
+  invTitle:'Factura',invNo:'Factura #',invDate:'Fecha',invDue:'Vence',billTo:'Para',item:'Descripción',amount:'Monto',subtotal:'Subtotal',depLess:'Depósito pagado',totalDue:'Total a pagar',paidStamp:'PAGADO',
+  viewMyInv:'Ver su factura',saveInv:'Guardar o imprimir',payInv:a=>`Pagar ${a}`,invThanks:'¡Gracias por su preferencia!',
+  tyPaid:'Pago recibido',tyBooked:'Cita reservada',tyPaidP:'¡Gracias! Su pago se realizó.',tyBookedP:'Guardamos su lugar. ¡Nos vemos pronto!',receipt:e=>e?`Recibo enviado a ${e}`:'Su recibo va en camino a su correo',
+  tyNext:'Lo que sigue',tyPortal:'Abrir su portal',tyRefer:'¿Conoce a alguien que nos necesite?',tyReferBtn:'Enviarle nuestro enlace',tyReferMsg:u=>`Acabo de usar ${CFG.biz}. Quizá te sirvan: ${u}`,tyAdd:'Una cosa más',tyHome:'Volver al sitio web'});
 let DB={customers:[]};try{DB=JSON.parse(localStorage.getItem('kmassage-db')||'null')||DB}catch(x){}
 /* live (v10): with a backend the PIN is checked on the server and the job comes from the shared store, so it works on the customer's own phone */
 const REMOTE=!!(CFG&&CFG.backend);let LIVE=false,PIN='';try{PIN=sessionStorage.getItem('kmassage-ptpin-'+JOB)||''}catch(x){}
-const save=()=>{if(LIVE)return;try{localStorage.setItem('kmassage-db',JSON.stringify(DB))}catch(x){}};
-let C=(DB.customers||[]).find(c=>c.id===JOB);const LOCALC=C;if(!C&&REMOTE&&JOB)C={id:JOB,name:'',job:{},ph:1};
+const save=()=>{if(LIVE||DEMO)return;try{localStorage.setItem('kmassage-db',JSON.stringify(DB))}catch(x){}};
+if(DEMO){DB=sampleDB();try{sessionStorage.setItem('kmassage-pt-'+JOB,'1')}catch(x){}}
+let C=DEMO?DB.customers[0]:(DB.customers||[]).find(c=>c.id===JOB);const LOCALC=C;if(!C&&REMOTE&&JOB)C={id:JOB,name:'',job:{},ph:1};
 async function api(o){const r=await fetch(CFG.backend,{method:'POST',body:JSON.stringify(Object.assign({j:JOB,pin:PIN},o))});return r.json()}
 function takeView(r){C=r.c;C.job=C.job||{};DB={customers:[C],crew:r.crew||[],addons:r.addons||[]};LIVE=true}
 let LANG=(()=>{let l='';try{l=localStorage.getItem('kmassage-lang')||''}catch(x){}return l||(C&&C.job&&C.job.lang)||((navigator.language||'').startsWith('es')?'es':'en')})();
@@ -341,6 +451,53 @@ const smsHref=b=>`sms:${BIZ_PHONE}${/iPhone|iPad|Mac/i.test(navigator.userAgent)
 const setLang=l=>{LANG=l;try{localStorage.setItem('kmassage-lang',l)}catch(x){}document.documentElement.lang=l;if(C){C.job=C.job||{};if(C.job.lang!==l){C.job.lang=l;if(LIVE)api({action:'portal_act',act:'lang',lang:l}).catch(()=>{});else save()}}};
 document.documentElement.lang=LANG;
 
+/* ---------- demo: labeled sample customer per kind (?demo=1). Never saved. ---------- */
+function sampleDB(){const d=n=>{const x=new Date();x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)},ago=n=>Date.now()-n*864e5,K=PK.kind,
+  plans=PK.plans||[],stepKeys=(PK.steps||[]).map(x=>x[0]);
+  const crew=[{id:'s1',name:'Maria',role:PK.crewWord||'Lead'},{id:'s2',name:'James',role:PK.crewWord||'Tech'}];
+  const c={id:'demo',sample:true,name:'Sample Customer',addr:K==='appt'||PK.atShop?'':'1234 Sample St, Houston, TX',job:{visits:[],changes:[],log:[]},show:{estimate:1,invoice:1,updates:1},updates:[],prod:{done:{}}};
+  if(K==='appt'){c.stage='booked';c.job.visits=[{id:'v1',type:'work',date:d(3),from:'10:00',status:'confirmed',crew:['s1'],lead:'s1',deposit:25,depPaid:1},{id:'v0',type:'work',date:d(-35),from:'11:00',status:'done',crew:['s1']}];
+    c.updates=[{t:ago(35),text:'Aftercare from your last visit: wait 48 hours before washing, use sulfate-free shampoo, book your next visit in about 6 weeks.',photos:[]}];
+    c.invoice={status:'paid',paidT:ago(35),t:ago(35),no:'INV-1042',link:'index.html',items:[{desc:'Salon appointment',amount:185},{desc:'Bond treatment',amount:35}],dep:25}}
+  else if(K==='event'){c.stage='approved';c.event={date:d(24),guests:120,place:'Sample venue, Houston',menu:'Menu picked at your tasting'};
+    c.job.visits=[{id:'v1',type:'inspection',date:d(-6),from:'14:00',status:'done',crew:['s1']}];c.estimate={status:'approved',okBy:'Sample Customer',okT:ago(5),link:'index.html'};
+    c.invoice={status:'sent',t:ago(5),no:'INV-2087',link:'index.html',dep:1500,depPaid:1,bal:3500,due:d(17),items:[{desc:'Buffet for 120 guests',amount:4200},{desc:'Service staff (4 people)',amount:800}],note:'Balance due 7 days before your event.'};stepKeys.slice(0,3).forEach((k,i)=>c.prod.done[k]={t:ago(10-i)})}
+  else if(K==='project'){c.stage='work';c.job.visits=[{id:'v1',type:'work',date:d(0),from:'08:00',to:'09:00',status:'onway',eta:15,crew:['s1','s2'],lead:'s1'}];
+    stepKeys.slice(0,Math.max(2,Math.floor(stepKeys.length/2))).forEach((k,i)=>c.prod.done[k]={t:ago(8-i)});c.estimate={status:'approved',okBy:'Sample Customer',okT:ago(12),link:'index.html'};
+    c.job.changes=[{title:'Replace 2 damaged boards found today',why:'They were soft under the old material.',price:180,status:'waiting',t:ago(0),photos:[]}]}
+  else{c.stage='estimate';c.job.visits=[{id:'v1',type:'estimate',date:d(PK.atShop?1:0),from:'13:00',to:PK.atShop?'':'15:00',status:PK.atShop?'confirmed':'onway',eta:20,crew:['s2'],lead:'s2'}];
+    c.estimate={status:'sent',link:'index.html'};c.updates=[{t:ago(0),text:'Sample note: what the tech found and the options we recommend.',photos:[]}]}
+  return{customers:[c],crew,addons:[]}}
+
+/* ---------- branded invoice (Oct 15): built from the owner's line items; pay link = owner's Stripe/Square/GHL link ---------- */
+function invLines(c){const iv=c.invoice||{};if(iv.items&&iv.items.length)return iv.items.map(x=>({desc:x.desc,amount:+x.amount||0}));const L=[];const e=c.estimate&&c.estimate.status==='approved'&&c.estimate.opts?c.estimate.opts[c.estimate.pick||0]:null;if(e)L.push({desc:e.name,amount:+e.price||0});
+  ((c.job||{}).changes||[]).filter(o=>o.status==='approved'||o.status==='paid').forEach(o=>L.push({desc:o.title,amount:+o.price||0}));((c.job||{}).picks||[]).forEach(p=>L.push({desc:p.name,amount:+p.price||0}));return L}
+function invHtml(c){const t=T(),iv=c.invoice||{},L=invLines(c),sub=L.reduce((a,x)=>a+x.amount,0),dep=+iv.dep||0,due=Math.max(0,sub-dep),paid=iv.status==='paid',no=iv.no||('INV-'+String(c.id||'').replace(/\D/g,'').slice(-4).padStart(4,'0'));
+  return `<article class="pinv ${paid?'is-paid':''}" id="pinvDoc"><header class="pinv-h"><div class="pinv-brand">${LOGO}<div><b>${esc(CFG.biz||'')}</b><small>${esc(PK.addr||'')}</small><small>${BIZ_PRETTY}</small></div></div><div class="pinv-t"><h2>${t.invTitle}</h2><dl><div><dt>${t.invNo}</dt><dd>${esc(no)}</dd></div><div><dt>${t.invDate}</dt><dd>${dayShort(iv.t||Date.now())}</dd></div>${iv.due&&!paid?`<div><dt>${t.invDue}</dt><dd>${dayShort(at(iv.due,'12:00'))}</dd></div>`:''}</dl></div></header>
+    <div class="pinv-to"><small>${t.billTo}</small><b>${esc(c.name||'')}</b>${c.addr?`<span>${esc(c.addr)}</span>`:''}</div>
+    <table class="pinv-tb"><thead><tr><th>${t.item}</th><th>${t.amount}</th></tr></thead><tbody>${L.map(x=>`<tr><td>${esc(x.desc)}</td><td>${usd(x.amount)}</td></tr>`).join('')||`<tr><td colspan="2">—</td></tr>`}</tbody></table>
+    <dl class="pinv-sum"><div><dt>${t.subtotal}</dt><dd>${usd(sub)}</dd></div>${dep?`<div><dt>${t.depLess}</dt><dd>−${usd(dep)}</dd></div>`:''}<div class="tot"><dt>${t.totalDue}</dt><dd>${usd(paid?0:due)}</dd></div></dl>
+    ${iv.note?`<p class="pinv-note">${esc(iv.note)}</p>`:''}<p class="pinv-thx">${t.invThanks}</p>${paid?`<span class="pinv-stamp" aria-label="${t.paidStamp}">${t.paidStamp}</span>`:''}</article>`}
+function invSheet(c){const t=T(),iv=c.invoice||{},L=invLines(c),due=Math.max(0,L.reduce((a,x)=>a+x.amount,0)-(+iv.dep||0)),paid=iv.status==='paid';
+  sheet(`<div class="pinv-wrap">${invHtml(c)}</div><div class="prow pinv-acts">${!paid&&iv.link?`<a class="pbtn pbtn-main" href="${esc(iv.link)}" target="_blank" rel="noopener">${I.card}${t.payInv(usd(due))}</a>`:''}<button type="button" class="pbtn pbtn-line" id="pinvPrint">${I.doc}${t.saveInv}</button><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`);
+  document.getElementById('pinvPrint').onclick=()=>{document.body.classList.add('printing-inv');window.print();setTimeout(()=>document.body.classList.remove('printing-inv'),500)}}
+
+/* ---------- thank-you screen (?thanks=paid|booked): confirm first, then what's next, then ONE plan offer, then a referral ---------- */
+function thanksScreen(kind){const t=T(),paid=kind!=='booked',pl=(PK.plans||[])[0],u=location.origin+location.pathname.replace(/portal\.html$/,''),em=new URLSearchParams(location.search).get('e')||'';
+  const nextL=paid?(PK.kind==='appt'?['Your receipt is in your email.','Book your next visit any time.','Text us with any questions.']:PK.kind==='event'?['Your receipt is in your email.','We’ll confirm your final count and menu.','Text us with any questions.']:['Your receipt is in your email.','Your warranty starts today.','Text us any time something comes up.'])
+    :(PK.kind==='appt'?['We’ll text you a reminder the day before.','Need to move it? Use the link in your text.','Arrive 5 minutes early.']:['We’ll text you when we’re on the way.','You’ll see who’s coming before we arrive.','Need to move it? Use the link in your text.']);
+  $('#papp').innerHTML=`<main class="ty"><section class="ty-card" aria-labelledby="tyH">
+    <div class="ty-check" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg></div>
+    <p class="pk">${esc(CFG.biz||'')}</p><h1 id="tyH">${paid?t.tyPaid:t.tyBooked}</h1><p class="ty-p">${paid?t.tyPaidP:t.tyBookedP}</p>
+    <div class="ty-mail" role="status"><span class="ty-env" aria-hidden="true"><svg viewBox="0 0 40 28"><rect x="1.5" y="1.5" width="37" height="25" rx="4"/><path d="M2 3l18 13L38 3"/></svg></span><span>${esc(t.receipt(em))}</span></div>
+    <h2 class="ty-h2">${t.tyNext}</h2><ol class="ty-next">${nextL.map(x=>`<li>${I.check}<span>${esc(x)}</span></li>`).join('')}</ol>
+    ${JOB?`<a class="pbtn pbtn-main ty-cta" href="portal.html?j=${encodeURIComponent(JOB)}">${t.tyPortal}</a>`:''}
+    </section>
+    ${pl&&PK.kind!=='event'?`<section class="pc ty-plan"><p class="pk">${t.tyAdd}</p><h2>${esc(pl.name)} <span class="plp">${esc(pl.price)}</span></h2><ul>${(pl.perks||[]).slice(0,3).map(x=>`<li>${I.check}<span>${esc(x)}</span></li>`).join('')}</ul>
+      <a class="pbtn ${JOB?'pbtn-line':'pbtn-main'}" ${pl.link?`href="${esc(pl.link)}" target="_blank" rel="noopener"`:`href="index.html#club"`}>${t.planJoin(esc(pl.name))}</a>${PK.joinBonus?`<p class="plbonus"><b>${t.planBonus}:</b> ${esc(PK.joinBonus)}</p>`:''}</section>`:''}
+    <section class="pc ty-ref"><p><b>${t.tyRefer}</b></p><a class="pbtn pbtn-line" href="${smsHref(t.tyReferMsg(u)).replace('sms:'+BIZ_PHONE,'sms:')}">${I.chat}${t.tyReferBtn}</a></section>
+    <a class="pin-site" href="index.html">${I.back}${t.tyHome}</a>${thmBtn()}</main>`;bindThm(()=>thanksScreen(kind));if(!reduce)setTimeout(()=>{const c=document.querySelector('.ty-card');c&&c.classList.add('go')},30);else{const c=document.querySelector('.ty-card');c&&c.classList.add('go','still')}}
+
 /* ---------- icons ---------- */
 const LOGO=`<svg viewBox="0 0 32 32" aria-hidden="true" class="lg"><path class="lg-r" d="M3 17 16 6l13 11" fill="none" stroke="#FFD400" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path class="lg-h" d="M8 15v11h16V15" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></svg>`;
 const I={doc:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12h6M9 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
@@ -354,6 +511,8 @@ const I={doc:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14
   back:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   globe:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" fill="none" stroke="currentColor" stroke-width="2"/></svg>`};
 
+const thmBtn=()=>`<button type="button" class="pthm" data-thm aria-label="${THEME==='light'?'Dark mode':'Light mode'}" title="${THEME==='light'?'Dark mode':'Light mode'}">${THEME==='light'?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'}</button>`;
+function bindThm(re){document.querySelectorAll('[data-thm]').forEach(b=>b.onclick=()=>{THEME=THEME==='light'?'dark':'light';try{localStorage.setItem('kmassage-theme',THEME)}catch(x){}document.documentElement.dataset.theme=THEME;re()})}
 /* ---------- small UI helpers ---------- */
 function toast(m){const t=document.createElement('div');t.className='ptoast';t.setAttribute('role','status');t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.classList.add('out'),2600);setTimeout(()=>t.remove(),3000)}
 function sheet(html,focus){const L=$('#player');L.innerHTML=`<div class="pscrim"><div class="psheet" role="dialog" aria-modal="true">${html}</div></div>`;const prev=document.activeElement;
@@ -373,7 +532,7 @@ let tries=0,lockUntil=0;try{const s=JSON.parse(sessionStorage.getItem('kmassage-
 const saveTries=()=>{try{sessionStorage.setItem('kmassage-pt-tries',JSON.stringify({n:tries,u:lockUntil}))}catch(x){}};
 function pinScreen(){const t=T();let v='';
   $('#papp').innerHTML=`<main class="pin" id="pin">
-    <div class="pin-top">${langSeg()}</div>
+    <div class="pin-top">${langSeg()}${thmBtn()}</div>
     <section class="pin-card" aria-labelledby="pinH">
       <div class="pin-brand">${LOGO}<span>Cypress Creek<small>Massage</small></span></div>
       <div class="pin-lockwrap">${I.lock}</div>
@@ -388,7 +547,7 @@ function pinScreen(){const t=T();let v='';
     </section>
     <a class="pin-site" href="index.html">${I.back}${t.visit}</a>
   </main>`;
-  bindLang(()=>{pinScreen();$('#pin').classList.add('again')});if(!C)return;
+  bindLang(()=>{pinScreen();$('#pin').classList.add('again')});bindThm(pinScreen);if(!C)return;
   const dots=$$('.pin-dots i'),err=$('#pinErr'),inp=$('#pinIn'),card=$('.pin-card');
   const draw=()=>dots.forEach((d,i)=>d.classList.toggle('on',i<v.length));
   const lockMsg=()=>{const s=Math.ceil((lockUntil-Date.now())/1000);if(s>0){err.textContent=t.locked(s);setTimeout(lockMsg,1000);return true}err.textContent='';return false};
@@ -420,20 +579,20 @@ function curVisit(){const V=((C.job||{}).visits||[]).filter(v=>v.status!=='cance
 const crewOf=v=>(v.crew||[]).map(id=>(DB.crew||[]).find(m=>m.id===id)).filter(Boolean);
 function visitCard(v){const t=T(),st=v.status||'scheduled',start=at(v.date,v.from),dd=Math.round((new Date(v.date+'T12:00').getTime()-new Date(new Date().toDateString()+' 12:00').getTime())/864e5);
   const live=st==='onway'||st==='arrived';
-  const route=st==='onway'?`<div class="route" aria-hidden="true"><div class="road"><i></i></div><div class="truck">${I.truck}</div><div class="home">${I.house}</div></div>`
+  const shop=PK.kind==='appt'||PK.kind==='event'||PK.atShop;const route=shop?'':st==='onway'?`<div class="route" aria-hidden="true"><div class="road"><i></i></div><div class="truck">${I.truck}</div><div class="home">${I.house}</div></div>`
     :st==='arrived'?`<div class="route here" aria-hidden="true"><div class="road full"><i></i></div><div class="home pulse">${I.house}</div><div class="truck parked">${I.truck}</div></div>`:'';
   const crew=crewOf(v),team=v.team&&v.team.photo;
   return `<section class="pc pc-visit ${live?'live':''} st-${st}" data-anim>
-    <div class="pc-head"><p class="pk">${t.next}</p><span class="pill pill-${st}">${st==='onway'||st==='arrived'?'<b class="dotlive"></b>':''}${t.st[st]}</span></div>
+    <div class="pc-head"><p class="pk">${PK.kind==='appt'?t.nextAppt:t.next}</p><span class="pill pill-${st}">${st==='onway'||st==='arrived'?'<b class="dotlive"></b>':''}${t.st[st]}</span></div>
     <div class="vbig"><div class="vcal" aria-hidden="true"><small>${new Date(start).toLocaleDateString(LOC(),{month:'short'})}</small><b>${new Date(start).getDate()}</b><span>${new Date(start).toLocaleDateString(LOC(),{weekday:'short'})}</span></div>
-      <div><h2>${esc(t.vt[v.type]||t.vt.work)}</h2><p class="vwhen">${dayLong(start)}</p><p class="vwin">${v.to?t.arrive(tm(v.from),tm(v.to)):t.arriveAt(tm(v.from))}</p>${st==='scheduled'||st==='confirmed'?`<p class="vcount">${t.inDays(Math.max(0,dd))}</p>`:''}</div></div>
+      <div><h2>${esc(t.vt[v.type]||t.vt.work)}</h2><p class="vwhen">${dayLong(start)}</p><p class="vwin">${shop?tm(v.from)+(v.to?' – '+tm(v.to):''):v.to?t.arrive(tm(v.from),tm(v.to)):t.arriveAt(tm(v.from))}</p>${st==='scheduled'||st==='confirmed'?`<p class="vcount">${t.inDays(Math.max(0,dd))}</p>`:''}</div></div>
     ${route}
-    ${st==='onway'?`<p class="vlive">${t.onwayP(v.eta)}</p>`:st==='arrived'?`<p class="vlive">${t.arrivedP}</p>`:st==='done'?`<p class="vlive">${t.doneP}</p>`:`<p class="pm">${esc(v.note||t.notHome)}</p>`}
-    <div class="who"><h3>${t.who}</h3>
+    ${st==='onway'?`<p class="vlive">${t.onwayP(v.eta)}</p>`:st==='arrived'?`<p class="vlive">${t.arrivedP}</p>`:st==='done'?`<p class="vlive">${t.doneP}</p>`:(shop?`<p class="pm"><b>${t.where}:</b> ${esc(PK.addr||t.shop)} · <a href="https://maps.google.com/?q=${encodeURIComponent(PK.addr||'')}" target="_blank" rel="noopener">${t.directions}</a></p>${v.deposit?`<p class="pm pdep">${v.depPaid?`<span class="pdep-i">${I.check}</span>`+t.depPaid(usd(v.deposit)):t.depOnFile}</p>`:''}${PK.policy?`<details class="ppol"><summary>${t.policy}</summary><p class="pm">${esc(PK.policy)}</p></details>`:''}`:`<p class="pm">${esc(v.note||t.notHome)}</p>`)}
+    <div class="who"><h3>${shop?t.yourPro(String(PK.crewWord||'').toLowerCase()):t.who}</h3>
       ${team?`<figure class="teamph"><button type="button" class="zoomable" data-zoom="${esc(v.team.photo)}"><img src="${esc(v.team.photo)}" alt="${t.teamCap}"></button><figcaption><b>${t.teamCap}</b>${v.team.names?`<span>${esc(v.team.names)}</span>`:''}</figcaption></figure>`:''}
-      ${crew.length?`<ul class="crew">${crew.map((m,i)=>`<li style="--d:${i*90}ms"><button type="button" class="av zoomable" ${m.photo?`data-zoom="${esc(m.photo)}"`:''} aria-label="${t.photo}: ${esc(m.name)}">${m.photo?`<img src="${esc(m.photo)}" alt="">`:`<span>${esc((m.name||'?')[0])}</span>`}</button><b>${esc(m.name)}</b><small>${m.id===v.lead?`<em>${t.lead}</em>`:esc(m.role||'')}</small></li>`).join('')}</ul>`:''}
-      ${!team&&!crew.length?`<p class="pm whosoon">${t.whoSoon}</p>`:''}</div>
-    <div class="prow">${st==='scheduled'||st==='confirmed'?`<button type="button" class="pbtn pbtn-line" data-ics="${v.id}">${I.cal}${t.addCal}</button>`:''}<a class="pbtn pbtn-line" href="${smsHref(t.sms.diff(C.name,dayShort(start)))}">${I.chat}${t.diffTime}</a></div>
+      ${crew.length?`<ul class="crew">${crew.map((m,i)=>`<li style="--d:${i*90}ms"><button type="button" class="av zoomable" ${m.photo?`data-zoom="${esc(m.photo)}"`:''} aria-label="${t.photo}: ${esc(m.name)}">${m.photo?`<img src="${esc(m.photo)}" alt="">`:`<span>${esc((m.name||'?')[0])}</span>`}</button><b>${esc(m.name)}</b><small>${shop?'':m.id===v.lead?`<em>${t.lead}</em>`:esc(m.role||'')}</small></li>`).join('')}</ul>`:''}
+      ${!team&&!crew.length&&!shop?`<p class="pm whosoon">${t.whoSoon}</p>`:''}</div>
+    <div class="prow">${st==='scheduled'||st==='confirmed'?`<button type="button" class="pbtn pbtn-line" data-ics="${v.id}">${I.cal}${t.addCal}</button>`:''}<a class="pbtn pbtn-line" href="${smsHref(t.sms.diff(C.name,dayShort(start)))}">${I.chat}${shop?t.resched:t.diffTime}</a>${shop&&dd===0?`<a class="pbtn pbtn-line" href="${smsHref(t.sms.q(C.name))}">${t.late}</a>`:''}</div>
   </section>`}
 function coCard(o,i){const t=T(),done=o.status!=='waiting';
   return `<article class="pc pc-co ${o.status}" data-anim><div class="pc-head"><p class="pk">${t.co}</p>${o.status==='approved'?`<span class="pill pill-ok">${I.check}${t.approved}</span>`:o.status==='paid'?`<span class="pill pill-ok">${I.check}${t.paid}</span>`:o.status==='declined'?`<span class="pill">${t.declined}</span>`:''}</div>
@@ -450,9 +609,9 @@ function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{}
   const addons=(DB.addons||[]).filter(a=>(j.addons||[]).includes(a.id));const picks=j.picks||[];
   const est=c.estimate&&s.estimate&&c.estimate.status!=='draft'?c.estimate:null,inv=c.invoice&&s.invoice&&c.invoice.status!=='draft'?c.invoice:null,rep=c.report&&(s.report||s.updates)?c.report:null,ups=(s.updates?(c.updates||[]):[]).concat(rep?[{t:rep.t,text:rep.notes,photos:rep.photos||[]}]:[]).sort((a,b)=>a.t-b.t);
   const dn=(c.prod||{}).done||{},CORE=['contract','mat_delivered','arrived','tearoff','decking','dryin','shingles','cleanup','walkthrough','inspection'];
-  const SK=['contract','claim','hoa','permit','mat_delivered','dumpster','arrived','tearoff','decking','dryin','shingles','ridge','cleanup','walkthrough','inspection','warranty'].filter(k=>k==='claim'?!!(c.ins&&c.ins.on):k==='hoa'?!!(c.prod&&c.prod.hoa):CORE.includes(k)||!!(c.prod&&c.prod.all));
+  const SK=PK.steps?PK.steps.filter(x=>x[2]||!!(c.prod&&c.prod.all)).map(x=>x[0]):['contract','claim','hoa','permit','mat_delivered','dumpster','arrived','tearoff','decking','dryin','shingles','ridge','cleanup','walkthrough','inspection','warranty'].filter(k=>k==='claim'?!!(c.ins&&c.ins.on):k==='hoa'?!!(c.prod&&c.prod.hoa):CORE.includes(k)||!!(c.prod&&c.prod.all));
   const nDone=SK.filter(k=>dn[k]).length,nx=SK.find(k=>!dn[k]),building=['approved','work','invoiced','paid'].includes(c.stage),pct=building?Math.max(8,Math.round(nDone/Math.max(1,SK.length)*100)):[8,30,55,100][cur];
-  const prog=nDone||['approved','work','invoiced','paid'].includes(c.stage)?`<section class="pc pc-prog" data-anim><div class="pc-head"><p class="pk">${t.prog}</p><span class="pill">${t.progP(nDone,SK.length)}</span></div><ol class="psteps">${SK.map(k=>`<li class="${dn[k]?'done':k===nx?'now':''}"><span class="pst-b">${dn[k]?I.check:''}</span><span><b>${esc(t.sk[k])}</b>${dn[k]?`<small>${dayShort(dn[k].t)} · ${new Date(dn[k].t).toLocaleTimeString(LOC(),{hour:'numeric',minute:'2-digit'})}</small>`:k===nx?`<small>${t.progNext}</small>`:''}</span></li>`).join('')}</ol></section>`:'';
+  const progT=PK.kind==='event'?t.progEvent:t.prog;const prog=PK.kind!=='appt'&&(nDone||['approved','work','invoiced','paid'].includes(c.stage))?`<section class="pc pc-prog" data-anim><div class="pc-head"><p class="pk">${progT}</p><span class="pill">${t.progP(nDone,SK.length)}</span></div><ol class="psteps">${SK.map(k=>`<li class="${dn[k]?'done':k===nx?'now':''}"><span class="pst-b">${dn[k]?I.check:''}</span><span><b>${esc((PK.steps&&LANG==='en'&&(PK.steps.find(x=>x[0]===k)||[])[1])||t.sk[k])}</b>${dn[k]?`<small>${dayShort(dn[k].t)} · ${new Date(dn[k].t).toLocaleTimeString(LOC(),{hour:'numeric',minute:'2-digit'})}</small>`:k===nx?`<small>${t.progNext}</small>`:''}</span></li>`).join('')}</ol></section>`:'';
   const P=[];
   if(v)P.push(visitCard(v));
   if(waiting)P.push(`<div class="todo" data-anim><b class="todo-n">${waiting}</b><span>${t.todoN(waiting)}</span></div>`);
@@ -462,31 +621,39 @@ function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{}
   if(est&&doc(est)){const ap=est.status==='approved';P.push(`<section class="pc pc-doc" data-anim><p class="pk">${t.est}</p>
     <a class="paybtn paybtn-line" href="${esc(doc(est))}" target="_blank" rel="noopener"><span class="paybtn-i">${I.doc}</span><span class="paybtn-t"><b>${t.viewEst}</b><small>${t.opensNew}</small></span><span class="paybtn-a" aria-hidden="true">→</span></a>
     ${ap?`<span class="pill pill-ok">${I.check}${t.estYes(est.okBy&&est.okBy[0]!=='('?esc(est.okBy):'',dayShort(est.okT||Date.now()))}</span>`:est.status==='sent'?`<button type="button" class="pbtn pbtn-main" data-est="0">${I.check}${t.yes}</button><a class="plink" href="${smsHref(t.sms.q(c.name))}">${t.ask}</a>`:''}</section>`)}
-  if(inv&&(doc(inv)||inv.status==='paid')){const pd=inv.status==='paid';P.push(`<section class="pc pc-inv ${pd?'is-paid':''}" data-anim><p class="pk">${t.inv}</p>
+  if(inv&&inv.items&&inv.items.length){const pd=inv.status==='paid';P.push(`<section class="pc pc-inv ${pd?'is-paid':''}" data-anim><p class="pk">${t.inv}</p>${pd?`<div class="paid-big">${I.check}<b>${t.invPaid(dayShort(inv.paidT||Date.now()))}</b></div>`:''}<button type="button" class="paybtn ${pd?'paybtn-line':''}" data-inv><span class="paybtn-i">${pd?I.doc:I.card}</span><span class="paybtn-t"><b>${pd?t.viewMyInv:t.viewInv}</b><small>${esc(inv.no||'')}</small></span><span class="paybtn-a" aria-hidden="true">→</span></button></section>`)}
+  else if(inv&&(doc(inv)||inv.status==='paid')){const pd=inv.status==='paid';P.push(`<section class="pc pc-inv ${pd?'is-paid':''}" data-anim><p class="pk">${t.inv}</p>
     ${pd?`<div class="paid-big">${I.check}<b>${t.invPaid(dayShort(inv.paidT||Date.now()))}</b></div>`:''}
     ${doc(inv)?`<a class="paybtn ${pd?'paybtn-line':''}" href="${esc(doc(inv))}" target="_blank" rel="noopener"><span class="paybtn-i">${pd?I.doc:I.card}</span><span class="paybtn-t"><b>${pd?t.viewInvOnly:t.viewInv}</b><small>${pd?t.opensNew:t.paySafe}</small></span><span class="paybtn-a" aria-hidden="true">→</span></a>`:''}</section>`)}
   if(addons.length)P.push(`<section class="pc pc-extras" data-anim><p class="pk">${t.extras}</p><p class="pm">${t.extrasP}</p><div class="xgrid">${addons.map(a=>{const pk=picks.find(p=>p.addon===a.id);return`<article class="x ${pk?'on':''}">${a.photo?`<img src="${esc(a.photo)}" alt="">`:''}<div><b>${esc(a.name)}</b>${a.desc?`<p>${esc(a.desc)}</p>`:''}<span class="xp">${usd(a.price)}</span>
     ${pk?(pk.status==='paid'?`<span class="pill pill-ok">${I.check}${t.paid}</span>`:`<span class="pill pill-ok">${I.check}${t.added}</span><p class="pm sm">${t.payLater}</p>`):`<button type="button" class="pbtn pbtn-line sm" data-add="${a.id}">${t.addIt}</button>`}</div></article>`}).join('')}</div></section>`);
   if(ups.length||c.camLink)P.push(`<section class="pc" data-anim><p class="pk">${t.ups}</p>${c.camLink?`<a class="pbtn pbtn-line" href="${esc(c.camLink)}" target="_blank" rel="noopener">${t.allPhotos}</a>`:''}<ol class="tl">${ups.slice().reverse().map(u=>`<li><small>${dayShort(u.t)}</small><p>${esc(u.text)}</p>${(u.photos||[]).length?`<div class="pgrid">${u.photos.map(p=>`<button type="button" class="zoomable" data-zoom="${esc(p)}"><img src="${esc(p)}" alt="${t.photo}"></button>`).join('')}</div>`:''}</li>`).join('')}</ol></section>`);
   if(c.matPlan&&c.matPlan.length&&s.materials)P.push(`<section class="pc" data-anim><p class="pk">${t.mats}</p><p class="pm">${t.matsP}</p><ul class="mats">${c.matPlan.map(m=>`<li><b>${esc(m.desc)}</b><span>${m.qty} ${esc(m.unit)}</span></li>`).join('')}</ul></section>`);
+  if(PK.kind==='event'&&c.event){const e=c.event,iv=c.invoice||{};P.unshift(`<section class="pc pc-event" data-anim><p class="pk">${t.nextEvent}</p><h2>${e.date?dayLong(at(e.date,'12:00')):''}</h2><dl class="evdl">${e.guests?`<div><dt>${t.evGuests}</dt><dd>${esc(e.guests)}</dd></div>`:''}${e.place?`<div><dt>${t.evPlace}</dt><dd>${esc(e.place)}</dd></div>`:''}${e.menu?`<div><dt>${t.evMenu}</dt><dd>${esc(e.menu)}</dd></div>`:''}</dl>${iv.dep?`<p class="pk">${t.evPay}</p><ul class="evpay"><li class="${iv.depPaid?'ok':''}"><span>${t.evDep}</span><b>${usd(iv.dep)}</b><small>${iv.depPaid?I.check+' '+t.paid:''}</small></li>${iv.bal?`<li><span>${t.evBal}</span><b>${usd(iv.bal)}</b><small>${iv.due?t.evDue(dayShort(at(iv.due,'12:00'))):''}</small></li>`:''}</ul>`:''}</section>`)}
+  {const pl=PK.plans||[],mem=c.club&&c.club.plan,doneV=((j.visits||[]).some(x=>x.status==='done')),before=['estimate','approved','work'].includes(c.stage),after=c.stage==='paid'||c.stage==='invoiced'||(PK.kind==='appt'&&doneV);
+    if(pl.length&&(mem||before||after)&&PK.kind!=='event'){const p0=pl[0];P.push(`<section class="pc pc-plan" data-anim><p class="pk">${mem?t.planMember(esc(String(mem).split(',')[0])):before&&!after?t.planBefore:PK.kind==='appt'?t.planAfterAppt:t.planAfter}</p>
+      ${mem?'':`<div class="plans">${pl.slice(0,2).map((q,i)=>`<article class="plan ${i===0?'best':''}"><h3>${esc(q.name)}</h3><p class="plp">${esc(q.price)}</p><ul>${(q.perks||[]).slice(0,4).map(x=>`<li>${I.check}<span>${esc(x)}</span></li>`).join('')}</ul><a class="pbtn ${i===0?'pbtn-main':'pbtn-line'}" ${((j.planLinks||{})[q.name]||q.link)?`href="${esc((j.planLinks||{})[q.name]||q.link)}" target="_blank" rel="noopener"`:`href="${smsHref(t.planAsk(q.name))}" data-plan="${esc(q.name)}"`}>${t.planJoin(esc(q.name))}</a></article>`).join('')}</div>${PK.joinBonus?`<p class="plbonus"><b>${t.planBonus}:</b> ${esc(PK.joinBonus)}</p>`:''}`}</section>`)}}
+  if(PK.kind==='appt'&&!v&&((j.visits||[]).some(x=>x.status==='done')||c.stage==='paid'))P.push(`<section class="pc pc-rebook" data-anim><p class="pk">${t.rebook}</p><p>${t.rebookP(PK.rebookWeeks)}</p><a class="pbtn pbtn-main" href="index.html#inspect">${I.cal}${t.rebookBtn}</a></section>`);
   if(c.stage==='paid')P.push(`<section class="pc pc-warr" data-anim><p class="pk">${t.warr}</p><p>${t.warrP}</p></section>`);
   if(!P.length)P.push(`<section class="pc" data-anim><p class="pm">${t.nothing}</p></section>`);
   const R=54,CIRC=2*Math.PI*R;
   $('#papp').innerHTML=`<div class="pwrap ${again?'again':''}" id="pwrap">
-    <header class="ptop"><a class="pbrand" href="index.html" aria-label="Cypress Creek Massage &amp; Day Spa, ${t.website}">${LOGO}<span>Cypress Creek</span></a>${langSeg()}<button type="button" class="plock" id="pLock" aria-label="${t.logout}">${t.logout}</button></header>
+    <header class="ptop"><a class="pbrand" href="index.html" aria-label="Cypress Creek Massage &amp; Day Spa, ${t.website}">${LOGO}<span>Cypress Creek</span></a>${langSeg()}${thmBtn()}<button type="button" class="plock" id="pLock" aria-label="${t.logout}">${t.logout}</button></header>
     <main class="pmain">
-      <section class="hello" data-anim><div class="ring" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" class="ring-bg"/><circle cx="60" cy="60" r="${R}" class="ring-fg" style="--c:${CIRC};--o:${CIRC*(1-pct/100)}"/></svg><span>${I.house}</span></div>
+      <section class="hello" data-anim><div class="ring" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" class="ring-bg"/><circle cx="60" cy="60" r="${R}" class="ring-fg" style="--c:${CIRC};--o:${CIRC*(1-pct/100)}"/></svg><span>${PK.kind==='appt'||PK.kind==='event'?I.cal:I.house}</span></div>
         <div><h1>${esc(t.hi(first(c.name)))}</h1><p class="addr">${esc(c.addr||t.yourRoof)}</p></div></section>
-      ${building?'':`<ol class="steps" aria-label="${t.stepNow}" data-anim>${t.steps.map((x,i)=>`<li class="${i<cur?'done':i===cur?'now':''}" ${i===cur?'aria-current="step"':''}><i>${i<cur?I.check:''}</i><span>${x}</span></li>`).join('')}</ol>`}
+      ${DEMO?`<p class="psample" role="note">${t.sample}</p>`:''}${building?'':`<ol class="steps" aria-label="${t.stepNow}" data-anim>${(PK.kind==='appt'?t.stepsAppt:PK.kind==='event'?t.stepsEvent:PK.kind==='service'?t.stepsService:t.steps).map((x,i)=>`<li class="${i<cur?'done':i===cur?'now':''}" ${i===cur?'aria-current="step"':''}><i>${i<cur?I.check:''}</i><span>${x}</span></li>`).join('')}</ol>`}
       ${P.join('')}
-      <section class="pc pc-more" data-anim><a class="more" href="index.html#inspect"><b>${t.book}</b><span>${t.bookP}</span></a><a class="more" href="index.html"><b>${t.visit}</b><span>ridgeline · ${esc(CFG.city)}</span></a></section>
+      <section class="pc pc-more" data-anim><a class="more" href="index.html#inspect"><b>${t.book}</b><span>${t.bookP}</span></a><a class="more" href="index.html"><b>${t.visit}</b><span>${esc(CFG.biz||'')} · ${esc(CFG.city)}</span></a></section>
       <div class="pcontact" data-anim><a class="pbtn pbtn-main" href="${smsHref(t.sms.q(c.name))}">${I.chat}${t.text}</a><a class="pbtn pbtn-line" href="tel:${BIZ_PHONE}">${I.phone}${t.call} ${BIZ_PRETTY}</a></div>
       ${REMOTE&&!LIVE?`<p class="pdemo">${t.demo}</p>`:''}
     </main></div>`;
-  bindLang(portal);
+  bindLang(portal);bindThm(portal);
   $('#pLock').onclick=()=>{try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen()};
   $$('[data-anim]').forEach((el,i)=>{el.style.setProperty('--i',i)});
   $$('.zoomable[data-zoom]').forEach(b=>b.onclick=()=>{const cl=sheet(`<div class="pzoom"><img src="${esc(b.dataset.zoom)}" alt="${t.photo}"><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`)});
+  $$('[data-inv]').forEach(b=>b.onclick=()=>invSheet(c));
+  $$('[data-plan]').forEach(b=>b.addEventListener('click',()=>{if(DEMO){toast(t.planSent);return}log(`Asked to join: ${b.dataset.plan}`)}));
   $$('[data-ics]').forEach(b=>b.onclick=()=>ics(j.visits.find(x=>x.id===b.dataset.ics)));
   $$('[data-coa]').forEach(b=>b.onclick=()=>signSheet(t.signT,changes[+b.dataset.coa],n=>{if(LIVE)return remoteAct({act:'co_ok',i:+b.dataset.coa,name:n},t.thanksApp,1);Object.assign(changes[+b.dataset.coa],{status:'approved',signed:n,signedT:Date.now()});log(`Approved change: ${changes[+b.dataset.coa].title} (${usd(changes[+b.dataset.coa].price)})`);confetti();toast(t.thanksApp);portal()}));
   $$('[data-cod]').forEach(b=>b.onclick=()=>{if(LIVE)return remoteAct({act:'co_no',i:+b.dataset.cod},t.thanksDec);const o=changes[+b.dataset.cod];o.status='declined';o.decT=Date.now();log(`Said not now to change: ${o.title}`);toast(t.thanksDec);portal()});
@@ -512,8 +679,10 @@ async function remoteAct(o,msg,party){const t=T();toast(t.sending);
 async function refresh(){if(!LIVE||document.hidden||!unlocked()||$('#player .psheet'))return;
   try{const r=await api({action:'portal_get'});if(r.ok){const was=JSON.stringify([C,DB.crew,DB.addons]);takeView(r);if(JSON.stringify([C,DB.crew,DB.addons])!==was)portal()}else if(r.reason==='pin'){try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen()}}catch(x){}}
 if(REMOTE){setInterval(refresh,60000);document.addEventListener('visibilitychange',refresh)}
-if(REMOTE&&JOB&&unlocked()&&PIN){$('#papp').innerHTML=`<main class="pin" id="pin"><section class="pin-card"><div class="pin-brand">${LOGO}<span>Cypress Creek<small>Massage</small></span></div><p class="pin-help">${T().loading}</p></section></main>`;
+const TY=new URLSearchParams(location.search).get('thanks');
+if(TY)thanksScreen(TY);
+else if(REMOTE&&JOB&&unlocked()&&PIN){$('#papp').innerHTML=`<main class="pin" id="pin"><section class="pin-card"><div class="pin-brand">${LOGO}<span>Cypress Creek<small>Massage</small></span></div><p class="pin-help">${T().loading}</p></section></main>`;
   api({action:'portal_get'}).then(r=>{if(r.ok){takeView(r);portal()}else if(r.reason==='nojob'&&LOCALC){C=LOCALC;portal()}else{try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen()}}).catch(()=>{if(LOCALC){C=LOCALC;portal()}else pinScreen()})}
-else if(C&&unlocked()&&!C.ph)portal();else pinScreen();
+else if(DEMO||(C&&unlocked()&&!C.ph))portal();else pinScreen();
 })();
 </script></body></html>
