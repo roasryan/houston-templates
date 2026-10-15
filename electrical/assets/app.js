@@ -7,7 +7,7 @@ const M=window.Motion||null;
 /* ================= CLIENT SETTINGS: the only block to change per client (see SETUP.md) =================
    backend: the client's Google Apps Script web app URL (/exec). Leads, owner alerts, the booking calendar and GoHighLevel all go through it.
    Leave either empty and the site falls back to demo mode (leads stay on this device, free map services). */
-const CFG={"biz": "Lone Star Current Electric", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};
+const SITE_PLAN={"name": "Safe Home", "price": "$12/mo", "perks": ["Yearly electrical safety free estimate", "Surge protector check", "No service fee", "15% off repairs"]};const CFG={"biz": "Lone Star Current Electric", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};
 
 const HOME=document.getElementById('hero')?'':'index.html';
 /* the photo sits exactly under the real header height (in-app browsers and notches change it) */
@@ -59,6 +59,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-sms]');if(
 
 
 
+const OWN_PLANS=["Safe Home", "Generator Care"];const OWN_KIND="service";
 /* ---------- CRM data: one small store shared by the website, the owner view and the customer portal ---------- */
 /* Demo: saved in this browser only. Live: the same shape moves to a database + texting service. */
 const DAY=864e5,NOW=Date.now();
@@ -289,8 +290,10 @@ function oTeam(){const C=DB.crew||[],A=DB.addons||[];
     <div class="pbox"><b>Add someone</b><div class="two"><div class="field"><label for="cmn">Name</label><input id="cmn" placeholder="Luis"></div><div class="field"><label for="cmr">Role</label><input id="cmr" list="cmrl" placeholder="Lead electrician"><datalist id="cmrl"><option value="Lead electrician"><option value="Electrician"><option value="Office"><option value="Project manager"><option value="Owner"></datalist></div></div><button class="btn btn-main btn-sm" type="button" id="cmadd">Add to electrician</button></div>
     <h3 class="osec">Extras customers can add <span class="cnt">${A.length}</span></h3><p class="muted" style="margin-top:-6px">Shown in a customer’s portal only when you switch it on for their job. They tap “Add to my job”, you get a heads-up, and it goes on your invoice.</p>
     ${A.map(a=>`<article class="orow"><div class="orow-m" style="display:flex;gap:12px;align-items:center">${a.photo?`<img class="xph" src="${a.photo}" alt="">`:''}<div><b>${esc(a.name)} · ${usd(a.price)}</b><small>${esc(a.desc||'')}</small></div></div><div class="oacts"><button class="btn btn-line btn-sm" type="button" data-xed="${a.id}">Edit</button><button class="btn btn-line btn-sm" type="button" data-xdel="${a.id}">Remove</button></div></article>`).join('')||'<p class="muted">None yet. Ideas: standby generators, outlets and switches, lighting and fans.</p>'}
-    <button class="btn btn-main btn-sm" type="button" id="xadd">Add an extra</button>`}
-function bindTeam(){const add=$('#cmadd');add.onclick=()=>{const n=$('#cmn').value.trim();if(!n){toast('Add a name.');return}const m={id:'m'+Math.random().toString(36).slice(2,7),name:n,role:$('#cmr').value.trim(),code:newCrewCode(),active:true,perms:{photos:true,phone:true,status:true,allJobs:/owner|manager/i.test($('#cmr').value)}};DB.crew=(DB.crew||[]).concat([m]);save();openOwner();crewEdit(m.id,true)};
+    <button class="btn btn-main btn-sm" type="button" id="xadd">Add an extra</button>
+    <h3 class="osec">Plan sign-up links</h3><p class="muted" style="margin-top:-6px">Paste the pay link for each monthly plan (from your Stripe, Square or booking app). Customers see a Join button for it in their portal and on the thank-you screen. No link = the button texts you instead.</p>
+    ${(typeof OWN_PLANS!=='undefined'?OWN_PLANS:['Club plan']).map((n,i)=>`<div class="field"><label for="plk${i}">${esc(n)}</label><input id="plk${i}" type="url" data-plk="${esc(n)}" placeholder="https://…" value="${esc((DB.planLinks||{})[n]||'')}"></div>`).join('')}`}
+function bindTeam(){document.querySelectorAll('[data-plk]').forEach(x=>x.onchange=()=>{const v=x.value.trim();if(v&&!/^https?:\/\//.test(v)){toast('Paste the full link (starts with https://).');return}DB.planLinks=Object.assign({},DB.planLinks||{},{[x.dataset.plk]:v});(DB.customers||[]).forEach(c=>{if(c.job)c.job.planLinks=DB.planLinks});save();toast('Saved.')});const add=$('#cmadd');add.onclick=()=>{const n=$('#cmn').value.trim();if(!n){toast('Add a name.');return}const m={id:'m'+Math.random().toString(36).slice(2,7),name:n,role:$('#cmr').value.trim(),code:newCrewCode(),active:true,perms:{photos:true,phone:true,status:true,allJobs:/owner|manager/i.test($('#cmr').value)}};DB.crew=(DB.crew||[]).concat([m]);save();openOwner();crewEdit(m.id,true)};
   $$('#obody [data-ced]').forEach(b=>b.onclick=()=>crewEdit(b.dataset.ced));
   $$('#obody [data-cphoto]').forEach(i=>i.onchange=()=>{const f=i.files[0];if(f)faceCrop(f,u=>{const m=DB.crew.find(x=>x.id===i.dataset.cphoto);m.photo=u;m.photoT=Date.now();save();openOwner()})});
   $('#xadd').onclick=()=>xSheet();$$('#obody [data-xed]').forEach(b=>b.onclick=()=>xSheet(b.dataset.xed));
@@ -473,12 +476,20 @@ function portalPage(c){const s=c.show=c.show||{},j=c.portal?ensureJob(c):null;
       <div class="obtns"><a class="ob ob-main" href="${smsTo(c.phone,portalInvite(c))}">${oi('chat')}Text link + PIN</a>${c.email?`<a class="ob ob-line" href="mailto:${esc(c.email)}?subject=${encodeURIComponent(j.lang==='es'?'Su proyecto con Lone Star Current Electric':'Your Lone Star Current Electric project')}&body=${encodeURIComponent(portalInvite(c))}">${oi('mail')}Email it</a>`:''}<button class="ob ob-line" type="button" id="ppCopy">Copy link</button><button class="ob ob-line" type="button" id="ppPrev">See it as ${esc(first(c.name))}</button><button class="ob ob-line" type="button" id="ppPin">New PIN</button></div>
       <h4 class="osub">What ${esc(first(c.name))} can see</h4>${Object.keys(lab).map(k=>`<label class="oswitch ${has[k]?'':'off'}"><input type="checkbox" data-show="${k}" ${has[k]&&s[k]?'checked':''} ${has[k]?'':'disabled'}><span></span><b>${lab[k]}</b>${has[k]?'':'<small>Nothing made yet</small>'}</label>`).join('')}
       ${(DB.addons||[]).length?`<h4 class="osub">Extras they can add</h4>${DB.addons.map(a=>{const pk=j.picks.find(p=>p.addon===a.id);return`<label class="oswitch"><input type="checkbox" data-offer="${a.id}" ${j.addons.includes(a.id)?'checked':''}><span></span><b>${esc(a.name)} · ${usd(a.price)}</b>${pk?`<small>They added it${pk.status==='paid'?' · paid':''}</small>`:''}</label>${pk&&pk.status!=='paid'?`<button class="ob ob-line" type="button" data-pkpaid="${a.id}">Mark ${esc(a.name)} paid</button>`:''}`}).join('')}`:`<p class="muted2">Add extras (lighting and fans…) under More → Electrician & extras.</p>`}
+      <h4 class="osub">Plan${(typeof OWN_KIND!=='undefined'&&OWN_KIND==='event')?', deposit and event':' and deposit'}</h4>
+      <div class="field"><label for="ppClub">Monthly plan they’re on</label><input id="ppClub" list="ppClubL" placeholder="Not on a plan" value="${esc(c.club&&c.club.plan||'')}"><datalist id="ppClubL">${(typeof OWN_PLANS!=='undefined'?OWN_PLANS:[]).map(n=>`<option value="${esc(n)}">`).join('')}</datalist><small class="muted2">On a plan = their portal shows “You’re a member”. Empty = it offers the plan right before and after the job.</small></div>
+      ${nextVisit(c)?`<div class="two"><div class="field"><label for="ppDep">Deposit for ${esc(fmtDay(new Date(nextVisit(c).date+'T12:00').getTime()))}</label><input id="ppDep" inputmode="decimal" placeholder="$0" value="${esc(nextVisit(c).deposit||'')}"></div><label class="oswitch" style="align-self:end"><input type="checkbox" id="ppDepOk" ${nextVisit(c).depPaid?'checked':''}><span></span><b>Deposit paid</b></label></div>`:''}
+      ${(typeof OWN_KIND!=='undefined'&&OWN_KIND==='event')?`<div class="two"><div class="field"><label for="evD">Event date</label><input id="evD" type="date" value="${esc((c.event||{}).date||'')}"></div><div class="field"><label for="evG">Guests</label><input id="evG" inputmode="numeric" value="${esc((c.event||{}).guests||'')}"></div></div><div class="field"><label for="evP">Venue</label><input id="evP" value="${esc((c.event||{}).place||'')}"></div><div class="field"><label for="evM">Menu</label><input id="evM" value="${esc((c.event||{}).menu||'')}"></div>`:''}
       ${j.log.length?`<h4 class="osub">What they did</h4><ul class="plist">${j.log.slice().reverse().slice(0,10).map(l=>`<li>${esc(l.text)} <small>${ago(l.t)}</small></li>`).join('')}</ul>`:''}`:''}`));
   $('#ppOn').onchange=e=>{c.portal=e.target.checked;if(c.portal)ensureJob(c);save();close();portalPage(c)};
   if(!c.portal)return;
   $('#ppCopy').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(portalUrl(c));toast('Link copied. Send the PIN with it.')};$('#ppPrev').onclick=()=>openPortal(c.id);
   $('#ppPin').onclick=()=>{j.pin=newPin();save();close();portalPage(c);toast('New PIN made. Send it to them.')};
   $$('#layer [data-show]').forEach(x=>x.onchange=()=>{s[x.dataset.show]=x.checked;save()});
+  j.planLinks=DB.planLinks||j.planLinks||{};
+  const pc=$('#ppClub');if(pc)pc.onchange=()=>{const v=pc.value.trim();c.club=v?Object.assign({},c.club||{},{plan:v,since:(c.club&&c.club.since)||Date.now()}):null;save();toast(v?'Saved: '+v:'Plan removed.')};
+  const nv=nextVisit(c),pd=$('#ppDep'),pk=$('#ppDepOk');if(nv&&pd){pd.onchange=()=>{nv.deposit=+String(pd.value).replace(/[^\d.]/g,'')||0;save()};pk.onchange=()=>{nv.depPaid=pk.checked;save()}}
+  if($('#evD'))['evD','evG','evP','evM'].forEach(id=>$('#'+id).onchange=()=>{c.event={date:$('#evD').value,guests:$('#evG').value.trim(),place:$('#evP').value.trim(),menu:$('#evM').value.trim()};save()});
   $$('#layer [data-offer]').forEach(x=>x.onchange=()=>{const k=x.dataset.offer;j.addons=x.checked?[...new Set(j.addons.concat([k]))]:j.addons.filter(a=>a!==k);save()});
   $$('#layer [data-pkpaid]').forEach(b=>b.onclick=()=>{const p=j.picks.find(p=>p.addon===b.dataset.pkpaid);p.status='paid';p.paidT=Date.now();save();close();portalPage(c)})}
 
@@ -685,8 +696,24 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 
 /* ---------- ESTIMATE + INVOICE: we are not a cost tracker. Paste the link their app made (QuickBooks, Square, Roofr…)
    or upload a photo/PDF. The customer gets a big button to open it. The owner flips "paid" (or "said yes") by hand. No amounts, no totals. ---------- */
-const hasDoc=d=>!!(d&&(d.link||d.file));
-function docForm(kind,c,d,done){const K=kind==='inv',f=first(c.name);let file=d?d.file||'':'';
+const hasDoc=d=>!!(d&&(d.link||d.file||(d.items&&d.items.length)));
+function invMake(c,d,done){const f=first(c.name),L=(d&&d.items&&d.items.length?d.items:invoiceLines(c)).map(x=>({desc:x.desc,amount:x.amount}));if(!L.length)L.push({desc:'',amount:''});
+  const due0=d&&d.due||new Date(Date.now()+14*864e5).toISOString().slice(0,10),no=d&&d.no||('INV-'+String(1000+((DB.invSeq=(DB.invSeq||0)+1))));
+  const row=(x,i)=>`<div class="two invrow"><div class="field"><label for="ivD${i}">Item</label><input id="ivD${i}" data-ivd="${i}" value="${esc(x.desc||'')}" placeholder="What you did"></div><div class="field"><label for="ivA${i}">Amount</label><input id="ivA${i}" data-iva="${i}" inputmode="decimal" value="${esc(x.amount===''?'':x.amount)}" placeholder="$0"></div></div>`;
+  const close=open(sheetWrap('ivH','Invoice · '+esc(f),`<p class="muted2" style="margin-top:0">Your logo and business info go on it automatically. ${esc(f)} sees it in their portal with a Pay button, and can save it as a PDF.</p>
+    <div id="ivRows">${L.map(row).join('')}</div><button class="ob ob-line" type="button" id="ivAdd">${oi('plus')}Add a line</button>
+    <div class="two"><div class="field"><label for="ivDue">Due date</label><input id="ivDue" type="date" value="${esc(due0)}"></div><div class="field"><label for="ivDep">Deposit already paid</label><input id="ivDep" inputmode="decimal" placeholder="$0" value="${esc(d&&d.dep||'')}"></div></div>
+    <div class="field"><label for="ivPay">Pay link (Stripe, Square…)</label><input id="ivPay" type="url" placeholder="https://…" value="${esc(d&&d.link||'')}"><small class="muted2">Make a payment link for the total in your payment app and paste it here. When they pay, send them to your thank-you page.</small></div>
+    <div class="field"><label for="ivNote">Note (optional)</label><input id="ivNote" value="${esc(d&&d.note||'')}" placeholder="Thanks for choosing us!"></div>
+    <p class="muted2" id="ivTot"></p><p class="err" id="ivE" role="alert" hidden></p><div class="obtns"><button class="ob ob-main ob-xl" type="button" id="ivGo">Save invoice</button></div>`),'#ivD0');
+  const read=()=>[...document.querySelectorAll('[data-ivd]')].map(x=>({desc:x.value.trim(),amount:+String(document.querySelector(`[data-iva="${x.dataset.ivd}"]`).value).replace(/[^\d.]/g,'')||0})).filter(x=>x.desc||x.amount);
+  const tot=()=>{const it=read(),sub=it.reduce((a,x)=>a+x.amount,0),dep=+String($('#ivDep').value).replace(/[^\d.]/g,'')||0;$('#ivTot').textContent=`Total due: ${usd(Math.max(0,sub-dep))}`};
+  document.getElementById('ivRows').addEventListener('input',tot);$('#ivDep').oninput=tot;tot();
+  $('#ivAdd').onclick=()=>{const n=document.querySelectorAll('[data-ivd]').length;document.getElementById('ivRows').insertAdjacentHTML('beforeend',row({desc:'',amount:''},n));$('#ivD'+n).focus()};
+  $('#ivGo').onclick=()=>{const it=read(),l=$('#ivPay').value.trim(),e=$('#ivE');if(!it.length){e.textContent='Add at least one line.';e.hidden=false;return}if(l&&!/^https?:\/\//.test(l)){e.textContent='Paste the full link (starts with https://).';e.hidden=false;return}
+    const n=Object.assign(d||{status:'sent',t:Date.now()},{items:it,no,due:$('#ivDue').value,dep:+String($('#ivDep').value).replace(/[^\d.]/g,'')||0,link:l,note:$('#ivNote').value.trim()});
+    c.invoice=n;c.show=c.show||{};c.show.invoice=true;if(!c.portal){c.portal=true;ensureJob(c)}if(n.status!=='paid'&&stageIx(c.stage)<stageIx('invoiced'))c.stage='invoiced';markStep(c,'invoice',true);save();close();custSheet(c.id);done&&done()}}
+function docForm(kind,c,d,done){const K=kind==='inv',f=first(c.name);let file=d?d.file||'':'';if(K&&(!d||!d.link&&!d.file||d.items)&&!window.__invPaste)return invMake(c,d,done);window.__invPaste=false;
   const close=open(sheetWrap('dfH',(hasDoc(d)?'Change ':'Add ')+(K?'invoice':'estimate')+' · '+esc(f),`<p class="muted2" style="margin-top:0">${K?'Make the invoice in QuickBooks, Square or whatever you use. Paste its link here (the one customers use to pay), or upload a photo or PDF of it.':'Make the estimate in the app you use. Paste its link, or upload a photo or PDF of it.'}</p>
     <div class="field"><label for="dfL">Link</label><input id="dfL" type="url" placeholder="https://…" value="${esc(d&&d.link||'')}"></div>
     <div class="field"><span class="flabel">Or upload it</span><label class="upl" for="dfF"><span id="dfFl">${file?'File attached ✓ (tap to replace)':'Photo or PDF'}</span><input id="dfF" type="file" accept="image/*,application/pdf"></label></div>
@@ -704,14 +731,14 @@ function docPage(kind,c){const K=kind==='inv',d=c[K?'invoice':'estimate'],f=firs
   const ok=K?d.status==='paid':d.status==='approved',when=K?d.paidT:d.okT;
   const close=open(sheetWrap('dpH',(K?'Invoice':'Estimate')+' · '+esc(f),`<div class="ocard2 obig ${ok?'on':''}"><span class="okick">${K?'Invoice':'Estimate'} · added ${fmtDay(d.t)}</span><b class="obig-n">${ok?(K?'Paid':'Approved'):(K?'Not paid yet':'Waiting for an answer')}</b>${ok&&when?`<small>${fmtDay(when)}${!K&&d.okBy&&d.okBy[0]!=='('?' · '+esc(d.okBy):''}</small>`:d.status==='declined'?'<small>They said no</small>':''}</div>
     <label class="oswitch big"><input type="checkbox" id="dpOk" ${ok?'checked':''}><span></span><b>${K?'Paid':'They said yes'}</b><small>${K?'Flip it when the money is in.':'Flip it when they agree.'}</small></label>
-    <div class="obtns"><a class="ob ob-line" href="${esc(d.link||d.file)}" target="_blank" rel="noopener" ${!d.link?'download':''}>${oi('file')}Open it</a>
-      ${!ok?`<a class="ob ob-line" href="${smsTo(c.phone,K?`Hi ${f}, it’s ${ownerName} with Lone Star. Here’s your invoice: ${d.link||portalUrl(c)} Thank you!`:`Hi ${f}, it’s ${ownerName} with Lone Star. Here’s your estimate: ${d.link||portalUrl(c)} Any questions, just text me.`)}">${oi('chat')}Text it to ${esc(f)}</a>`:''}
-      <button class="ob ob-line" type="button" id="dpEd">${oi('edit')}Change link or file</button></div>
+    <div class="obtns">${K&&d.items?`<button class="ob ob-line" type="button" id="dpSee">${oi('file')}See it as ${esc(f)}</button>`:`<a class="ob ob-line" href="${esc(d.link||d.file)}" target="_blank" rel="noopener" ${!d.link?'download':''}>${oi('file')}Open it</a>`}
+      ${!ok?`<a class="ob ob-line" href="${smsTo(c.phone,K?`Hi ${f}, it’s ${ownerName} with Lone Star. Here’s your invoice: ${d.items?portalUrl(c):d.link||portalUrl(c)} Thank you!`:`Hi ${f}, it’s ${ownerName} with Lone Star. Here’s your estimate: ${d.items?portalUrl(c):d.link||portalUrl(c)} Any questions, just text me.`)}">${oi('chat')}Text it to ${esc(f)}</a>`:''}
+      <button class="ob ob-line" type="button" id="dpEd">${oi('edit')}${K&&d.items?'Edit the invoice':'Change link or file'}</button>${K?`<button class="ob ob-line" type="button" id="dpPaste">${d.items?'Use a link or PDF instead':'Build it here instead'}</button>`:''}</div>
     ${K&&CFG.backend?`<p class="muted2">Using QuickBooks, Square or Jobber? Under More → Connections “paid” can flip by itself.</p>`:''}`));
   $('#dpOk').onchange=e=>{const on=e.target.checked;if(K){Object.assign(d,{status:on?'paid':'sent',paidT:on?Date.now():null});if(on){c.stage='paid';markStep(c,'paid',true)}else{if(c.stage==='paid')c.stage='invoiced';markStep(c,'paid',false)}}
     else{Object.assign(d,{status:on?'approved':'sent',okT:on?Date.now():null,okBy:on?(d.okBy||'(you marked it)'):''});if(on){if(stageIx(c.stage)<stageIx('approved'))c.stage='approved';markStep(c,'contract',true)}else if(c.stage==='approved')c.stage='estimate'}
     save();close();docPage(kind,c)};
-  $('#dpEd').onclick=()=>{close();docForm(kind,c,d,()=>docPage(kind,c))}}
+  $('#dpEd').onclick=()=>{close();docForm(kind,c,d,()=>docPage(kind,c))};const ds=$('#dpSee');if(ds)ds.onclick=()=>{close();openPortal(c.id)};const dp=$('#dpPaste');if(dp)dp.onclick=()=>{close();if(d.items){window.__invPaste=true;docForm(kind,c,Object.assign({},d,{items:null}),()=>docPage(kind,c))}else invMake(c,d,()=>docPage(kind,c))}}
 function estPage(c){docPage('est',c)}
 function estSheet(id){docPage('est',byId(id))}
 function invoicePage(c){docPage('inv',c)}
@@ -1023,9 +1050,12 @@ function bindAvail(){const S=AV.S;let view=new Date();view.setDate(1);
       <p class="idemo">${window.CATALOG_NOTE?window.CATALOG_NOTE:CFG.backend?'The owner already has your request. If the time ever needs to move, you’ll hear from us the way you picked.':'Demo: on a live site the confirmation goes out the way the customer picked (text, call or email) and the owner gets an instant alert.'}</p>
       <ul class="iperks"><li><b>Free estimate:</b> ${when}</li><li><b>You need:</b> ${esc(D.issue)}</li>${q&&q.touched&&q.range?`<li><b>Your price held 30 days:</b> ${esc(q.name)}, ${esc(q.range)}</li>`:''}<li><b>We’ll reach you by:</b> ${best.toLowerCase()}</li></ul>
       ${(()=>{const st=new Date(selD);const[hh,mm]=String(selS).split(':').map(Number);st.setHours(hh||9,mm||0,0,0);return calButtons('Free estimate · '+CFG.biz,st,AV.S.len||60,D.addr,'You need: '+D.issue+'. Questions? Call or text '+BIZ_PRETTY)})()}
+      ${(nt==='sms'||nt==='email')?`<p class="isent" role="status"><span class="isent-e" aria-hidden="true"><svg viewBox="0 0 40 28"><rect x="1.5" y="1.5" width="37" height="25" rx="4"/><path d="M2 3l18 13L38 3"/></svg></span>Confirmation sent</p>`:''}
+      ${typeof SITE_PLAN!=='undefined'&&SITE_PLAN?`<div class="iplan"><p class="ikick">Add it to your visit</p><b>${esc(SITE_PLAN.name)} · ${esc(SITE_PLAN.price)}</b><ul>${SITE_PLAN.perks.slice(0,3).map(x=>`<li>${esc(x)}</li>`).join('')}</ul><button class="btn btn-line" type="button" id="iPlan">Yes, add ${esc(SITE_PLAN.name)}</button><small>No charge now. We set it up at your visit. First month free.</small></div>`:''}
       <div class="row"><button class="btn btn-main" type="button" id="iDoneX">Done</button><button class="btn btn-line" type="button" id="iEdit">Change something</button></div>`;
     f.hidden=true;$('.imsteps').hidden=true;$('#imH').textContent='You’re booked';$('#iDone').hidden=false;MD.querySelector('.impanel').scrollTop=0;
     $('#iEdit').onclick=()=>{f.hidden=false;$('#iDone').hidden=true;$('.imsteps').hidden=false;iStep(2)};$('#iDoneX').onclick=closeIM;
+    const ip=$('#iPlan');if(ip)ip.onclick=()=>{c.planAsk=SITE_PLAN.name;save();ip.disabled=true;ip.textContent='Added. We’ll set it up at your visit.';if(CFG.backend)sendLead({name:D.name,phone:D.phone,email:D.email,addr:D.addr,source:'Plan: '+SITE_PLAN.name,msg:'Wants '+SITE_PLAN.name+' added at the visit on '+when,best}).catch(()=>{})};
     const bk=$('#iBooked');bk.innerHTML=`<span class="okpill">Booked</span> <b>${when}</b> <button type="button" class="linkbtn" id="iSee">See details</button>`;bk.hidden=false;$('#iSee').onclick=()=>openIM(true);
     $('#iOpen').textContent='Book another time';$('#iNext').hidden=true;const qn=$('#qbNext');if(qn)qn.innerHTML=`Booked: <b>${when}</b>`;
     if(M&&!reduce)M.animate('#iDone',{opacity:[0,1],y:[16,0]},{duration:.35})});
