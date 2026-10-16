@@ -1210,12 +1210,27 @@ function addrTypeahead(inp){if(!inp||inp.dataset.ta)return;inp.dataset.ta='1';in
   const GEO='https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/';let sugg=[],act=-1,seq=0,tmr;
   const hide=()=>{list.hidden=true;inp.setAttribute('aria-expanded','false');act=-1};
   const show=()=>{list.innerHTML=sugg.map((x,i)=>`<li role="option" aria-selected="${i===act}" data-i="${i}">${esc(x.text.replace(/, USA$/,''))}</li>`).join('');list.hidden=!sugg.length;inp.setAttribute('aria-expanded',String(!!sugg.length))};
-  const use=t=>{inp.value=String(t).replace(/, USA$/,'');hide();inp.dispatchEvent(new Event('change',{bubbles:true}))};
-  inp.addEventListener('input',()=>{clearTimeout(tmr);const v=inp.value.trim();if(v.length<3){sugg=[];hide();return}
+  const use=(t,key)=>{inp.value=String(t).replace(/, USA$/,'');hide();inp.dispatchEvent(new Event('change',{bubbles:true}));if(inp.id==='iAddr')addrMap(inp,wrap,inp.value,key)};
+  inp.addEventListener('input',()=>{clearTimeout(tmr);const v=inp.value.trim();const fm=wrap.parentNode.querySelector('.amap');if(fm&&!fm.hidden){fm.hidden=true;delete inp.dataset.confirmed}if(v.length<3){sugg=[];hide();return}
     tmr=setTimeout(async()=>{const my=++seq;try{const j=await(await fetch(`${GEO}suggest?f=json&countryCode=USA&category=Address&maxSuggestions=6&location=${CFG.lon},${CFG.lat}&text=${encodeURIComponent(v)}`)).json();if(my!==seq)return;sugg=(j.suggestions||[]).filter(x=>!x.isCollection);act=-1;show()}catch(x){hide()}},220)});
-  inp.addEventListener('keydown',e=>{if(list.hidden)return;if(e.key==='ArrowDown'){e.preventDefault();act=(act+1)%sugg.length;show()}else if(e.key==='ArrowUp'){e.preventDefault();act=(act-1+sugg.length)%sugg.length;show()}else if(e.key==='Enter'&&act>=0){e.preventDefault();use(sugg[act].text)}else if(e.key==='Escape')hide()});
-  let picked=false;const pick=e=>{const li=e.target.closest('li');if(!li)return;e.preventDefault();if(picked)return;picked=true;setTimeout(()=>picked=false,600);use(sugg[+li.dataset.i].text)};
+  inp.addEventListener('keydown',e=>{if(list.hidden)return;if(e.key==='ArrowDown'){e.preventDefault();act=(act+1)%sugg.length;show()}else if(e.key==='ArrowUp'){e.preventDefault();act=(act-1+sugg.length)%sugg.length;show()}else if(e.key==='Enter'&&act>=0){e.preventDefault();use(sugg[act].text,sugg[act].magicKey)}else if(e.key==='Escape')hide()});
+  let picked=false;const pick=e=>{const li=e.target.closest('li');if(!li)return;e.preventDefault();if(picked)return;picked=true;setTimeout(()=>picked=false,600);use(sugg[+li.dataset.i].text,sugg[+li.dataset.i].magicKey)};
   list.addEventListener('pointerdown',pick);list.addEventListener('mousedown',e=>e.preventDefault());list.addEventListener('click',pick);inp.addEventListener('blur',()=>setTimeout(hide,350))}
+/* ---- "Is this your place?" (Oct 16): after an address is picked, show a satellite view to confirm it, plus a service-area check.
+   Google Maps embed (no key) + Esri geocode for the distance. Identifier only: nothing is measured from the photo. ---- */
+function addrMap(inp,wrap,addr,key){if(!addr)return;let fig=wrap.parentNode.querySelector('.amap');
+  if(!fig){fig=document.createElement('figure');fig.className='amap';wrap.insertAdjacentElement('afterend',fig)}
+  fig.hidden=false;fig.classList.remove('ok');delete inp.dataset.confirmed;
+  fig.innerHTML=`<div class="amapf"><iframe src="https://maps.google.com/maps?q=${encodeURIComponent(addr)}&t=k&z=19&output=embed" title="Satellite view of ${esc(addr)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+  <figcaption><p class="amq"><b>Is this the right place?</b><span class="amarea">Checking our service area…</span></p><div class="amb"><button type="button" class="btn btn-main amyes">Yes, that's it</button><button type="button" class="btn btn-line amno">Change address</button></div><p class="amdone" hidden>✓ Address confirmed</p></figcaption>`;
+  fig.querySelector('.amyes').onclick=()=>{inp.dataset.confirmed='1';fig.classList.add('ok');fig.querySelector('.amb').hidden=true;fig.querySelector('.amdone').hidden=false};
+  fig.querySelector('.amno').onclick=()=>{fig.hidden=true;inp.value='';delete inp.dataset.confirmed;inp.focus()};
+  const area=fig.querySelector('.amarea'),R=+(CFG.radius||35);
+  fetch('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&maxLocations=1&outFields=none&SingleLine='+encodeURIComponent(addr)+(key?'&magicKey='+encodeURIComponent(key):'')).then(r=>r.json()).then(j=>{const c=j.candidates&&j.candidates[0];if(!c||!CFG.lat){area.textContent='';return}
+    const toR=d=>d*Math.PI/180,dl=toR(c.location.y-CFG.lat),dn=toR(c.location.x-CFG.lon),h=Math.sin(dl/2)**2+Math.cos(toR(CFG.lat))*Math.cos(toR(c.location.y))*Math.sin(dn/2)**2,mi=7918*Math.asin(Math.sqrt(h));
+    inp.dataset.miles=mi.toFixed(1);
+    if(mi<=R){area.textContent=`You're in our service area (about ${Math.max(1,Math.round(mi))} mi away).`;area.className='amarea in'}
+    else{area.textContent=`That's about ${Math.round(mi)} miles out, past our usual area. Book anyway and we'll confirm by text.`;area.className='amarea out'}}).catch(()=>{area.textContent=''})}
 addrTypeahead($('#iAddr'));
 /* sign-up sheets are built on the fly: attach when they open */
 new MutationObserver(()=>{['#ja','#oaddr'].forEach(s=>{const e=$(s);if(e)addrTypeahead(e)})}).observe(document.getElementById('layer')||document.body,{childList:true,subtree:true});
