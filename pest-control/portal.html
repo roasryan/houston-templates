@@ -5,7 +5,7 @@
 <title>Your service · Lone Star Shield Pest &amp; Termite</title>
 <meta name="robots" content="noindex,nofollow"><meta name="description" content="Private page for Lone Star Shield Pest &amp; Termite customers.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&display=swap">
 <style>:root{--slate:#1F2A33;--deck:#24313B;--raised:#2E3D48;--hivis:#8FE05A;--text:#F4F7F8;--muted:#B7C3CB;--ok:#2BB673;--bad:#E8603F;--line:rgba(255,255,255,.12);--card:rgba(36,49,59,.9);--r:22px;--display:'Archivo',system-ui,sans-serif}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;min-height:100vh;min-height:100dvh;background:#141E27;color:var(--text);font:400 18px/1.5 var(--display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -323,7 +323,80 @@ svg{display:block}
 .ty-cta{margin-top:18px;width:100%}
 .ty-plan h2{margin:4px 0 8px;font-size:22px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}.ty-plan ul{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:7px}.ty-plan li{display:grid;grid-template-columns:20px 1fr;gap:8px}.ty-plan li svg{width:18px;height:18px;color:var(--ok);margin-top:3px}
 .ty-ref p{margin:0 0 10px}
-:root{--hivis:#8FE05A;--sodium:#8FE05A;--on-sodium:#10202B;--hi-ink:#446B2B}#wall{display:none!important}</style></head><body><div id="wall" aria-hidden="true"></div><div id="papp"></div><div id="player"></div><script>/* ============ Ridgeline customer portal (portal.html?j=JOB) — Oct 7, round 1 ============
+:root{--hivis:#8FE05A;--sodium:#8FE05A;--on-sodium:#10202B;--hi-ink:#446B2B}#wall{display:none!important}/* ===== Customer portal: Framer / Notion look (Oct 16). Loaded after portal.css + theme. Light theme only; dark stays as before. =====
+   Calm off-white canvas, white cards with hairlines, Inter, black primary buttons, brand color only for progress. */
+:root[data-theme="light"]{--text:#191918;--muted:#6B6A66;--line:#EAEAE8;--card:#FFFFFF;--raised:#F4F4F2;--deck:#F8F8F7}
+[data-theme="light"] body{background:#F8F8F7;font-family:"Inter",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:17px;letter-spacing:-.006em}
+[data-theme="light"] h1,[data-theme="light"] h2,[data-theme="light"] h3,[data-theme="light"] .pin-brand{font-family:"Inter Tight","Inter",ui-sans-serif,sans-serif;letter-spacing:-.025em}
+/* header */
+[data-theme="light"] .ptop{background:rgba(248,248,247,.86);backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px);border-bottom:1px solid var(--line)}
+[data-theme="light"] .pbrand span{display:inline;font:700 16px/1 "Inter Tight","Inter",sans-serif;letter-spacing:-.01em;color:var(--text)}
+[data-theme="light"] .plang,[data-theme="light"] .plock,[data-theme="light"] .pthm{background:#fff;border:1px solid var(--line);box-shadow:none}
+[data-theme="light"] .plang button[aria-pressed="true"]{background:#191918;color:#fff}
+/* hello */
+[data-theme="light"] .hello h1{font-weight:700;font-size:clamp(30px,7vw,44px);letter-spacing:-.03em}
+[data-theme="light"] .hello .addr{color:var(--muted)}
+[data-theme="light"] .ring-bg{stroke:#ECECEA}
+[data-theme="light"] .psample{background:#fff;border:1px dashed #DCDCD9;color:var(--muted);border-radius:12px}
+/* step strip */
+[data-theme="light"] .steps{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgba(15,15,15,.04)}
+[data-theme="light"] .steps li{font-weight:600;color:#91908C}
+[data-theme="light"] .steps .now span{color:var(--text)}
+[data-theme="light"] .steps i{background:#fff;border:1.5px solid #DCDCD9}
+[data-theme="light"] .steps .done i{background:#191918;border-color:#191918}
+[data-theme="light"] .steps .done i svg{color:#fff}
+[data-theme="light"] .steps li.done:not(:last-child)::after{background:#191918}
+/* cards */
+[data-theme="light"] .pc{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 1px 2px rgba(15,15,15,.04),0 8px 24px -12px rgba(15,15,15,.08)}
+[data-theme="light"] .pk{font-weight:600;letter-spacing:.06em;color:#91908C;font-size:12.5px}
+[data-theme="light"] .pc h2{font-weight:700;font-size:24px;letter-spacing:-.025em}
+[data-theme="light"] .pc h3{font-weight:650}
+[data-theme="light"] .pill{border-radius:6px;font-weight:600;font-size:13px;background:#F1F1EF;color:#787774}
+[data-theme="light"] .pill-ok,[data-theme="light"] .pill-confirmed{background:#EEF3ED;color:#548164}
+[data-theme="light"] .pill-onway,[data-theme="light"] .pill-arrived{background:#FAF3DD;color:#A67C2E}
+[data-theme="light"] .psteps li:not(:last-child)::before{background:#ECECEA}
+[data-theme="light"] .psteps li.done:not(:last-child)::before,[data-theme="light"] .psteps li.done .pst-b{background:#191918;border-color:#191918}
+[data-theme="light"] .psteps li.done .pst-b svg{color:#fff}
+[data-theme="light"] .psteps li.now small{color:var(--text)}
+[data-theme="light"] .vcal{border-radius:14px;border:1px solid var(--line);box-shadow:0 2px 8px rgba(15,15,15,.06)}
+[data-theme="light"] .vcal small{background:#191918;color:#fff;letter-spacing:.08em;font-weight:700;font-size:12px}
+[data-theme="light"] .vcal b{font-weight:700;letter-spacing:-.03em}
+/* buttons */
+[data-theme="light"] .pbtn{border-radius:12px;font-weight:600}
+[data-theme="light"] .pbtn-main{background:#191918;color:#fff;border-color:#191918;box-shadow:0 1px 2px rgba(15,15,15,.2)}
+[data-theme="light"] .pbtn-main:hover{filter:none;background:#000}
+[data-theme="light"] .pbtn-line{background:#fff;border:1px solid #DCDCD9;color:var(--text)}
+[data-theme="light"] .pbtn-line:hover{background:#F8F8F7}
+[data-theme="light"] .paybtn{border-radius:14px}
+/* "book again / website" links */
+[data-theme="light"] .more{border-radius:12px;background:#F8F8F7;border:1px solid var(--line)}
+[data-theme="light"] .more:hover{background:#F1F1EF;transform:none}
+[data-theme="light"] .more b{font-weight:650}
+[data-theme="light"] .more b::after{color:var(--text)}
+/* PIN screen */
+[data-theme="light"] .pin-card{border:1px solid var(--line);border-radius:22px;box-shadow:0 1px 2px rgba(15,15,15,.04),0 24px 60px -24px rgba(15,15,15,.18)}
+[data-theme="light"] .pin-brand{text-transform:none;font-weight:700;letter-spacing:-.02em}
+[data-theme="light"] .pin-brand small{color:#91908C;letter-spacing:.06em;font-weight:600}
+[data-theme="light"] .pt-key{background:#fff;border:1px solid var(--line);box-shadow:0 1px 2px rgba(15,15,15,.05);font-weight:600}
+@media (hover:hover){[data-theme="light"] .pt-key:hover{background:#F8F8F7}}
+[data-theme="light"] .psheet{border-radius:20px 20px 0 0}
+/* services: "what else we can do for you" (both themes) */
+.pc-svcs .svh{margin:2px 0 4px}
+.svgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+.svc{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:14px;border:1px solid var(--line);background:var(--deck)}
+.svc b{font-size:17px;font-weight:650;letter-spacing:-.015em}
+.svc p{margin:0;color:var(--muted);font-size:15px;line-height:1.45}
+.svc-a{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:8px}
+.svc-ask{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:10px;background:var(--text);color:var(--card);font-weight:600;font-size:15px;text-decoration:none}
+.svc-ask svg{width:16px;height:16px}
+.svc-more{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--line);font-weight:600;font-size:15px;text-decoration:none;color:var(--text);background:var(--card)}
+.svc-more:hover,.svc-ask:hover{opacity:.88}
+[data-theme="light"] .svc{background:#FBFBFA}
+@media (min-width:640px){.svgrid{grid-template-columns:1fr 1fr}}
+@media (min-width:980px){.pmain{max-width:760px}}
+[data-theme="light"] #wall{display:none!important}
+@media (max-width:519px){[data-theme="light"] .pbrand span{display:none}}
+</style></head><body><div id="wall" aria-hidden="true"></div><div id="papp"></div><div id="player"></div><script>/* ============ Ridgeline customer portal (portal.html?j=JOB) — Oct 7, round 1 ============
    Separate screen for customers on a current job. PIN unlock, English/Español, arrival window + who's coming,
    change orders and add-ons they can approve and pay, invoice, job photos. Owner sets everything up in Owner → customer.
    Data: same store as the website ('kpestcon-db'). Demo: this browser. Live: synced through the backend (next step). */
@@ -333,9 +406,9 @@ svg{display:block}
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const CFG={"biz": "Lone Star Shield Pest & Termite", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};const BIZ_PHONE="+12815550150";const PKCFG={"kind": "service", "atShop": false, "addr": "2615 Broadway St, Pearland, TX 77581", "steps": [["contract", "Visit booked and confirmed", 1], ["inspection", "Inspection done", 1], ["proposal", "Plan and price sent", 1], ["disclosures", "Disclosures signed", 1], ["arrived", "Tech arrived", 1], ["perimeter", "Outside walls checked", 1], ["treat", "Treatment applied", 1], ["stations", "Bait and traps set", 1], ["cleanup", "Cleanup", 1], ["walkthrough", "Walkthrough with you", 1], ["records", "Treatment record filed", 1], ["warranty", "Warranty sent", 1], ["invoice", "Invoice sent", 0], ["paid", "Paid", 0], ["review", "Review asked", 0]], "plans": [{"name": "Home Shield (quarterly)", "price": "$45/mo", "perks": ["Quarterly exterior service, interior on request", "Free re-services between visits", "Service report with photos every visit"]}, {"name": "Home Shield Plus (bi-monthly)", "price": "$55/mo", "perks": ["Service every 2 months", "Fire ant granules included", "Free re-services"]}], "joinBonus": "your first month is free.", "rebookWeeks": 0, "policy": "", "crewWord": "Tech"};
+const CFG={"biz": "Lone Star Shield Pest & Termite", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};const BIZ_PHONE="+12815550150";const PKCFG={"kind": "service", "atShop": false, "addr": "2615 Broadway St, Pearland, TX 77581", "steps": [["contract", "Visit booked and confirmed", 1], ["inspection", "Inspection done", 1], ["proposal", "Plan and price sent", 1], ["disclosures", "Disclosures signed", 1], ["arrived", "Tech arrived", 1], ["perimeter", "Outside walls checked", 1], ["treat", "Treatment applied", 1], ["stations", "Bait and traps set", 1], ["cleanup", "Cleanup", 1], ["walkthrough", "Walkthrough with you", 1], ["records", "Treatment record filed", 1], ["warranty", "Warranty sent", 1], ["invoice", "Invoice sent", 0], ["paid", "Paid", 0], ["review", "Review asked", 0]], "plans": [{"name": "Home Shield (quarterly)", "price": "$45/mo", "perks": ["Quarterly exterior service, interior on request", "Free re-services between visits", "Service report with photos every visit"]}, {"name": "Home Shield Plus (bi-monthly)", "price": "$55/mo", "perks": ["Service every 2 months", "Fire ant granules included", "Free re-services"]}], "joinBonus": "your first month is free.", "rebookWeeks": 0, "policy": "", "crewWord": "Tech", "services": [{"t": "General pest control", "d": "Ants, roaches, spiders and crickets stopped at the outside walls, with the inside treated when you ask.", "url": "pest-control-houston.html"}, {"t": "Termite inspection and treatment", "d": "We find mud tubes and damage, then treat the soil around the house with a written plan and a one-year warranty.", "url": "termite-inspection-treatment-houston.html"}, {"t": "Mosquito control", "d": "A barrier spray every month from April to October so you can use the backyard again.", "url": "mosquito-control-houston.html"}, {"t": "Rodent control", "d": "We find how they get in, seal the gaps and set stations. You get photos of every spot.", "url": "rodent-control-houston.html"}, {"t": "Fire ants", "d": "Granules in the beds and on every mound, so the yard is safe for kids and dogs again.", "url": "fire-ant-control-houston.html"}, {"t": "Wasps and bees", "d": "Nests knocked down and treated, including the ones up high under the eaves.", "url": "wasp-bee-removal-houston.html"}]};
 /* ---------- portal kind (Oct 15): project | service | appt | event. Kit sites pass PKCFG; Ridgeline = project ---------- */
-const PK=Object.assign({kind:'project',atShop:false,steps:null,plans:[],joinBonus:'',rebookWeeks:0,policy:'',crewWord:'',visitWord:''},typeof PKCFG!=='undefined'?PKCFG:{});
+const PK=Object.assign({kind:'project',atShop:false,steps:null,plans:[],joinBonus:'',rebookWeeks:0,policy:'',crewWord:'',visitWord:'',services:[{"t": "Home repair", "d": "Leaks, missing products and flashing, fixed and photographed.", "url": "roof-repair.html"}, {"t": "Home replacement", "d": "A new home with the warranty in writing.", "url": "roof-replacement.html"}, {"t": "Storm damage", "d": "Free check after hail or wind, with photos for your records.", "url": "storm-damage.html"}, {"t": "Insurance claims", "d": "We meet the adjuster and document every damaged spot.", "url": "insurance-claims.html"}, {"t": "Gutters", "d": "Seamless gutters and guards that keep water off the home edge.", "url": "gutters.html"}, {"t": "Attic ventilation", "d": "Ridge vents that cool the attic and help products last.", "url": "attic-ventilation.html"}]},typeof PKCFG!=='undefined'?PKCFG:{});
 const DEMO=new URLSearchParams(location.search).has('demo');
 let THEME='light';try{THEME=localStorage.getItem('kpestcon-theme')||'light'}catch(x){}document.documentElement.dataset.theme=THEME;
 const BIZ_PRETTY=BIZ_PHONE.replace(/^\+1(\d{3})(\d{3})(\d{4})$/,'($1) $2-$3');
@@ -448,6 +521,8 @@ const tm=hm=>{if(!hm)return'';const[h,m]=hm.split(':').map(Number),d=new Date();
 const at=(date,hm)=>{const[y,mo,d]=date.split('-').map(Number),[h,m]=(hm||'08:00').split(':').map(Number);return new Date(y,mo-1,d,h,m||0).getTime()};
 const isPhone=()=>/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&innerWidth<900);
 const smsHref=b=>`sms:${BIZ_PHONE}${/iPhone|iPad|Mac/i.test(navigator.userAgent)?'&':'?'}body=${encodeURIComponent(b)}`;
+Object.assign(W.en,{svcK:'More from us',svcH:b=>`What else ${b} can do for you`,svcP:'Same team, same easy booking. Ask about any of these and we’ll text you back.',svcAsk:'Ask about this',svcMore:'Details',svcMsg:(s,n)=>`Hi, it’s ${n||'a customer'}. I’d like to ask about ${s}.`});
+Object.assign(W.es,{svcK:'Más de nosotros',svcH:b=>`Qué más puede hacer ${b} por usted`,svcP:'El mismo equipo, la misma reserva fácil. Pregunte por cualquiera y le respondemos por texto.',svcAsk:'Preguntar',svcMore:'Detalles',svcMsg:(s,n)=>`Hola, soy ${n||'un cliente'}. Quisiera preguntar por ${s}.`});
 const setLang=l=>{LANG=l;try{localStorage.setItem('kpestcon-lang',l)}catch(x){}document.documentElement.lang=l;if(C){C.job=C.job||{};if(C.job.lang!==l){C.job.lang=l;if(LIVE)api({action:'portal_act',act:'lang',lang:l}).catch(()=>{});else save()}}};
 document.documentElement.lang=LANG;
 
@@ -644,6 +719,7 @@ function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{}
         <div><h1>${esc(t.hi(first(c.name)))}</h1><p class="addr">${esc(c.addr||t.yourRoof)}</p></div></section>
       ${DEMO?`<p class="psample" role="note">${t.sample}</p>`:''}${building?'':`<ol class="steps" aria-label="${t.stepNow}" data-anim>${(PK.kind==='appt'?t.stepsAppt:PK.kind==='event'?t.stepsEvent:PK.kind==='service'?t.stepsService:t.steps).map((x,i)=>`<li class="${i<cur?'done':i===cur?'now':''}" ${i===cur?'aria-current="step"':''}><i>${i<cur?I.check:''}</i><span>${x}</span></li>`).join('')}</ol>`}
       ${P.join('')}
+      ${(PK.services||[]).length?`<section class="pc pc-svcs" data-anim aria-labelledby="svcH"><p class="pk">${t.svcK}</p><h2 id="svcH" class="svh">${esc(t.svcH(CFG.biz||''))}</h2><p class="pm">${t.svcP}</p><div class="svgrid">${PK.services.map(x=>`<article class="svc"><b>${esc(x.t)}</b>${x.d?`<p>${esc(x.d)}</p>`:''}<div class="svc-a"><a class="svc-ask" href="${smsHref(t.svcMsg(x.t,first(c.name)))}">${I.chat}<span>${t.svcAsk}</span></a>${x.url?`<a class="svc-more" href="${esc(x.url)}">${t.svcMore} <span aria-hidden="true">→</span></a>`:''}</div></article>`).join('')}</div></section>`:''}
       <section class="pc pc-more" data-anim><a class="more" href="index.html#inspect"><b>${t.book}</b><span>${t.bookP}</span></a><a class="more" href="index.html"><b>${t.visit}</b><span>${esc(CFG.biz||'')} · ${esc(CFG.city)}</span></a></section>
       <div class="pcontact" data-anim><a class="pbtn pbtn-main" href="${smsHref(t.sms.q(c.name))}">${I.chat}${t.text}</a><a class="pbtn pbtn-line" href="tel:${BIZ_PHONE}">${I.phone}${t.call} ${BIZ_PRETTY}</a></div>
       ${REMOTE&&!LIVE?`<p class="pdemo">${t.demo}</p>`:''}
