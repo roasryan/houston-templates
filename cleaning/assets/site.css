@@ -1582,3 +1582,96 @@ html{background-image:url(engrave.svg)!important;background-size:600px 600px!imp
 #layer .opage .ophead{box-shadow:none!important;border-bottom:1px solid #E9E9E7!important}
 #layer .opage input[type=checkbox],#layer .opage input[type=radio]{accent-color:#1F1E1C}
 #layer .opage .sheet{max-width:720px!important;width:100%!important;margin:0 auto!important;left:auto!important;right:auto!important;transform:none!important;position:relative!important;inset:auto!important;border-radius:0!important;box-shadow:none!important}
+/* ===== Growth tab (Oct 21), Notion look to match owner_notion.css ===== */
+#owner .gcard{background:#fff;border:1px solid #E9E9E7;border-radius:12px;padding:18px 18px 16px;margin:0 0 16px}
+#owner .ghead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+#owner .ghead h2{margin:2px 0 4px;font:700 21px/1.25 Inter,ui-sans-serif,system-ui,sans-serif!important;letter-spacing:-.015em;color:#1F1E1C}
+#owner .ghead2{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:22px 0 8px}
+#owner .ghead2 .osec2{margin:0}
+#owner .gactions{display:flex;gap:8px;flex-wrap:wrap}
+#owner .okick{font:600 12.5px/1.3 Inter,sans-serif;color:#787774;margin:0;letter-spacing:0;text-transform:none}
+#owner .gmeter{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+#owner .gmeter>div{background:#F7F7F5;border-radius:8px;padding:10px 12px}
+#owner .gmeter b{display:block;font:700 24px/1.15 Inter,sans-serif;letter-spacing:-.02em;color:#1F1E1C}
+#owner .gmeter small{font-size:13px;color:#787774}
+#owner .gstats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 4px}
+#owner .gstats>div{border:1px solid #E9E9E7;border-radius:10px;padding:11px 13px;background:#fff}
+#owner .gstats small{display:block;font:500 12.5px/1.3 Inter,sans-serif;color:#787774}
+#owner .gstats b{display:block;font:700 22px/1.25 Inter,sans-serif;color:#1F1E1C;letter-spacing:-.02em}
+#owner .gstats .warn{background:#FBF3DB;border-color:#F1E3B5}
+#owner .gstats .warn b{color:#9A6A12}
+#owner .gstats .gcut{background:#EEF3ED;border-color:#D7E4D5;grid-column:1/-1}
+#owner .gstats .gcut b{color:#2F6B45}
+@media (min-width:700px){#owner .gstats{grid-template-columns:repeat(5,minmax(0,1fr))}#owner .gstats .gcut{grid-column:auto}}
+#owner .gchips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+#owner .gchip{min-height:34px;padding:4px 11px;border-radius:999px;border:1px solid #E3E2E0;background:#fff;color:#37352F;font:500 14px Inter,sans-serif;cursor:pointer}
+#owner .gchip span{color:#91908C;font-weight:600;margin-left:2px}
+#owner .gchip[aria-pressed="true"]{background:#1F1E1C;border-color:#1F1E1C;color:#fff}
+#owner .gchip[aria-pressed="true"] span{color:#C9C8C4}
+#owner .gsrc .gchip{font-size:13px;min-height:30px}
+#owner .glist{display:flex;flex-direction:column;border:1px solid #E9E9E7;border-radius:10px;overflow:hidden;background:#fff;margin:6px 0 18px}
+#owner .grow2{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-top:1px solid #EFEFED;cursor:pointer}
+#owner .grow2:first-child{border-top:0}
+#owner .grow2:hover{background:#FBFBFA}
+#owner .grow-main{min-width:0;flex:1}
+#owner .grow-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#owner .grow-top b{font:600 15.5px/1.3 Inter,sans-serif;color:#1F1E1C}
+#owner .grow-sub{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px;font-size:13.5px}
+#owner .grow-act{display:flex;align-items:center;gap:6px;flex-shrink:0}
+#owner .gtag{font:600 11.5px/1 Inter,sans-serif;padding:4px 7px;border-radius:4px;background:#1F1E1C;color:#fff;white-space:nowrap}
+#owner .gtag.own{background:#F1F1EF;color:#787774}
+#owner .gpill{font:500 12.5px/1 Inter,sans-serif;padding:4px 7px;border-radius:4px;background:#F1F1EF;color:#5F5E5B}
+#owner .gp-new{background:#FAECEC;color:#C4554D}#owner .gp-contacted{background:#F8ECDF;color:#B26A28}
+#owner .gp-booked{background:#E9F3F7;color:#3F7499}#owner .gp-showed{background:#F6F3F8;color:#7D5A9E}
+#owner .gp-won{background:#EEF3ED;color:#3F7A52}#owner .gp-lost{background:#F1F1EF;color:#91908C}
+#owner .gtimer{font:600 13px Inter,sans-serif;color:#787774}
+#owner .gtimer.late{color:#C4554D}
+#owner .gmoney{font:600 13px Inter,sans-serif;color:#2F6B45}
+#owner .gicon{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:8px;border:1px solid #E9E9E7;color:#1F1E1C;background:#fff}
+#owner .gicon .oi{width:18px;height:18px}
+#owner .gnext{min-height:38px!important;white-space:nowrap}
+@media (max-width:560px){#owner .grow2{flex-wrap:wrap}#owner .grow-act{width:100%;justify-content:flex-end}}
+#owner .gtable{width:100%;border-collapse:collapse;margin-top:12px;font:14.5px/1.4 Inter,sans-serif}
+#owner .gtable th{text-align:left;font:500 12.5px Inter,sans-serif;color:#787774;padding:6px 8px;border-bottom:1px solid #E9E9E7}
+#owner .gtable td{padding:9px 8px;border-bottom:1px solid #F1F1EF;color:#1F1E1C}
+#owner .gtable td:nth-child(n+3),#owner .gtable th:nth-child(n+3){text-align:right;font-variant-numeric:tabular-nums}
+#owner .gtable tfoot td{font-weight:700;border-bottom:0;padding-top:12px}
+#owner .gtable tfoot td:last-child{text-align:right}
+#owner .gstate-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+#owner .gpaid{display:inline-flex;align-items:center;gap:6px;font:600 14px Inter,sans-serif;color:#2F6B45}
+#owner .gweek{display:flex;gap:6px}
+#owner .gweek .ob{min-width:38px;padding:6px 9px!important}
+#owner .oi.flip{transform:scaleX(-1)}
+#owner .gnote{display:flex;gap:10px;align-items:flex-start;background:#FBF3DB;border:1px solid #F1E3B5;border-radius:10px;padding:12px 14px;margin:0 0 14px;color:#6B4B10;font-size:14px;line-height:1.45}
+#owner .gnote .oi{width:18px;height:18px;flex-shrink:0;margin-top:2px}
+#owner .gsample{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#E9F3F7;border:1px solid #CFE2EC;border-radius:10px;padding:10px 14px;margin:0 0 14px;color:#2B5675;font-size:14px}
+#owner .gsample .ob{margin-left:auto}
+#owner .ggo{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;background:#fff;border:1px solid #E9E9E7;border-radius:12px;padding:14px 16px;margin:0 0 16px;cursor:pointer;color:#1F1E1C}
+#owner .ggo:hover{background:#FBFBFA}
+#owner .ggo small{display:block;font:500 12.5px Inter,sans-serif;color:#787774}
+#owner .ggo b{display:block;font:700 18px/1.3 Inter,sans-serif;letter-spacing:-.01em}
+#owner .ggo em{display:block;font-style:normal;font-size:13.5px;color:#787774;margin-top:2px}
+#owner .ggo .oi{width:18px;height:18px;color:#91908C}
+#layer .gcontact{display:flex;gap:8px;margin-bottom:10px}
+#layer .gchips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+#layer .gchip{min-height:36px;padding:4px 12px;border-radius:999px;border:1px solid #E3E2E0;background:#fff;color:#37352F;font:500 14px Inter,sans-serif;cursor:pointer}
+#layer .gchip[aria-pressed="true"]{background:#1F1E1C;border-color:#1F1E1C;color:#fff}
+#layer .gprint .gtable{width:100%;border-collapse:collapse;font:14.5px Inter,sans-serif}
+#layer .gprint .gtable th,#layer .gprint .gtable td{padding:7px 6px;border-bottom:1px solid #EEE;text-align:left}
+#layer .gprint .gtable td:nth-child(n+3),#layer .gprint .gtable th:nth-child(n+3){text-align:right}
+#layer .gprint h2{font:700 20px Inter,sans-serif;margin:4px 0 8px}
+@media print{body>*:not(#layer){display:none!important}#layer .scrim{position:static!important;background:none!important}#layer .sheet{box-shadow:none!important;border:0!important;max-width:none!important}#layer .noprint{display:none!important}}
+/* ===== Oct 21 fix: Availability cards were dark with dark text (Ryan). Light Notion cards everywhere in the owner app. ===== */
+#owner .ocard{background:#fff!important;border:1px solid #E9E9E7!important;color:#1F1E1C!important;border-radius:12px!important;box-shadow:none!important}
+#owner .ocard h3,#owner .ocard b,#owner .ocard label,#owner .avon,#owner .avrow2{color:#1F1E1C!important}
+#owner .ocard .muted,#owner .avt i,#owner .ocard small{color:#6B6A66!important}
+#owner .avrow2{border-bottom-color:#EFEFED!important}
+#owner .ocard select,#owner .ocard input:not([type=checkbox]):not([type=radio]),#owner .avt select,#owner .avlims select{background:#fff!important;color:#1F1E1C!important;border:1px solid #E3E2E0!important;border-radius:8px!important}
+#owner .avon input,#owner .ocard input[type=checkbox]{accent-color:#1F1E1C}
+#owner .avw{background:#fff!important;color:#5F5E5B!important;border-color:#E3E2E0!important}
+#owner .avw[aria-pressed=true]{background:#1F1E1C!important;color:#fff!important;border-color:#1F1E1C!important}
+#owner .avcal .calhead b,#owner .avcal .calnav,#owner .avcal .cd.o-open{color:#1F1E1C!important}
+#owner .avcal .cd{color:#787774!important;border-color:#E9E9E7!important}
+#owner .avcal .cd.o-blocked{background:#FAECEC!important;color:#C4554D!important;border-color:#F0CFCC!important}
+#owner .avsave{background:#fff!important;border-top:1px solid #E9E9E7}
+#owner .frow small,#owner .obrand small,#owner .oside small{color:#787774!important}
