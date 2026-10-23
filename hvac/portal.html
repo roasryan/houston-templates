@@ -609,7 +609,7 @@ function sampleDB(){const d=n=>{const x=new Date();x.setDate(x.getDate()+n);retu
     c.job.changes=[{title:'Replace 2 damaged boards found today',why:'They were soft under the old material.',price:180,status:'waiting',t:ago(0),photos:[]}]}
   else{c.stage='estimate';c.job.visits=[{id:'v1',type:'estimate',date:d(PK.atShop?1:0),from:'13:00',to:PK.atShop?'':'15:00',status:PK.atShop?'confirmed':'onway',eta:20,crew:['s2'],lead:'s2'}];
     c.estimate={status:'sent',t:ago(0),no:'EST-1203',valid:d(30),items:[{desc:'Recommended repair (sample)',amount:640},{desc:'Parts (sample)',amount:185},{desc:'Labor, 2 hours (sample)',amount:240}],note:'Sample estimate. Prices shown are made up.'};c.updates=[{t:ago(0),text:'Sample note: what the tech found and the options we recommend.',photos:[]}]}
-  {const tq=new URLSearchParams(location.search).get('truck'),v=c.job.visits[0];if(v&&tq==='sleep')Object.assign(v,{date:d(2),status:'confirmed'});else if(v&&tq==='prep')Object.assign(v,{date:d(0),status:'confirmed'});else if(v&&tq==='here')Object.assign(v,{date:d(0),status:'arrived'})}/* demo: ?demo=1&truck=sleep|prep|here */
+  {const tq=new URLSearchParams(location.search).get('truck'),v=c.job.visits[0];if(v&&tq==='sleep')Object.assign(v,{date:d(2),status:'confirmed'});else if(v&&tq==='prep'){const h=Math.min(22,new Date().getHours()+2);Object.assign(v,{date:d(0),status:'confirmed',from:String(h).padStart(2,'0')+':00',to:String(h+1).padStart(2,'0')+':00'})}else if(v&&tq==='here')Object.assign(v,{date:d(0),status:'arrived'})}/* demo: ?demo=1&truck=sleep|prep|here */
   const sp={};(PK.services||[]).forEach((x,i)=>{if(i===1)sp[x.t]=149;if(i===3)sp[x.t]=89});/* sample prices, demo only */
   return{customers:[c],crew,addons:[],svcPrices:sp}}
 
