@@ -59,7 +59,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-sms]');if(
 
 
 
-const OWN_PLANS=["Essential Massage", "Wellness 90"];const OWN_KIND="appt";
+const OWN_PLANS=["Essential Massage", "Wellness 90"];const OWN_KIND="appt";const GROWTH={"model": "spread", "stages": ["New", "Contacted", "Booked", "Came in", "Bought package"], "unit": "session", "units": "sessions", "offerPh": "e.g. Reset series: 3 massages", "react": "Hi {first}, it's {biz}. We're opening {spots} spots for our {offer} before {deadline}. Want me to hold one for you? Reply STOP to opt out.", "pct": 0, "pkg": true, "note": "Massage therapists are licensed in Texas. Have a lawyer confirm a per-client cut is allowed before you use it."};
 /* ---------- CRM data: one small store shared by the website, the owner view and the customer portal ---------- */
 /* Demo: saved in this browser only. Live: the same shape moves to a database + texting service. */
 const DAY=864e5,NOW=Date.now();
@@ -98,8 +98,8 @@ function loginSheet(){const close=open(`<div class="scrim"><div class="sheet" ro
     ensureJob(c);location.href=portalUrl(c)}}
 $$('[data-login]').forEach(b=>b.onclick=loginSheet);
 
-function full(id,html){let el=document.getElementById(id);if(!el){el=document.createElement('div');el.id=id;el.className='app';document.body.appendChild(el)}el.innerHTML=html;el.hidden=false;document.documentElement.classList.add('app-open');el.scrollTop=0;
-  if(M&&!reduce)M.animate(el,{opacity:[.001,1],y:[16,0]},{duration:.25});return el}
+function full(id,html){let el=document.getElementById(id);if(!el){el=document.createElement('div');el.id=id;el.className='app';document.body.appendChild(el)}const wasOpen=!el.hidden&&!!el.innerHTML;el.innerHTML=html;el.hidden=false;document.documentElement.classList.add('app-open');el.scrollTop=0;
+  if(M&&!reduce&&!wasOpen)M.animate(el,{opacity:[.001,1],y:[16,0]},{duration:.25});return el}/* Oct 21: no fade on tab switches (the website showed through) */
 function closeFull(id){const el=document.getElementById(id);if(el)el.hidden=true;if(!$$('.app').some(a=>!a.hidden))document.documentElement.classList.remove('app-open')}
 
 const PSTEPS=[['Request',['lead']],['Appointment',['booked','inspected']],['Estimate',['estimate','approved']],['Work',['work']],['Done',['invoiced','paid']]];
@@ -713,7 +713,24 @@ function invMake(c,d,done){const f=first(c.name),L=(d&&d.items&&d.items.length?d
   $('#ivGo').onclick=()=>{const it=read(),l=$('#ivPay').value.trim(),e=$('#ivE');if(!it.length){e.textContent='Add at least one line.';e.hidden=false;return}if(l&&!/^https?:\/\//.test(l)){e.textContent='Paste the full link (starts with https://).';e.hidden=false;return}
     const n=Object.assign(d||{status:'sent',t:Date.now()},{items:it,no,due:$('#ivDue').value,dep:+String($('#ivDep').value).replace(/[^\d.]/g,'')||0,link:l,note:$('#ivNote').value.trim()});
     c.invoice=n;c.show=c.show||{};c.show.invoice=true;if(!c.portal){c.portal=true;ensureJob(c)}if(n.status!=='paid'&&stageIx(c.stage)<stageIx('invoiced'))c.stage='invoiced';markStep(c,'invoice',true);save();close();custSheet(c.id);done&&done()}}
-function docForm(kind,c,d,done){const K=kind==='inv',f=first(c.name);let file=d?d.file||'':'';if(K&&(!d||!d.link&&!d.file||d.items)&&!window.__invPaste)return invMake(c,d,done);window.__invPaste=false;
+/* itemized estimate (Oct 22): the customer sees it inside their portal with a Yes button, instead of being sent to another site */
+function estMake(c,d,done){const f=first(c.name),L=(d&&d.items&&d.items.length?d.items:[{desc:'',amount:''}]).map(x=>({desc:x.desc,amount:x.amount}));
+  const no=d&&d.no||('EST-'+String(1000+((DB.estSeq=(DB.estSeq||0)+1)))),v0=d&&d.valid||new Date(Date.now()+30*864e5).toISOString().slice(0,10);
+  const row=(x,i)=>`<div class="two invrow"><div class="field"><label for="esD${i}">Item</label><input id="esD${i}" data-esd="${i}" value="${esc(x.desc||'')}" placeholder="What you'll do"></div><div class="field"><label for="esA${i}">Amount</label><input id="esA${i}" data-esa="${i}" inputmode="decimal" value="${esc(x.amount===''?'':x.amount)}" placeholder="$0"></div></div>`;
+  const close=open(sheetWrap('esH','Estimate · '+esc(f),`<p class="muted2" style="margin-top:0">${esc(f)} sees every line inside their portal and can say yes right there. Your logo and business info go on it automatically.</p>
+    <div id="esRows">${L.map(row).join('')}</div><button class="ob ob-line" type="button" id="esAdd">${oi('plus')}Add a line</button>
+    <div class="field"><label for="esV">Good until</label><input id="esV" type="date" value="${esc(v0)}"></div>
+    <div class="field"><label for="esN">Note (optional)</label><input id="esN" value="${esc(d&&d.note||'')}" placeholder="What's included, warranty, timing…"></div>
+    <p class="muted2" id="esTot"></p><p class="err" id="esE" role="alert" hidden></p><div class="obtns"><button class="ob ob-main ob-xl" type="button" id="esGo">Send estimate</button></div>
+    <button class="olink" type="button" id="esPaste">Use a link or PDF from another app instead</button>`),'#esD0');
+  const read=()=>[...document.querySelectorAll('[data-esd]')].map(x=>({desc:x.value.trim(),amount:+String(document.querySelector(`[data-esa="${x.dataset.esd}"]`).value).replace(/[^\d.]/g,'')||0})).filter(x=>x.desc||x.amount);
+  const tot=()=>{$('#esTot').textContent='Estimate total: '+usd(read().reduce((a,x)=>a+x.amount,0))};document.getElementById('esRows').addEventListener('input',tot);tot();
+  $('#esAdd').onclick=()=>{const n=document.querySelectorAll('[data-esd]').length;document.getElementById('esRows').insertAdjacentHTML('beforeend',row({desc:'',amount:''},n));$('#esD'+n).focus()};
+  $('#esPaste').onclick=()=>{close();window.__invPaste=true;docForm('est',c,d,done)};
+  $('#esGo').onclick=()=>{const it=read(),e=$('#esE');if(!it.length){e.textContent='Add at least one line.';e.hidden=false;return}
+    const n=Object.assign(d&&d.items?d:{status:'sent',t:Date.now()},{items:it,no,valid:$('#esV').value,note:$('#esN').value.trim(),link:'',file:''});if(n.status!=='approved')n.status='sent';
+    c.estimate=n;c.show=c.show||{};c.show.estimate=true;if(!c.portal){c.portal=true;ensureJob(c)}if(stageIx(c.stage)<stageIx('estimate'))c.stage='estimate';save();close();custSheet(c.id);done&&done()}}
+function docForm(kind,c,d,done){const K=kind==='inv',f=first(c.name);let file=d?d.file||'':'';if(K&&(!d||!d.link&&!d.file||d.items)&&!window.__invPaste)return invMake(c,d,done);if(!K&&(!d||!d.link&&!d.file||d.items)&&!window.__invPaste)return estMake(c,d,done);window.__invPaste=false;
   const close=open(sheetWrap('dfH',(hasDoc(d)?'Change ':'Add ')+(K?'invoice':'estimate')+' · '+esc(f),`<p class="muted2" style="margin-top:0">${K?'Make the invoice in QuickBooks, Square or whatever you use. Paste its link here (the one customers use to pay), or upload a photo or PDF of it.':'Make the estimate in the app you use. Paste its link, or upload a photo or PDF of it.'}</p>
     <div class="field"><label for="dfL">Link</label><input id="dfL" type="url" placeholder="https://…" value="${esc(d&&d.link||'')}"></div>
     <div class="field"><span class="flabel">Or upload it</span><label class="upl" for="dfF"><span id="dfFl">${file?'File attached ✓ (tap to replace)':'Photo or PDF'}</span><input id="dfF" type="file" accept="image/*,application/pdf"></label></div>
@@ -779,6 +796,174 @@ function stageBar(c){if(c.stage==='lost')return'';const after=['approved','work'
   if(after&&c.stage!=='approved'){const p=progress(c),inv=c.invoice;return`<button type="button" class="jprog" data-sec="progress"><span class="okick">Job steps</span><b>${p.n} of ${p.of}${p.next?' · next: '+esc(p.next.l):' · all done'}</b><span class="obar2"><i style="width:${Math.round(p.n/Math.max(1,p.of)*100)}%"></i></span>${inv?`<small>${inv.status==='paid'?'Invoice paid ✓':'Invoice not paid yet'}</small>`:''}</button>`}
   const si=Math.max(0,SALES.findIndex(s=>s[0]===(c.stage==='inspected'?'booked':c.stage)));
   return`<ol class="jsteps js4" aria-label="Job stage">${SALES.map(([k,l],i)=>`<li class="${i<si?'done':i===si?'now':''}"><button type="button" data-stage="${k}" aria-label="Set stage: ${l}">${i<si?oi('check'):i+1}</button><span>${l}</span></li>`).join('')}</ol><p class="jhint">Tap any step to move the job back or forward.${c.stage==='approved'?' After this, use Job steps.':''}</p>`}
+/* ---------- GROWTH (Oct 21): the partner tab for rev-share deals (Unplanned & Co. sells the business's offer, keeps a cut).
+   Offer + spots left, lead pipeline with speed-to-lead timer and show rate, "Unplanned & Co." source tags, weekly statement
+   both sides can see, past-customer reactivation (consent required). Trade-specific labels come from GROWTH (kit/growth_cfg.py).
+   Real data only; "See a sample week" shows a labeled sample that is never saved. ---------- */
+const GR=(typeof GROWTH!=='undefined')?GROWTH:{model:'pct',stages:['New','Contacted','Appointment booked','Inspected','Signed'],unit:'job',units:'jobs',offerPh:'e.g. Free storm-damage appointment',react:"Hi {first}, it's {biz}. We're running {offer} for past customers until {deadline}. Want me to book you a time? Reply STOP to opt out.",pct:7,pkg:false,note:''};
+const GKEYS=['new','contacted','booked','showed','won'],GLAB=k=>k==='lost'?'Lost':GR.stages[GKEYS.indexOf(k)]||k;
+const UC='Unplanned & Co.';
+OPAGES.growth='Growth';
+let gSample=false,gChip='all',gSrc='all',gWeek=0,gTick=null;
+const gDB=()=>{DB.growth=DB.growth||{offer:{},pay:[],react:{list:[],msg:''}};DB.growth.react=DB.growth.react||{list:[],msg:''};DB.growth.pay=DB.growth.pay||[];DB.growth.offer=DB.growth.offer||{};return DB.growth};
+const stageToG={lead:'new',booked:'booked',inspected:'showed',estimate:'showed',approved:'won',work:'won',invoiced:'won',paid:'won',lost:'lost'};
+function gOf(c){if(!c.g){c.g={src:/unplanned|partner|growth/i.test(c.source||'')?'uc':'own',st:stageToG[c.stage]||'new',t:{new:c.created||Date.now()}}}return c.g}
+const monday=t=>{const d=new Date(t);d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return d.getTime()};
+const wkLabel=t=>{const a=new Date(t),b=new Date(t+6*DAY),f=x=>x.toLocaleDateString('en-US',{month:'short',day:'numeric'});return f(a)+' – '+f(b)};
+const mins=ms=>{const m=Math.round(ms/6e4);return m<60?m+' min':m<1440?(Math.round(m/6)/10)+' hr':Math.round(m/1440)+' days'};
+
+/* ---- labeled sample (never saved) ---- */
+function gSampleData(){const now=Date.now(),H=36e5,o=GR.model==='spread'?{name:(GR.offerPh||'').replace(/^e\.g\.\s*/,''),price:900,floor:450,spots:20,deadline:new Date(now+12*DAY).toISOString().slice(0,10)}:GR.model==='flat'?{name:(GR.offerPh||'').replace(/^e\.g\.\s*/,''),fee:2500,spots:20,deadline:new Date(now+12*DAY).toISOString().slice(0,10)}:{name:(GR.offerPh||'').replace(/^e\.g\.\s*/,''),pct:GR.pct,spots:20,deadline:new Date(now+12*DAY).toISOString().slice(0,10)};
+  const amt=GR.model==='pct'?[9800,14200,6400]:[900,900,900];
+  const N=[['Sample: Ana R.','uc','won',50*H,4,amt[0]],['Sample: Marcus T.','uc','won',30*H,2,amt[1]],['Sample: Priya S.','own','won',70*H,11,amt[2]],['Sample: Diego L.','uc','showed',20*H,3],['Sample: Kim W.','uc','booked',9*H,6],['Sample: Jordan P.','uc','booked',6*H,1],['Sample: Lena M.','own','contacted',4*H,24],['Sample: Chris B.','uc','new',.05*H],['Sample: Tasha G.','uc','new',.15*H],['Sample: Omar F.','uc','lost',80*H,38]];
+  const C=N.map(([name,src,st,age,reply,a],i)=>{const t0=now-age,t={new:t0};if(reply!=null&&st!=='new')t.contacted=t0+reply*6e4;const ix=GKEYS.indexOf(st);if(ix>=2)t.booked=t0+2*H;if(ix>=3)t.showed=t0+20*H;if(st==='won')t.won=Math.min(now-H,t0+26*H);if(st==='lost')t.lost=t0+40*H;
+    return{id:'smp'+i,sample:true,name,phone:'5555550'+String(100+i),created:t0,stage:'lead',g:{src,st,t,amt:a||0,why:st==='lost'?'Price':''},pkg:st==='won'&&GR.pkg?{name:o.name,total:3,used:i%3,exp:new Date(now+60*DAY).toISOString().slice(0,10)}:null}});
+  return{offer:o,C,pay:[],react:{list:[{id:'r1',name:'Sample: Bea N.',phone:'5555550201',consent:true,sent:now-2*DAY},{id:'r2',name:'Sample: Hugo K.',phone:'5555550202',consent:true},{id:'r3',name:'Sample: Ivy D.',phone:'5555550203',consent:false}],msg:''}}}
+let gS=null;
+const gCust=()=>gSample?(gS=gS||gSampleData()).C:DB.customers;
+const gStore=()=>gSample?(gS=gS||gSampleData()):gDB();
+const gSave=()=>{if(gSample){toast('Sample: not saved');return}save()};
+
+/* ---- money ---- */
+function gCut(c){const g=gOf(c),o=gStore().offer||{};if(g.src!=='uc'||g.st!=='won')return 0;
+  if(GR.model==='spread'){const price=+(g.amt||o.price||0),floor=+(o.floor||0);return Math.max(0,price-floor)}
+  if(GR.model==='pct')return Math.round((+g.amt||0)*(+(o.pct||GR.pct)||0)/100);return 0}
+function gStats(){const C=gCust(),now=Date.now(),wk0=monday(now),G=C.map(c=>[c,gOf(c)]);
+  const rep=G.filter(([c,g])=>g.t.contacted).map(([c,g])=>g.t.contacted-g.t.new);
+  const bookedN=G.filter(([c,g])=>g.t.booked||['booked','showed','won'].includes(g.st)).length,showedN=G.filter(([c,g])=>g.t.showed||['showed','won'].includes(g.st)).length;
+  const won=G.filter(([c,g])=>g.st==='won'&&(g.t.won||0)>=wk0);
+  return{newWk:G.filter(([c,g])=>g.t.new>=now-7*DAY).length,avg:rep.length?rep.reduce((a,b)=>a+b,0)/rep.length:null,in5:rep.length?Math.round(100*rep.filter(x=>x<=5*6e4).length/rep.length):null,
+    show:bookedN?Math.round(100*showedN/bookedN):null,wonWk:won.length,cutWk:won.reduce((a,[c])=>a+gCut(c),0),wonAll:G.filter(([c,g])=>g.st==='won'&&(g.t.won||0)>=((gStore().offer||{}).start||0)).length}}
+
+/* ---- page ---- */
+function oGrowth(){const st=gStats(),S=gStore(),o=S.offer||{},C=gCust(),now=Date.now();
+  const spotsLeft=o.spots?Math.max(0,o.spots-st.wonAll):null,dl=o.deadline?Math.ceil((new Date(o.deadline+'T23:59').getTime()-now)/DAY):null;
+  const cutLbl=GR.model==='flat'?'Flat monthly fee':'Our cut this week',cutVal=GR.model==='flat'?(o.fee?usd(o.fee):'Not set'):usd(st.cutWk);
+  const L=C.filter(c=>{const g=gOf(c);return(gChip==='all'?g.st!=='lost':g.st===gChip)&&(gSrc==='all'||g.src===gSrc)}).sort((a,b)=>GKEYS.indexOf(gOf(a).st)-GKEYS.indexOf(gOf(b).st)||gOf(b).t.new-gOf(a).t.new);
+  const cnt=k=>C.filter(c=>gOf(c).st===k&&(gSrc==='all'||gOf(c).src===gSrc)).length;
+  return `${gSample?`<div class="gsample" role="note"><b>Sample week.</b> Made-up people to show how this works. Nothing here is saved.<button class="ob ob-line" type="button" id="gSmp">Back to my data</button></div>`:''}
+    ${GR.note?`<p class="gnote">${oi('key')}<span>${esc(GR.note)}</span></p>`:''}
+    <section class="gcard goffer"><div class="ghead"><div><p class="okick">Current offer</p><h2>${o.name?esc(o.name):'No offer yet'}</h2>
+      <p class="muted2">${o.name?[GR.model==='spread'&&o.price?`Sold at ${usd(o.price)}`:'',GR.model==='spread'&&o.floor?`your lowest ${usd(o.floor)}`:'',GR.model==='pct'?`${o.pct||GR.pct}% of each ${GR.unit} we bring`:'',GR.model==='flat'&&o.fee?`flat ${usd(o.fee)}/month`:''].filter(Boolean).join(' · '):`One offer with a clear result, a deadline and a set number of spots. ${esc(GR.offerPh||'')}`}</p></div>
+      <button class="ob ob-line" type="button" id="gOfferE">${oi('edit')}${o.name?'Edit':'Set the offer'}</button></div>
+      ${o.name?`<div class="gmeter"><div><b>${spotsLeft==null?'–':spotsLeft}</b><small>spots left${o.spots?` of ${o.spots}`:''}</small></div><div><b>${dl==null?'–':dl<0?'Ended':dl}</b><small>${dl==null?'no deadline':dl<0?'deadline passed':dl===1?'day left':'days left'}</small></div><div><b>${st.wonWk}</b><small>sold this week</small></div></div>`:''}</section>
+    <div class="gstats">
+      <div><small>New leads (7 days)</small><b>${st.newWk}</b></div>
+      <div class="${st.avg!=null&&st.avg>5*6e4?'warn':''}"><small>Avg first reply</small><b>${st.avg==null?'–':mins(st.avg)}</b></div>
+      <div class="${st.in5!=null&&st.in5<80?'warn':''}"><small>Replied in 5 min</small><b>${st.in5==null?'–':st.in5+'%'}</b></div>
+      <div><small>Show rate</small><b>${st.show==null?'–':st.show+'%'}</b></div>
+      <div class="gcut"><small>${cutLbl}</small><b>${cutVal}</b></div></div>
+    <div class="ghead2"><h2 class="osec2">Leads</h2><div class="gactions"><button class="ob ob-main" type="button" id="gAdd">${oi('plus')}Add lead</button>${!gSample?`<button class="ob ob-line" type="button" id="gSmp">See a sample week</button>`:''}</div></div>
+    <div class="gchips" role="group" aria-label="Filter by stage">${[['all','Open'],...GKEYS.map(k=>[k,GLAB(k)]),['lost','Lost']].map(([k,l])=>`<button type="button" class="gchip" data-gchip="${k}" aria-pressed="${gChip===k}">${esc(l)}${k!=='all'?` <span>${cnt(k)}</span>`:''}</button>`).join('')}</div>
+    <div class="gchips gsrc" role="group" aria-label="Filter by source">${[['all','All sources'],['uc','From '+UC],['own','Your own']].map(([k,l])=>`<button type="button" class="gchip" data-gsrc="${k}" aria-pressed="${gSrc===k}">${esc(l)}</button>`).join('')}</div>
+    <div class="glist" id="gList">${L.length?L.map(gRow).join(''):`<div class="oempty">${oi('check')}<b>No leads here.</b><span>Leads from the offer page land here the second they come in. Call or text within 5 minutes.</span></div>`}</div>
+    ${gStatement()}
+    ${gReact()}`}
+function gRow(c){const g=gOf(c),now=Date.now(),age=now-g.t.new,late=g.st==='new'&&age>5*6e4,ix=GKEYS.indexOf(g.st),nx=ix>=0&&ix<4?GKEYS[ix+1]:null;
+  return `<article class="grow2 gst-${g.st}" data-glead="${c.id}"><div class="grow-main"><div class="grow-top"><b>${esc(c.name)}</b>${g.src==='uc'?`<span class="gtag">${UC}</span>`:`<span class="gtag own">Your own</span>`}</div>
+    <div class="grow-sub"><span class="gpill gp-${g.st}">${esc(GLAB(g.st))}</span>${g.st==='new'?`<span class="gtimer ${late?'late':''}" data-since="${g.t.new}">${mins(age)} waiting</span>`:g.t.contacted?`<span class="muted2">First reply ${mins(g.t.contacted-g.t.new)}</span>`:''}${g.st==='won'&&gCut(c)?`<span class="gmoney">${usd(gCut(c))} cut</span>`:''}</div></div>
+    <div class="grow-act">${c.phone?`<a class="gicon" href="tel:${digits(c.phone)}" data-gcontact="${c.id}" aria-label="Call ${esc(c.name)}">${oi('phone')}</a><a class="gicon" href="sms:${digits(c.phone)}" data-gcontact="${c.id}" aria-label="Text ${esc(c.name)}">${oi('chat')}</a>`:''}
+      ${nx?`<button class="ob ob-line gnext" type="button" data-gnext="${c.id}">${esc(nx==='contacted'?'Mark contacted':nx==='won'?GLAB('won'):GLAB(nx))}</button>`:''}</div></article>`}
+
+/* ---- weekly statement (both sides see the same numbers) ---- */
+function gStatement(){const S=gStore(),w0=monday(Date.now())-gWeek*7*DAY,w1=w0+7*DAY;
+  const R=gCust().filter(c=>{const g=gOf(c);return g.src==='uc'&&g.st==='won'&&g.t.won>=w0&&g.t.won<w1}).sort((a,b)=>gOf(a).t.won-gOf(b).t.won);
+  const tot=R.reduce((a,c)=>a+gCut(c),0),p=(S.pay||[]).find(x=>x.wk===w0);
+  return `<section class="gcard gstate" id="gState"><div class="ghead"><div><p class="okick">Weekly statement · ${UC}</p><h2>${wkLabel(w0)}</h2></div>
+    <div class="gweek"><button class="ob ob-line" type="button" data-gwk="1" aria-label="Earlier week">${oi('back')}</button><button class="ob ob-line" type="button" data-gwk="-1" aria-label="Later week" ${gWeek<=0?'disabled':''}>${oi('back','flip')}</button></div></div>
+    ${GR.model==='flat'?`<p class="muted2">Flat monthly fee${(S.offer||{}).fee?` of ${usd(S.offer.fee)}`:''}. No per-${GR.unit} cut. These are the results we brought this week:</p>`:''}
+    ${R.length?`<table class="gtable"><thead><tr><th>Day</th><th>Customer</th><th>${GR.model==='pct'?'Job amount':'Sold at'}</th><th>${GR.model==='flat'?'':'Our cut'}</th></tr></thead><tbody>${R.map(c=>{const g=gOf(c),o=S.offer||{};return`<tr><td>${new Date(g.t.won).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}</td><td>${esc(c.name.replace(/^Sample: /,''))}</td><td>${usd(+(g.amt||o.price||0))}</td><td>${GR.model==='flat'?'':usd(gCut(c))}</td></tr>`}).join('')}</tbody>
+      ${GR.model!=='flat'?`<tfoot><tr><td colspan="3">Total owed to ${UC}</td><td>${usd(tot)}</td></tr></tfoot>`:''}</table>`:`<p class="muted2">No sales from ${UC} this week yet.</p>`}
+    <div class="gstate-foot">${GR.model!=='flat'&&tot?(p?`<span class="gpaid">${oi('check')}Paid ${new Date(p.paidT).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span><button class="ob ob-line" type="button" id="gUnpay">Undo</button>`:`<button class="ob ob-main" type="button" id="gPay" data-wk="${w0}">${oi('check')}Mark paid</button>`):''}<button class="ob ob-line" type="button" id="gPrint">${oi('file')}Save or print</button></div></section>`}
+
+/* ---- past customers: free first source. Texts go only to people who agreed to get texts. ---- */
+function gMsg(name){const S=gStore(),o=S.offer||{};const tpl=(S.react&&S.react.msg)||GR.react;return tpl.replace(/\{first\}/g,first(String(name).replace(/^Sample: /,''))).replace(/\{biz\}/g,CFG.biz||'us').replace(/\{offer\}/g,o.name||'our offer').replace(/\{spots\}/g,o.spots||'a few').replace(/\{deadline\}/g,o.deadline?new Date(o.deadline+'T12:00').toLocaleDateString('en-US',{month:'long',day:'numeric'}):'the end of the month')}
+function gReact(){const R=gStore().react||{list:[]},L=R.list||[],ok=L.filter(x=>x.consent),sent=L.filter(x=>x.sent);
+  return `<section class="gcard greact"><div class="ghead"><div><p class="okick">Free first: past customers</p><h2>Bring past customers back</h2><p class="muted2">Text the offer to people who already know you. Only people who agreed to get texts from you can be texted.</p></div>
+    <div class="gactions"><button class="ob ob-line" type="button" id="gImp">${oi('user')}Add list</button><button class="ob ob-line" type="button" id="gMsgE">${oi('edit')}Message</button></div></div>
+    <div class="gmeter"><div><b>${L.length}</b><small>on the list</small></div><div><b>${ok.length}</b><small>agreed to texts</small></div><div><b>${sent.length}</b><small>texted</small></div></div>
+    ${L.length?`<div class="glist">${L.map(x=>`<div class="grow2 greact-row"><div class="grow-main"><b>${esc(x.name)}</b><div class="grow-sub">${x.consent?'<span class="gpill gp-won">Agreed to texts</span>':'<span class="gpill gp-lost">No text consent</span>'}${x.sent?`<span class="muted2">Texted ${ago(x.sent)}</span>`:''}</div></div>
+      <div class="grow-act">${x.consent&&x.phone?`<a class="ob ob-line" href="sms:${digits(x.phone)}?&body=${encodeURIComponent(gMsg(x.name))}" data-gsent="${x.id}">${oi('chat')}${x.sent?'Text again':'Text offer'}</a>`:''}<button class="ob ob-line" type="button" data-glink="${x.id}">They replied</button></div></div>`).join('')}</div>`:''}</section>`}
+
+/* ---- sheets ---- */
+function gOfferSheet(){const S=gStore(),o=S.offer||{};
+  const close=open(sheetWrap('goH','The offer',`<div class="field"><label for="goN">Offer name</label><input id="goN" value="${esc(o.name||'')}" placeholder="${esc(GR.offerPh||'')}"></div>
+    ${GR.model==='spread'?`<div class="two"><div class="field"><label for="goP">Price customers pay</label><input id="goP" inputmode="decimal" value="${esc(o.price||'')}" placeholder="$"></div><div class="field"><label for="goF">Your lowest price</label><input id="goF" inputmode="decimal" value="${esc(o.floor||'')}" placeholder="$"><small class="muted2">${UC} keeps the difference.</small></div></div>`:''}
+    ${GR.model==='pct'?`<div class="field"><label for="goC">${UC}'s cut (% of each ${GR.unit})</label><input id="goC" inputmode="decimal" value="${esc(o.pct||GR.pct)}"></div>`:''}
+    ${GR.model==='flat'?`<div class="field"><label for="goFee">Flat monthly fee</label><input id="goFee" inputmode="decimal" value="${esc(o.fee||'')}" placeholder="$"><small class="muted2">No per-${GR.unit} cut for health care.</small></div>`:''}
+    <div class="two"><div class="field"><label for="goS">Spots</label><input id="goS" inputmode="numeric" value="${esc(o.spots||'')}" placeholder="How many you can take"></div><div class="field"><label for="goD">Deadline</label><input id="goD" type="date" value="${esc(o.deadline||'')}"></div></div>
+    <button class="ob ob-main" type="button" id="goSave">${oi('check')}Save offer</button>`),'#goN');
+  $('#goSave').onclick=()=>{const v=s=>{const e=$(s);return e?e.value.trim():''},n=s=>+String(v(s)).replace(/[^\d.]/g,'')||0;
+    const no={name:v('#goN'),spots:n('#goS'),deadline:v('#goD'),start:o.start&&o.name===v('#goN')?o.start:Date.now()};
+    if(GR.model==='spread'){no.price=n('#goP');no.floor=n('#goF')}if(GR.model==='pct')no.pct=n('#goC');if(GR.model==='flat')no.fee=n('#goFee');
+    S.offer=no;gSave();close();openOwner()}}
+function gLeadSheet(id){const c=gCust().find(x=>x.id===id);if(!c)return;const g=gOf(c),pk=c.pkg||{};
+  const close=open(sheetWrap('glH',esc(c.name),`<div class="gcontact">${c.phone?`<a class="ob ob-main" href="tel:${digits(c.phone)}" data-gcontact="${c.id}">${oi('phone')}Call</a><a class="ob ob-line" href="sms:${digits(c.phone)}" data-gcontact="${c.id}">${oi('chat')}Text</a>`:'<p class="muted2">No phone number.</p>'}</div>
+    <p class="muted2">Came in ${ago(g.t.new)}${g.t.contacted?` · first reply after ${mins(g.t.contacted-g.t.new)}`:' · not contacted yet'}</p>
+    <h4 class="osub">Stage</h4><div class="gchips">${[...GKEYS,'lost'].map(k=>`<button type="button" class="gchip" data-gset="${k}" aria-pressed="${g.st===k}">${esc(GLAB(k))}</button>`).join('')}</div>
+    <div class="field" id="glWhyF" ${g.st==='lost'?'':'hidden'}><label for="glWhy">Why lost</label><input id="glWhy" value="${esc(g.why||'')}" placeholder="Price, timing, went with someone else…"></div>
+    <div class="field"><label for="glSrc">Where this lead came from</label><select id="glSrc"><option value="uc" ${g.src==='uc'?'selected':''}>${UC}</option><option value="own" ${g.src==='own'?'selected':''}>Your own (no cut)</option></select></div>
+    ${GR.model!=='flat'?`<div class="field"><label for="glAmt">${GR.model==='pct'?`${GR.unit[0].toUpperCase()+GR.unit.slice(1)} amount`:'Sold at'}</label><input id="glAmt" inputmode="decimal" value="${esc(g.amt||'')}" placeholder="${GR.model==='spread'&&(gStore().offer||{}).price?usd(gStore().offer.price):'$'}"></div>`:''}
+    ${GR.pkg?`<h4 class="osub">Their package (shows in their portal)</h4><div class="field"><label for="gpN">Package</label><input id="gpN" value="${esc(pk.name||((gStore().offer||{}).name||''))}"></div>
+      <div class="two"><div class="field"><label for="gpT">Total ${esc(GR.units)}</label><input id="gpT" inputmode="numeric" value="${esc(pk.total||'')}"></div><div class="field"><label for="gpU">Used</label><input id="gpU" inputmode="numeric" value="${esc(pk.used||0)}"></div></div>
+      <div class="two"><div class="field"><label for="gpE">Use by</label><input id="gpE" type="date" value="${esc(pk.exp||'')}"></div><div class="field"><label for="gpB">Balance still owed</label><input id="gpB" inputmode="decimal" value="${esc(pk.bal||'')}" placeholder="$0"></div></div>
+      <div class="field"><label for="gpL">Pay link for the balance</label><input id="gpL" type="url" value="${esc(pk.link||'')}" placeholder="Stripe or Square link"></div>`:''}
+    <button class="ob ob-main" type="button" id="glSave">${oi('check')}Save</button>${!c.sample?`<button class="ob ob-line" type="button" id="glJob">${oi('jobs')}Open full job</button>`:''}`));
+  let st=g.st;
+  $$('#layer [data-gset]').forEach(b=>b.onclick=()=>{st=b.dataset.gset;$$('#layer [data-gset]').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#glWhyF').hidden=st!=='lost'});
+  $$('#layer [data-gcontact]').forEach(a=>a.addEventListener('click',()=>gContact(c.id)));
+  $('#glSave').onclick=()=>{const n=s=>{const e=$(s);return e?+String(e.value).replace(/[^\d.]/g,'')||0:0};gSet(c,st);g.src=$('#glSrc').value;g.why=st==='lost'?$('#glWhy').value.trim():'';if($('#glAmt'))g.amt=n('#glAmt');
+    if(GR.pkg&&$('#gpN')){const nm=$('#gpN').value.trim();c.pkg=nm?{name:nm,total:n('#gpT'),used:n('#gpU'),exp:$('#gpE').value,bal:n('#gpB'),link:$('#gpL').value.trim(),unit:GR.unit,units:GR.units}:null;if(c.pkg){c.portal=true;(c.show=c.show||{}).pkg=true}}
+    gSave();close();openOwner()};
+  {const b=$('#glJob');if(b)b.onclick=()=>{close();custSheet(c.id)}}}
+function gSet(c,st){const g=gOf(c);if(g.st===st)return;g.st=st;g.t=g.t||{};if(!g.t[st])g.t[st]=Date.now();if(st!=='new'&&!g.t.contacted)g.t.contacted=Date.now();
+  const map={booked:'booked',showed:'inspected',won:'approved',lost:'lost'};if(!c.sample&&map[st]&&stageIx(c.stage)<stageIx(map[st]))c.stage=map[st];if(!c.sample&&st==='lost')c.stage='lost'}
+function gContact(id){const c=gCust().find(x=>x.id===id);if(!c)return;const g=gOf(c);if(!g.t.contacted){g.t.contacted=Date.now();if(g.st==='new')g.st='contacted';gSave()}}
+function gAddSheet(){const close=open(sheetWrap('gaH','Add a lead',`<div class="field"><label for="gaN">Name</label><input id="gaN" autocomplete="off"></div><div class="field"><label for="gaP">Mobile</label><input id="gaP" type="tel" inputmode="tel"></div>
+    <div class="field"><label for="gaS">Source</label><select id="gaS"><option value="uc">${UC}</option><option value="own">Your own (no cut)</option></select></div><p class="err" id="gaE" role="alert" hidden></p><button class="ob ob-main" type="button" id="gaSave">${oi('plus')}Add</button>`),'#gaN');
+  $('#gaSave').onclick=()=>{const nm=$('#gaN').value.trim(),ph=$('#gaP').value;if(nm.length<2||digits(ph).length<10){const e=$('#gaE');e.textContent='Add a name and a 10-digit mobile number.';e.hidden=false;return}
+    if(gSample){toast('Sample: not saved');close();return}const c=upsert({name:nm,phone:ph,source:$('#gaS').value==='uc'?UC:'Owner'});c.g={src:$('#gaS').value,st:'new',t:{new:Date.now()}};save();close();openOwner()}}
+function gImpSheet(){const close=open(sheetWrap('giH','Add past customers',`<p class="muted2" style="margin-top:0">One per line: name, mobile. Add <b>, yes</b> at the end only if that person agreed to get texts from you (for example on a sign-up form).</p>
+    <div class="field"><label for="giT">Past customers</label><textarea id="giT" rows="8" placeholder="Maria Lopez, 281 555 0101, yes&#10;James Carter, 713 555 0102"></textarea></div>
+    <label class="oswitch"><input type="checkbox" id="giOk"><span></span><b>I confirm the people marked "yes" agreed to get texts from ${esc(CFG.biz||'my business')}.</b></label><p class="err" id="giE" role="alert" hidden></p>
+    <button class="ob ob-main" type="button" id="giSave">${oi('plus')}Add to list</button>`),'#giT');
+  $('#giSave').onclick=()=>{const rows=$('#giT').value.split(/\n+/).map(l=>l.split(',').map(x=>x.trim())).filter(a=>a[0]&&digits(a[1]||'').length>=10),okAll=$('#giOk').checked,e=$('#giE');
+    if(!rows.length){e.textContent='Add at least one line with a name and a 10-digit number.';e.hidden=false;return}
+    if(rows.some(a=>/^y/i.test(a[2]||''))&&!okAll){e.textContent='Tick the box to confirm those people agreed to texts.';e.hidden=false;return}
+    const R=gStore().react;rows.forEach(a=>{if(!R.list.some(x=>digits(x.phone)===digits(a[1])))R.list.push({id:'r'+Math.random().toString(36).slice(2,8),name:a[0],phone:digits(a[1]),consent:/^y/i.test(a[2]||'')&&okAll})});gSave();close();openOwner()}}
+function gMsgSheet(){const R=gStore().react;const close=open(sheetWrap('gmH','Text message',`<p class="muted2" style="margin-top:0">{first}, {biz}, {offer}, {spots} and {deadline} fill in by themselves. Keep "Reply STOP to opt out."</p>
+    <div class="field"><label for="gmT">Message</label><textarea id="gmT" rows="5">${esc(R.msg||GR.react)}</textarea></div><p class="muted2" id="gmP"></p><button class="ob ob-main" type="button" id="gmSave">${oi('check')}Save message</button>`),'#gmT');
+  const pv=()=>{const was=R.msg;R.msg=$('#gmT').value;$('#gmP').textContent='Preview: '+gMsg('Maria Lopez');R.msg=was};$('#gmT').oninput=pv;pv();
+  $('#gmSave').onclick=()=>{const t=$('#gmT').value;if(!/stop/i.test(t)){toast('Add “Reply STOP to opt out.”');return}R.msg=t;gSave();close();openOwner()}}
+function gPrint(){const el=$('#gState');if(!el)return;const close=open(`<div class="scrim gprint"><div class="sheet" role="dialog" aria-modal="true" aria-label="Statement"><div class="opbody"><p class="okick">${esc(CFG.biz||'')}</p>${el.innerHTML}<p class="muted2">Prepared from the owner app. Every sale is time-stamped when it’s marked ${esc(GLAB('won'))}.</p><div class="gstate-foot noprint"><button class="ob ob-main" type="button" id="gpGo">${oi('file')}Print or save as PDF</button><button class="ob ob-line" type="button" data-close>Close</button></div></div></div></div>`);
+  $$('#layer .gprint .gweek,#layer .gprint #gPay,#layer .gprint #gUnpay,#layer .gprint #gPrint').forEach(x=>x.remove());$('#gpGo').onclick=()=>window.print()}
+
+/* ---- bind + hooks into the owner app ---- */
+function bindGrowth(){const ob=$('#obody');if(!ob)return;
+  const smp=$('#gSmp');if(smp)smp.onclick=()=>{gSample=!gSample;gS=null;openOwner()};
+  {const b=$('#gOfferE');if(b)b.onclick=gOfferSheet}{const b=$('#gAdd');if(b)b.onclick=gAddSheet}{const b=$('#gImp');if(b)b.onclick=gImpSheet}{const b=$('#gMsgE');if(b)b.onclick=gMsgSheet}{const b=$('#gPrint');if(b)b.onclick=gPrint}
+  {const b=$('#gPay');if(b)b.onclick=()=>{const S=gStore();S.pay=(S.pay||[]).filter(x=>x.wk!==+b.dataset.wk).concat([{wk:+b.dataset.wk,paidT:Date.now()}]);gSave();openOwner()}}
+  {const b=$('#gUnpay');if(b)b.onclick=()=>{const S=gStore(),w0=monday(Date.now())-gWeek*7*DAY;S.pay=(S.pay||[]).filter(x=>x.wk!==w0);gSave();openOwner()}}
+  $$('#obody [data-gwk]').forEach(b=>b.onclick=()=>{gWeek=Math.max(0,gWeek+(+b.dataset.gwk));openOwner()});
+  $$('#obody [data-gchip]').forEach(b=>b.onclick=()=>{gChip=b.dataset.gchip;openOwner()});
+  $$('#obody [data-gsrc]').forEach(b=>b.onclick=()=>{gSrc=b.dataset.gsrc;openOwner()});
+  $$('#obody [data-glead]').forEach(r=>r.addEventListener('click',e=>{if(e.target.closest('a,button'))return;gLeadSheet(r.dataset.glead)}));
+  $$('#obody [data-gcontact]').forEach(a=>a.addEventListener('click',()=>{gContact(a.dataset.gcontact);setTimeout(openOwner,400)}));
+  $$('#obody [data-gnext]').forEach(b=>b.onclick=e=>{e.stopPropagation();const c=gCust().find(x=>x.id===b.dataset.gnext);if(!c)return;const ix=GKEYS.indexOf(gOf(c).st);const nx=GKEYS[ix+1];if(nx==='won'&&GR.model!=='flat'){gLeadSheet(c.id);return}gSet(c,nx);gSave();openOwner()});
+  $$('#obody [data-gsent]').forEach(a=>a.addEventListener('click',()=>{const x=(gStore().react.list||[]).find(r=>r.id===a.dataset.gsent);if(x){x.sent=Date.now();gSave();setTimeout(openOwner,400)}}));
+  $$('#obody [data-glink]').forEach(b=>b.onclick=()=>{const R=gStore().react,x=(R.list||[]).find(r=>r.id===b.dataset.glink);if(!x)return;if(gSample){toast('Sample: not saved');return}
+    const c=upsert({name:x.name,phone:x.phone,source:UC});c.g={src:'uc',st:'contacted',t:{new:Date.now(),contacted:Date.now()},via:'past customers'};x.replied=Date.now();save();gChip='all';openOwner();toast(first(x.name)+' added to your leads')});
+  clearInterval(gTick);gTick=setInterval(()=>{if(oTab!=='growth'||!document.body.contains(ob)){clearInterval(gTick);return}$$('#obody .gtimer[data-since]').forEach(t=>{const a=Date.now()-+t.dataset.since;t.textContent=mins(a)+' waiting';t.classList.toggle('late',a>5*6e4)})},15000)}
+const _gOpenOwner=openOwner;
+openOwner=function(){const el=_gOpenOwner.apply(this,arguments),ow=$('#owner');if(!ow||!$('#obody'))return el;
+  const side=ow.querySelector('.oside .oside-i[data-otab="money"]');if(side&&!ow.querySelector('.oside-i[data-otab="growth"]')){side.insertAdjacentHTML('afterend',`<button type="button" class="oside-i" data-otab="growth" aria-current="${oTab==='growth'?'page':'false'}">${oi('chart')}Growth</button>`);
+    ow.querySelector('.oside-i[data-otab="growth"]').onclick=()=>{oTab='growth';openOwner();ow.scrollTop=0}}
+  if(oTab==='growth'){$('#obody').innerHTML=oGrowth();$$('#owner .oside-i[data-otab]').forEach(b=>b.setAttribute('aria-current',b.dataset.otab==='growth'?'page':'false'));bindGrowth()}
+  else if(oTab==='today'){const st=gStats(),n=gCust().filter(c=>gOf(c).st==='new').length,o=gStore().offer||{};const card=`<button type="button" class="ggo" id="gGo"><span><small>Growth${o.name?' · '+esc(o.name):''}</small><b>${n?`${n} new lead${n>1?'s':''} waiting`:'No new leads waiting'}</b><em>${st.wonWk} sold this week${st.show!=null?` · ${st.show}% show rate`:''}</em></span>${oi('back','flip')}</button>`;
+    const h=$('#obody .ohello');if(h){h.insertAdjacentHTML('afterend',card);$('#gGo').onclick=()=>{oTab='growth';openOwner();ow.scrollTop=0}}}
+  return el};
+const _gMore=oMore;
+oMore=function(){return _gMore().replace('<div class="omore">',`<div class="omore"><button type="button" data-go="growth">${oi('chart')}<span><b>Growth</b><small>Offer, leads, speed to lead, weekly statement</small></span>${oi('back','flip')}</button>`)};
 
 /* ---------- backend: every lead and booking goes to the client's Apps Script web app
    (Google Sheet row + instant owner alert + GoHighLevel contact/appointment). Demo mode when CFG.backend is empty. ---------- */
@@ -1210,12 +1395,27 @@ function addrTypeahead(inp){if(!inp||inp.dataset.ta)return;inp.dataset.ta='1';in
   const GEO='https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/';let sugg=[],act=-1,seq=0,tmr;
   const hide=()=>{list.hidden=true;inp.setAttribute('aria-expanded','false');act=-1};
   const show=()=>{list.innerHTML=sugg.map((x,i)=>`<li role="option" aria-selected="${i===act}" data-i="${i}">${esc(x.text.replace(/, USA$/,''))}</li>`).join('');list.hidden=!sugg.length;inp.setAttribute('aria-expanded',String(!!sugg.length))};
-  const use=t=>{inp.value=String(t).replace(/, USA$/,'');hide();inp.dispatchEvent(new Event('change',{bubbles:true}))};
-  inp.addEventListener('input',()=>{clearTimeout(tmr);const v=inp.value.trim();if(v.length<3){sugg=[];hide();return}
+  const use=(t,key)=>{inp.value=String(t).replace(/, USA$/,'');hide();inp.dispatchEvent(new Event('change',{bubbles:true}));if(inp.id==='iAddr')addrMap(inp,wrap,inp.value,key)};
+  inp.addEventListener('input',()=>{clearTimeout(tmr);const v=inp.value.trim();const fm=wrap.parentNode.querySelector('.amap');if(fm&&!fm.hidden){fm.hidden=true;delete inp.dataset.confirmed}if(v.length<3){sugg=[];hide();return}
     tmr=setTimeout(async()=>{const my=++seq;try{const j=await(await fetch(`${GEO}suggest?f=json&countryCode=USA&category=Address&maxSuggestions=6&location=${CFG.lon},${CFG.lat}&text=${encodeURIComponent(v)}`)).json();if(my!==seq)return;sugg=(j.suggestions||[]).filter(x=>!x.isCollection);act=-1;show()}catch(x){hide()}},220)});
-  inp.addEventListener('keydown',e=>{if(list.hidden)return;if(e.key==='ArrowDown'){e.preventDefault();act=(act+1)%sugg.length;show()}else if(e.key==='ArrowUp'){e.preventDefault();act=(act-1+sugg.length)%sugg.length;show()}else if(e.key==='Enter'&&act>=0){e.preventDefault();use(sugg[act].text)}else if(e.key==='Escape')hide()});
-  let picked=false;const pick=e=>{const li=e.target.closest('li');if(!li)return;e.preventDefault();if(picked)return;picked=true;setTimeout(()=>picked=false,600);use(sugg[+li.dataset.i].text)};
+  inp.addEventListener('keydown',e=>{if(list.hidden)return;if(e.key==='ArrowDown'){e.preventDefault();act=(act+1)%sugg.length;show()}else if(e.key==='ArrowUp'){e.preventDefault();act=(act-1+sugg.length)%sugg.length;show()}else if(e.key==='Enter'&&act>=0){e.preventDefault();use(sugg[act].text,sugg[act].magicKey)}else if(e.key==='Escape')hide()});
+  let picked=false;const pick=e=>{const li=e.target.closest('li');if(!li)return;e.preventDefault();if(picked)return;picked=true;setTimeout(()=>picked=false,600);use(sugg[+li.dataset.i].text,sugg[+li.dataset.i].magicKey)};
   list.addEventListener('pointerdown',pick);list.addEventListener('mousedown',e=>e.preventDefault());list.addEventListener('click',pick);inp.addEventListener('blur',()=>setTimeout(hide,350))}
+/* ---- "Is this your place?" (Oct 16): after an address is picked, show a satellite view to confirm it, plus a service-area check.
+   Google Maps embed (no key) + Esri geocode for the distance. Identifier only: nothing is measured from the photo. ---- */
+function addrMap(inp,wrap,addr,key){if(!addr)return;let fig=wrap.parentNode.querySelector('.amap');
+  if(!fig){fig=document.createElement('figure');fig.className='amap';wrap.insertAdjacentElement('afterend',fig)}
+  fig.hidden=false;fig.classList.remove('ok');delete inp.dataset.confirmed;
+  fig.innerHTML=`<div class="amapf"><iframe src="https://maps.google.com/maps?q=${encodeURIComponent(addr)}&t=k&z=19&output=embed" title="Satellite view of ${esc(addr)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+  <figcaption><p class="amq"><b>Is this the right place?</b><span class="amarea">Checking our service area…</span></p><div class="amb"><button type="button" class="btn btn-main amyes">Yes, that's it</button><button type="button" class="btn btn-line amno">Change address</button></div><p class="amdone" hidden>✓ Address confirmed</p></figcaption>`;
+  fig.querySelector('.amyes').onclick=()=>{inp.dataset.confirmed='1';fig.classList.add('ok');fig.querySelector('.amb').hidden=true;fig.querySelector('.amdone').hidden=false};
+  fig.querySelector('.amno').onclick=()=>{fig.hidden=true;inp.value='';delete inp.dataset.confirmed;inp.focus()};
+  const area=fig.querySelector('.amarea'),R=+(CFG.radius||35);
+  fetch('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&maxLocations=1&outFields=none&SingleLine='+encodeURIComponent(addr)+(key?'&magicKey='+encodeURIComponent(key):'')).then(r=>r.json()).then(j=>{const c=j.candidates&&j.candidates[0];if(!c||!CFG.lat){area.textContent='';return}
+    const toR=d=>d*Math.PI/180,dl=toR(c.location.y-CFG.lat),dn=toR(c.location.x-CFG.lon),h=Math.sin(dl/2)**2+Math.cos(toR(CFG.lat))*Math.cos(toR(c.location.y))*Math.sin(dn/2)**2,mi=7918*Math.asin(Math.sqrt(h));
+    inp.dataset.miles=mi.toFixed(1);
+    if(mi<=R){area.textContent=`You're in our service area (about ${Math.max(1,Math.round(mi))} mi away).`;area.className='amarea in'}
+    else{area.textContent=`That's about ${Math.round(mi)} miles out, past our usual area. Book anyway and we'll confirm by text.`;area.className='amarea out'}}).catch(()=>{area.textContent=''})}
 addrTypeahead($('#iAddr'));
 /* sign-up sheets are built on the fly: attach when they open */
 new MutationObserver(()=>{['#ja','#oaddr'].forEach(s=>{const e=$(s);if(e)addrTypeahead(e)})}).observe(document.getElementById('layer')||document.body,{childList:true,subtree:true});
