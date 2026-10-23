@@ -5,7 +5,7 @@
 <title>Your visits · Bayou Strength &amp; Conditioning</title>
 <meta name="robots" content="noindex,nofollow"><meta name="description" content="Private page for Bayou Strength &amp; Conditioning customers.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>:root{--slate:#1F2A33;--deck:#24313B;--raised:#2E3D48;--hivis:#FF9A5C;--text:#F4F7F8;--muted:#B7C3CB;--ok:#2BB673;--bad:#E8603F;--line:rgba(255,255,255,.12);--card:rgba(36,49,59,.9);--r:22px;--display:'Archivo',system-ui,sans-serif}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;min-height:100vh;min-height:100dvh;background:#141E27;color:var(--text);font:400 18px/1.5 var(--display);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -396,6 +396,57 @@ svg{display:block}
 @media (min-width:980px){.pmain{max-width:760px}}
 [data-theme="light"] #wall{display:none!important}
 @media (max-width:519px){[data-theme="light"] .pbrand span{display:none}}
+/* prepaid package card (Oct 21) */
+.pc-pkg .pkrow{display:flex;align-items:center;gap:16px;margin-top:6px}
+.pc-pkg h2{margin:0 0 4px}
+.pkring{position:relative;width:72px;height:72px;flex-shrink:0}
+.pkring svg{width:72px;height:72px;transform:rotate(-90deg)}
+.pkring circle{fill:none;stroke-width:7}
+.pkr-bg{stroke:var(--line)}
+.pkr-fg{stroke:var(--text);stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.pkring b{position:absolute;inset:0;display:grid;place-items:center;font-size:24px;font-weight:700;letter-spacing:-.02em}
+.pkdots{list-style:none;display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:16px 0 4px}
+.pkdots li{width:22px;height:8px;border-radius:4px;background:var(--line)}
+.pkdots li.on{background:var(--text)}
+.pkact{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.pkbal{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:var(--deck);border:1px solid var(--line)}
+.pkbal span{color:var(--muted);font-size:15px}
+.pkbal b{font-size:20px;margin-right:auto}
+@media (prefers-reduced-motion:reduce){.pkr-fg{transition:none}}
+/* truck moods (Oct 22) */
+.scene{position:relative;height:96px;margin:12px 0 0;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,var(--deck),var(--card))}
+.sc-sleep{background:linear-gradient(180deg,#1E2A44 0%,#2E3D5C 100%)}
+.sc-ground{position:absolute;left:0;right:0;bottom:0;height:14px;background:rgba(0,0,0,.08)}
+.sc-sleep .sc-ground{background:#1A2338}
+.sc-truck{position:absolute;left:50%;bottom:6px;width:120px;margin-left:-60px}
+.tk{width:100%;height:auto;display:block;overflow:visible}
+.tk-body{fill:#FFD400}.tk-cab{fill:#F4F4F2}.tk-win{fill:#2B3944}.tk-wh{fill:#1F2A33;stroke:#F4F4F2;stroke-width:2}.tk-hub{fill:#C9C8C4}
+.tk-rack{fill:none;stroke:#C9C8C4;stroke-width:2.4;stroke-linecap:round}.tk-eye{fill:none;stroke:#1F2A33;stroke-width:2.2;stroke-linecap:round}.tk-lamp{fill:#FFF3B0}
+.sc-sleep .sc-truck{animation:snore 3.2s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes snore{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.96) translateY(1px)}}
+.sc-moon{position:absolute;top:12px;left:18px;width:22px;height:22px;fill:#F5E7A8}
+.zz{position:absolute;left:calc(50% + 46px);bottom:58px;font:700 15px/1 "Inter Tight",Inter,sans-serif;color:#F4F4F2;opacity:0;animation:zz 3s ease-in infinite}
+.z2{animation-delay:1s;font-size:18px}.z3{animation-delay:2s;font-size:22px}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}20%{opacity:1}100%{opacity:0;transform:translate(26px,-40px)}}
+.sc-prep .sc-truck{animation:idle .35s ease-in-out infinite}
+@keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
+.sc-wrench{position:absolute;left:calc(50% + 62px);bottom:44px;width:22px;height:22px;fill:none;stroke:var(--text);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;animation:wrench 1.1s ease-in-out infinite;transform-origin:20% 80%}
+@keyframes wrench{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(25deg)}}
+.sc-box{position:absolute;bottom:14px;width:16px;height:14px;border-radius:3px;background:#C9A26B;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+.sc-box.b1{left:calc(50% - 98px);animation:load 2.4s ease-in-out infinite}
+.sc-box.b2{left:calc(50% - 98px);animation:load 2.4s ease-in-out 1.2s infinite}
+@keyframes load{0%{transform:translate(0,0);opacity:0}15%{opacity:1}60%{transform:translate(52px,-22px);opacity:1}75%,100%{transform:translate(52px,-22px);opacity:0}}
+.sp{position:absolute;color:#E0B400;font-size:13px;animation:tw 1.6s ease-in-out infinite}
+.sp.s1{left:calc(50% - 50px);top:16px}.sp.s2{left:calc(50% + 40px);top:10px;animation-delay:.8s}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1.1)}}
+.vmood{margin-top:10px}
+@media (prefers-reduced-motion:reduce){.scene *{animation:none!important}.zz{opacity:1}.z1{transform:translate(4px,-6px)}.z2{transform:translate(14px,-18px)}.z3{transform:translate(24px,-30px)}.sc-box{opacity:0}}
+.scene{height:112px}.sc-truck{width:150px;margin-left:-75px}.zz{left:calc(50% + 60px);bottom:70px}.sc-wrench{left:calc(50% + 80px);bottom:52px}
+.sc-box.b1,.sc-box.b2{left:calc(50% - 118px)}
+.vmood{font-weight:500!important;font-size:16px!important;line-height:1.45!important;color:var(--text)}
+.pinv-brand .lg-h{stroke:var(--text)!important}
+/* whole page at once (Oct 22): one quick fade together, no scroll reveal */
+[data-anim]{transform:none!important;transition:opacity .2s ease!important;transition-delay:0s!important}
 </style></head><body><div id="wall" aria-hidden="true"></div><div id="papp"></div><div id="player"></div><script>/* ============ Ridgeline customer portal (portal.html?j=JOB) — Oct 7, round 1 ============
    Separate screen for customers on a current job. PIN unlock, English/Español, arrival window + who's coming,
    change orders and add-ons they can approve and pay, invoice, job photos. Owner sets everything up in Owner → customer.
@@ -406,7 +457,7 @@ svg{display:block}
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const CFG={"biz": "Bayou Strength & Conditioning", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};const BIZ_PHONE="+17135550160";const PKCFG={"kind": "appt", "atShop": false, "addr": "5400 Washington Ave, Houston, TX 77007", "steps": [["contract", "Intro session confirmed", 1], ["waiver", "Waiver signed", 1], ["goals", "Goals form completed", 0], ["arrived", "Checked in", 1], ["assess", "Movement check", 1], ["workout", "Coached workout", 1], ["scan", "InBody scan (optional)", 0], ["walkthrough", "Plan review with you", 1], ["notes", "Member notes saved", 1], ["invoice", "Receipt sent", 0], ["paid", "Paid", 0], ["booked", "First class booked", 0], ["review", "Review asked", 0]], "plans": [{"name": "8 classes a month", "price": "$149/mo", "perks": ["8 classes a month", "Monthly coach check-in"]}, {"name": "Unlimited classes", "price": "$199/mo", "perks": ["Every class, every day", "Monthly coach check-in", "InBody scan every quarter"]}], "joinBonus": "your first month is free.", "rebookWeeks": 1, "policy": "Please give us 24 hours’ notice to cancel or move your appointment so we can offer the spot to someone else.", "crewWord": "Coach", "services": [{"t": "1:1 personal training", "d": "A coach builds your program and watches your form. 60 minutes for $95 or 30 minutes for $55.", "url": "personal-training-houston.html"}, {"t": "Partner training", "d": "Train with a friend or partner for $110 per session for two.", "url": "partner-training-houston.html"}, {"t": "Strength, HIIT and mobility classes", "d": "Coached group classes for $25 each. Everything is scaled to your level.", "url": "strength-hiit-classes-houston.html"}, {"t": "Open gym", "d": "Lift on your own 5 AM to 8 PM with a program in the app. $79 a month.", "url": "open-gym-houston.html"}, {"t": "Body scans and assessments", "d": "A fitness assessment with an InBody scan for $75, so you have a real starting point.", "url": "body-composition-scan-houston.html"}, {"t": "Nutrition coaching", "d": "A check-in every 2 weeks and simple habits you can keep. $149 a month.", "url": "nutrition-coaching-houston.html"}]};
+const CFG={"biz": "Bayou Strength & Conditioning", "city": "Houston", "tz": "America/Chicago", "lat": 29.7604, "lon": -95.3698, "backend": ""};const BIZ_PHONE="+17135550160";const PKCFG={"kind": "appt", "atShop": false, "addr": "5400 Washington Ave, Houston, TX 77007", "steps": [["contract", "Intro session confirmed", 1], ["waiver", "Waiver signed", 1], ["goals", "Goals form completed", 0], ["arrived", "Checked in", 1], ["assess", "Movement check", 1], ["workout", "Coached workout", 1], ["scan", "InBody scan (optional)", 0], ["walkthrough", "Plan review with you", 1], ["notes", "Member notes saved", 1], ["invoice", "Receipt sent", 0], ["paid", "Paid", 0], ["booked", "First class booked", 0], ["review", "Review asked", 0]], "plans": [{"name": "8 classes a month", "price": "$149/mo", "perks": ["8 classes a month", "Monthly coach check-in"]}, {"name": "Unlimited classes", "price": "$199/mo", "perks": ["Every class, every day", "Monthly coach check-in", "InBody scan every quarter"]}], "joinBonus": "your first month is free.", "rebookWeeks": 1, "policy": "Please give us 24 hours’ notice to cancel or move your appointment so we can offer the spot to someone else.", "crewWord": "Coach", "services": [{"t": "1:1 personal training", "d": "A coach builds your program and watches your form. 60 minutes for $95 or 30 minutes for $55.", "url": "personal-training-houston.html"}, {"t": "Partner training", "d": "Train with a friend or partner for $110 per session for two.", "url": "partner-training-houston.html"}, {"t": "Strength, HIIT and mobility classes", "d": "Coached group classes for $25 each. Everything is scaled to your level.", "url": "strength-hiit-classes-houston.html"}, {"t": "Open gym", "d": "Lift on your own 5 AM to 8 PM with a program in the app. $79 a month.", "url": "open-gym-houston.html"}, {"t": "Body scans and assessments", "d": "A fitness assessment with an InBody scan for $75, so you have a real starting point.", "url": "body-composition-scan-houston.html"}, {"t": "Nutrition coaching", "d": "A check-in every 2 weeks and simple habits you can keep. $149 a month.", "url": "nutrition-coaching-houston.html"}], "look": "", "pkg": true, "unit": "class", "units": "classes"};
 /* ---------- portal kind (Oct 15): project | service | appt | event. Kit sites pass PKCFG; Ridgeline = project ---------- */
 const PK=Object.assign({kind:'project',atShop:false,steps:null,plans:[],joinBonus:'',rebookWeeks:0,policy:'',crewWord:'',visitWord:'',services:[{"t": "Workout repair", "d": "Leaks, missing equipment and flashing, fixed and photographed.", "url": "roof-repair.html"}, {"t": "Workout replacement", "d": "A new workout with the warranty in writing.", "url": "roof-replacement.html"}, {"t": "Storm damage", "d": "Free check after hail or wind, with photos for your records.", "url": "storm-damage.html"}, {"t": "Insurance claims", "d": "We meet the adjuster and document every damaged spot.", "url": "insurance-claims.html"}, {"t": "Gutters", "d": "Seamless gutters and guards that keep water off your session edge.", "url": "gutters.html"}, {"t": "Attic ventilation", "d": "Ridge vents that cool the attic and help equipment last.", "url": "attic-ventilation.html"}]},typeof PKCFG!=='undefined'?PKCFG:{});
 const DEMO=new URLSearchParams(location.search).has('demo');
@@ -523,41 +574,74 @@ const isPhone=()=>/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(naviga
 const smsHref=b=>`sms:${BIZ_PHONE}${/iPhone|iPad|Mac/i.test(navigator.userAgent)?'&':'?'}body=${encodeURIComponent(b)}`;
 Object.assign(W.en,{svcK:'More from us',svcH:b=>`What else ${b} can do for you`,svcP:'Same team, same easy booking. Ask about any of these and we’ll text you back.',svcAsk:'Ask about this',svcMore:'Details',svcMsg:(s,n)=>`Hi, it’s ${n||'a customer'}. I’d like to ask about ${s}.`});
 Object.assign(W.es,{svcK:'Más de nosotros',svcH:b=>`Qué más puede hacer ${b} por usted`,svcP:'El mismo equipo, la misma reserva fácil. Pregunte por cualquiera y le respondemos por texto.',svcAsk:'Preguntar',svcMore:'Detalles',svcMsg:(s,n)=>`Hola, soy ${n||'un cliente'}. Quisiera preguntar por ${s}.`});
+Object.assign(W.en,{pkK:'Your package',pkLeft:(l,n,u)=>`${l} of ${n} ${u} left`,pkUsed:(u,n)=>`${u} used`,pkExp:d=>`Use by ${d}`,pkBook:u=>`Book your next ${u}`,pkBookMsg:(u,n)=>`Hi, it’s ${n||'a customer'}. I’d like to book my next ${u}.`,pkBal:'Still to pay',pkPay:a=>`Pay ${a}`,pkMoreK:'Almost done',pkMoreH:p=>`Ready for another ${p}?`,pkMoreP:'Keep your results going. Text us and we’ll set it up, no new sign-up needed.',pkMoreBtn:'Text us to renew',pkMoreMsg:(p,n)=>`Hi, it’s ${n||'a customer'}. I’d like another ${p}.`,pkDone:'All used. Nice work.'});
+Object.assign(W.es,{pkK:'Su paquete',pkLeft:(l,n,u)=>`Le quedan ${l} de ${n}`,pkUsed:(u,n)=>`${u} usadas`,pkExp:d=>`Úselo antes del ${d}`,pkBook:u=>`Reservar su próxima cita`,pkBookMsg:(u,n)=>`Hola, soy ${n||'un cliente'}. Quisiera reservar mi próxima cita.`,pkBal:'Pendiente de pago',pkPay:a=>`Pagar ${a}`,pkMoreK:'Casi termina',pkMoreH:p=>`¿Listo para otro ${p}?`,pkMoreP:'Mantenga sus resultados. Escríbanos y lo preparamos, sin registrarse de nuevo.',pkMoreBtn:'Escríbanos para renovar',pkMoreMsg:(p,n)=>`Hola, soy ${n||'un cliente'}. Quisiera otro ${p}.`,pkDone:'Todo usado. ¡Bien hecho!'});
+Object.assign(W.en,{viewRcpt:'View your receipt',estTitle:'Estimate',estNo:'Estimate #',estValid:'Good until',estTotal:'Estimate total',estFor:'Prepared for',viewEstIn:'See your estimate',estSub:'Every line, right here',rcpt:'Receipt',rcptKeep:'Thank you. Keep this for your records.',rcptPaidBy:'Paid',rcptBal:'Balance',rcptCust:'Customer',rcptTime:'Time',rcptItems:'Items'});
+Object.assign(W.es,{viewRcpt:'Ver su recibo',estTitle:'Presupuesto',estNo:'Presupuesto #',estValid:'Válido hasta',estTotal:'Total del presupuesto',estFor:'Preparado para',viewEstIn:'Ver su presupuesto',estSub:'Cada línea, aquí mismo',rcpt:'Recibo',rcptKeep:'Gracias. Guárdelo para sus registros.',rcptPaidBy:'Pagado',rcptBal:'Saldo',rcptCust:'Cliente',rcptTime:'Hora',rcptItems:'Artículos'});
+Object.assign(W.en,{sleepP:d=>`Our truck is resting up for ${d}. We wake it up the morning of your visit.`,prepP:'Loading up and checking the tools for your visit today.'});
+Object.assign(W.es,{sleepP:d=>`Nuestra camioneta descansa hasta el ${d}. La despertamos la mañana de su visita.`,prepP:'Cargando y revisando las herramientas para su visita de hoy.'});
 const setLang=l=>{LANG=l;try{localStorage.setItem('kgym-lang',l)}catch(x){}document.documentElement.lang=l;if(C){C.job=C.job||{};if(C.job.lang!==l){C.job.lang=l;if(LIVE)api({action:'portal_act',act:'lang',lang:l}).catch(()=>{});else save()}}};
-document.documentElement.lang=LANG;
+document.documentElement.lang=LANG;if(PK.look)document.documentElement.classList.add('look-'+PK.look);
 
 /* ---------- demo: labeled sample customer per kind (?demo=1). Never saved. ---------- */
 function sampleDB(){const d=n=>{const x=new Date();x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)},ago=n=>Date.now()-n*864e5,K=PK.kind,
   plans=PK.plans||[],stepKeys=(PK.steps||[]).map(x=>x[0]);
   const crew=[{id:'s1',name:'Maria',role:PK.crewWord||'Lead'},{id:'s2',name:'James',role:PK.crewWord||'Tech'}];
   const c={id:'demo',sample:true,name:'Sample Customer',addr:K==='appt'||PK.atShop?'':'1234 Sample St, Houston, TX',job:{visits:[],changes:[],log:[]},show:{estimate:1,invoice:1,updates:1},updates:[],prod:{done:{}}};
+  if(PK.pkg)c.pkg={name:'Sample package',total:3,used:2,exp:d(40),bal:120,unit:PK.unit,units:PK.units};
   if(K==='appt'){c.stage='booked';c.job.visits=[{id:'v1',type:'work',date:d(3),from:'10:00',status:'confirmed',crew:['s1'],lead:'s1',deposit:25,depPaid:1},{id:'v0',type:'work',date:d(-35),from:'11:00',status:'done',crew:['s1']}];
-    c.updates=[{t:ago(35),text:'Aftercare from your last visit: wait 48 hours before washing, use sulfate-free shampoo, book your next visit in about 6 weeks.',photos:[]}];
-    c.invoice={status:'paid',paidT:ago(35),t:ago(35),no:'INV-1042',link:'index.html',items:[{desc:'Salon appointment',amount:185},{desc:'Bond treatment',amount:35}],dep:25}}
+    c.updates=[{t:ago(35),text:'Sample note: aftercare tips from your last visit and when to come back.',photos:[]}];
+    c.invoice={status:'paid',paidT:ago(35),t:ago(35),no:'INV-1042',items:[{desc:((PK.services||[])[0]||{}).t||'Appointment',amount:185},{desc:((PK.services||[])[1]||{}).t||'Add-on',amount:35}],dep:25}}
   else if(K==='event'){c.stage='approved';c.event={date:d(24),guests:120,place:'Sample venue, Houston',menu:'Menu picked at your tasting'};
-    c.job.visits=[{id:'v1',type:'inspection',date:d(-6),from:'14:00',status:'done',crew:['s1']}];c.estimate={status:'approved',okBy:'Sample Customer',okT:ago(5),link:'index.html'};
-    c.invoice={status:'sent',t:ago(5),no:'INV-2087',link:'index.html',dep:1500,depPaid:1,bal:3500,due:d(17),items:[{desc:'Buffet for 120 guests',amount:4200},{desc:'Service staff (4 people)',amount:800}],note:'Balance due 7 days before your event.'};stepKeys.slice(0,3).forEach((k,i)=>c.prod.done[k]={t:ago(10-i)})}
+    c.job.visits=[{id:'v1',type:'inspection',date:d(-6),from:'14:00',status:'done',crew:['s1']}];c.estimate={status:'approved',okBy:'Sample Customer',okT:ago(5),t:ago(7),no:'EST-2087',items:[{desc:'Buffet for 120 guests',amount:4200},{desc:'Service staff (4 people)',amount:800}]};
+    c.invoice={status:'sent',t:ago(5),no:'INV-2087',dep:1500,depPaid:1,bal:3500,due:d(17),items:[{desc:'Buffet for 120 guests',amount:4200},{desc:'Service staff (4 people)',amount:800}],note:'Balance due 7 days before your event.'};stepKeys.slice(0,3).forEach((k,i)=>c.prod.done[k]={t:ago(10-i)})}
   else if(K==='project'){c.stage='work';c.job.visits=[{id:'v1',type:'work',date:d(0),from:'08:00',to:'09:00',status:'onway',eta:15,crew:['s1','s2'],lead:'s1'}];
-    stepKeys.slice(0,Math.max(2,Math.floor(stepKeys.length/2))).forEach((k,i)=>c.prod.done[k]={t:ago(8-i)});c.estimate={status:'approved',okBy:'Sample Customer',okT:ago(12),link:'index.html'};
+    stepKeys.slice(0,Math.max(2,Math.floor(stepKeys.length/2))).forEach((k,i)=>c.prod.done[k]={t:ago(8-i)});c.estimate={status:'approved',okBy:'Sample Customer',okT:ago(12),t:ago(14),no:'EST-1180',items:[{desc:'Main project (sample)',amount:8400},{desc:'Materials and haul-away (sample)',amount:1250}]};
     c.job.changes=[{title:'Replace 2 damaged boards found today',why:'They were soft under the old material.',price:180,status:'waiting',t:ago(0),photos:[]}]}
   else{c.stage='estimate';c.job.visits=[{id:'v1',type:'estimate',date:d(PK.atShop?1:0),from:'13:00',to:PK.atShop?'':'15:00',status:PK.atShop?'confirmed':'onway',eta:20,crew:['s2'],lead:'s2'}];
-    c.estimate={status:'sent',link:'index.html'};c.updates=[{t:ago(0),text:'Sample note: what the tech found and the options we recommend.',photos:[]}]}
+    c.estimate={status:'sent',t:ago(0),no:'EST-1203',valid:d(30),items:[{desc:'Recommended repair (sample)',amount:640},{desc:'Parts (sample)',amount:185},{desc:'Labor, 2 hours (sample)',amount:240}],note:'Sample estimate. Prices shown are made up.'};c.updates=[{t:ago(0),text:'Sample note: what the tech found and the options we recommend.',photos:[]}]}
+  {const tq=new URLSearchParams(location.search).get('truck'),v=c.job.visits[0];if(v&&tq==='sleep')Object.assign(v,{date:d(2),status:'confirmed'});else if(v&&tq==='prep')Object.assign(v,{date:d(0),status:'confirmed'});else if(v&&tq==='here')Object.assign(v,{date:d(0),status:'arrived'})}/* demo: ?demo=1&truck=sleep|prep|here */
   return{customers:[c],crew,addons:[]}}
 
 /* ---------- branded invoice (Oct 15): built from the owner's line items; pay link = owner's Stripe/Square/GHL link ---------- */
 function invLines(c){const iv=c.invoice||{};if(iv.items&&iv.items.length)return iv.items.map(x=>({desc:x.desc,amount:+x.amount||0}));const L=[];const e=c.estimate&&c.estimate.status==='approved'&&c.estimate.opts?c.estimate.opts[c.estimate.pick||0]:null;if(e)L.push({desc:e.name,amount:+e.price||0});
   ((c.job||{}).changes||[]).filter(o=>o.status==='approved'||o.status==='paid').forEach(o=>L.push({desc:o.title,amount:+o.price||0}));((c.job||{}).picks||[]).forEach(p=>L.push({desc:p.name,amount:+p.price||0}));return L}
 function invHtml(c){const t=T(),iv=c.invoice||{},L=invLines(c),sub=L.reduce((a,x)=>a+x.amount,0),dep=+iv.dep||0,due=Math.max(0,sub-dep),paid=iv.status==='paid',no=iv.no||('INV-'+String(c.id||'').replace(/\D/g,'').slice(-4).padStart(4,'0'));
+  if(PK.look==='receipt')return rcptHtml(c,{title:paid?t.rcpt:t.invTitle,no,date:paid?(iv.paidT||iv.t):iv.t,lines:L,rows:[[t.subtotal,usd(sub)]].concat(dep?[[t.depLess,'−'+usd(dep)]]:[]),total:paid?sub:due,totalLabel:paid?t.rcptPaidBy:t.totalDue,extra:iv.due&&!paid?[[t.invDue,dayShort(at(iv.due,'12:00'))]]:[],note:iv.note,paid});
   return `<article class="pinv ${paid?'is-paid':''}" id="pinvDoc"><header class="pinv-h"><div class="pinv-brand">${LOGO}<div><b>${esc(CFG.biz||'')}</b><small>${esc(PK.addr||'')}</small><small>${BIZ_PRETTY}</small></div></div><div class="pinv-t"><h2>${t.invTitle}</h2><dl><div><dt>${t.invNo}</dt><dd>${esc(no)}</dd></div><div><dt>${t.invDate}</dt><dd>${dayShort(iv.t||Date.now())}</dd></div>${iv.due&&!paid?`<div><dt>${t.invDue}</dt><dd>${dayShort(at(iv.due,'12:00'))}</dd></div>`:''}</dl></div></header>
     <div class="pinv-to"><small>${t.billTo}</small><b>${esc(c.name||'')}</b>${c.addr?`<span>${esc(c.addr)}</span>`:''}</div>
     <table class="pinv-tb"><thead><tr><th>${t.item}</th><th>${t.amount}</th></tr></thead><tbody>${L.map(x=>`<tr><td>${esc(x.desc)}</td><td>${usd(x.amount)}</td></tr>`).join('')||`<tr><td colspan="2">—</td></tr>`}</tbody></table>
     <dl class="pinv-sum"><div><dt>${t.subtotal}</dt><dd>${usd(sub)}</dd></div>${dep?`<div><dt>${t.depLess}</dt><dd>−${usd(dep)}</dd></div>`:''}<div class="tot"><dt>${t.totalDue}</dt><dd>${usd(paid?0:due)}</dd></div></dl>
     ${iv.note?`<p class="pinv-note">${esc(iv.note)}</p>`:''}<p class="pinv-thx">${t.invThanks}</p>${paid?`<span class="pinv-stamp" aria-label="${t.paidStamp}">${t.paidStamp}</span>`:''}</article>`}
+/* itemized estimate inside the portal (Oct 22): no more sending people to another site unless the owner pasted a link */
+function estHtml(c){const t=T(),e=c.estimate||{},L=(e.items||[]).map(x=>({desc:x.desc,amount:+x.amount||0})),sub=L.reduce((a,x)=>a+x.amount,0),no=e.no||('EST-'+String(c.id||'').replace(/\D/g,'').slice(-4).padStart(4,'0'));
+  if(PK.look==='receipt')return rcptHtml(c,{title:t.estTitle,no,date:e.t,lines:L,total:sub,totalLabel:t.estTotal,extra:e.valid?[[t.estValid,dayShort(at(e.valid,'12:00'))]]:[],note:e.note,paid:false});
+  return `<article class="pinv pest" id="pinvDoc"><header class="pinv-h"><div class="pinv-brand">${LOGO}<div><b>${esc(CFG.biz||'')}</b><small>${esc(PK.addr||'')}</small><small>${BIZ_PRETTY}</small></div></div><div class="pinv-t"><h2>${t.estTitle}</h2><dl><div><dt>${t.estNo}</dt><dd>${esc(no)}</dd></div><div><dt>${t.invDate}</dt><dd>${dayShort(e.t||Date.now())}</dd></div>${e.valid?`<div><dt>${t.estValid}</dt><dd>${dayShort(at(e.valid,'12:00'))}</dd></div>`:''}</dl></div></header>
+    <div class="pinv-to"><small>${t.estFor}</small><b>${esc(c.name||'')}</b>${c.addr?`<span>${esc(c.addr)}</span>`:''}</div>
+    <table class="pinv-tb"><thead><tr><th>${t.item}</th><th>${t.amount}</th></tr></thead><tbody>${L.map(x=>`<tr><td>${esc(x.desc)}</td><td>${usd(x.amount)}</td></tr>`).join('')}</tbody></table>
+    <dl class="pinv-sum"><div class="tot"><dt>${t.estTotal}</dt><dd>${usd(sub)}</dd></div></dl>${e.note?`<p class="pinv-note">${esc(e.note)}</p>`:''}</article>`}
+function estSheet(c){const t=T(),e=c.estimate||{};
+  sheet(`<div class="pinv-wrap">${estHtml(c)}</div><div class="prow pinv-acts">${e.status==='sent'?`<button type="button" class="pbtn pbtn-main" id="pestOk">${I.check}${t.yes}</button>`:''}<button type="button" class="pbtn pbtn-line" id="pinvPrint">${I.doc}${t.saveInv}</button><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`);
+  document.getElementById('pinvPrint').onclick=()=>{document.body.classList.add('printing-inv');window.print();setTimeout(()=>document.body.classList.remove('printing-inv'),500)};
+  const ok=document.getElementById('pestOk');if(ok)ok.onclick=()=>{const b=document.querySelector('.pc-doc [data-est]');const x=document.querySelector('#player [data-close]');x&&x.click();b&&b.click()}}
+/* receipt look (Oct 22, test on one template): printer slot, cream paper, zigzag torn edges, notched corners */
+function rcptHtml(c,o){const t=T(),d=new Date(o.date||Date.now()),bars=Array.from({length:42},(_,i)=>{const w=[1,2,1,3,1,2,2,1][((i*7)+(String(o.no).length*3))%8];return `<i style="width:${w}px"></i>`}).join('');
+  return `<div class="rprinter" aria-hidden="true"><span class="rp-led"></span><span class="rp-slot"></span></div><article class="rcpt ${o.paid?'is-paid':''}" id="pinvDoc"><div class="rc-in">
+    <header class="rc-h">${LOGO}<b class="rc-biz">${esc(CFG.biz||'')}</b><small>${esc(PK.addr||'')}</small><small>${BIZ_PRETTY}</small></header>
+    <p class="rc-title">${esc(o.title)}</p>
+    <dl class="rc-meta"><div><dt>No.</dt><dd>${esc(o.no)}</dd></div><div><dt>${t.invDate}</dt><dd>${d.toLocaleDateString(LOC(),{month:'short',day:'numeric',year:'numeric'})}</dd></div><div><dt>${t.rcptTime}</dt><dd>${d.toLocaleTimeString(LOC(),{hour:'numeric',minute:'2-digit'})}</dd></div><div><dt>${t.rcptCust}</dt><dd>${esc(c.name||'')}</dd></div>${(o.extra||[]).map(([a,b])=>`<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join('')}</dl>
+    <p class="rc-rule"></p>
+    <ul class="rc-lines">${o.lines.map((x,i)=>`<li><span class="rc-q">${i+1}</span><span class="rc-d">${esc(x.desc)}</span><span class="rc-a">${usd(x.amount)}</span></li>`).join('')}</ul>
+    <p class="rc-rule"></p>
+    <dl class="rc-sum">${(o.rows||[]).map(([a,b])=>`<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join('')}<div class="rc-tot"><dt>${esc(o.totalLabel)}</dt><dd>${usd(o.total)}</dd></div></dl>
+    ${o.note?`<p class="rc-note">${esc(o.note)}</p>`:''}
+    ${o.paid?`<p class="rc-stamp">${t.paidStamp}</p>`:''}
+    <div class="rc-bar">${bars}</div><p class="rc-no">${esc(o.no)}</p><p class="rc-thx">${t.rcptKeep}</p></div></article>`}
 function invSheet(c){const t=T(),iv=c.invoice||{},L=invLines(c),due=Math.max(0,L.reduce((a,x)=>a+x.amount,0)-(+iv.dep||0)),paid=iv.status==='paid';
   sheet(`<div class="pinv-wrap">${invHtml(c)}</div><div class="prow pinv-acts">${!paid&&iv.link?`<a class="pbtn pbtn-main" href="${esc(iv.link)}" target="_blank" rel="noopener">${I.card}${t.payInv(usd(due))}</a>`:''}<button type="button" class="pbtn pbtn-line" id="pinvPrint">${I.doc}${t.saveInv}</button><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`);
   document.getElementById('pinvPrint').onclick=()=>{document.body.classList.add('printing-inv');window.print();setTimeout(()=>document.body.classList.remove('printing-inv'),500)}}
 
-/* ---------- thank-you screen (?thanks=paid|booked): confirm first, then what's next, then ONE plan offer, then a referral ---------- */
+/* ---------- thank-you screen (?thanks=paid|booked): confirm first, then what's next, then ONE plan offer (no referral: affiliate program is a paid add-on, Ryan Oct 21) ---------- */
 function thanksScreen(kind){const t=T(),paid=kind!=='booked',pl=(PK.plans||[])[0],u=location.origin+location.pathname.replace(/portal\.html$/,''),em=new URLSearchParams(location.search).get('e')||'';
   const nextL=paid?(PK.kind==='appt'?['Your receipt is in your email.','Book your next visit any time.','Text us with any questions.']:PK.kind==='event'?['Your receipt is in your email.','We’ll confirm your final count and menu.','Text us with any questions.']:['Your receipt is in your email.','Your warranty starts today.','Text us any time something comes up.'])
     :(PK.kind==='appt'?['We’ll text you a reminder the day before.','Need to move it? Use the link in your text.','Arrive 5 minutes early.']:['We’ll text you when we’re on the way.','You’ll see who’s coming before we arrive.','Need to move it? Use the link in your text.']);
@@ -570,7 +654,6 @@ function thanksScreen(kind){const t=T(),paid=kind!=='booked',pl=(PK.plans||[])[0
     </section>
     ${pl&&PK.kind!=='event'?`<section class="pc ty-plan"><p class="pk">${t.tyAdd}</p><h2>${esc(pl.name)} <span class="plp">${esc(pl.price)}</span></h2><ul>${(pl.perks||[]).slice(0,3).map(x=>`<li>${I.check}<span>${esc(x)}</span></li>`).join('')}</ul>
       <a class="pbtn ${JOB?'pbtn-line':'pbtn-main'}" ${pl.link?`href="${esc(pl.link)}" target="_blank" rel="noopener"`:`href="index.html#club"`}>${t.planJoin(esc(pl.name))}</a>${PK.joinBonus?`<p class="plbonus"><b>${t.planBonus}:</b> ${esc(PK.joinBonus)}</p>`:''}</section>`:''}
-    <section class="pc ty-ref"><p><b>${t.tyRefer}</b></p><a class="pbtn pbtn-line" href="${smsHref(t.tyReferMsg(u)).replace('sms:'+BIZ_PHONE,'sms:')}">${I.chat}${t.tyReferBtn}</a></section>
     <a class="pin-site" href="index.html">${I.back}${t.tyHome}</a>${thmBtn()}</main>`;bindThm(()=>thanksScreen(kind));if(!reduce)setTimeout(()=>{const c=document.querySelector('.ty-card');c&&c.classList.add('go')},30);else{const c=document.querySelector('.ty-card');c&&c.classList.add('go','still')}}
 
 /* ---------- icons ---------- */
@@ -655,7 +738,7 @@ const crewOf=v=>(v.crew||[]).map(id=>(DB.crew||[]).find(m=>m.id===id)).filter(Bo
 function visitCard(v){const t=T(),st=v.status||'scheduled',start=at(v.date,v.from),dd=Math.round((new Date(v.date+'T12:00').getTime()-new Date(new Date().toDateString()+' 12:00').getTime())/864e5);
   const live=st==='onway'||st==='arrived';
   const shop=PK.kind==='appt'||PK.kind==='event'||PK.atShop;const route=shop?'':st==='onway'?`<div class="route" aria-hidden="true"><div class="road"><i></i></div><div class="truck">${I.truck}</div><div class="home">${I.house}</div></div>`
-    :st==='arrived'?`<div class="route here" aria-hidden="true"><div class="road full"><i></i></div><div class="home pulse">${I.house}</div><div class="truck parked">${I.truck}</div></div>`:'';
+    :st==='arrived'?`<div class="route here" aria-hidden="true"><div class="road full"><i></i></div><div class="home pulse">${I.house}</div><div class="truck parked">${I.truck}</div></div>`:(st==='scheduled'||st==='confirmed')&&dd>=0?truckScene(dd>0?'sleep':'prep',start):'';
   const crew=crewOf(v),team=v.team&&v.team.photo;
   return `<section class="pc pc-visit ${live?'live':''} st-${st}" data-anim>
     <div class="pc-head"><p class="pk">${PK.kind==='appt'?t.nextAppt:t.next}</p><span class="pill pill-${st}">${st==='onway'||st==='arrived'?'<b class="dotlive"></b>':''}${t.st[st]}</span></div>
@@ -677,6 +760,18 @@ function coCard(o,i){const t=T(),done=o.status!=='waiting';
     ${!done?`<div class="prow"><button type="button" class="pbtn pbtn-main" data-coa="${i}">${I.check}${t.approve}</button><button type="button" class="pbtn pbtn-line" data-cod="${i}">${t.notNow}</button></div><a class="plink" href="${smsHref(t.sms.co(C.name,o.title))}">${t.ask}</a>`
       :o.status==='approved'||o.status==='paid'?`<p class="pm">${t.payLater}</p>`+(o.signed&&o.signed[0]!=='('?`<p class="pm sm">${t.signedBy(esc(o.signed))}</p>`:''):''}
   </article>`}
+/* prepaid package card (Oct 21, growth partner): sessions left, use-by, book next, balance, renew. No referral (affiliate program is a paid add-on). */
+function pkgCard(c){const t=T(),k=c.pkg,n=Math.max(0,+k.total||0),u=Math.min(n,Math.max(0,+k.used||0)),l=n-u,unit=k.unit||PK.unit||'visit',units=k.units||PK.units||'visits',R=26,CI=2*Math.PI*R,fr=n?l/n:0,nm=first(c.name);
+  const ring=n?`<div class="pkring" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="${R}" class="pkr-bg"/><circle cx="32" cy="32" r="${R}" class="pkr-fg" stroke-dasharray="${CI.toFixed(1)}" stroke-dashoffset="${(CI*(1-fr)).toFixed(1)}"/></svg><b>${l}</b></div>`:'';
+  return `<section class="pc pc-pkg" data-anim aria-labelledby="pkH"><p class="pk">${t.pkK}</p><div class="pkrow">${ring}<div><h2 id="pkH">${esc(k.name)}</h2><p class="pm">${n?(l?esc(t.pkLeft(l,n,l===1?unit:units)):t.pkDone):''}${k.exp?` · ${esc(t.pkExp(dayShort(at(k.exp,'12:00'))))}`:''}</p></div></div>
+    ${n?`<ol class="pkdots" aria-label="${esc(t.pkUsed(u,n))}">${Array.from({length:Math.min(n,24)},(_,i)=>`<li class="${i<u?'on':''}"></li>`).join('')}</ol>`:''}
+    <div class="pkact">${l?`<a class="pbtn pbtn-main" href="${smsHref(t.pkBookMsg(unit,nm))}">${I.chat}${esc(t.pkBook(unit))}</a>`:''}${+k.bal>0?`<div class="pkbal"><span>${t.pkBal}</span><b>${usd(k.bal)}</b>${k.link?`<a class="pbtn pbtn-line" href="${esc(k.link)}" target="_blank" rel="noopener">${I.card}${t.pkPay(usd(k.bal))}</a>`:''}</div>`:''}</div></section>
+    ${n&&l<=1?`<section class="pc pc-pkmore" data-anim><p class="pk">${t.pkMoreK}</p><h2>${esc(t.pkMoreH(k.name))}</h2><p class="pm">${t.pkMoreP}</p><a class="pbtn pbtn-line" href="${smsHref(t.pkMoreMsg(k.name,nm))}">${I.chat}${t.pkMoreBtn}</a></section>`:''}`}
+/* truck moods (Oct 22, Ryan): asleep before the visit day, getting prepped on the day, drives once we're on the way. Original drawings. */
+const TRUCKSVG=(eye)=>`<svg class="tk" viewBox="0 0 96 56" aria-hidden="true"><rect x="4" y="14" width="54" height="28" rx="5" class="tk-body"/><path d="M58 22h17l13 12v8H58z" class="tk-cab"/><path d="M63 25h11l8 8H63z" class="tk-win"/>${eye==='sleep'?'<path d="M80 38q3 3 6 0" class="tk-eye"/>':'<circle cx="83" cy="38" r="2.6" class="tk-lamp"/>'}<circle cx="22" cy="45" r="7" class="tk-wh"/><circle cx="72" cy="45" r="7" class="tk-wh"/><circle cx="22" cy="45" r="2.4" class="tk-hub"/><circle cx="72" cy="45" r="2.4" class="tk-hub"/><path d="M12 8h30l-5 6" class="tk-rack"/></svg>`;
+function truckScene(kind,start){const t=T();
+  if(kind==='sleep')return `<div class="scene sc-sleep" aria-hidden="true"><svg class="sc-moon" viewBox="0 0 24 24"><path d="M15 3a9 9 0 1 0 6 15A8 8 0 0 1 15 3z"/></svg><div class="sc-truck">${TRUCKSVG('sleep')}</div><span class="zz z1">z</span><span class="zz z2">z</span><span class="zz z3">Z</span><div class="sc-ground"></div></div><p class="vlive vmood">${esc(t.sleepP(new Date(start).toLocaleDateString(LOC(),{weekday:'long'})))}</p>`;
+  return `<div class="scene sc-prep" aria-hidden="true"><div class="sc-truck">${TRUCKSVG('awake')}</div><svg class="sc-wrench" viewBox="0 0 24 24"><path d="M14 6a4 4 0 0 0-5 5L3 17l4 4 6-6a4 4 0 0 0 5-5l-3 3-3-3z"/></svg><span class="sc-box b1"></span><span class="sc-box b2"></span><span class="sp s1">✦</span><span class="sp s2">✦</span><div class="sc-ground"></div></div><p class="vlive vmood">${esc(t.prepP)}</p>`}
 let shown=false;
 function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{},s=c.show||{};document.onkeydown=null;
   const cur=Math.max(0,PSTEPS.findIndex(p=>p.includes(c.stage)));
@@ -689,14 +784,15 @@ function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{}
   const progT=PK.kind==='event'?t.progEvent:t.prog;const prog=PK.kind!=='appt'&&(nDone||['approved','work','invoiced','paid'].includes(c.stage))?`<section class="pc pc-prog" data-anim><div class="pc-head"><p class="pk">${progT}</p><span class="pill">${t.progP(nDone,SK.length)}</span></div><ol class="psteps">${SK.map(k=>`<li class="${dn[k]?'done':k===nx?'now':''}"><span class="pst-b">${dn[k]?I.check:''}</span><span><b>${esc((PK.steps&&LANG==='en'&&(PK.steps.find(x=>x[0]===k)||[])[1])||t.sk[k])}</b>${dn[k]?`<small>${dayShort(dn[k].t)} · ${new Date(dn[k].t).toLocaleTimeString(LOC(),{hour:'numeric',minute:'2-digit'})}</small>`:k===nx?`<small>${t.progNext}</small>`:''}</span></li>`).join('')}</ol></section>`:'';
   const P=[];
   if(v)P.push(visitCard(v));
+  if(PK.pkg&&c.pkg&&c.pkg.name)P.push(pkgCard(c));
   if(waiting)P.push(`<div class="todo" data-anim><b class="todo-n">${waiting}</b><span>${t.todoN(waiting)}</span></div>`);
   changes.map((o,i)=>[o,i]).sort((a,b)=>(a[0].status==='waiting'?0:1)-(b[0].status==='waiting'?0:1)||b[0].t-a[0].t).forEach(([o,i])=>P.push(coCard(o,i)));
   const doc=d=>d.link||d.file||'';
   if(prog)P.push(prog);
-  if(est&&doc(est)){const ap=est.status==='approved';P.push(`<section class="pc pc-doc" data-anim><p class="pk">${t.est}</p>
-    <a class="paybtn paybtn-line" href="${esc(doc(est))}" target="_blank" rel="noopener"><span class="paybtn-i">${I.doc}</span><span class="paybtn-t"><b>${t.viewEst}</b><small>${t.opensNew}</small></span><span class="paybtn-a" aria-hidden="true">→</span></a>
+  if(est&&(doc(est)||(est.items&&est.items.length))){const ap=est.status==='approved',inP=est.items&&est.items.length&&!doc(est);P.push(`<section class="pc pc-doc" data-anim><p class="pk">${t.est}</p>
+    ${inP?`<button type="button" class="paybtn paybtn-line" data-estv><span class="paybtn-i">${I.doc}</span><span class="paybtn-t"><b>${t.viewEstIn}</b><small>${t.estSub} · ${usd(est.items.reduce((a,x)=>a+(+x.amount||0),0))}</small></span><span class="paybtn-a" aria-hidden="true">→</span></button>`:`<a class="paybtn paybtn-line" href="${esc(doc(est))}" target="_blank" rel="noopener"><span class="paybtn-i">${I.doc}</span><span class="paybtn-t"><b>${t.viewEst}</b><small>${t.opensNew}</small></span><span class="paybtn-a" aria-hidden="true">→</span></a>`}
     ${ap?`<span class="pill pill-ok">${I.check}${t.estYes(est.okBy&&est.okBy[0]!=='('?esc(est.okBy):'',dayShort(est.okT||Date.now()))}</span>`:est.status==='sent'?`<button type="button" class="pbtn pbtn-main" data-est="0">${I.check}${t.yes}</button><a class="plink" href="${smsHref(t.sms.q(c.name))}">${t.ask}</a>`:''}</section>`)}
-  if(inv&&inv.items&&inv.items.length){const pd=inv.status==='paid';P.push(`<section class="pc pc-inv ${pd?'is-paid':''}" data-anim><p class="pk">${t.inv}</p>${pd?`<div class="paid-big">${I.check}<b>${t.invPaid(dayShort(inv.paidT||Date.now()))}</b></div>`:''}<button type="button" class="paybtn ${pd?'paybtn-line':''}" data-inv><span class="paybtn-i">${pd?I.doc:I.card}</span><span class="paybtn-t"><b>${pd?t.viewMyInv:t.viewInv}</b><small>${esc(inv.no||'')}</small></span><span class="paybtn-a" aria-hidden="true">→</span></button></section>`)}
+  if(inv&&inv.items&&inv.items.length){const pd=inv.status==='paid';P.push(`<section class="pc pc-inv ${pd?'is-paid':''}" data-anim><p class="pk">${t.inv}</p>${pd?`<div class="paid-big">${I.check}<b>${t.invPaid(dayShort(inv.paidT||Date.now()))}</b></div>`:''}<button type="button" class="paybtn ${pd?'paybtn-line':''}" data-inv><span class="paybtn-i">${pd?I.doc:I.card}</span><span class="paybtn-t"><b>${pd?(PK.look==='receipt'?t.viewRcpt:t.viewMyInv):t.viewInv}</b><small>${esc(inv.no||'')}</small></span><span class="paybtn-a" aria-hidden="true">→</span></button></section>`)}
   else if(inv&&(doc(inv)||inv.status==='paid')){const pd=inv.status==='paid';P.push(`<section class="pc pc-inv ${pd?'is-paid':''}" data-anim><p class="pk">${t.inv}</p>
     ${pd?`<div class="paid-big">${I.check}<b>${t.invPaid(dayShort(inv.paidT||Date.now()))}</b></div>`:''}
     ${doc(inv)?`<a class="paybtn ${pd?'paybtn-line':''}" href="${esc(doc(inv))}" target="_blank" rel="noopener"><span class="paybtn-i">${pd?I.doc:I.card}</span><span class="paybtn-t"><b>${pd?t.viewInvOnly:t.viewInv}</b><small>${pd?t.opensNew:t.paySafe}</small></span><span class="paybtn-a" aria-hidden="true">→</span></a>`:''}</section>`)}
@@ -728,7 +824,7 @@ function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{}
   $('#pLock').onclick=()=>{try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen()};
   $$('[data-anim]').forEach((el,i)=>{el.style.setProperty('--i',i)});
   $$('.zoomable[data-zoom]').forEach(b=>b.onclick=()=>{const cl=sheet(`<div class="pzoom"><img src="${esc(b.dataset.zoom)}" alt="${t.photo}"><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`)});
-  $$('[data-inv]').forEach(b=>b.onclick=()=>invSheet(c));
+  $$('[data-inv]').forEach(b=>b.onclick=()=>invSheet(c));$$('[data-estv]').forEach(b=>b.onclick=()=>estSheet(c));
   $$('[data-plan]').forEach(b=>b.addEventListener('click',()=>{if(DEMO){toast(t.planSent);return}log(`Asked to join: ${b.dataset.plan}`)}));
   $$('[data-ics]').forEach(b=>b.onclick=()=>ics(j.visits.find(x=>x.id===b.dataset.ics)));
   $$('[data-coa]').forEach(b=>b.onclick=()=>signSheet(t.signT,changes[+b.dataset.coa],n=>{if(LIVE)return remoteAct({act:'co_ok',i:+b.dataset.coa,name:n},t.thanksApp,1);Object.assign(changes[+b.dataset.coa],{status:'approved',signed:n,signedT:Date.now()});log(`Approved change: ${changes[+b.dataset.coa].title} (${usd(changes[+b.dataset.coa].price)})`);confetti();toast(t.thanksApp);portal()}));
@@ -736,7 +832,7 @@ function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{}
   $$('[data-est]').forEach(b=>b.onclick=()=>signSheet(t.estT,{title:''},n=>{if(LIVE)return remoteAct({act:'est_ok',name:n},t.thanksApp,1);Object.assign(c.estimate,{status:'approved',okBy:n,okT:Date.now()});if(['lead','booked','inspected','estimate'].includes(c.stage))c.stage='approved';log('Said yes to the estimate');confetti();toast(t.thanksApp);portal()}));
   $$('[data-add]').forEach(b=>b.onclick=()=>{const a=(DB.addons||[]).find(x=>x.id===b.dataset.add);const cl=sheet(`<h2>${t.addT}</h2><div class="sheet-x">${a.photo?`<img src="${esc(a.photo)}" alt="">`:''}<div><b>${esc(a.name)}</b><p class="pm">${esc(a.desc||'')}</p><p class="price big"><b>${usd(a.price)}</b></p></div></div><div class="prow"><button type="button" class="pbtn pbtn-main" id="addGo">${I.check}${t.addBtn}</button><button type="button" class="pbtn pbtn-line" data-close>${t.notNow}</button></div>`,'#addGo');
     $('#addGo').onclick=()=>{if(LIVE){cl();return remoteAct({act:'extra',id:a.id},t.addOk,1)}j.picks=(j.picks||[]).concat([{addon:a.id,name:a.name,price:a.price,status:'requested',t:Date.now()}]);log(`Added extra: ${a.name} (${usd(a.price)})`);cl();confetti();toast(t.addOk);portal()}});
-  if(!reduce&&!again){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});$$('[data-anim]').forEach(el=>io.observe(el))}else $$('[data-anim]').forEach(el=>el.classList.add('in'));
+  /* Oct 22 (Ryan): the whole page shows at once, nothing waits for a scroll */requestAnimationFrame(()=>$$('[data-anim]').forEach(el=>el.classList.add('in')));
   requestAnimationFrame(()=>$('#pwrap').classList.add('ready'))}
 function log(text){const c=C;c.job.log=(c.job.log||[]).concat([{t:Date.now(),text}]);c.fresh=true;DB.activity=(DB.activity||[]).concat([{t:Date.now(),cid:c.id,text,seen:false}]).slice(-200);save();
   /* live: also POST {action:'portal'} to the backend so the owner gets an alert (backend v9, next step) */}
