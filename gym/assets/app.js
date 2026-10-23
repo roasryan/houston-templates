@@ -59,7 +59,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-sms]');if(
 
 
 
-const OWN_PLANS=["8 classes a month", "Unlimited classes"];const OWN_KIND="appt";const GROWTH={"model": "spread", "stages": ["New", "Contacted", "Trial booked", "Came in", "Joined"], "unit": "class", "units": "classes", "offerPh": "e.g. 6-week kickstart: 18 classes", "react": "Hi {first}, it's {biz}. We're opening {spots} spots for our {offer} before {deadline}. Want me to hold one for you? Reply STOP to opt out.", "pct": 0, "pkg": true, "note": ""};
+const OWN_PLANS=["8 classes a month", "Unlimited classes"];const OWN_KIND="appt";const GROWTH={"model": "spread", "stages": ["New", "Contacted", "Trial booked", "Came in", "Joined"], "unit": "class", "units": "classes", "offerPh": "e.g. 6-week kickstart: 18 classes", "react": "Hi {first}, it's {biz}. We're opening {spots} spots for our {offer} before {deadline}. Want me to hold one for you? Reply STOP to opt out.", "pct": 0, "pkg": true, "note": ""};const OWN_SVCS=["1:1 personal training", "Partner training", "Strength, HIIT and mobility classes", "Open gym", "Body scans and assessments", "Nutrition coaching"];
 /* ---------- CRM data: one small store shared by the website, the owner view and the customer portal ---------- */
 /* Demo: saved in this browser only. Live: the same shape moves to a database + texting service. */
 const DAY=864e5,NOW=Date.now();
@@ -963,7 +963,15 @@ openOwner=function(){const el=_gOpenOwner.apply(this,arguments),ow=$('#owner');i
     const h=$('#obody .ohello');if(h){h.insertAdjacentHTML('afterend',card);$('#gGo').onclick=()=>{oTab='growth';openOwner();ow.scrollTop=0}}}
   return el};
 const _gMore=oMore;
-oMore=function(){return _gMore().replace('<div class="omore">',`<div class="omore"><button type="button" data-go="growth">${oi('chart')}<span><b>Growth</b><small>Offer, leads, speed to lead, weekly statement</small></span>${oi('back','flip')}</button>`)};
+oMore=function(){return _gMore().replace('<div class="omore">',`<div class="omore"><button type="button" data-go="growth">${oi('chart')}<span><b>Growth</b><small>Offer, leads, speed to lead, weekly statement</small></span>${oi('back','flip')}</button><button type="button" id="mSvcP">${oi('file')}<span><b>Prices in the customer portal</b><small>Set price = one-tap "Add to my bill". No price = free estimate request</small></span>${oi('back','flip')}</button>`)};
+/* Oct 22: owner sets which services customers can add to their bill from the portal */
+const SVC_LIST=(typeof OWN_SVCS!=='undefined'&&OWN_SVCS.length)?OWN_SVCS:['Workout repair','Workout replacement','Storm damage','Insurance claims','Gutters','Attic ventilation'];
+function svcPriceSheet(){const P=DB.svcPrices=DB.svcPrices||{};
+  const close=open(sheetWrap('spH','Prices in the customer portal',`<p class="muted2" style="margin-top:0">Customers see these services inside their portal. With a price, they can add it to their bill in one tap. Leave it blank and they ask for a free estimate instead. You get an alert either way.</p>
+    ${SVC_LIST.map((n,i)=>`<div class="field"><label for="sp${i}">${esc(n)}</label><input id="sp${i}" data-spn="${esc(n)}" inputmode="decimal" placeholder="Blank = free estimate" value="${P[n]?esc(P[n]):''}"></div>`).join('')}
+    <button class="ob ob-main ob-xl" type="button" id="spGo">${oi('check')}Save prices</button>`));
+  $('#spGo').onclick=()=>{$$('#layer [data-spn]').forEach(x=>{const v=+String(x.value).replace(/[^\d.]/g,'')||0;if(v>0)P[x.dataset.spn]=v;else delete P[x.dataset.spn]});save();close();toast('Prices saved')}}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#mSvcP');if(!b)return;e.preventDefault();svcPriceSheet()});
 
 /* ---------- backend: every lead and booking goes to the client's Apps Script web app
    (Google Sheet row + instant owner alert + GoHighLevel contact/appointment). Demo mode when CFG.backend is empty. ---------- */
@@ -986,7 +994,7 @@ if(CFG.backend){const q=outbox();if(q.length){setOutbox([]);q.forEach(row=>postB
    Crew and customers change the same jobs from their own phones; the owner view checks for changes every minute. */
 const SYNC={last:{},meta:'',act:'',timer:0,poll:0,loaded:false};
 const jh=o=>JSON.stringify(o);
-const metaObj=()=>({crew:DB.crew||[],addons:DB.addons||[],settings:{payLink:DB.payLink||'',spend:DB.spend||{},fee:DB.fee,labor:DB.labor,repeat:DB.repeat,deleted:(DB.deleted||[]).slice(-500)}});
+const metaObj=()=>({crew:DB.crew||[],addons:DB.addons||[],settings:{svcPrices:DB.svcPrices||{},payLink:DB.payLink||'',spend:DB.spend||{},fee:DB.fee,labor:DB.labor,repeat:DB.repeat,deleted:(DB.deleted||[]).slice(-500)}});
 function markSynced(skip){SYNC.last={};DB.customers.forEach(c=>{if(!skip||!skip.has(c.id))SYNC.last[c.id]=jh(c)});SYNC.meta=jh(metaObj());SYNC.act=jh(DB.activity||[])}
 window.__onSave=()=>{if(!SYNC.loaded)return;clearTimeout(SYNC.timer);SYNC.timer=setTimeout(pushNow,1200)};
 async function pushNow(){const t=otok();if(!t||!CFG.backend||!SYNC.loaded)return;clearTimeout(SYNC.timer);
@@ -1013,7 +1021,7 @@ async function loadOwnerLeads(token){const [db,ld]=await Promise.all([ownerPost(
     merged.push(j);added.push(j);fresh.add(j.id)});
   DB.customers=merged.sort((a,b)=>(b.created||0)-(a.created||0));
   if((db.crew||[]).length||SYNC.loaded)DB.crew=db.crew;if((db.addons||[]).length||SYNC.loaded)DB.addons=db.addons;
-  const st=db.settings||{};['payLink','spend','fee','labor','repeat'].forEach(k=>{if(st[k]!==undefined&&st[k]!==null)DB[k]=st[k]});
+  const st=db.settings||{};['svcPrices','payLink','spend','fee','labor','repeat'].forEach(k=>{if(st[k]!==undefined&&st[k]!==null)DB[k]=st[k]});
   const seen=new Set((DB.activity||[]).filter(a=>a.seen).map(a=>a.t)),byT=new Map();(DB.activity||[]).concat(db.activity||[]).forEach(a=>{const o=Object.assign({},a);if(seen.has(a.t))o.seen=true;byT.set(a.t+'|'+a.cid,o)});DB.activity=[...byT.values()].sort((a,b)=>a.t-b.t).slice(-200);
   DB.customers.forEach(c=>{if(c.appt&&!(c.job&&c.job.apptIn))ensureJob(c)});
   const firstLoad=!SYNC.loaded;markSynced(firstLoad?new Set(DB.customers.filter(c=>!db.jobs[c.id]).map(c=>c.id)):fresh);
