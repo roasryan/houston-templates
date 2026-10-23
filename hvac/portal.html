@@ -593,7 +593,7 @@ const setLang=l=>{LANG=l;try{localStorage.setItem('khvac-lang',l)}catch(x){}docu
 document.documentElement.lang=LANG;if(PK.look)document.documentElement.classList.add('look-'+PK.look);
 
 /* ---------- demo: labeled sample customer per kind (?demo=1). Never saved. ---------- */
-function sampleDB(){const d=n=>{const x=new Date();x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)},ago=n=>Date.now()-n*864e5,K=PK.kind,
+function sampleDB(){const d=n=>{const x=new Date();x.setDate(x.getDate()+n);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}/* local date, not UTC (evening demo showed tomorrow) */,ago=n=>Date.now()-n*864e5,K=PK.kind,
   plans=PK.plans||[],stepKeys=(PK.steps||[]).map(x=>x[0]);
   const crew=[{id:'s1',name:'Maria',role:PK.crewWord||'Lead'},{id:'s2',name:'James',role:PK.crewWord||'Tech'}];
   const c={id:'demo',sample:true,name:'Sample Customer',addr:K==='appt'||PK.atShop?'':'1234 Sample St, Houston, TX',job:{visits:[],changes:[],log:[]},show:{estimate:1,invoice:1,updates:1},updates:[],prod:{done:{}}};
