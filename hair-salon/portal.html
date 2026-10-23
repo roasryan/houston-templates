@@ -447,6 +447,13 @@ svg{display:block}
 .pinv-brand .lg-h{stroke:var(--text)!important}
 /* whole page at once (Oct 22): one quick fade together, no scroll reveal */
 [data-anim]{transform:none!important;transition:opacity .2s ease!important;transition-delay:0s!important}
+/* services inside the portal (Oct 22) */
+.svprice{display:flex;align-items:baseline;gap:10px;margin:12px 0 4px;padding:12px 14px;border-radius:12px;background:var(--deck);border:1px solid var(--line)}
+.svprice b{font-size:26px;letter-spacing:-.02em}.svprice span{color:var(--muted);font-size:15px}
+.svst{align-self:flex-start;margin-top:4px}
+.svc-ask,.svc-more{cursor:pointer;font-family:inherit;border:0}
+.svc-more{border:1px solid var(--line)}
+button.more{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
 </style></head><body><div id="wall" aria-hidden="true"></div><div id="papp"></div><div id="player"></div><script>/* ============ Ridgeline customer portal (portal.html?j=JOB) — Oct 7, round 1 ============
    Separate screen for customers on a current job. PIN unlock, English/Español, arrival window + who's coming,
    change orders and add-ons they can approve and pay, invoice, job photos. Owner sets everything up in Owner → customer.
@@ -560,7 +567,7 @@ const save=()=>{if(LIVE||DEMO)return;try{localStorage.setItem('khairsal-db',JSON
 if(DEMO){DB=sampleDB();try{sessionStorage.setItem('khairsal-pt-'+JOB,'1')}catch(x){}}
 let C=DEMO?DB.customers[0]:(DB.customers||[]).find(c=>c.id===JOB);const LOCALC=C;if(!C&&REMOTE&&JOB)C={id:JOB,name:'',job:{},ph:1};
 async function api(o){const r=await fetch(CFG.backend,{method:'POST',body:JSON.stringify(Object.assign({j:JOB,pin:PIN},o))});return r.json()}
-function takeView(r){C=r.c;C.job=C.job||{};DB={customers:[C],crew:r.crew||[],addons:r.addons||[]};LIVE=true}
+function takeView(r){C=r.c;C.job=C.job||{};DB={customers:[C],crew:r.crew||[],addons:r.addons||[],svcPrices:r.svc||{}};LIVE=true}
 let LANG=(()=>{let l='';try{l=localStorage.getItem('khairsal-lang')||''}catch(x){}return l||(C&&C.job&&C.job.lang)||((navigator.language||'').startsWith('es')?'es':'en')})();
 {const SK={"contract": "Appointment confirmed", "deposit": "Deposit received", "consult": "Photos and notes sent", "patch": "Patch test done (new color)", "arrived": "Checked in", "consult2": "Consult with your stylist", "color": "Color or treatment applied", "process": "Processing", "cutstyle": "Cut and style", "walkthrough": "Mirror check with you", "invoice": "Receipt sent", "paid": "Paid", "rebook": "Next visit booked", "review": "Review asked"},VT={"inspection": "Color consult", "work": "Salon appointment", "followup": "Touch-up visit", "estimate": "Bridal trial"};for(const L of ['en','es']){W[L].sk=Object.assign({},W[L].sk,SK);W[L].vt=Object.assign({},W[L].vt,VT)}Object.assign(W.en,{yourRoof:"Your appointment with Magnolia & Main",prog:'Your job, step by step',mats:'What we’re bringing',book:'Book another service',bookP:"Cuts and styling, Blowouts, Color and root touch-ups and more.",warr:"Clean tools every guest",warrP:"Combs, brushes and tools are cleaned and disinfected between guests, as Texas rules require."})}
 LANG='en';const T=()=>W[LANG];const LOC=()=>LANG==='es'?'es-US':'en-US';
@@ -576,6 +583,8 @@ Object.assign(W.en,{svcK:'More from us',svcH:b=>`What else ${b} can do for you`,
 Object.assign(W.es,{svcK:'Más de nosotros',svcH:b=>`Qué más puede hacer ${b} por usted`,svcP:'El mismo equipo, la misma reserva fácil. Pregunte por cualquiera y le respondemos por texto.',svcAsk:'Preguntar',svcMore:'Detalles',svcMsg:(s,n)=>`Hola, soy ${n||'un cliente'}. Quisiera preguntar por ${s}.`});
 Object.assign(W.en,{pkK:'Your package',pkLeft:(l,n,u)=>`${l} of ${n} ${u} left`,pkUsed:(u,n)=>`${u} used`,pkExp:d=>`Use by ${d}`,pkBook:u=>`Book your next ${u}`,pkBookMsg:(u,n)=>`Hi, it’s ${n||'a customer'}. I’d like to book my next ${u}.`,pkBal:'Still to pay',pkPay:a=>`Pay ${a}`,pkMoreK:'Almost done',pkMoreH:p=>`Ready for another ${p}?`,pkMoreP:'Keep your results going. Text us and we’ll set it up, no new sign-up needed.',pkMoreBtn:'Text us to renew',pkMoreMsg:(p,n)=>`Hi, it’s ${n||'a customer'}. I’d like another ${p}.`,pkDone:'All used. Nice work.'});
 Object.assign(W.es,{pkK:'Su paquete',pkLeft:(l,n,u)=>`Le quedan ${l} de ${n}`,pkUsed:(u,n)=>`${u} usadas`,pkExp:d=>`Úselo antes del ${d}`,pkBook:u=>`Reservar su próxima cita`,pkBookMsg:(u,n)=>`Hola, soy ${n||'un cliente'}. Quisiera reservar mi próxima cita.`,pkBal:'Pendiente de pago',pkPay:a=>`Pagar ${a}`,pkMoreK:'Casi termina',pkMoreH:p=>`¿Listo para otro ${p}?`,pkMoreP:'Mantenga sus resultados. Escríbanos y lo preparamos, sin registrarse de nuevo.',pkMoreBtn:'Escríbanos para renovar',pkMoreMsg:(p,n)=>`Hola, soy ${n||'un cliente'}. Quisiera otro ${p}.`,pkDone:'Todo usado. ¡Bien hecho!'});
+Object.assign(W.en,{svDetails:'Details',svAdd:p=>`Add to my bill · ${p}`,svAddH:(n,p)=>`Add ${n} for ${p}?`,svAddP:'It goes on your bill in this portal. You pay it with the rest, no new sign-up.',svAddYes:'Yes, add it',svEst:'Get a free estimate',svEstH:n=>`Free estimate: ${n}`,svEstP:'Tell us a little about it. We’ll send your estimate right here in your portal.',svNote:'Anything we should know? (optional)',svSend:'Send my request',svSet:p=>`Set price: ${p}`,svQuote:'Priced after a quick look',svAdded:'On your bill',svAsked:'Estimate requested',svAddedT:n=>`${n} added to your bill.`,svAskedT:'Request sent. We’ll text you when your estimate is ready.',svText:'Rather text us?'});
+Object.assign(W.es,{svDetails:'Detalles',svAdd:p=>`Agregar a mi cuenta · ${p}`,svAddH:(n,p)=>`¿Agregar ${n} por ${p}?`,svAddP:'Se agrega a su cuenta en este portal. Lo paga junto con lo demás.',svAddYes:'Sí, agregarlo',svEst:'Pedir presupuesto gratis',svEstH:n=>`Presupuesto gratis: ${n}`,svEstP:'Cuéntenos un poco. Le enviamos el presupuesto aquí en su portal.',svNote:'¿Algo que debamos saber? (opcional)',svSend:'Enviar solicitud',svSet:p=>`Precio fijo: ${p}`,svQuote:'Se cotiza tras una revisión rápida',svAdded:'En su cuenta',svAsked:'Presupuesto solicitado',svAddedT:n=>`${n} se agregó a su cuenta.`,svAskedT:'Solicitud enviada. Le escribimos cuando su presupuesto esté listo.',svText:'¿Prefiere escribirnos?'});
 Object.assign(W.en,{viewRcpt:'View your receipt',estTitle:'Estimate',estNo:'Estimate #',estValid:'Good until',estTotal:'Estimate total',estFor:'Prepared for',viewEstIn:'See your estimate',estSub:'Every line, right here',rcpt:'Receipt',rcptKeep:'Thank you. Keep this for your records.',rcptPaidBy:'Paid',rcptBal:'Balance',rcptCust:'Customer',rcptTime:'Time',rcptItems:'Items'});
 Object.assign(W.es,{viewRcpt:'Ver su recibo',estTitle:'Presupuesto',estNo:'Presupuesto #',estValid:'Válido hasta',estTotal:'Total del presupuesto',estFor:'Preparado para',viewEstIn:'Ver su presupuesto',estSub:'Cada línea, aquí mismo',rcpt:'Recibo',rcptKeep:'Gracias. Guárdelo para sus registros.',rcptPaidBy:'Pagado',rcptBal:'Saldo',rcptCust:'Cliente',rcptTime:'Hora',rcptItems:'Artículos'});
 Object.assign(W.en,{sleepP:d=>`Our truck is resting up for ${d}. We wake it up the morning of your visit.`,prepP:'Loading up and checking the tools for your visit today.'});
@@ -601,7 +610,8 @@ function sampleDB(){const d=n=>{const x=new Date();x.setDate(x.getDate()+n);retu
   else{c.stage='estimate';c.job.visits=[{id:'v1',type:'estimate',date:d(PK.atShop?1:0),from:'13:00',to:PK.atShop?'':'15:00',status:PK.atShop?'confirmed':'onway',eta:20,crew:['s2'],lead:'s2'}];
     c.estimate={status:'sent',t:ago(0),no:'EST-1203',valid:d(30),items:[{desc:'Recommended repair (sample)',amount:640},{desc:'Parts (sample)',amount:185},{desc:'Labor, 2 hours (sample)',amount:240}],note:'Sample estimate. Prices shown are made up.'};c.updates=[{t:ago(0),text:'Sample note: what the tech found and the options we recommend.',photos:[]}]}
   {const tq=new URLSearchParams(location.search).get('truck'),v=c.job.visits[0];if(v&&tq==='sleep')Object.assign(v,{date:d(2),status:'confirmed'});else if(v&&tq==='prep')Object.assign(v,{date:d(0),status:'confirmed'});else if(v&&tq==='here')Object.assign(v,{date:d(0),status:'arrived'})}/* demo: ?demo=1&truck=sleep|prep|here */
-  return{customers:[c],crew,addons:[]}}
+  const sp={};(PK.services||[]).forEach((x,i)=>{if(i===1)sp[x.t]=149;if(i===3)sp[x.t]=89});/* sample prices, demo only */
+  return{customers:[c],crew,addons:[],svcPrices:sp}}
 
 /* ---------- branded invoice (Oct 15): built from the owner's line items; pay link = owner's Stripe/Square/GHL link ---------- */
 function invLines(c){const iv=c.invoice||{};if(iv.items&&iv.items.length)return iv.items.map(x=>({desc:x.desc,amount:+x.amount||0}));const L=[];const e=c.estimate&&c.estimate.status==='approved'&&c.estimate.opts?c.estimate.opts[c.estimate.pick||0]:null;if(e)L.push({desc:e.name,amount:+e.price||0});
@@ -637,6 +647,23 @@ function rcptHtml(c,o){const t=T(),d=new Date(o.date||Date.now()),bars=Array.fro
     ${o.note?`<p class="rc-note">${esc(o.note)}</p>`:''}
     ${o.paid?`<p class="rc-stamp">${t.paidStamp}</p>`:''}
     <div class="rc-bar">${bars}</div><p class="rc-no">${esc(o.no)}</p><p class="rc-thx">${t.rcptKeep}</p></div></article>`}
+/* services stay inside the portal (Oct 22, Ryan): set price = add to the open bill in one tap; no price = free estimate request */
+const svcPrice=n=>{const v=(DB.svcPrices||{})[n];return +v>0?+v:0};
+const svcState=(c,n)=>{const r=((c.job||{}).svcReq||[]).filter(x=>x.name===n).pop();return r?r.kind:''};
+function svcSheet(c,i){const t=T(),x=(PK.services||[])[i];if(!x)return;const pr=svcPrice(x.t),st=svcState(c,x.t);
+  const cl=sheet(`<p class="pk">${t.svcK}</p><h2>${esc(x.t)}</h2>${x.d?`<p class="pm">${esc(x.d)}</p>`:''}
+    <div class="svprice">${pr?`<b>${usd(pr)}</b><span>${t.svSet('')}</span>`:`<span>${t.svQuote}</span>`}</div>
+    ${st?`<p class="pill pill-ok">${I.check}${st==='add'?t.svAdded:t.svAsked}</p>`:pr?`<p class="pm">${t.svAddP}</p><div class="prow"><button type="button" class="pbtn pbtn-main" id="svGo">${I.check}${t.svAddYes}</button><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`
+      :`<p class="pm">${t.svEstP}</p><label class="pfield"><span>${t.svNote}</span><textarea id="svN" rows="3"></textarea></label><div class="prow"><button type="button" class="pbtn pbtn-main" id="svGo">${t.svSend}</button><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`}
+    <a class="plink" href="${smsHref(t.svcMsg(x.t,first(c.name)))}">${t.svText}</a>`);
+  const go=document.getElementById('svGo');if(!go)return;
+  go.onclick=()=>{const note=(document.getElementById('svN')||{}).value||'',kind=pr?'add':'est';go.disabled=true;cl();
+    if(LIVE)return remoteAct({act:'svc',kind,svc:x.t,note:note.slice(0,400)},kind==='add'?t.svAddedT(x.t):t.svAskedT,kind==='add');
+    if(DEMO){toast(kind==='add'?t.svAddedT(x.t):t.svAskedT);}
+    const j=c.job=c.job||{};j.svcReq=(j.svcReq||[]).concat([{name:x.t,kind,note:note.slice(0,400),t:Date.now(),price:pr}]);
+    if(kind==='add'){let iv=c.invoice;if(!iv||iv.status==='paid'||!(iv.items&&iv.items.length)&&iv.link){iv=c.invoice={status:'sent',t:Date.now(),no:'INV-'+String(Date.now()).slice(-4),items:[]}}iv.items=(iv.items||[]).concat([{desc:x.t,amount:pr}]);if(iv.status==='draft')iv.status='sent';(c.show=c.show||{}).invoice=true;if(!DEMO)log(`Added to their bill in the portal: ${x.t} (${usd(pr)})`)}
+    else if(!DEMO)log(`Asked for a free estimate: ${x.t}${note?' · '+note:''}`);
+    if(!DEMO)toast(kind==='add'?t.svAddedT(x.t):t.svAskedT);portal()}}
 function invSheet(c){const t=T(),iv=c.invoice||{},L=invLines(c),due=Math.max(0,L.reduce((a,x)=>a+x.amount,0)-(+iv.dep||0)),paid=iv.status==='paid';
   sheet(`<div class="pinv-wrap">${invHtml(c)}</div><div class="prow pinv-acts">${!paid&&iv.link?`<a class="pbtn pbtn-main" href="${esc(iv.link)}" target="_blank" rel="noopener">${I.card}${t.payInv(usd(due))}</a>`:''}<button type="button" class="pbtn pbtn-line" id="pinvPrint">${I.doc}${t.saveInv}</button><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`);
   document.getElementById('pinvPrint').onclick=()=>{document.body.classList.add('printing-inv');window.print();setTimeout(()=>document.body.classList.remove('printing-inv'),500)}}
@@ -815,8 +842,8 @@ function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{}
         <div><h1>${esc(t.hi(first(c.name)))}</h1><p class="addr">${esc(c.addr||t.yourRoof)}</p></div></section>
       ${DEMO?`<p class="psample" role="note">${t.sample}</p>`:''}${building?'':`<ol class="steps" aria-label="${t.stepNow}" data-anim>${(PK.kind==='appt'?t.stepsAppt:PK.kind==='event'?t.stepsEvent:PK.kind==='service'?t.stepsService:t.steps).map((x,i)=>`<li class="${i<cur?'done':i===cur?'now':''}" ${i===cur?'aria-current="step"':''}><i>${i<cur?I.check:''}</i><span>${x}</span></li>`).join('')}</ol>`}
       ${P.join('')}
-      ${(PK.services||[]).length?`<section class="pc pc-svcs" data-anim aria-labelledby="svcH"><p class="pk">${t.svcK}</p><h2 id="svcH" class="svh">${esc(t.svcH(CFG.biz||''))}</h2><p class="pm">${t.svcP}</p><div class="svgrid">${PK.services.map(x=>`<article class="svc"><b>${esc(x.t)}</b>${x.d?`<p>${esc(x.d)}</p>`:''}<div class="svc-a"><a class="svc-ask" href="${smsHref(t.svcMsg(x.t,first(c.name)))}">${I.chat}<span>${t.svcAsk}</span></a>${x.url?`<a class="svc-more" href="${esc(x.url)}">${t.svcMore} <span aria-hidden="true">→</span></a>`:''}</div></article>`).join('')}</div></section>`:''}
-      <section class="pc pc-more" data-anim><a class="more" href="index.html#inspect"><b>${t.book}</b><span>${t.bookP}</span></a><a class="more" href="index.html"><b>${t.visit}</b><span>${esc(CFG.biz||'')} · ${esc(CFG.city)}</span></a></section>
+      ${(PK.services||[]).length?`<section class="pc pc-svcs" data-anim aria-labelledby="svcH"><p class="pk">${t.svcK}</p><h2 id="svcH" class="svh">${esc(t.svcH(CFG.biz||''))}</h2><p class="pm">${t.svcP}</p><div class="svgrid">${PK.services.map((x,i)=>`<article class="svc"><b>${esc(x.t)}</b>${x.d?`<p>${esc(x.d)}</p>`:''}${svcState(c,x.t)?`<span class="pill pill-ok svst">${I.check}${svcState(c,x.t)==='add'?t.svAdded:t.svAsked}</span>`:''}<div class="svc-a">${svcPrice(x.t)?`<button type="button" class="svc-ask" data-svc="${i}">${I.card}<span>${t.svAdd(usd(svcPrice(x.t)))}</span></button>`:`<button type="button" class="svc-ask" data-svc="${i}">${I.doc}<span>${t.svEst}</span></button>`}<button type="button" class="svc-more" data-svc="${i}">${t.svDetails} <span aria-hidden="true">→</span></button></div></article>`).join('')}</div></section>`:''}
+      <section class="pc pc-more" data-anim><button type="button" class="more" data-gosvc><b>${t.book}</b><span>${t.bookP}</span></button><a class="more" href="index.html"><b>${t.visit}</b><span>${esc(CFG.biz||'')} · ${esc(CFG.city)}</span></a></section>
       <div class="pcontact" data-anim><a class="pbtn pbtn-main" href="${smsHref(t.sms.q(c.name))}">${I.chat}${t.text}</a><a class="pbtn pbtn-line" href="tel:${BIZ_PHONE}">${I.phone}${t.call} ${BIZ_PRETTY}</a></div>
       ${REMOTE&&!LIVE?`<p class="pdemo">${t.demo}</p>`:''}
     </main></div>`;
@@ -824,7 +851,7 @@ function portal(){const again=shown;shown=true;const t=T(),c=C,j=c.job=c.job||{}
   $('#pLock').onclick=()=>{try{sessionStorage.removeItem(KEY)}catch(x){}pinScreen()};
   $$('[data-anim]').forEach((el,i)=>{el.style.setProperty('--i',i)});
   $$('.zoomable[data-zoom]').forEach(b=>b.onclick=()=>{const cl=sheet(`<div class="pzoom"><img src="${esc(b.dataset.zoom)}" alt="${t.photo}"><button type="button" class="pbtn pbtn-line" data-close>${t.close}</button></div>`)});
-  $$('[data-inv]').forEach(b=>b.onclick=()=>invSheet(c));$$('[data-estv]').forEach(b=>b.onclick=()=>estSheet(c));
+  $$('[data-inv]').forEach(b=>b.onclick=()=>invSheet(c));$$('[data-estv]').forEach(b=>b.onclick=()=>estSheet(c));$$('[data-svc]').forEach(b=>b.onclick=()=>svcSheet(c,+b.dataset.svc));$$('[data-gosvc]').forEach(b=>b.onclick=()=>{const e=document.querySelector('.pc-svcs');e&&e.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})});
   $$('[data-plan]').forEach(b=>b.addEventListener('click',()=>{if(DEMO){toast(t.planSent);return}log(`Asked to join: ${b.dataset.plan}`)}));
   $$('[data-ics]').forEach(b=>b.onclick=()=>ics(j.visits.find(x=>x.id===b.dataset.ics)));
   $$('[data-coa]').forEach(b=>b.onclick=()=>signSheet(t.signT,changes[+b.dataset.coa],n=>{if(LIVE)return remoteAct({act:'co_ok',i:+b.dataset.coa,name:n},t.thanksApp,1);Object.assign(changes[+b.dataset.coa],{status:'approved',signed:n,signedT:Date.now()});log(`Approved change: ${changes[+b.dataset.coa].title} (${usd(changes[+b.dataset.coa].price)})`);confetti();toast(t.thanksApp);portal()}));
