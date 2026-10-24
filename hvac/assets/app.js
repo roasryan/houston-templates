@@ -1081,6 +1081,159 @@ if(IX_ON){const _ixOpen=openOwner;
     const h=ob.querySelector('.ixtasks .ohello');if(h)h.remove();const gg=ob.querySelector('.ixtasks #gGo');if(gg){gg.onclick=()=>{oTab='growth';openOwner()}}
     bindOwner();bindOverview();const t=$('#owner .otop h1');if(t)t.textContent='Overview';const s=$('#owner .oside-i[data-otab="today"]');if(s)s.lastChild.textContent='Overview';return el};
   OPAGES.today='Overview'}
+/* ---------- STORM WATCH (Oct 24, the owner: "make a cool UI feature with demo clients' houses in a neighborhood or zip code").
+   Map of every home the business has serviced, a storm (NWS-style warning + radar core + hail swath) sweeping across it on a
+   timeline, homes lighting up as the hail core passes. Owner gets: homes in the path, high-risk list (hail size x equipment age),
+   who can be texted (opted in ONLY), one-tap portal notice for everyone, call list for the rest.
+   Live strip = real National Weather Service alerts for Harris County. Map + storm are a labeled sample until real addresses are mapped. ---------- */
+const SW_ON=IX_ON;
+const SW_T={hvac:{asset:'AC',why:'Hail can flatten the coil fins on the outdoor unit and power surges can hurt the compressor.',offer:'a free storm check of your AC',svc:'Free storm check',avg:650},
+  roofing:{asset:'System',why:'Hail 1 inch and up can bruise equipment and crack vents. Leaks often show up weeks later.',offer:'a free estimate',svc:'Free storm free estimate',avg:4200}};
+const SWK=(typeof OWN_SVCS!=='undefined'&&OWN_SVCS.some(s=>/roof/i.test(s)))?SW_T.roofing:SW_T.hvac;
+let swPinged=new Set(),swPingT={},swT=1,swSel=null,swPlay=null,swSeen=false,swPosted=false,swLiveR=null;
+const SW_W=800,SW_H=520,SW_P0=[-70,40],SW_P1=[880,450],SW_R1=36,SW_R2=56,SW_R3=74,SW_WIND=108;
+const SW_V=[{x:150,n:'Eldridge Pkwy'},{x:410,n:'Dairy Ashford Rd'},{x:665,n:'Kirkwood Rd'}],SW_H2=[{y:92,n:'I-10 Katy Fwy',fw:1},{y:252,n:'Memorial Dr'},{y:372,n:'Briar Forest Dr'},{y:478,n:'Westheimer Rd'}];
+const SW_ROWS=[[28,'Cedar Hollow Ln'],[60,'Fox Run Dr'],[118,'Willow Bend Dr'],[136,'Amber Glen Ln'],[222,'Stoneleigh Ct'],[284,'Timber Oak Dr'],[312,'Brook Meadow Ln'],[340,'Quail Ridge Ln'],[402,'Lantern Hill Dr'],[430,'Silver Pine Ct'],[452,'Mill Creek Ct'],[506,'Oak Terrace Ln']];
+const swZip=y=>y<92?'77084':y<372?'77079':'77077';
+const swWave=(x,y)=>y+3.5*Math.sin((x+y*1.7)/38);
+/* ---- sample neighborhood: every house on the street grid, ~70 of them are past customers ---- */
+let swMapD=null;
+function swMap(){if(swMapD)return swMapD;const R=(()=>{let s=11;return()=>(s=(s*16807)%2147483647)/2147483647})();
+  const FN=['Maria','James','Linda','Robert','Patricia','David','Jennifer','Carlos','Susan','Michael','Karen','Luis','Nancy','Daniel','Lisa','Mark','Sandra','Jose','Betty','Paul','Angela','Kevin','Laura','Brian','Ana','Steven','Rosa','Eric','Megan','Tom'];
+  const LN=['G.','T.','N.','P.','W.','H.','R.','M.','B.','L.','C.','S.','D.','K.','A.','F.'];
+  const homes=[],streets=[],stubs=[];
+  SW_ROWS.forEach(([y,st])=>{let x0=6;[...SW_V.map(v=>v.x),SW_W+12].forEach(xv=>{const x1=xv-14;if(x1-x0<40){x0=xv+14;return}
+      const pts=[];for(let x=x0;x<=x1;x+=8)pts.push([x,swWave(x,y)]);streets.push({pts,st});
+      for(let x=x0+6;x<x1-4;x+=15){if(R()<.18)continue;[-1,1].forEach(sd=>{if(R()<.12)return;const hx=x+(R()-.5)*3,hy=swWave(x,y)+sd*8.5;homes.push({x:hx,y:hy,st,zip:swZip(y)})})}
+      if(x1-x0>120&&R()<.8){const sx=x0+40+R()*(x1-x0-80);stubs.push([sx,swWave(sx,y),R()<.5?-1:1])}
+      x0=xv+14})});
+  const cust=[];let n=0;homes.forEach(h=>{if(R()<.12){n++;const no=1000+Math.floor(R()*89)*12+Math.floor(h.x/7);
+    Object.assign(h,{cust:{id:'sw'+n,name:'Sample: '+FN[Math.floor(R()*FN.length)]+' '+LN[Math.floor(R()*LN.length)],addr:no+' '+h.st,zip:h.zip,age:2+Math.floor(R()*R()*17+R()*3),
+      last:1+Math.floor(R()*22),sms:R()<.55,member:R()<.22}});cust.push(h)}});
+  return swMapD={homes,streets,stubs,cust}}
+/* ---- storm geometry ---- */
+const swAt=t=>[SW_P0[0]+(SW_P1[0]-SW_P0[0])*t,SW_P0[1]+(SW_P1[1]-SW_P0[1])*t];
+const SW_ANG=Math.atan2(SW_P1[1]-SW_P0[1],SW_P1[0]-SW_P0[0]);
+function swHit(h){const dx=SW_P1[0]-SW_P0[0],dy=SW_P1[1]-SW_P0[1],L=dx*dx+dy*dy,u=Math.max(0,Math.min(1,((h.x-SW_P0[0])*dx+(h.y-SW_P0[1])*dy)/L)),p=swAt(u),d=Math.hypot(h.x-p[0],h.y-p[1]);
+  const hail=d<SW_R1?1.75:d<SW_R2?1.25:d<SW_R3?1:0;return{u,d,hail,wind:d<SW_WIND,mi:(d/200).toFixed(1)}}
+function swRisk(h){const k=h.cust,s=swHit(h);if(!s.hail&&!s.wind)return null;
+  const lvl=s.hail>=1.75||(s.hail>=1.25&&k.age>=10)?'high':s.hail?'med':'low';return{...s,lvl,score:s.hail*10+k.age+(lvl==='high'?100:lvl==='med'?50:0)}}
+const SW_START=17*60+40,SW_LEN=95;
+const swClock=t=>{const m=Math.round(SW_START+SW_LEN*t),h=Math.floor(m/60),mm=String(m%60).padStart(2,'0');return`${h>12?h-12:h}:${mm} PM`};
+const swDay=()=>new Date(Date.now()-DAY).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+function swHitNow(){const M=swMap();return M.cust.map(h=>({h,r:swRisk(h)})).filter(x=>x.r&&x.r.u<=swT+1e-6).sort((a,b)=>b.r.score-a.r.score)}
+/* ---- svg ---- */
+const swHouse=(x,y,cls,id)=>`<g class="swh ${cls}" transform="translate(${x.toFixed(1)},${y.toFixed(1)})"${id?` data-swh="${id}" tabindex="0" role="button"`:''}><path d="M-6,1 L0,-5.5 L6,1 L6,6 L-6,6 Z"/></g>`;
+function swSvg(){const M=swMap(),pl=p=>p.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ');
+  const n=[-Math.sin(SW_ANG),Math.cos(SW_ANG)],B=150,warn=[[SW_P0[0]+n[0]*B,SW_P0[1]+n[1]*B],[SW_P1[0]+n[0]*B,SW_P1[1]+n[1]*B],[SW_P1[0]-n[0]*B,SW_P1[1]-n[1]*B],[SW_P0[0]-n[0]*B,SW_P0[1]-n[1]*B]];
+  return `<svg class="swsvg" viewBox="0 0 ${SW_W} ${SW_H}" role="img" aria-label="Sample map of a neighborhood with past customer homes and a storm path">
+  <defs><radialGradient id="swg1"><stop offset="0" stop-color="#3FB950" stop-opacity=".55"/><stop offset="1" stop-color="#3FB950" stop-opacity="0"/></radialGradient>
+  <radialGradient id="swg2"><stop offset="0" stop-color="#F2C744" stop-opacity=".85"/><stop offset="1" stop-color="#F2C744" stop-opacity="0"/></radialGradient>
+  <radialGradient id="swg3"><stop offset="0" stop-color="#E5484D" stop-opacity=".9"/><stop offset="1" stop-color="#E5484D" stop-opacity="0"/></radialGradient>
+  <radialGradient id="swg4"><stop offset="0" stop-color="#C13FD8"/><stop offset="1" stop-color="#C13FD8" stop-opacity="0"/></radialGradient>
+  <pattern id="swdots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#9A9A94" opacity=".35"/></pattern></defs>
+  <rect width="${SW_W}" height="${SW_H}" fill="#F4F3EF"/><rect width="${SW_W}" height="${SW_H}" fill="url(#swdots)"/>
+  <path class="swpark" d="M0,170 C90,148 140,206 230,186 S360,150 430,176 S560,212 640,186 S760,160 800,174"/>
+  <path class="swbayou" d="M0,170 C90,148 140,206 230,186 S360,150 430,176 S560,212 640,186 S760,160 800,174"/>
+  ${M.streets.map(s=>`<polyline class="swst" points="${pl(s.pts)}"/>`).join('')}
+  ${M.stubs.map(([x,y,d])=>`<line class="swst" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="${(y+d*16).toFixed(1)}"/><circle class="swcul" cx="${x.toFixed(1)}" cy="${(y+d*19).toFixed(1)}" r="4.5"/>`).join('')}
+  ${SW_H2.map(r=>`<line class="swart ${r.fw?'swfw':''}" x1="0" y1="${r.y}" x2="${SW_W}" y2="${r.y}"/>`).join('')}
+  ${SW_V.map(v=>`<line class="swart" x1="${v.x}" y1="0" x2="${v.x}" y2="${SW_H}"/>`).join('')}
+  <line class="swzip" x1="0" y1="80" x2="${SW_W}" y2="80"/><line class="swzip" x1="0" y1="386" x2="${SW_W}" y2="386"/>
+  <text class="swzipl" x="${SW_W-12}" y="22">77084</text><text class="swzipl" x="${SW_W-12}" y="108">77079</text><text class="swzipl" x="${SW_W-12}" y="402">77077</text>
+  ${M.homes.filter(h=>!h.cust).map(h=>`<rect class="swbg" x="${(h.x-3).toFixed(1)}" y="${(h.y-2.5).toFixed(1)}" width="6" height="5" rx="1"/>`).join('')}
+  <g class="swstorm"><polygon class="swwarn" points="${pl(warn)}"/><path id="swSwath" class="swswath"/><path id="swSwath2" class="swswath2"/>
+    <g id="swCore"><g transform="rotate(${(SW_ANG*180/Math.PI).toFixed(1)})"><ellipse rx="160" ry="98" fill="url(#swg1)"/><ellipse rx="104" ry="64" fill="url(#swg2)"/><ellipse rx="62" ry="40" fill="url(#swg3)"/><ellipse class="swcorepulse" rx="30" ry="21" fill="url(#swg4)"/></g></g></g>
+  <g id="swHomes">${M.cust.map(h=>swHouse(h.x,h.y,'',h.cust.id)).join('')}</g>
+  <g class="swlabels"><text class="swlbl swlbl-w" x="470" y="226">Buffalo Bayou · Terry Hershey Park</text>
+  ${SW_H2.map(r=>`<text class="swlbl" x="${r.fw?16:424}" y="${r.y-7}">${r.n}</text>`).join('')}
+  ${SW_V.map(v=>`<text class="swlbl" transform="translate(${v.x-7},${SW_H-40}) rotate(-90)">${v.n}</text>`).join('')}</g>
+  <g id="swPin"></g>
+  <text class="swwarnl" x="18" y="${SW_H-16}">Dashed = Severe Thunderstorm Warning area</text></svg>`}
+function swPaint(){const sv=$('#obody .swsvg');if(!sv)return;const M=swMap(),p=swAt(swT),core=$('#swCore');
+  core.setAttribute('transform',`translate(${p[0].toFixed(1)},${p[1].toFixed(1)})`);core.style.opacity=swT>=1?.25:1;
+  const d=`M${SW_P0[0]},${SW_P0[1]} L${p[0].toFixed(1)},${p[1].toFixed(1)}`;$('#swSwath').setAttribute('d',d);$('#swSwath2').setAttribute('d',d);
+  M.cust.forEach(h=>{const g=sv.querySelector(`[data-swh="${h.cust.id}"]`);if(!g)return;const r=swRisk(h),on=r&&r.u<=swT+1e-6;
+    if(on&&!swPinged.has(h.cust.id)){swPinged.add(h.cust.id);if(swPlay)swPingT[h.cust.id]=1}
+    g.setAttribute('class','swh '+(on?'sw-'+r.lvl:'sw-ok')+(swSel===h.cust.id?' sel':'')+(on&&swPingT[h.cust.id]?' ping':''));
+    g.setAttribute('aria-label',`${h.cust.name.replace('Sample: ','')}, ${h.cust.addr}${on?', '+(r.hail?r.hail+' inch hail':'strong wind'):''}`)});
+  const pin=$('#swPin'),sel=swSel&&M.cust.find(h=>h.cust.id===swSel);pin.innerHTML=sel?`<g transform="translate(${sel.x.toFixed(1)},${(sel.y-12).toFixed(1)})"><rect x="-70" y="-30" width="140" height="24" rx="6" class="swtip"/><text class="swtipt" y="-14" text-anchor="middle">${esc(sel.cust.addr)}</text></g>`:'';
+  const H=swHitNow(),hi=H.filter(x=>x.r.lvl==='high'),hail=H.filter(x=>x.r.hail),tx=hail.filter(x=>x.h.cust.sms),val=Math.round((hi.length*SWK.avg*.6+(hail.length-hi.length)*SWK.avg*.25)/50)*50;
+  const set=(id,v)=>{const e=$('#'+id);if(e)e.textContent=v};
+  set('swClock',swClock(swT));set('swK1',hail.length);set('swK2',hi.length);set('swK3',tx.length);set('swK4',fmtUsd(val));
+  set('swK1s',`of ${M.cust.length} homes you've serviced here`);set('swK3s',`${hail.length-tx.length} did not opt in: portal notice only`);
+  const sl=$('#swSlider');if(sl&&+sl.value!==Math.round(swT*1000))sl.value=Math.round(swT*1000);
+  const pb=$('#swPlayB');if(pb){pb.innerHTML=swPlay?`${swIco('pause')}Pause`:`${swIco('play')}${swT>=1?'Replay storm':'Play'}`}
+  $$('#obody [data-swn]').forEach(e=>{const k=e.dataset.swn;e.textContent=k==='tx'?tx.length:k==='all'?hail.length:hail.length-tx.length});
+  swList(H)}
+const fmtUsd=v=>'$'+Math.round(v).toLocaleString('en-US');
+const swIco=k=>`<svg viewBox="0 0 24 24" class="oi" aria-hidden="true" fill="currentColor">${k==='play'?'<path d="M7 4.5v15l13-7.5z"/>':'<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>'}</svg>`;
+function swList(H){const ul=$('#swList');if(!ul)return;
+  const rows=H.filter(x=>x.r.hail).concat(H.filter(x=>!x.r.hail));
+  ul.innerHTML=rows.length?rows.map(({h,r})=>{const k=h.cust;return`<li><button type="button" class="swrow ${swSel===k.id?'on':''}" data-swr="${k.id}">
+    <span class="swdot sw-${r.lvl}" aria-hidden="true"></span>
+    <span class="swrm"><b>${esc(k.name.replace('Sample: ',''))}</b><small>${esc(k.addr)} · ${k.zip}</small></span>
+    <span class="swchips"><em class="swc swc-${r.lvl}">${r.hail?r.hail.toFixed(2).replace(/0$/,'')+'″ hail':'Wind 60 mph'}</em><em class="swc">${SWK.asset} ${k.age} yrs</em>${k.sms?'<em class="swc swc-ok">Texts OK</em>':'<em class="swc swc-mute">Portal only</em>'}</span></button></li>`}).join('')
+    :`<li class="swempty">No homes hit yet. Press play to watch the storm move through.</li>`;
+  $$('#swList [data-swr]').forEach(b=>b.onclick=()=>{swSel=swSel===b.dataset.swr?null:b.dataset.swr;swPaint()})}
+/* ---- live NWS strip (real, Harris County) ---- */
+function swLive(){const el=$('#swLive');if(!el)return;const show=r=>{const e=$('#swLive');if(!e)return;e.className='swlive '+(r.err?'':'is-'+(r.n?'on':'ok'));
+    e.innerHTML=r.err?'<i></i>Live weather check is unavailable right now':`<i></i><span><b>Live · Harris County:</b> ${r.n?esc(r.ev.slice(0,3).join(', ')):'no active warnings'}</span><small>National Weather Service · ${r.at}</small>`};
+  if(swLiveR&&Date.now()-swLiveR.t<10*60e3)return show(swLiveR);
+  fetch('https://api.weather.gov/alerts/active?area=TX',{headers:{Accept:'application/geo+json'}}).then(r=>r.ok?r.json():Promise.reject()).then(j=>{
+    const F=(j.features||[]).filter(f=>/Harris/i.test((f.properties||{}).areaDesc||'')),ev=[...new Set(F.map(f=>f.properties.event))];
+    swLiveR={t:Date.now(),n:F.length,ev,at:new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})};show(swLiveR)}).catch(()=>{swLiveR={t:Date.now()-9*60e3,err:1};show(swLiveR)})}
+/* ---- page ---- */
+function oStorm(){const day=swDay();
+  return `<div class="sw"><div class="ixhead"><div><p class="ixeyebrow">Past customers · storm risk</p></div><div class="swlive" id="swLive"><i></i>Checking live weather…</div></div>
+  <p class="ixsub">Every home you've serviced, checked against National Weather Service warnings. When hail or high wind passes over a customer, they show up here with what to do.</p>
+  <div class="ixsample">Sample neighborhood and storm. Not real customers or a real storm. Nothing here is sent. <a class="ixlink" href="portal.html?demo=1&storm=1" target="_blank" rel="noopener">See what a customer sees →</a></div>
+  <div class="swalert"><span class="swalert-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 15.5A4.5 4.5 0 0 0 17.5 7a6 6 0 0 0-11.4 1.6A4 4 0 0 0 7 16.5"/><path d="M13 12l-3 5h4l-3 5"/></svg></span>
+    <div><b>Severe Thunderstorm Warning</b><span>Hail up to 1.75 in · gusts to 60 mph · ${day}, 5:40–7:15 PM</span></div><span class="swclock" aria-live="polite"><small>Storm time</small><b id="swClock">${swClock(swT)}</b></span></div>
+  <div class="ixkpis swkpis">
+    <div class="ixk"><p class="ixkl">Homes hit by hail</p><p class="ixkv" id="swK1">0</p><p class="swks" id="swK1s"></p></div>
+    <div class="ixk"><p class="ixkl">High risk</p><p class="ixkv swbad" id="swK2">0</p><p class="swks">Big hail or ${SWK.asset} 10+ years old</p></div>
+    <div class="ixk"><p class="ixkl">Can be texted</p><p class="ixkv" id="swK3">0</p><p class="swks" id="swK3s"></p></div>
+    <div class="ixk"><p class="ixkl">Possible repair work</p><p class="ixkv" id="swK4">$0</p><p class="swks">Rough guess, ${fmtUsd(SWK.avg)} avg job</p></div></div>
+  <div class="swgrid"><section class="ixcard swmapc" aria-label="Storm map">${swSvg()}
+      <div class="swctl"><button type="button" class="ob ob-main" id="swPlayB"></button><label class="swrange"><span class="sr-only">Storm time</span><input type="range" id="swSlider" min="0" max="1000" value="${Math.round(swT*1000)}"></label></div>
+      <ul class="swleg"><li><span class="swdot sw-high"></span>High risk</li><li><span class="swdot sw-med"></span>Hail</li><li><span class="swdot sw-low"></span>Wind only</li><li><span class="swdot sw-ok"></span>Your customer, not hit</li><li><span class="swbgk"></span>Other homes</li></ul></section>
+    <section class="ixcard swside" aria-labelledby="swAH"><h3 class="ixch" id="swAH">What to do</h3>
+      <div class="swacts"><button type="button" class="swact" id="swTxt"><b>Text <span data-swn="tx">0</span> opted-in customers</b><small>${esc(SWK.svc)} offer. Only people who agreed to texts.</small></button>
+        <button type="button" class="swact" id="swPost"><b>Show a notice in <span data-swn="all">0</span> portals</b><small>“We're watching your home” card with a booking button.</small></button>
+        <button type="button" class="swact" id="swCall"><b>Call list for the other <span data-swn="rest">0</span></b><small>No text consent: call them or let the portal notice do it.</small></button></div>
+      <h3 class="ixch swlh">Homes in the path</h3><ul class="swlist" id="swList"></ul></section></div></div>`}
+function swStop(){if(swPlay){cancelAnimationFrame(swPlay);swPlay=null}}
+function swStart(){swStop();if(swT>=1){swT=0;swPinged=new Set();swPingT={}}let last=performance.now();
+  const step=now=>{if(!$('#obody .swsvg')){swPlay=null;return}swT=Math.min(1,swT+(now-last)/9000);last=now;if(swT>=1){swPlay=null;swPaint();return}swPlay=requestAnimationFrame(step);swPaint()};swPlay=requestAnimationFrame(step);swPaint()}
+function bindStorm(){const M0=swMap(),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  $('#swPlayB').onclick=()=>swPlay?(swStop(),swPaint()):swStart();
+  $('#swSlider').oninput=e=>{swStop();swT=+e.target.value/1000;swPinged=new Set(M0.cust.filter(h=>{const r=swRisk(h);return r&&r.u<=swT}).map(h=>h.cust.id));swPingT={};swPaint()};
+  $$('#obody [data-swh]').forEach(g=>{const f=()=>{swSel=swSel===g.dataset.swh?null:g.dataset.swh;swPaint();const r=$(`#swList [data-swr="${g.dataset.swh}"]`);if(r)r.scrollIntoView({block:'nearest',behavior:'smooth'})};g.onclick=f;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}}});
+  $('#swTxt').onclick=swTextSheet;
+  $('#swPost').onclick=()=>{swPosted=true;toast(`Sample: notice shown in ${swHitNow().filter(x=>x.r.hail).length} sample portals. Nothing was sent.`)};
+  $('#swCall').onclick=swCallSheet;
+  swLive();if(!swSeen&&!reduce){swSeen=true;swT=0;swStart()}else swPaint()}
+const swMsg=k=>`Hi ${first(k.name.replace('Sample: ',''))}, it's ${CFG.biz||'us'}. Yesterday's hail storm passed over ${k.addr.replace(/^\d+\s/,'')}. ${SWK.why} Want ${SWK.offer} this week? Reply STOP to opt out.`;
+function swTextSheet(){const L=swHitNow().filter(x=>x.r.hail&&x.h.cust.sms);
+  open(sheetWrap('swTH',`Text ${L.length} opted-in customers`,`<p class="muted2" style="margin-top:0">Only customers who agreed to texts are on this list. Every text ends with “Reply STOP to opt out.”</p>
+    <div class="swmsg">${esc(L.length?swMsg(L[0].h.cust):'')}</div>
+    <ul class="swtl">${L.map(({h,r})=>`<li><span class="swdot sw-${r.lvl}"></span><b>${esc(h.cust.name.replace('Sample: ',''))}</b><small>${esc(h.cust.addr)}</small></li>`).join('')}</ul>
+    <button class="ob ob-main ob-xl" type="button" id="swSend">${oi('chat')}Send ${L.length} texts</button><p class="muted2">Sample customers: pressing send shows what would happen. Nothing is sent.</p>`));
+  $('#swSend').onclick=()=>toast('Sample: nothing was sent. With real customers each text opens ready to send.')}
+function swCallSheet(){const L=swHitNow().filter(x=>x.r.hail&&!x.h.cust.sms);
+  open(sheetWrap('swCH',`Call list (${L.length})`,`<p class="muted2" style="margin-top:0">These customers didn't agree to texts. Call them, or let the notice in their portal do the work.</p>
+    <ul class="swtl">${L.map(({h,r})=>`<li><span class="swdot sw-${r.lvl}"></span><b>${esc(h.cust.name.replace('Sample: ',''))}</b><small>${esc(h.cust.addr)} · ${r.hail}″ hail · ${SWK.asset} ${h.cust.age} yrs</small></li>`).join('')}</ul>`))}
+if(SW_ON){OPAGES.storm='Storm watch';
+  const _swOpen=openOwner;
+  openOwner=function(){if(oTab!=='storm')swStop();const el=_swOpen.apply(this,arguments),ow=$('#owner');if(!ow||!$('#obody'))return el;
+    const anchor=ow.querySelector('.oside .oside-i[data-otab="growth"]')||ow.querySelector('.oside .oside-i[data-otab="money"]');
+    if(anchor&&!ow.querySelector('.oside-i[data-otab="storm"]')){anchor.insertAdjacentHTML('afterend',`<button type="button" class="oside-i" data-otab="storm" aria-current="${oTab==='storm'?'page':'false'}"><svg class="oi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 15.5A4.5 4.5 0 0 0 17.5 7a6 6 0 0 0-11.4 1.6A4 4 0 0 0 7 16.5"/><path d="M13 12l-3 5h4l-3 5"/></svg>Storm watch</button>`);
+      ow.querySelector('.oside-i[data-otab="storm"]').onclick=()=>{oTab='storm';openOwner();ow.scrollTop=0}}
+    if(oTab==='storm'){$('#obody').innerHTML=oStorm();$$('#owner .oside-i[data-otab]').forEach(b=>b.setAttribute('aria-current',b.dataset.otab==='storm'?'page':'false'));const t=$('#owner .otop h1');if(t)t.textContent='Storm watch';bindStorm()}
+    return el};
+  const _swMore=oMore;
+  oMore=function(){return _swMore().replace('<div class="omore">',`<div class="omore"><button type="button" data-go="storm">${oi('globe')}<span><b>Storm watch</b><small>Which customer homes a storm just hit, and who to contact</small></span>${oi('back','flip')}</button>`)}}
 
 /* ---------- backend: every lead and booking goes to the client's Apps Script web app
    (Google Sheet row + instant owner alert + GoHighLevel contact/appointment). Demo mode when CFG.backend is empty. ---------- */
