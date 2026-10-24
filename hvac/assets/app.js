@@ -1170,10 +1170,14 @@ const fmtUsd=v=>'$'+Math.round(v).toLocaleString('en-US');
 const swIco=k=>`<svg viewBox="0 0 24 24" class="oi" aria-hidden="true" fill="currentColor">${k==='play'?'<path d="M7 4.5v15l13-7.5z"/>':'<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>'}</svg>`;
 /* selected home: satellite card (sample spot = real imagery of the area, Esri; real customers = Google satellite from the backend once they book) */
 const swGeo=h=>({lng:-95.624+(h.x-150)*6.35e-5,lat:29.784-(h.y-92)*1.22e-4});
-const swSatUrl=g=>`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${(g.lng-.00064).toFixed(5)},${(g.lat-.00028).toFixed(5)},${(g.lng+.00064).toFixed(5)},${(g.lat+.00028).toFixed(5)}&bboxSR=4326&imageSR=3857&size=640,320&format=jpg&f=image`;
+const satTiles=(lat,lng,z=19)=>{const n=2**z,px=(lng+180)/360*n*256,r=lat*Math.PI/180,py=(1-Math.log(Math.tan(r)+1/Math.cos(r))/Math.PI)/2*n*256,W=640,H=320,out=[];
+  for(let tx=Math.floor((px-W/2)/256);tx<=Math.floor((px+W/2-1)/256);tx++)for(let ty=Math.floor((py-H/2)/256);ty<=Math.floor((py+H/2-1)/256);ty++)
+    out.push(`<img alt="" src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${ty}/${tx}" style="position:absolute;left:${((tx*256-(px-W/2))/W*100).toFixed(3)}%;top:${((ty*256-(py-H/2))/H*100).toFixed(3)}%;width:${(256/W*100).toFixed(3)}%;height:${(256/H*100).toFixed(3)}%;max-width:none">`);
+  return `<div class="sattiles" aria-hidden="true">${out.join('')}</div>`};
+
 function swHome(){const el=$('#swHome');if(!el)return;const M=swMap(),h=swSel&&M.cust.find(x=>x.cust.id===swSel);if(!h){el.hidden=true;el.innerHTML='';return}
   const k=h.cust,r=swRisk(h),on=r&&r.u<=swT+1e-6,g=swGeo(h);el.hidden=false;
-  if(el.dataset.id!==k.id){el.dataset.id=k.id;el.innerHTML=`<figure class="swsat"><img src="${swSatUrl(g)}" alt="Satellite view of the home (sample location)"><span class="swsat-pin" aria-hidden="true"></span><span class="swsat-swath" aria-hidden="true"></span><figcaption>Imagery: Esri, Maxar · sample location</figcaption></figure>
+  if(el.dataset.id!==k.id){el.dataset.id=k.id;el.innerHTML=`<figure class="swsat" role="img" aria-label="Satellite view of the home (sample location)">${satTiles(g.lat,g.lng)}<span class="swsat-pin" aria-hidden="true"></span><span class="swsat-swath" aria-hidden="true"></span><figcaption>Imagery: Esri, Maxar · sample location</figcaption></figure>
     <div class="swhb"><div><b>${esc(k.name.replace('Sample: ',''))}</b><small>${esc(k.addr)} · ${k.zip}</small></div><button type="button" class="ixlink" id="swHx">Close</button></div>
     <dl class="swhd"><div><dt>Storm</dt><dd id="swHs"></dd></div><div><dt>${SWK.asset}</dt><dd>${k.age} yrs old</dd></div><div><dt>Last visit</dt><dd>${k.last} mo ago</dd></div><div><dt>Contact</dt><dd>${k.sms?'Texts OK':'Portal only'}</dd></div></dl>`;
     $('#swHx').onclick=()=>{swSel=null;swPaint()}}

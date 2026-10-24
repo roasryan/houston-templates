@@ -1787,3 +1787,4 @@ html{background-image:url(engrave.svg)!important;background-size:600px 600px!imp
 #owner .swhd{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin:10px 0 0}
 #owner .swhd dt{color:var(--ix-mute);font-size:12px}
 #owner .swhd dd{margin:0;font:600 13.5px Inter,sans-serif;color:var(--ix-ink)}
+.sattiles{position:absolute;inset:0;overflow:hidden}
