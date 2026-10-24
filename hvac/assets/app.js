@@ -1168,7 +1168,18 @@ function swPaint(){const sv=$('#obody .swsvg');if(!sv)return;const M=swMap(),p=s
   swList(H)}
 const fmtUsd=v=>'$'+Math.round(v).toLocaleString('en-US');
 const swIco=k=>`<svg viewBox="0 0 24 24" class="oi" aria-hidden="true" fill="currentColor">${k==='play'?'<path d="M7 4.5v15l13-7.5z"/>':'<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>'}</svg>`;
-function swList(H){const ul=$('#swList');if(!ul)return;
+/* selected home: satellite card (sample spot = real imagery of the area, Esri; real customers = Google satellite from the backend once they book) */
+const swGeo=h=>({lng:-95.624+(h.x-150)*6.35e-5,lat:29.784-(h.y-92)*1.22e-4});
+const swSatUrl=g=>`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${(g.lng-.00064).toFixed(5)},${(g.lat-.00028).toFixed(5)},${(g.lng+.00064).toFixed(5)},${(g.lat+.00028).toFixed(5)}&bboxSR=4326&imageSR=3857&size=640,320&format=jpg&f=image`;
+function swHome(){const el=$('#swHome');if(!el)return;const M=swMap(),h=swSel&&M.cust.find(x=>x.cust.id===swSel);if(!h){el.hidden=true;el.innerHTML='';return}
+  const k=h.cust,r=swRisk(h),on=r&&r.u<=swT+1e-6,g=swGeo(h);el.hidden=false;
+  if(el.dataset.id!==k.id){el.dataset.id=k.id;el.innerHTML=`<figure class="swsat"><img src="${swSatUrl(g)}" alt="Satellite view of the home (sample location)"><span class="swsat-pin" aria-hidden="true"></span><span class="swsat-swath" aria-hidden="true"></span><figcaption>Imagery: Esri, Maxar · sample location</figcaption></figure>
+    <div class="swhb"><div><b>${esc(k.name.replace('Sample: ',''))}</b><small>${esc(k.addr)} · ${k.zip}</small></div><button type="button" class="ixlink" id="swHx">Close</button></div>
+    <dl class="swhd"><div><dt>Storm</dt><dd id="swHs"></dd></div><div><dt>${SWK.asset}</dt><dd>${k.age} yrs old</dd></div><div><dt>Last visit</dt><dd>${k.last} mo ago</dd></div><div><dt>Contact</dt><dd>${k.sms?'Texts OK':'Portal only'}</dd></div></dl>`;
+    $('#swHx').onclick=()=>{swSel=null;swPaint()}}
+  const hs=$('#swHs');if(hs)hs.textContent=on?(r.hail?r.hail+'″ hail, '+r.mi+' mi from the core':'Wind only'):(r?'In the path, not hit yet':'Not in the path');
+  el.querySelector('.swsat').classList.toggle('hit',!!(on&&r.hail))}
+function swList(H){swHome();const ul=$('#swList');if(!ul)return;
   const rows=H.filter(x=>x.r.hail).concat(H.filter(x=>!x.r.hail));
   ul.innerHTML=rows.length?rows.map(({h,r})=>{const k=h.cust;return`<li><button type="button" class="swrow ${swSel===k.id?'on':''}" data-swr="${k.id}">
     <span class="swdot sw-${r.lvl}" aria-hidden="true"></span>
@@ -1198,7 +1209,7 @@ function oStorm(){const day=swDay();
   <div class="swgrid"><section class="ixcard swmapc" aria-label="Storm map">${swSvg()}
       <div class="swctl"><button type="button" class="ob ob-main" id="swPlayB"></button><label class="swrange"><span class="sr-only">Storm time</span><input type="range" id="swSlider" min="0" max="1000" value="${Math.round(swT*1000)}"></label></div>
       <ul class="swleg"><li><span class="swdot sw-high"></span>High risk</li><li><span class="swdot sw-med"></span>Hail</li><li><span class="swdot sw-low"></span>Wind only</li><li><span class="swdot sw-ok"></span>Your customer, not hit</li><li><span class="swbgk"></span>Other homes</li></ul></section>
-    <section class="ixcard swside" aria-labelledby="swAH"><h3 class="ixch" id="swAH">What to do</h3>
+    <section class="ixcard swside" aria-labelledby="swAH"><div class="swhome" id="swHome" hidden></div><h3 class="ixch" id="swAH">What to do</h3>
       <div class="swacts"><button type="button" class="swact" id="swTxt"><b>Text <span data-swn="tx">0</span> opted-in customers</b><small>${esc(SWK.svc)} offer. Only people who agreed to texts.</small></button>
         <button type="button" class="swact" id="swPost"><b>Show a notice in <span data-swn="all">0</span> portals</b><small>“We're watching your home” card with a booking button.</small></button>
         <button type="button" class="swact" id="swCall"><b>Call list for the other <span data-swn="rest">0</span></b><small>No text consent: call them or let the portal notice do it.</small></button></div>
