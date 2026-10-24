@@ -507,6 +507,7 @@ button.more{width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer
 .hsat-swath{position:absolute;left:-20%;top:-60%;width:140%;height:120%;background:linear-gradient(180deg,transparent 30%,rgba(193,63,216,.28) 45%,rgba(193,63,216,.34) 55%,transparent 70%);transform:rotate(24deg);mix-blend-mode:screen}
 .hsat-core{position:absolute;right:6%;bottom:2%;width:38%;height:60%;border-radius:50%;background:radial-gradient(closest-side,rgba(193,63,216,.75),rgba(229,72,77,.45) 55%,rgba(242,199,68,0));animation:stmdrift 6s ease-in-out infinite alternate}
 @media (prefers-reduced-motion:reduce){.hsat-pin i,.hsat-core{animation:none}}
+.sattiles{position:absolute;inset:0;overflow:hidden}
 </style></head><body><div id="wall" aria-hidden="true"></div><div id="papp"></div><div id="player"></div><script>/* ============ Ridgeline customer portal (portal.html?j=JOB) — Oct 7, round 1 ============
    Separate screen for customers on a current job. PIN unlock, English/Español, arrival window + who's coming,
    change orders and add-ons they can approve and pay, invoice, job photos. Owner sets everything up in Owner → customer.
@@ -665,7 +666,7 @@ function sampleDB(){const d=n=>{const x=new Date();x.setDate(x.getDate()+n);retu
   else{c.stage='estimate';c.job.visits=[{id:'v1',type:'estimate',date:d(PK.atShop?1:0),from:'13:00',to:PK.atShop?'':'15:00',status:PK.atShop?'confirmed':'onway',eta:20,crew:['s2'],lead:'s2'}];
     c.estimate={status:'sent',t:ago(0),no:'EST-1203',valid:d(30),items:[{desc:'Recommended repair (sample)',amount:640},{desc:'Parts (sample)',amount:185},{desc:'Labor, 2 hours (sample)',amount:240}],note:'Sample estimate. Prices shown are made up.'};c.updates=[{t:ago(0),text:'Sample note: what the tech found and the options we recommend.',photos:[]}]}
   if(PK.look==='pro'&&new URLSearchParams(location.search).get('storm')!=='0')c.storm={t:(()=>{const x=new Date(Date.now()-864e5);x.setHours(18,52,0,0);return+x})(),hail:1.25,mi:0.3,asset:/roof/i.test(JSON.stringify(PK.services||''))?'System':'AC'};
-  if(PK.look==='pro'){c.home={sysAge:12,lat:29.76112,lng:-95.61964,sat:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=-95.62028,29.76084,-95.61900,29.76140&bboxSR=4326&imageSR=3857&size=640,320&format=jpg&f=image',satBy:'Imagery: Esri, Maxar · sample location'};c.created=ago(420);c.history=[{t:ago(400),title:((PK.services||[])[2]||{}).t||'Service',amount:189,paid:1},{t:ago(230),title:((PK.services||[])[0]||{}).t||'Repair',amount:465,paid:1}]}
+  if(PK.look==='pro'){c.home={sysAge:12,lat:29.76112,lng:-95.61964,sat:'tiles',satBy:'Imagery: Esri, Maxar · sample location'};c.created=ago(420);c.history=[{t:ago(400),title:((PK.services||[])[2]||{}).t||'Service',amount:189,paid:1},{t:ago(230),title:((PK.services||[])[0]||{}).t||'Repair',amount:465,paid:1}]}
   {const tq=new URLSearchParams(location.search).get('truck'),v=c.job.visits[0];if(v&&tq==='sleep')Object.assign(v,{date:d(2),status:'confirmed'});else if(v&&tq==='prep'){const h=Math.min(22,new Date().getHours()+2);Object.assign(v,{date:d(0),status:'confirmed',from:String(h).padStart(2,'0')+':00',to:String(h+1).padStart(2,'0')+':00'})}else if(v&&tq==='here')Object.assign(v,{date:d(0),status:'arrived'})}/* demo: ?demo=1&truck=sleep|prep|here */
   const sp={};(PK.services||[]).forEach((x,i)=>{if(i===1)sp[x.t]=149;if(i===3)sp[x.t]=89});/* sample prices, demo only */
   return{customers:[c],crew,addons:[],svcPrices:sp}}
@@ -722,8 +723,12 @@ function svcSheet(c,i){const t=T(),x=(PK.services||[])[i];if(!x)return;const pr=
     else if(!DEMO)log(`Asked for a free estimate: ${x.t}${note?' · '+note:''}`);
     if(!DEMO)toast(kind==='add'?t.svAddedT(x.t):t.svAskedT);portal()}}
 /* pro account view (Oct 24, HVAC prototype): account summary, personalized recommendations (smart rules, AI later), activity timeline */
-function homeSat(c,storm){const h=c.home||{};if(!h.sat)return'';const t=T();
-  return `<figure class="hsat ${storm?'hsat-storm':''}"><img src="${esc(h.sat)}" alt="${esc(t.hsAlt)}" loading="eager" decoding="async" onerror="this.closest('figure').remove()">
+const satTiles=(lat,lng,z=19)=>{const n=2**z,px=(lng+180)/360*n*256,r=lat*Math.PI/180,py=(1-Math.log(Math.tan(r)+1/Math.cos(r))/Math.PI)/2*n*256,W=640,H=320,out=[];
+  for(let tx=Math.floor((px-W/2)/256);tx<=Math.floor((px+W/2-1)/256);tx++)for(let ty=Math.floor((py-H/2)/256);ty<=Math.floor((py+H/2-1)/256);ty++)
+    out.push(`<img alt="" src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${ty}/${tx}" style="position:absolute;left:${((tx*256-(px-W/2))/W*100).toFixed(3)}%;top:${((ty*256-(py-H/2))/H*100).toFixed(3)}%;width:${(256/W*100).toFixed(3)}%;height:${(256/H*100).toFixed(3)}%;max-width:none">`);
+  return `<div class="sattiles" aria-hidden="true">${out.join('')}</div>`};
+function homeSat(c,storm){const h=c.home||{};if(!h.sat)return'';const t=T(),img=h.sat==='tiles'&&h.lat?satTiles(+h.lat,+h.lng):/^data:image\/|^https:\/\//.test(h.sat)?`<img src="${esc(h.sat)}" alt="${esc(t.hsAlt)}" decoding="async" onerror="this.closest('figure').remove()">`:'';if(!img)return'';
+  return `<figure class="hsat ${storm?'hsat-storm':''}" role="img" aria-label="${esc(t.hsAlt)}">${img}
     ${storm?'<span class="hsat-swath" aria-hidden="true"></span><span class="hsat-core" aria-hidden="true"></span>':''}
     <span class="hsat-pin" aria-hidden="true"><i></i></span><figcaption><b>${esc(t.stYou)}</b>${h.satBy?`<small>${esc(h.satBy)}</small>`:''}</figcaption></figure>`}
 function proStorm(c){const t=T(),s=c.storm;if(!s||s.ok)return'';const a=s.asset||'AC',age=c.home&&+c.home.sysAge,dt=new Date(s.t);
