@@ -1609,3 +1609,72 @@ html{background-image:url(engrave.svg)!important;background-size:600px 600px!imp
 #owner .avcal .cd.o-blocked{background:#FAECEC!important;color:#C4554D!important;border-color:#F0CFCC!important}
 #owner .avsave{background:#fff!important;border-top:1px solid #E9E9E7}
 #owner .frow small,#owner .obrand small,#owner .oside small{color:#787774!important}
+/* ===== Overview analytics (Oct 24): Stripe-style. Light canvas, crisp cards, tabular numbers, one accent (blue), status colors only with icon + text. ===== */
+#owner{--ix-ink:#0B0B0B;--ix-ink2:#52514E;--ix-mute:#6E6D69;--ix-line:#E6E6E3;--ix-soft:#F7F7F5;--ix-blue:#2A78D6;--ix-blue-s:#EAF2FC;--ix-good:#0A7A0A;--ix-good-s:#E7F4E7;--ix-bad:#C03030;--ix-bad-s:#FBEAEA;--ix-warn:#9A6400;--ix-warn-s:#FDF3DE}
+#owner .ixsample{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--ix-blue-s);border:1px solid #CFE0F6;border-radius:10px;padding:10px 14px;margin:0 0 18px;color:#1D4F8F;font-size:14px}
+#owner .ixsample .ob{margin-left:auto}
+#owner .ixhead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+#owner .ixeyebrow{margin:0;color:var(--ix-mute);font:500 13px Inter,sans-serif}
+#owner .ixh{margin:2px 0 0;font:650 28px/1.2 Inter,sans-serif!important;letter-spacing:-.02em!important;color:var(--ix-ink)}
+#owner .ixsub{margin:6px 0 18px;color:var(--ix-mute);font-size:13.5px}
+#owner .ixlink{background:none;border:0;padding:0;color:var(--ix-blue);font:600 13.5px Inter,sans-serif;cursor:pointer}
+#owner .ixlink:hover{text-decoration:underline}
+#owner .ixrange{display:inline-flex;background:var(--ix-soft);border:1px solid var(--ix-line);border-radius:9px;padding:3px;gap:2px}
+#owner .ixrange button{min-height:32px;min-width:46px;border:0;border-radius:7px;background:none;color:var(--ix-ink2);font:600 13px Inter,sans-serif;cursor:pointer}
+#owner .ixrange button[aria-pressed="true"]{background:#fff;color:var(--ix-ink);box-shadow:0 1px 2px rgba(0,0,0,.08),0 0 0 1px var(--ix-line)}
+#owner .ixkpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--ix-line);border:1px solid var(--ix-line);border-radius:12px;overflow:hidden;margin-bottom:16px}
+@media (min-width:760px){#owner .ixkpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
+#owner .ixk{background:#fff;padding:14px 16px 12px;min-width:0}
+#owner .ixkl{margin:0;color:var(--ix-mute);font:500 12.5px Inter,sans-serif}
+#owner .ixkv{margin:4px 0 6px;font:650 24px/1.15 Inter,sans-serif;letter-spacing:-.02em;color:var(--ix-ink);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#owner .ixkf{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:22px}
+#owner .ixspark{width:70px;height:22px;flex-shrink:0}
+#owner .ixd{display:inline-flex;align-items:center;gap:3px;font:600 12px Inter,sans-serif;padding:2px 6px;border-radius:5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+#owner .ixd svg{width:8px;height:8px;fill:currentColor}
+#owner .ixd-up{background:var(--ix-good-s);color:var(--ix-good)}#owner .ixd-down{background:var(--ix-bad-s);color:var(--ix-bad)}#owner .ixd-n{background:var(--ix-soft);color:var(--ix-mute);font-weight:500}
+#owner .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#owner .ixgrid2{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:16px;align-items:start}
+@media (min-width:1000px){#owner .ixgrid2{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}#owner .ixgrid2:has(> .ixcard:nth-child(2):not(.ixwide)) > .ixcard:first-child:not(.ixwide){grid-column:auto}}
+#owner .ixgrid2 > .ixcard{margin:0}
+#owner .ixcard{background:#fff;border:1px solid var(--ix-line);border-radius:12px;padding:16px 18px;margin-bottom:16px;min-width:0}
+#owner .ixch{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+#owner .ixch h3{margin:0;font:600 15px Inter,sans-serif!important;color:var(--ix-ink);letter-spacing:-.005em}
+#owner .ixmuted{color:var(--ix-mute);font-size:13px;margin:0}
+#owner .ixtag{font:600 11px Inter,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--ix-blue);background:var(--ix-blue-s);padding:3px 7px;border-radius:5px}
+#owner .ixleg{display:flex;gap:14px;color:var(--ix-ink2);font-size:12.5px}
+#owner .ixleg span{display:inline-flex;align-items:center;gap:6px}
+#owner .ixsw{display:inline-block;width:10px;height:10px;border-radius:3px}
+#owner .ixsw-b{background:var(--ix-blue)}#owner .ixsw-l{height:2px;width:12px;border-radius:2px;background:#A3A29C}
+#owner .ixchartwrap{position:relative}
+#owner .ixchart{width:100%;height:auto;display:block}
+#owner .ixgrid{stroke:#EFEFEC;stroke-width:1}
+#owner .ixax{fill:var(--ix-mute);font:500 10.5px Inter,sans-serif}
+#owner .ixb{fill:var(--ix-blue);transition:opacity .15s}
+#owner .ixbar{cursor:pointer}#owner .ixbar.dim .ixb{opacity:.35}
+#owner .ixprev{fill:none;stroke:#A3A29C;stroke-width:2;stroke-dasharray:4 4;stroke-linejoin:round}
+#owner .ixtip{position:absolute;top:0;width:180px;background:#fff;border:1px solid var(--ix-line);border-radius:9px;box-shadow:0 8px 24px rgba(0,0,0,.10);padding:9px 11px;font-size:12.5px;pointer-events:none;display:grid;gap:4px}
+#owner .ixtip span{display:flex;align-items:center;gap:6px;color:var(--ix-ink2)}#owner .ixtip em{margin-left:auto;font-style:normal;font-weight:600;color:var(--ix-ink);font-variant-numeric:tabular-nums}
+#owner .ixtable{margin-top:8px}#owner .ixtable summary{cursor:pointer;color:var(--ix-mute);font-size:12.5px}
+#owner .ixtable table,#owner .ixt{width:100%;border-collapse:collapse;font:14px/1.4 Inter,sans-serif}
+#owner .ixtable th,#owner .ixtable td,#owner .ixt th,#owner .ixt td{text-align:left;padding:8px 6px;border-bottom:1px solid #F0F0EE;white-space:nowrap}
+#owner .ixt th,#owner .ixtable th{font:500 12px Inter,sans-serif;color:var(--ix-mute)}
+#owner .ixt td:last-child,#owner .ixt th:last-child,#owner .ixt-num td:not(:first-child),#owner .ixt-num th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+#owner .ixt tr[data-open]{cursor:pointer}#owner .ixt tr[data-open]:hover td{background:#FAFAF9}
+#owner .ixbad{color:var(--ix-bad);font-weight:600}
+#owner .ixscroll{overflow-x:auto;margin:0 -6px}
+#owner .ixins{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+#owner .ixins li{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:10px;border-radius:10px;background:var(--ix-soft)}
+#owner .ixins svg{width:20px;height:20px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin:2px auto 0}
+#owner .ixins b{display:block;font:600 14px/1.35 Inter,sans-serif;color:var(--ix-ink)}#owner .ixins p{margin:3px 0 4px;color:var(--ix-ink2);font-size:13px;line-height:1.45}
+#owner .ixi-risk svg,#owner .ixi-money svg{stroke:var(--ix-bad)}#owner .ixi-warn svg{stroke:var(--ix-warn)}#owner .ixi-grow svg{stroke:var(--ix-blue)}#owner .ixi-good svg{stroke:var(--ix-good)}
+#owner .ixfun,#owner .ixmix{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+#owner .ixfun li,#owner .ixmix li{display:grid;grid-template-columns:96px minmax(0,1fr) 54px 36px;gap:10px;align-items:center;font-size:13.5px;color:var(--ix-ink2)}
+#owner .ixmix li{grid-template-columns:minmax(80px,140px) minmax(0,1fr) 64px}
+#owner .ixfun b,#owner .ixmix b{text-align:right;color:var(--ix-ink);font-variant-numeric:tabular-nums}#owner .ixfun small{color:var(--ix-mute);text-align:right}
+#owner .ixmix span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#owner .ixfb{height:10px;background:var(--ix-soft);border-radius:5px;overflow:hidden}#owner .ixfb i{display:block;height:100%;background:var(--ix-blue);border-radius:0 4px 4px 0}
+#owner .ixfun li.leak .ixfb i{background:#EB6834}#owner .ixfun li.leak span{color:var(--ix-ink);font-weight:600}
+#owner .ixnote{margin:12px 0 0;font-size:13px;color:var(--ix-ink2)}
+#owner .ixtoday{margin-top:8px!important}
+#owner .ixtasks .ostats,#owner .ixtasks .oquick{margin-bottom:6px}
+@media (max-width:560px){#owner .ixfun li{grid-template-columns:80px minmax(0,1fr) 40px 34px;font-size:13px}#owner .ixh{font-size:23px!important}}

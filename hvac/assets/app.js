@@ -59,7 +59,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-sms]');if(
 
 
 
-const OWN_PLANS=["Comfort Club", "Comfort Club Plus"];const OWN_KIND="service";const GROWTH={"model": "pct", "stages": ["New", "Contacted", "Visit booked", "Estimate given", "Job won"], "unit": "job", "units": "jobs", "offerPh": "e.g. Fall tune-up + free system check", "react": "Hi {first}, it's {biz}. We're running {offer} for past customers until {deadline}. Want me to book you a time? Reply STOP to opt out.", "pct": 7, "pkg": false, "note": ""};const OWN_SVCS=["AC repair", "New AC and heating systems", "Tune-ups", "Heating repair", "Leaks and drain lines", "Thermostats and air quality"];
+const OWN_PLANS=["Comfort Club", "Comfort Club Plus"];const OWN_KIND="service";const GROWTH={"model": "pct", "stages": ["New", "Contacted", "Visit booked", "Estimate given", "Job won"], "unit": "job", "units": "jobs", "offerPh": "e.g. Fall tune-up + free system check", "react": "Hi {first}, it's {biz}. We're running {offer} for past customers until {deadline}. Want me to book you a time? Reply STOP to opt out.", "pct": 7, "pkg": false, "note": ""};const INSIGHTS=true;const OWN_SVCS=["AC repair", "New AC and heating systems", "Tune-ups", "Heating repair", "Leaks and drain lines", "Thermostats and air quality"];
 /* ---------- CRM data: one small store shared by the website, the owner view and the customer portal ---------- */
 /* Demo: saved in this browser only. Live: the same shape moves to a database + texting service. */
 const DAY=864e5,NOW=Date.now();
@@ -972,6 +972,115 @@ function svcPriceSheet(){const P=DB.svcPrices=DB.svcPrices||{};
     <button class="ob ob-main ob-xl" type="button" id="spGo">${oi('check')}Save prices</button>`));
   $('#spGo').onclick=()=>{$$('#layer [data-spn]').forEach(x=>{const v=+String(x.value).replace(/[^\d.]/g,'')||0;if(v>0)P[x.dataset.spn]=v;else delete P[x.dataset.spn]});save();close();toast('Prices saved')}}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#mSvcP');if(!b)return;e.preventDefault();svcPriceSheet()});
+/* ---------- OVERVIEW (Oct 24, the owner: "feel like something a $1M+ business uses"): Stripe-style analytics home for the owner.
+   KPIs with trend + change vs the previous period, revenue chart with hover, funnel with the biggest leak called out,
+   rule-based insights with dollar impact ("smart rules now, AI later"), lead sources with CAC/ROAS, estimates at risk,
+   service mix and top areas. Real data; when there is none yet a clearly labeled sample is shown (never saved). ---------- */
+const IX_ON=(typeof INSIGHTS!=='undefined')&&INSIGHTS;
+let ixRange=30,ixSample=null,ixForceSample=false;
+const ixVal=c=>{const s=a=>(a||[]).reduce((x,i)=>x+(+i.amount||0),0);return s((c.invoice||{}).items)||s((c.estimate||{}).items)||+c.value||+((c.g||{}).amt)||0};
+const ixPaidT=c=>c.invoice&&c.invoice.status==='paid'?(c.invoice.paidT||c.invoice.t||c.created):0;
+const ixWonT=c=>isWon(c)?((c.estimate||{}).okT||(c.g&&c.g.t&&c.g.t.won)||c.created):0;
+const ixReply=c=>{const t=(c.g&&c.g.t)||{};return t.contacted&&t.new?t.contacted-t.new:(c.firstReply||null)};
+const ixZip=c=>{const m=String(c.addr||'').match(/\b(77\d{3}|7[5-9]\d{3})\b/);return m?m[1]:''};
+/* ---- labeled sample (HVAC-shaped, 180 days) ---- */
+function ixSampleData(){const R=(()=>{let s=7;return()=>(s=(s*16807)%2147483647)/2147483647})(),now=Date.now(),C=[];
+  const SV=(typeof OWN_SVCS!=='undefined'&&OWN_SVCS.length?OWN_SVCS:['Repair','Replacement','Tune-up','Install']).map((t,i)=>({t,p:[420,9800,189,380,260,650][i%6],sd:[160,2600,20,120,90,240][i%6]}));
+  const SRC=[['Google Ads',.34],['Google Business Profile',.26],['Meta ads',.16],['Referral',.12],['Website (organic)',.12]],ZIP=['77079','77024','77494','77450','77007','77042','77096','77084'];
+  for(let i=0;i<230;i++){const age=Math.floor(R()*180)*DAY+Math.floor(R()*DAY),t0=now-age;let r=R(),src='Referral';for(const[s,w]of SRC){if((r-=w)<0){src=s;break}}
+    const sv=SV[Math.floor(R()*R()*SV.length)],price=Math.max(89,Math.round((sv.p+(R()-.5)*2*sv.sd)/5)*5),st=R();
+    const stage=st<.12?'lost':st<.22?'lead':st<.32?'booked':st<.42?'estimate':st<.5?'approved':st<.56?'invoiced':'paid';
+    const c={id:'ix'+i,sample:true,name:'Sample customer '+(i+1),created:t0,source:src,svc:sv.t,addr:'Sample St, Houston, TX '+ZIP[Math.floor(R()*ZIP.length)],stage,
+      g:{src:'own',st:'new',t:{new:t0,contacted:t0+Math.round((R()<.7?R()*6:6+R()*90)*6e4)}}};
+    if(stageIx(stage)>=stageIx('estimate')||stage==='lost')c.estimate={status:isWon(c)?'approved':'sent',t:t0+2*DAY,okT:t0+4*DAY,items:[{desc:sv.t,amount:price}]};
+    if(stage==='invoiced'||stage==='paid')c.invoice={status:stage==='paid'?'paid':'sent',t:t0+6*DAY,paidT:t0+(7+Math.floor(R()*10))*DAY,items:[{desc:sv.t,amount:price}]};
+    if(stage==='lost')c.lostReason=['Price','Went with someone else','Timing','No answer after 3 tries'][Math.floor(R()*4)];
+    if(R()<.18)c.club={plan:'Plan'};C.push(c)}
+  return{C,spend:{'Google Ads':3200,'Meta ads':1400,'Google Business Profile':0,'Referral':0,'Website (organic)':0}}}
+const ixData=()=>{const real=DB.customers.filter(c=>!c.sample);if(real.length>=3&&!ixForceSample)return{C:real,spend:DB.spend||{},sample:false};ixSample=ixSample||ixSampleData();return{C:ixSample.C,spend:ixSample.spend,sample:true}};
+/* ---- numbers ---- */
+function ixStats(C,from,to,spend){const inR=t=>t&&t>=from&&t<to,L=C.filter(c=>inR(c.created)),W=C.filter(c=>inR(ixWonT(c))),P=C.filter(c=>inR(ixPaidT(c)));
+  const hasEst=c=>c.estimate&&c.estimate.status!=='draft',seen=c=>c.report||stageIx(c.stage)>=2&&c.stage!=='lost'||hasEst(c)||isWon(c),est=L.filter(c=>hasEst(c)||isWon(c)),showed=L.filter(seen),booked=L.filter(c=>c.appt||stageIx(c.stage)>=1&&c.stage!=='lost'||seen(c));
+  const reps=L.map(ixReply).filter(x=>x!=null).sort((a,b)=>a-b),days=(to-from)/DAY,sp=Object.values(spend||{}).reduce((a,b)=>a+(+b||0),0)*days/30;
+  const won=W.reduce((a,c)=>a+ixVal(c),0),col=P.reduce((a,c)=>a+ixVal(c),0);
+  return{leads:L.length,booked:booked.length,showed:showed.length,est:est.length,wonN:W.length,won,col,avg:W.length?won/W.length:0,close:est.length?W.length/est.length:null,book:L.length?booked.length/L.length:null,show:booked.length?showed.length/booked.length:null,
+    reply:reps.length?reps[Math.floor(reps.length/2)]:null,spend:sp,cac:W.length&&sp?sp/W.length:null,roas:sp?won/sp:null}}
+function ixSeries(C,from,to,fn){const n=to-from>100*DAY?12:to-from>40*DAY?13:to-from>10*DAY?Math.round((to-from)/DAY/3):7,step=(to-from)/n,out=[];for(let i=0;i<n;i++){const a=from+i*step,b=a+step;out.push({a,b,v:fn(a,b)})}return out}
+const ixUSD=n=>n>=1e6?'$'+(n/1e6).toFixed(2)+'M':n>=1e4?'$'+(n/1e3).toFixed(1)+'k':usd(n);
+const ixPct=x=>x==null?'—':Math.round(x*100)+'%';
+const ixDur=ms=>ms==null?'—':ms<36e5?Math.max(1,Math.round(ms/6e4))+' min':(ms/36e5).toFixed(1)+' hr';
+function ixDelta(cur,prev,lowerIsBetter){if(cur==null||prev==null||!prev)return'<span class="ixd ixd-n">no prior data</span>';const d=(cur-prev)/Math.abs(prev),good=lowerIsBetter?d<0:d>0,flat=Math.abs(d)<.005;
+  return `<span class="ixd ${flat?'ixd-n':good?'ixd-up':'ixd-down'}">${flat?'':`<svg viewBox="0 0 10 10" aria-hidden="true"><path d="${d>0?'M5 2 9 8H1z':'M5 8 1 2h8z'}"/></svg>`}${flat?'Flat':Math.abs(Math.round(d*100))+'%'}<span class="sr">${good?' better':' worse'} than the previous period</span></span>`}
+function ixSpark(vals,color){const w=120,h=32,mx=Math.max(1,...vals),pts=vals.map((v,i)=>[(i/(Math.max(1,vals.length-1)))*w,h-3-(v/mx)*(h-6)]);
+  return `<svg class="ixspark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><path d="M${pts.map(p=>p.map(x=>x.toFixed(1)).join(' ')).join('L')}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`}
+function ixBars(S,P){const w=640,h=220,pad=34,mx=Math.max(1,...S.map(x=>x.v),...P.map(x=>x.v)),bw=(w-pad)/S.length,ticks=[0,.5,1].map(f=>mx*f);
+  const fmtD=t=>new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  return `<svg class="ixchart" viewBox="0 0 ${w} ${h+22}" role="img" aria-label="Revenue won per period, with the previous period as a line">
+    ${ticks.map(v=>{const y=h-(v/mx)*(h-14);return`<line x1="${pad}" x2="${w}" y1="${y}" y2="${y}" class="ixgrid"/><text x="${pad-6}" y="${y+4}" class="ixax" text-anchor="end">${ixUSD(v)}</text>`}).join('')}
+    ${S.map((x,i)=>{const bh=(x.v/mx)*(h-14),bx=pad+i*bw+bw*.18;return`<g class="ixbar" data-tip="${fmtD(x.a)} – ${fmtD(x.b-1)}|${usd(x.v)}|${usd((P[i]||{}).v||0)}"><rect x="${pad+i*bw}" y="0" width="${bw}" height="${h}" fill="transparent"/><path d="M${bx} ${h}V${h-bh+4}q0-4 4-4h${bw*.64-8}q4 0 4 4V${h}z" class="ixb"/></g>`}).join('')}
+    <path d="M${P.map((x,i)=>`${(pad+i*bw+bw/2).toFixed(1)} ${(h-(x.v/mx)*(h-14)).toFixed(1)}`).join('L')}" class="ixprev"/>
+    ${S.filter((x,i)=>i%Math.ceil(S.length/6)===0).map(x=>{const i=S.indexOf(x);return`<text x="${pad+i*bw+bw/2}" y="${h+16}" class="ixax" text-anchor="middle">${fmtD(x.a)}</text>`}).join('')}</svg>`}
+/* ---- rule-based insights (the AI slot later) ---- */
+function ixInsights(C,cur,prev,to){const out=[],at=C.filter(c=>c.estimate&&c.estimate.status==='sent'&&to-(c.estimate.t||0)>5*DAY&&to-(c.estimate.t||0)<60*DAY&&c.stage!=='lost');
+  const atV=at.reduce((a,c)=>a+ixVal(c),0);if(at.length)out.push({k:'risk',h:`${ixUSD(atV)} in estimates waiting 5+ days`,p:`${at.length} customer${at.length>1?'s have':' has'} not answered. A same-day follow-up call wins back about 1 in 4.`,a:'Follow up',go:'people'});
+  if(cur.reply!=null&&cur.reply>5*6e4)out.push({k:'warn',h:`First reply is ${ixDur(cur.reply)}, goal is 5 min`,p:'Leads answered within 5 minutes are far more likely to book. Turn on missed-call text-back and lead alerts.',a:'Open Growth',go:'growth'});
+  const unpaid=C.filter(c=>c.invoice&&c.invoice.status==='sent'),uv=unpaid.reduce((a,c)=>a+ixVal(c),0);if(unpaid.length)out.push({k:'money',h:`${ixUSD(uv)} unpaid on ${unpaid.length} invoice${unpaid.length>1?'s':''}`,p:'Send a reminder with the pay link from the Money tab.',a:'Open Money',go:'money'});
+  if(cur.close!=null&&prev.close!=null&&cur.close<prev.close-.05)out.push({k:'warn',h:`Close rate fell to ${ixPct(cur.close)} (was ${ixPct(prev.close)})`,p:'Check lost reasons in Numbers. Price objections usually mean the options were not explained on site.',a:'See lost reasons',go:'numbers'});
+  const mem=C.filter(c=>c.club).length,paidN=C.filter(c=>ixPaidT(c)).length;if(paidN>=10&&mem/paidN<.25)out.push({k:'grow',h:`Only ${Math.round(mem/paidN*100)}% of customers are on a plan`,p:`Each plan member is recurring revenue and books first in busy season. Offer it on every invoice.`,a:'See plans',go:'team'});
+  if(cur.won>prev.won*1.15&&prev.won)out.push({k:'good',h:`Revenue won is up ${Math.round((cur.won/prev.won-1)*100)}% vs last period`,p:'Keep ad spend steady while the pipeline is growing.',a:null});
+  return out.slice(0,5)}
+const IXI={risk:'<path d="M12 3 2 21h20L12 3zM12 10v5M12 18h.01"/>',warn:'<circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16h.01"/>',money:'<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/>',grow:'<path d="M4 18 10 12l4 4 6-8M14 8h6v6"/>',good:'<path d="M5 12.5 10 17l9-10"/>'};
+/* ---- page ---- */
+function oOverview(){const D=ixData(),C=D.C,to=Date.now()+60e3,R=ixRange,from=to-R*DAY,pf=from-R*DAY;
+  const cur=ixStats(C,from,to,D.spend),prev=ixStats(C,pf,from,D.spend);
+  const S=ixSeries(C,from,to,(a,b)=>C.filter(c=>{const t=ixWonT(c);return t>=a&&t<b}).reduce((x,c)=>x+ixVal(c),0)),P=ixSeries(C,pf,from,(a,b)=>C.filter(c=>{const t=ixWonT(c);return t>=a&&t<b}).reduce((x,c)=>x+ixVal(c),0));
+  const sp=fn=>ixSeries(C,from,to,fn).map(x=>x.v);
+  const K=[['Revenue won',ixUSD(cur.won),ixDelta(cur.won,prev.won),sp((a,b)=>C.filter(c=>{const t=ixWonT(c);return t>=a&&t<b}).reduce((x,c)=>x+ixVal(c),0))],
+    ['Collected',ixUSD(cur.col),ixDelta(cur.col,prev.col),sp((a,b)=>C.filter(c=>{const t=ixPaidT(c);return t>=a&&t<b}).reduce((x,c)=>x+ixVal(c),0))],
+    ['Average job',ixUSD(cur.avg),ixDelta(cur.avg,prev.avg),null],['Close rate',ixPct(cur.close),ixDelta(cur.close,prev.close),null],
+    ['New leads',String(cur.leads),ixDelta(cur.leads,prev.leads),sp((a,b)=>C.filter(c=>c.created>=a&&c.created<b).length)],['Booking rate',ixPct(cur.book),ixDelta(cur.book,prev.book),null],
+    ['First reply (median)',ixDur(cur.reply),ixDelta(cur.reply,prev.reply,true),null],['Cost per customer',cur.cac==null?'—':ixUSD(cur.cac),ixDelta(cur.cac,prev.cac,true),null]];
+  const fun=[['Leads',cur.leads],['Booked',cur.booked],['Visited',cur.showed],['Estimate sent',cur.est],['Won',cur.wonN]];let worst=null;fun.forEach((f,i)=>{if(i&&fun[i-1][1]){const r=f[1]/fun[i-1][1];if(!worst||r<worst.r)worst={i,r}}});
+  const srcs={};C.filter(c=>c.created>=from).forEach(c=>{const k=c.source||'Website',s=srcs[k]=srcs[k]||{l:0,b:0,w:0,r:0};s.l++;if(c.appt||stageIx(c.stage)>=1&&c.stage!=='lost')s.b++;if(isWon(c)){s.w++;s.r+=ixVal(c)}});
+  const srcRows=Object.entries(srcs).sort((a,b)=>b[1].r-a[1].r).map(([k,s])=>{const spd=(+(D.spend||{})[k]||0)*R/30;return{k,...s,sp:spd,cac:s.w&&spd?spd/s.w:null,roas:spd?s.r/spd:null}});
+  const risk=C.filter(c=>c.estimate&&c.estimate.status==='sent'&&c.stage!=='lost').map(c=>({c,v:ixVal(c),age:Math.floor((to-(c.estimate.t||c.created))/DAY)})).filter(x=>x.age<60).sort((a,b)=>b.v-a.v).slice(0,6);
+  const mix={};C.filter(c=>ixWonT(c)>=from).forEach(c=>{const k=c.svc||((c.estimate||{}).items||[{}])[0].desc||'Other';mix[k]=(mix[k]||0)+ixVal(c)});const mixR=Object.entries(mix).sort((a,b)=>b[1]-a[1]).slice(0,6),mixMx=Math.max(1,...mixR.map(x=>x[1]));
+  const zips={};C.filter(c=>ixWonT(c)>=from&&ixZip(c)).forEach(c=>{const z=ixZip(c);zips[z]=(zips[z]||0)+ixVal(c)});const zR=Object.entries(zips).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const ins=ixInsights(C,cur,prev,to);
+  return `${D.sample?`<div class="ixsample" role="note"><b>Sample data.</b> Made-up numbers so you can see the dashboard. Your real numbers replace these as soon as a few leads come in.${DB.customers.filter(c=>!c.sample).length>=3?'<button class="ob ob-line" type="button" id="ixReal">Back to my data</button>':''}</div>`:''}
+  <div class="ixhead"><div><p class="ixeyebrow">${new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</p><h2 class="ixh">${greet()}, ${esc(ownerName)}</h2></div>
+    <div class="ixrange" role="group" aria-label="Date range">${[[7,'7D'],[30,'30D'],[90,'90D'],[365,'12M']].map(([d,l])=>`<button type="button" data-ixr="${d}" aria-pressed="${R===d}">${l}</button>`).join('')}</div></div>
+  <p class="ixsub">Compared with the previous ${R===365?'12 months':R+' days'}${!D.sample&&DB.customers.length>=3?` · <button type="button" class="ixlink" id="ixSmp">see sample data</button>`:''}</p>
+  <div class="ixkpis">${K.map(([l,v,d,s])=>`<div class="ixk"><p class="ixkl">${l}</p><p class="ixkv">${v}</p><div class="ixkf">${d}${s?ixSpark(s,'#2a78d6'):''}</div></div>`).join('')}</div>
+  <div class="ixgrid2">
+    <section class="ixcard ixwide"><div class="ixch"><h3>Revenue won</h3><div class="ixleg"><span><i class="ixsw ixsw-b"></i>This period</span><span><i class="ixsw ixsw-l"></i>Previous period</span></div></div><div class="ixchartwrap">${ixBars(S,P)}<div class="ixtip" role="status" hidden></div></div>
+      <details class="ixtable"><summary>Show as table</summary><table><thead><tr><th>Period starting</th><th>This period</th><th>Previous</th></tr></thead><tbody>${S.map((x,i)=>`<tr><td>${new Date(x.a).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</td><td>${usd(x.v)}</td><td>${usd((P[i]||{}).v||0)}</td></tr>`).join('')}</tbody></table></details></section>
+    <section class="ixcard"><div class="ixch"><h3>Insights</h3><span class="ixtag">Smart rules</span></div>${ins.length?`<ul class="ixins">${ins.map(x=>`<li class="ixi-${x.k}"><svg viewBox="0 0 24 24" aria-hidden="true">${IXI[x.k]}</svg><div><b>${esc(x.h)}</b><p>${esc(x.p)}</p>${x.a?`<button type="button" class="ixlink" data-go="${x.go}">${esc(x.a)} →</button>`:''}</div></li>`).join('')}</ul>`:'<p class="ixmuted">Nothing needs attention right now.</p>'}</section>
+  </div>
+  <div class="ixgrid2">
+    <section class="ixcard"><div class="ixch"><h3>Funnel</h3><span class="ixmuted">${R===365?'12 months':R+' days'}</span></div><ol class="ixfun">${fun.map(([l,v],i)=>`<li class="${worst&&worst.i===i?'leak':''}"><span>${l}</span><div class="ixfb"><i style="width:${Math.max(2,cur.leads?v/cur.leads*100:0)}%"></i></div><b>${v}</b><small>${i&&fun[i-1][1]?Math.round(v/fun[i-1][1]*100)+'%':''}</small></li>`).join('')}</ol>${worst?`<p class="ixnote"><b>Biggest leak:</b> ${fun[worst.i-1][0]} → ${fun[worst.i][0]} (${Math.round(worst.r*100)}% make it).</p>`:''}</section>
+    <section class="ixcard"><div class="ixch"><h3>Estimates at risk</h3><span class="ixmuted">open, by value</span></div>${risk.length?`<table class="ixt"><thead><tr><th>Customer</th><th>Waiting</th><th>Value</th></tr></thead><tbody>${risk.map(x=>`<tr ${x.c.sample?'':`data-open="${x.c.id}"`}><td>${esc(x.c.name)}</td><td class="${x.age>=7?'ixbad':''}">${x.age} day${x.age===1?'':'s'}</td><td>${usd(x.v)}</td></tr>`).join('')}</tbody></table>`:'<p class="ixmuted">No open estimates.</p>'}</section>
+  </div>
+  <section class="ixcard"><div class="ixch"><h3>Lead sources</h3><span class="ixmuted">spend from Numbers → ad spend</span></div><div class="ixscroll"><table class="ixt ixt-num"><thead><tr><th>Source</th><th>Leads</th><th>Booked</th><th>Won</th><th>Revenue</th><th>Spend</th><th>Cost / customer</th><th>Return</th></tr></thead>
+    <tbody>${srcRows.map(r=>`<tr><td>${esc(r.k)}</td><td>${r.l}</td><td>${r.l?Math.round(r.b/r.l*100)+'%':'—'}</td><td>${r.w}</td><td>${usd(r.r)}</td><td>${r.sp?usd(r.sp):'—'}</td><td>${r.cac==null?'—':usd(r.cac)}</td><td>${r.roas==null?'—':r.roas.toFixed(1)+'×'}</td></tr>`).join('')||'<tr><td colspan="8">No leads in this range.</td></tr>'}</tbody></table></div></section>
+  <div class="ixgrid2">
+    <section class="ixcard"><div class="ixch"><h3>Revenue by service</h3></div>${mixR.length?`<ul class="ixmix">${mixR.map(([k,v])=>`<li><span>${esc(k)}</span><div class="ixfb"><i style="width:${Math.max(2,v/mixMx*100)}%"></i></div><b>${ixUSD(v)}</b></li>`).join('')}</ul>`:'<p class="ixmuted">No won jobs in this range.</p>'}</section>
+    <section class="ixcard"><div class="ixch"><h3>Top areas</h3><span class="ixmuted">revenue by ZIP</span></div>${zR.length?`<ul class="ixmix">${zR.map(([k,v])=>`<li><span>${esc(k)}</span><div class="ixfb"><i style="width:${Math.max(2,v/zR[0][1]*100)}%"></i></div><b>${ixUSD(v)}</b></li>`).join('')}</ul>`:'<p class="ixmuted">Add addresses to jobs to see areas.</p>'}</section>
+  </div>
+  <h2 class="osec2 ixtoday">Today</h2>`}
+function bindOverview(){const ob=$('#obody');if(!ob)return;
+  $$('#obody [data-ixr]').forEach(b=>b.onclick=()=>{ixRange=+b.dataset.ixr;openOwner()});
+  {const b=$('#ixSmp');if(b)b.onclick=()=>{ixForceSample=true;openOwner()}}{const b=$('#ixReal');if(b)b.onclick=()=>{ixForceSample=false;openOwner()}}
+  const tip=$('#obody .ixtip'),wrap=$('#obody .ixchartwrap');
+  $$('#obody .ixbar').forEach(g=>{const show=e=>{const[a,v,p]=g.dataset.tip.split('|');tip.innerHTML=`<b>${a}</b><span><i class="ixsw ixsw-b"></i>This period <em>${v}</em></span><span><i class="ixsw ixsw-l"></i>Previous <em>${p}</em></span>`;tip.hidden=false;const r=wrap.getBoundingClientRect(),gr=g.getBoundingClientRect();tip.style.left=Math.min(r.width-180,Math.max(0,gr.left-r.left+gr.width/2-90))+'px';$$('#obody .ixbar').forEach(x=>x.classList.toggle('dim',x!==g))};
+    g.addEventListener('mouseenter',show);g.addEventListener('click',show);g.addEventListener('mouseleave',()=>{tip.hidden=true;$$('#obody .ixbar').forEach(x=>x.classList.remove('dim'))})});
+  $$('#obody .ixcard [data-go]').forEach(b=>b.onclick=()=>{oTab=b.dataset.go;openOwner();const o=$('#owner');if(o)o.scrollTop=0})}
+if(IX_ON){const _ixOpen=openOwner;
+  openOwner=function(){const el=_ixOpen.apply(this,arguments);if(oTab!=='today'||!$('#obody'))return el;
+    const ob=$('#obody');const tasks=ob.innerHTML;ob.innerHTML=oOverview()+`<div class="ixtasks">${tasks}</div>`;
+    const h=ob.querySelector('.ixtasks .ohello');if(h)h.remove();const gg=ob.querySelector('.ixtasks #gGo');if(gg){gg.onclick=()=>{oTab='growth';openOwner()}}
+    bindOwner();bindOverview();const t=$('#owner .otop h1');if(t)t.textContent='Overview';const s=$('#owner .oside-i[data-otab="today"]');if(s)s.lastChild.textContent='Overview';return el};
+  OPAGES.today='Overview'}
 
 /* ---------- backend: every lead and booking goes to the client's Apps Script web app
    (Google Sheet row + instant owner alert + GoHighLevel contact/appointment). Demo mode when CFG.backend is empty. ---------- */
