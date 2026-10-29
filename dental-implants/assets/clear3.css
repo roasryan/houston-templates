@@ -204,3 +204,8 @@ summary::after{color:#8A8F98!important}
 /* hero without a photo yet (new trades) */
 .khero.nophoto .sub,.khero.nophoto p,.khero.nophoto .lede{color:#5B616C!important}
 @media (min-width:901px){.khero.nophoto .kgrid{padding-bottom:70px}}
+
+/* Oct 29: boxed FAQ items need side padding (text was touching the border) */
+.qs details{padding:2px 20px!important}
+.qs summary{gap:16px}
+@media (max-width:560px){.qs details{padding:2px 16px!important}}
