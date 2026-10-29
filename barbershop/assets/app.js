@@ -1613,7 +1613,7 @@ document.getElementById('kxAgain')&&document.getElementById('kxAgain').addEventL
 
 /* compare handle (after a wipe or a fix): drag to see before vs after */
 const cmp=$('.kxcmp');
-function setCmp(p){if(!after||!cmp)return;p=Math.max(0,Math.min(100,p));after.style.clipPath=`inset(0 0 0 ${p}%)`;cmp.style.left=p+'%';cmp.setAttribute('aria-valuenow',Math.round(p))}
+function setCmp(p){if(!after||!cmp)return;p=Math.max(0,Math.min(100,p));after.style.clipPath=`inset(0 0 0 ${p}%)`;cmp.style.left=p+'%';cmp.classList.toggle('nob',p<20);cmp.classList.toggle('noa',p>80);cmp.setAttribute('aria-valuenow',Math.round(p))}
 let cmpFn=null,cmpBound=false;
 function dragCmp(onMove){cmpFn=onMove;if(cmpBound)return;cmpBound=true;let on=false;const at=e=>{const r=box.getBoundingClientRect();return (e.clientX-r.left)/r.width*100};
   cmp.addEventListener('pointerdown',e=>{on=true;cmp.setPointerCapture(e.pointerId);e.preventDefault()});
