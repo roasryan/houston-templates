@@ -1609,3 +1609,9 @@ html{background-image:url(engrave.svg)!important;background-size:600px 600px!imp
 #owner .avcal .cd.o-blocked{background:#FAECEC!important;color:#C4554D!important;border-color:#F0CFCC!important}
 #owner .avsave{background:#fff!important;border-top:1px solid #E9E9E7}
 #owner .frow small,#owner .obrand small,#owner .oside small{color:#787774!important}
+
+/* Oct 29: hide the Before/After tag when the slider sits at that edge (it ran off the photo) */
+.kxcmp .ct{transition:opacity .15s}.kxcmp.nob .ct.b,.kxcmp.noa .ct.a{opacity:0}
+
+/* Oct 29: cost table stacks into cards on phones (prices were cut off) */
+@media (max-width:600px){.ktw{overflow:visible}.ktable{min-width:0}.ktable thead{display:none}.ktable,.ktable tbody,.ktable tr,.ktable td{display:block;width:100%}.ktable tr{padding:12px 16px;border-bottom:1px solid var(--line)}.ktable td{padding:0!important;border:0!important}.ktable td:nth-child(1){font-weight:700}.ktable td:nth-child(2){white-space:normal;margin:3px 0}.ktable td:nth-child(3){color:var(--soft);font-size:14.5px}}
