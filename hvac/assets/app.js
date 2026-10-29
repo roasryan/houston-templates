@@ -1059,7 +1059,7 @@ function oOverview(){const D=ixData(),C=D.C,to=Date.now()+60e3,ALL=ixRange===0,f
   </div>
   <div class="ixgrid2">
     <section class="ixcard"><div class="ixch"><h3>Funnel</h3><span class="ixmuted">${ALL?'All time':R===365?'12 months':R+' days'}</span></div><ol class="ixfun">${fun.map(([l,v],i)=>`<li class="${worst&&worst.i===i?'leak':''}"><span>${l}</span><div class="ixfb"><i style="width:${Math.max(2,cur.leads?v/cur.leads*100:0)}%"></i></div><b>${v}</b><small>${i&&fun[i-1][1]?Math.round(v/fun[i-1][1]*100)+'%':''}</small></li>`).join('')}</ol>${worst?`<p class="ixnote"><b>Biggest leak:</b> ${fun[worst.i-1][0]} → ${fun[worst.i][0]} (${Math.round(worst.r*100)}% make it).</p>`:''}</section>
-    <section class="ixcard"><div class="ixch"><h3>Estimates at risk</h3><span class="ixmuted">open, by value</span></div>${risk.length?`<table class="ixt"><thead><tr><th>Customer</th><th>Waiting</th><th>Value</th></tr></thead><tbody>${risk.map(x=>`<tr ${x.c.sample?'':`data-open="${x.c.id}"`}><td>${esc(x.c.name)}</td><td class="${x.age>=7?'ixbad':''}">${x.age} day${x.age===1?'':'s'}</td><td>${usd(x.v)}</td></tr>`).join('')}</tbody></table>`:'<p class="ixmuted">No open estimates.</p>'}</section>
+    <section class="ixcard"><div class="ixch"><h3>Estimates at risk</h3><span class="ixmuted">open, by value</span></div>${risk.length?`<table class="ixt"><thead><tr><th>Customer</th><th>Waiting</th><th>Value</th></tr></thead><tbody>${risk.map(x=>`<tr ${x.c.sample?'':`data-open="${x.c.id}"`}><td>${esc(x.c.name)}</td><td class="${x.age>=7?'ixbad':''}">${Math.max(0,x.age)} day${Math.max(0,x.age)===1?'':'s'}</td><td>${usd(x.v)}</td></tr>`).join('')}</tbody></table>`:'<p class="ixmuted">No open estimates.</p>'}</section>
   </div>
   <section class="ixcard"><div class="ixch"><h3>Lead sources</h3><span class="ixmuted">spend from Numbers → ad spend</span></div><div class="ixscroll"><table class="ixt ixt-num"><thead><tr><th>Source</th><th>Leads</th><th>Booked</th><th>Won</th><th>Revenue</th><th>Spend</th><th>Cost / customer</th><th>Return</th></tr></thead>
     <tbody>${srcRows.map(r=>`<tr><td>${esc(r.k)}</td><td>${r.l}</td><td>${r.l?Math.round(r.b/r.l*100)+'%':'—'}</td><td>${r.w}</td><td>${usd(r.r)}</td><td>${r.sp?usd(r.sp):'—'}</td><td>${r.cac==null?'—':usd(r.cac)}</td><td>${r.roas==null?'—':r.roas.toFixed(1)+'×'}</td></tr>`).join('')||'<tr><td colspan="8">No leads in this range.</td></tr>'}</tbody></table></div></section>
@@ -1890,7 +1890,7 @@ document.getElementById('kxAgain')&&document.getElementById('kxAgain').addEventL
 
 /* compare handle (after a wipe or a fix): drag to see before vs after */
 const cmp=$('.kxcmp');
-function setCmp(p){if(!after||!cmp)return;p=Math.max(0,Math.min(100,p));after.style.clipPath=`inset(0 0 0 ${p}%)`;cmp.style.left=p+'%';cmp.setAttribute('aria-valuenow',Math.round(p))}
+function setCmp(p){if(!after||!cmp)return;p=Math.max(0,Math.min(100,p));after.style.clipPath=`inset(0 0 0 ${p}%)`;cmp.style.left=p+'%';cmp.classList.toggle('nob',p<20);cmp.classList.toggle('noa',p>80);cmp.setAttribute('aria-valuenow',Math.round(p))}
 let cmpFn=null,cmpBound=false;
 function dragCmp(onMove){cmpFn=onMove;if(cmpBound)return;cmpBound=true;let on=false;const at=e=>{const r=box.getBoundingClientRect();return (e.clientX-r.left)/r.width*100};
   cmp.addEventListener('pointerdown',e=>{on=true;cmp.setPointerCapture(e.pointerId);e.preventDefault()});
