@@ -40,3 +40,8 @@
   $('#bookBtn').onclick=()=>{const e=window.__est;$('#bkSum').textContent='Estimate '+$('#tot').textContent+' · '+(e.lines.map(l=>l[0]).join(', ')||'Choose services first');$('#bkForm').hidden=false;$('#bkDone').hidden=true;bk.showModal();};
   $('#send').onclick=()=>{if(!$('#fName').value||!$('#fPhone').value){$('#fName').reportValidity();$('#fPhone').reportValidity();return}$('#bkForm').hidden=true;$('#bkDone').hidden=false;};
 })();
+// review platform filter
+document.querySelectorAll('.rtabs button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.rtabs button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+  const f=b.dataset.f;document.querySelectorAll('#revlist .rv').forEach(r=>{r.hidden=!(f==='all'||r.dataset.src===f)});
+}));
