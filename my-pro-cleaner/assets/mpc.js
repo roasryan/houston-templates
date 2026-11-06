@@ -47,13 +47,13 @@ document.querySelectorAll('.rtabs button').forEach(b=>b.addEventListener('click'
 }));
 // ---- review links + swipe deck ----
 (function(){
-  const URLS={google:'https://www.google.com/maps/search/?api=1&query=My+Pro+Cleaner+26119+Interstate+45+N+Spring+TX',yelp:'https://www.yelp.com/biz/my-pro-cleaner-spring-2',facebook:'https://www.facebook.com/myprocleaner/reviews'};
+  const URLS={google:'https://www.google.com/maps/search/?api=1&query=My+Pro+Cleaner+26119+Interstate+45+N+Spring+TX',yelp:'https://www.yelp.com/biz/my-pro-cleaner-spring-4',facebook:'https://www.facebook.com/myprocleaner/reviews'};
   const NAMES={google:'Google',yelp:'Yelp',facebook:'Facebook'};
   const plat=rv=>rv.dataset.src||((rv.querySelector('.src')||{}).textContent||'').split(' ')[0].toLowerCase();
-  function linkify(rv){const p=plat(rv);if(!URLS[p]||rv.dataset.linked)return;rv.dataset.linked=1;rv.dataset.src=p;rv.classList.add('rv-click');rv.tabIndex=0;rv.setAttribute('role','link');rv.setAttribute('aria-label','Read this review on '+NAMES[p]);
-    const a=document.createElement('a');a.className='rv-open';a.href=URLS[p];a.target='_blank';a.rel='noopener';a.textContent='Read on '+NAMES[p]+' ↗';a.tabIndex=-1;rv.appendChild(a);
-    rv.addEventListener('click',e=>{if(e.target.closest('a'))return;if(rv.closest('.deck'))return;window.open(URLS[p],'_blank','noopener')});
-    rv.addEventListener('keydown',e=>{if(e.key==='Enter')window.open(URLS[p],'_blank','noopener')});}
+  function linkify(rv){const p=plat(rv);if(!URLS[p]||rv.dataset.linked)return;const U=rv.dataset.url||URLS[p];rv.dataset.linked=1;rv.dataset.src=p;rv.classList.add('rv-click');rv.tabIndex=0;rv.setAttribute('role','link');rv.setAttribute('aria-label','Read this review on '+NAMES[p]);
+    const a=document.createElement('a');a.className='rv-open';a.href=U;a.target='_blank';a.rel='noopener';a.textContent=(rv.dataset.url?'See this review on ':'Read on ')+NAMES[p]+' ↗';a.tabIndex=-1;rv.appendChild(a);
+    rv.addEventListener('click',e=>{if(e.target.closest('a'))return;if(rv.closest('.deck'))return;window.open(U,'_blank','noopener')});
+    rv.addEventListener('keydown',e=>{if(e.key==='Enter')window.open(U,'_blank','noopener')});}
   document.querySelectorAll('.rv').forEach(linkify);
   document.querySelectorAll('[data-deck]').forEach(mount=>{
     const src=[...document.querySelectorAll(mount.dataset.deck+' .rv')];if(!src.length)return;
@@ -67,7 +67,7 @@ document.querySelectorAll('.rtabs button').forEach(b=>b.addEventListener('click'
       c.onpointermove=e=>{if(x0===null)return;dx=e.clientX-x0;c.style.transform=`translateX(${dx}px) rotate(${dx/18}deg)`};
       c.onpointerup=c.onpointercancel=e=>{if(x0===null)return;x0=null;
         if(Math.abs(dx)>80)go(1,Math.sign(dx));
-        else if(Math.abs(dx)<6&&e.type==='pointerup'){c.style.transform='';window.open(URLS[c.dataset.src],'_blank','noopener')}
+        else if(Math.abs(dx)<6&&e.type==='pointerup'){c.style.transform='';window.open(c.dataset.url||URLS[c.dataset.src],'_blank','noopener')}
         else{c.style.transition='transform .25s';c.style.transform=''}}}
     mount.querySelectorAll('.deck-b').forEach(b=>b.onclick=()=>go(+b.dataset.d));
     render();addEventListener('resize',()=>{if(!busy)render()});
