@@ -377,3 +377,10 @@ html.adopen,html.adopen body{overflow:hidden}
 .adareas{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--mut)}.adareas b{display:block;color:var(--ink);margin-bottom:4px}
 .adwait{color:var(--mut)}
 @media(max-width:700px){.atab{padding:12px 7px;font-size:12.5px}.adpanel h2{font-size:26px}}
+/* language switch */
+.lang{font-weight:700;font-size:14px;text-decoration:none;color:inherit;border:1.5px solid rgba(22,32,74,.18);border-radius:999px;padding:7px 13px;white-space:nowrap;margin-left:auto}
+.hd .lang ~ .ph,.hd .lang ~ .menu-btn,.hd .lang ~ .btn{margin-left:0}
+.lang .lg-s{display:none}
+@media(max-width:560px){.lang .lg-l{display:none}.lang .lg-s{display:inline}.lang{padding:7px 11px}}
+@media(max-width:1259px){.hd nav{display:none}}
+@media(min-width:1260px){.hd .lang{margin-left:0}.hd{gap:16px}.hd nav{gap:18px}}
