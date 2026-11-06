@@ -13,9 +13,9 @@
   if(cf)cf.addEventListener('submit',e=>{e.preventDefault();cf.querySelector('.cdone').hidden=false;cf.querySelector('button[type=submit]').disabled=true;});
   // price estimator + booking (home only)
   const out=$('.step output'); if(!out)return;
-  const RATE_ROOM=80, RATE_TILE=1;
+  const RATE_ROOM=80, RATE_TILE=1, MIN=175, MAXROOMS=5;
   let rooms=+out.textContent||1;
-  $$('.step button').forEach((b,i)=>b.onclick=()=>{rooms=Math.max(0,Math.min(12,rooms+(i?1:-1)));out.textContent=rooms;calc();});
+  $$('.step button').forEach((b,i)=>b.onclick=()=>{rooms=Math.max(0,Math.min(MAXROOMS,rooms+(i?1:-1)));out.textContent=rooms;calc();});
   $('#tile').oninput=calc;
   $$('#extras input,#addons input').forEach(i=>i.onchange=calc);
   const money=n=>'$'+n.toLocaleString();
@@ -28,7 +28,7 @@
     if(tile)L.push([tile+' sq ft tile & grout',money(t)]);
     ex.forEach(e=>L.push([e,'on site']));ad.forEach(a=>L.push([a,'ask']));
     $('#lines').innerHTML=L.length?L.map(l=>`<li><span>${l[0]}</span><span>${l[1]}</span></li>`).join(''):'<li><span>Pick a service</span><span>—</span></li>';
-    const tot=c+t;$('#tot').textContent=tot?money(tot)+(ex.length?'+':''):(ex.length?'On site':'$0');
+    const sub=c+t,minApplies=sub>0&&sub<MIN,tot=minApplies?MIN:sub;if(minApplies)L.push(['Minimum charge applies',money(MIN)]);if(rooms>=MAXROOMS)L.push(['More than 5 rooms? Text Josh for a quote','']);$('#lines').innerHTML=L.length?L.map(l=>`<li><span>${l[0]}</span><span>${l[1]}</span></li>`).join(''):'<li><span>Pick a service</span><span>—</span></li>';$('#tot').textContent=tot?money(tot)+(ex.length?'+':''):(ex.length?'On site':'$0');
     window.__est={tot,lines:L};
   }
   calc();

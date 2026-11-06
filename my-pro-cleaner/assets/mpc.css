@@ -315,3 +315,12 @@ a.svc:hover{transform:translateY(-2px);box-shadow:0 18px 40px -28px rgba(22,32,7
 .bktoast button{margin-left:auto;border:0;background:none;font-size:20px;line-height:1;color:var(--mut);cursor:pointer;padding:0 0 0 6px}
 @media(max-width:700px){.bktoast{bottom:96px;right:16px;max-width:none}}
 @media(prefers-reduced-motion:reduce){.bktoast{transition:none}}
+/* ported pages */
+.prose{font-size:17px;line-height:1.7;overflow-wrap:anywhere}.prose p{margin:0 0 14px}.prose h2,.prose h3{margin:30px 0 10px}.prose ul,.prose ol{margin:0 0 16px;padding-left:22px}.prose li{margin:4px 0}
+.prose .aimg{display:block;max-width:100%;height:auto;border-radius:14px;margin:18px 0}
+.prose table{border-collapse:collapse;width:100%;margin:12px 0}.prose td,.prose th{border:1px solid var(--line);padding:8px}
+.prose a{color:var(--red)}
+.fareas{font-size:13px;color:#AEB7D3;padding:14px 0;border-top:1px solid rgba(255,255,255,.08)}.fareas a{color:#fff}
+.areas a{background:var(--sky);border-radius:999px;padding:10px 16px;font-weight:700;color:var(--ink);text-decoration:none}.areas a:hover{background:#dfe8fb}
+.smap{columns:2;column-gap:28px;padding-left:18px}.smap li{margin:4px 0;break-inside:avoid}
+@media(max-width:700px){.smap{columns:1}}
