@@ -58,7 +58,7 @@ nav a{text-decoration:none;color:var(--ink2)}nav a:hover{color:var(--red)}
 .cta{display:flex;flex-wrap:wrap;gap:12px}
 .hero-pts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:28px;font-size:14.5px;color:#C9D1E8;padding:0;list-style:none}
 .hero-pts li:before{content:"✓";color:var(--gold);font-weight:800;margin-right:7px}
-@media(max-width:760px){.hero{min-height:0;display:block}.hero img{position:relative;height:auto;aspect-ratio:16/10;object-position:68% 50%}.hero:after{display:none}.hero-in{padding:26px 0 34px}.hero h1{font-size:36px}.hero p{font-size:16.5px;margin-bottom:22px}.chip{margin-bottom:16px;font-size:13px}.hero-pts{margin-top:20px;font-size:13.5px}.cta .btn{flex:1;justify-content:center}}
+@media(max-width:760px){.hero{min-height:calc(100svh - 110px);align-items:center}.hero img{object-position:66% 50%}.hero:after{background:linear-gradient(180deg,rgba(13,19,48,.78) 0%,rgba(13,19,48,.82) 55%,rgba(13,19,48,.92) 100%)}.hero-in{padding:56px 0 52px}.chip{margin-bottom:22px;font-size:13px}.hero h1{font-size:38px;line-height:1.15;margin-bottom:20px}.hero p{font-size:17px;line-height:1.65;margin-bottom:30px}.cta{gap:12px}.cta .btn{flex:1 1 100%;justify-content:center}.hero-pts{flex-direction:column;gap:10px;margin-top:28px;font-size:14.5px}}
 /* trust strip */
 .trust{background:#fff;border-bottom:1px solid var(--line)}
 .trust .wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding-top:22px;padding-bottom:22px}
@@ -235,7 +235,7 @@ footer .logo{color:#fff}
     <div class="est">
       <div class="card">
         <div class="row"><div><h4>Carpeted rooms</h4><small>Bedrooms, living rooms, dens. Pre-vacuum included.</small></div>
-          <div class="step" data-k="rooms"><button type="button" aria-label="Fewer rooms">−</button><output>3</output><button type="button" aria-label="More rooms">+</button></div></div>
+          <div class="step" data-k="rooms"><button type="button" aria-label="Fewer rooms">−</button><output>1</output><button type="button" aria-label="More rooms">+</button></div></div>
         <div class="row"><div><h4>Tile &amp; grout</h4><small>Kitchens, baths, entries. Square feet, a rough guess is fine.</small></div>
           <input class="sq" id="tile" type="number" min="0" step="25" value="0" inputmode="numeric" aria-label="Tile square feet"></div>
         <div class="row" style="display:block"><h4>Furniture &amp; rugs <small style="display:inline">· priced when Josh sees the fabric</small></h4>
@@ -258,7 +258,7 @@ footer .logo{color:#fff}
       </div>
       <aside class="sum" aria-live="polite">
         <h3>Your estimate</h3>
-        <div class="tot" id="tot">$240</div>
+        <div class="tot" id="tot">$80</div>
         <div class="note">Typical maintenance cleaning</div>
         <ul class="lines" id="lines"></ul>
         <p class="note">Estimates aren't guaranteed. Heavy soil, restoration or add-ons can change the price, and Josh confirms it before he starts.</p>
@@ -445,7 +445,7 @@ footer .logo{color:#fff}
 (function(){
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
   const RATE_ROOM=80, RATE_TILE=1;
-  let rooms=3;
+  let rooms=1;
   const out=$('.step output');
   $$('.step button').forEach((b,i)=>b.onclick=()=>{rooms=Math.max(0,Math.min(12,rooms+(i?1:-1)));out.textContent=rooms;calc();});
   ['#tile'].forEach(s=>$(s).oninput=calc);
