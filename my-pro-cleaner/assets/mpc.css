@@ -344,3 +344,13 @@ a.svc:hover{transform:translateY(-2px);box-shadow:0 18px 40px -28px rgba(22,32,7
 .ba-note{font-size:12.5px!important;line-height:1.45;color:#AEB7D3!important;margin:10px 4px 2px!important}.ba-note b{color:#fff}
 @media(max-width:860px){.hx{padding:28px 0 36px}.hx-g{grid-template-columns:1fr;gap:24px}.hx p{font-size:17px}.hx .hero-pts{display:none}.ba{padding:10px}.ba-tabs button{padding:7px 11px;font-size:13px}}
 @media(max-width:860px){.ba-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.ba-tabs::-webkit-scrollbar{display:none}.ba-tabs button{flex:none}}
+/* before/after section under the hero (light) */
+.bax{padding:56px 0;background:var(--bg,#F7F5F0)}
+.bax-g{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center}
+.bax h2{font-size:clamp(28px,3.4vw,40px);margin:8px 0 12px}
+.bax-copy p{color:var(--mut);font-size:17px;margin:0 0 22px}
+.bax .ba{background:#fff;border:1px solid var(--line);box-shadow:0 20px 50px -30px rgba(22,32,74,.45)}
+.bax .ba-tabs button{color:var(--ink);border-color:var(--line)}
+.bax .ba-tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.bax .ba-note{color:var(--mut)!important}.bax .ba-note a{color:var(--red);font-weight:700;text-decoration:none}
+@media(max-width:860px){.bax{padding:32px 0}.bax-g{grid-template-columns:1fr;gap:18px}.bax-copy .btn{display:none}}
