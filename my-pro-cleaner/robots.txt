@@ -1,0 +1,3 @@
+# Demo preview: keep search engines out (the live site gets its own robots.txt)
+User-agent: *
+Disallow: /
