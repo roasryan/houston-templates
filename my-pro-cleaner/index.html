@@ -44,6 +44,20 @@ nav a{text-decoration:none;color:var(--ink2)}nav a:hover{color:var(--red)}
 @media(max-width:400px){.logo img{width:140px;height:auto}.hd .btn{padding:10px 14px;font-size:14px}}
 @media(max-width:960px){nav{display:none}.hd .ph{margin-left:auto}}
 @media(max-width:560px){.hd .ph{display:none}.hd .btn{margin-left:auto}}
+.menu-btn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font:700 14px "Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink);cursor:pointer}
+.menu-btn:hover{border-color:var(--ink)}
+.drawer{position:fixed;inset:0;z-index:60;display:none}
+.drawer.open{display:block}
+.drawer .bg{position:absolute;inset:0;background:rgba(10,14,35,.55)}
+.drawer .pn{position:absolute;right:0;top:0;bottom:0;width:min(380px,92vw);background:var(--cream);padding:22px 24px 28px;overflow:auto;box-shadow:-20px 0 60px rgba(0,0,0,.3);animation:sl .22s ease}
+@keyframes sl{from{transform:translateX(30px);opacity:0}}
+.drawer .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.drawer h5{margin:18px 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.drawer a.l{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);text-decoration:none;font-weight:700}
+.drawer a.l:after{content:"→";color:var(--red)}
+.drawer .acts{display:grid;gap:10px;margin-top:22px}
+.drawer .acts .btn{justify-content:center}
+@media(max-width:560px){.hd{gap:10px}.menu-btn{margin-left:auto}.hd .btn{display:none}}
 /* hero */
 .hero{position:relative;min-height:640px;display:flex;align-items:center;color:#fff;overflow:hidden;background:#0F1736}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 55%}
@@ -202,6 +216,7 @@ footer .logo{color:#fff}
   <a class="logo" href="#top" aria-label="My Pro Cleaner home"><img src="https://www.myprocleaner.com/_images/logo-myprocleaner.png" alt="My Pro Cleaner" width="176" height="44"></a>
   <nav><a href="#services">Services</a><a href="#price">Prices</a><a href="#reviews">Reviews</a><a href="#about">About Josh</a><a href="#faq">FAQ</a></nav>
   <a class="ph" href="tel:+12817900005">281-790-0005</a>
+  <button class="menu-btn" type="button" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="drawer"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span>Menu</span></button>
   <a class="btn b-red" href="#price">Get my price</a>
 </div></header>
 
@@ -423,6 +438,14 @@ footer .logo{color:#fff}
   <div class="sub">© My Pro Cleaner™ · 26119 Interstate 45 N #303, Spring, TX 77380 · <a style="display:inline" href="https://www.myprocleaner.com/privacy-policy.php">Privacy</a> · Demo redesign by Unplanned &amp; Co.</div>
 </div></footer>
 
+<div class="drawer" id="drawer" aria-hidden="true"><div class="bg" data-close></div><div class="pn" role="dialog" aria-label="Menu">
+  <div class="top"><img src="https://www.myprocleaner.com/_images/logo-myprocleaner.png" alt="My Pro Cleaner" width="150" height="38"><button class="x" style="position:static" type="button" aria-label="Close menu" data-close>×</button></div>
+  <h5>Services</h5>
+  <a class="l" href="#services">Carpet cleaning</a><a class="l" href="#services">Tile &amp; grout cleaning</a><a class="l" href="#services">Upholstery cleaning</a><a class="l" href="#services">Leather cleaning &amp; repair</a><a class="l" href="#services">Oriental &amp; area rugs</a><a class="l" href="#services">Fabric protector</a><a class="l" href="#services">Green Clean</a><a class="l" href="#services">Commercial cleaning</a>
+  <h5>More</h5>
+  <a class="l" href="#price">Prices &amp; booking</a><a class="l" href="#promise">Our guarantees</a><a class="l" href="#reviews">Reviews</a><a class="l" href="#about">About Josh</a><a class="l" href="#areas">Service area</a><a class="l" href="#faq">FAQ</a><a class="l" href="#care">Carpet care advice</a>
+  <div class="acts"><a class="btn b-red" href="#price">Get my price</a><a class="btn b-line" href="sms:+12817900005">Text Josh</a><a class="btn b-line" href="tel:+12817900005">Call 281-790-0005</a></div>
+</div></div>
 <nav class="mbar" aria-label="Quick actions"><a href="tel:+12817900005">📞<span>Call</span></a><a href="sms:+12817900005">💬<span>Text</span></a><a class="p" href="#price">Get my price</a></nav>
 
 <dialog id="bk"><div class="dl" style="position:relative">
@@ -446,6 +469,11 @@ footer .logo{color:#fff}
 <script>
 (function(){
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const dr=$('#drawer'),mb=$('#menuBtn');
+  const setD=o=>{dr.classList.toggle('open',o);dr.setAttribute('aria-hidden',!o);mb.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''};
+  mb.onclick=()=>setD(true);
+  dr.addEventListener('click',e=>{if(e.target.closest('[data-close]')||e.target.closest('a'))setD(false)});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')setD(false)});
   const RATE_ROOM=80, RATE_TILE=1;
   let rooms=1;
   const out=$('.step output');
