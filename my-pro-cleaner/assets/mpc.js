@@ -28,7 +28,7 @@
     if(tile)L.push([tile+' sq ft tile & grout',money(t)]);
     ex.forEach(e=>L.push([e,'on site']));ad.forEach(a=>L.push([a,'ask']));
     $('#lines').innerHTML=L.length?L.map(l=>`<li><span>${l[0]}</span><span>${l[1]}</span></li>`).join(''):'<li><span>Pick a service</span><span>—</span></li>';
-    const sub=c+t,minApplies=sub>0&&sub<MIN,tot=minApplies?MIN:sub;if(minApplies)L.push(['Minimum charge applies',money(MIN)]);if(rooms>=MAXROOMS)L.push(['More than 5 rooms? Text Josh for a quote','']);$('#lines').innerHTML=L.length?L.map(l=>`<li><span>${l[0]}</span><span>${l[1]}</span></li>`).join(''):'<li><span>Pick a service</span><span>—</span></li>';$('#tot').textContent=tot?money(tot)+(ex.length?'+':''):(ex.length?'On site':'$0');
+    const sub=c+t,tot=sub;if(rooms>=MAXROOMS)L.push(['More than 5 rooms? Text Josh for a quote','']);$('#lines').innerHTML=L.length?L.map(l=>`<li><span>${l[0]}</span><span>${l[1]}</span></li>`).join(''):'<li><span>Pick a service</span><span>—</span></li>';$('#tot').textContent=tot?money(tot)+(ex.length?'+':''):(ex.length?'On site':'$0');
     window.__est={tot,lines:L};
   }
   calc();
@@ -115,4 +115,21 @@ document.querySelectorAll('.rtabs button').forEach(b=>b.addEventListener('click'
   el.querySelector('button').onclick=()=>el.classList.remove('on');
   document.body.appendChild(el);
   setTimeout(()=>{if(document.querySelector('dialog[open]'))return;el.classList.add('on');try{sessionStorage.setItem('mpc_toast','1')}catch(e){};setTimeout(()=>el.classList.remove('on'),7000)},6000);
+})();
+// ---- hero before/after compare ----
+(function(){
+  const ba=document.getElementById('ba');if(!ba)return;
+  const fr=ba.querySelector('.ba-frame'),r=ba.querySelector('.ba-range'),A=ba.querySelector('.ba-after'),B=ba.querySelector('.ba-before');
+  const N={carpet:'Carpet',tile:'Tile and grout',sofa:'Upholstery',rug:'Area rug'};
+  const set=v=>fr.style.setProperty('--p',v+'%');
+  r.addEventListener('input',()=>set(r.value));
+  ba.querySelectorAll('.ba-tabs button').forEach(b=>b.addEventListener('click',()=>{
+    ba.querySelectorAll('.ba-tabs button').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));
+    const k=b.dataset.k;A.src='assets/hero-'+k+'-after.webp';B.src='assets/hero-'+k+'-before.webp';
+    A.alt=N[k]+' after cleaning (demo image)';B.alt=N[k]+' before cleaning (demo image)';r.value=50;set(50);
+  }));
+  // preload the other pairs after the page settles
+  addEventListener('load',()=>setTimeout(()=>['tile','sofa','rug'].forEach(k=>['before','after'].forEach(s=>{const i=new Image();i.src='assets/hero-'+k+'-'+s+'.webp'})),1500));
+  // one gentle hint so people see it moves
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){let t=0;const go=()=>{t+=1;const v=50+18*Math.sin(t/14);set(v.toFixed(1));if(t<88)requestAnimationFrame(go);else set(50)};setTimeout(()=>requestAnimationFrame(go),900);r.addEventListener('pointerdown',()=>{t=999},{once:true})}
 })();
