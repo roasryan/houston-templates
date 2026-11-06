@@ -133,3 +133,35 @@ document.querySelectorAll('.rtabs button').forEach(b=>b.addEventListener('click'
   // one gentle hint so people see it moves
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){let t=0;const go=()=>{t+=1;const v=50+18*Math.sin(t/14);set(v.toFixed(1));if(t<88)requestAnimationFrame(go);else set(50)};setTimeout(()=>requestAnimationFrame(go),900);r.addEventListener('pointerdown',()=>{t=999},{once:true})}
 })();
+// ---- service-area side tab ----
+(function(){
+  const tab=document.getElementById('aTab'),dr=document.getElementById('areaDrawer');if(!tab||!dr)return;
+  const SHOP={lat:30.1420,lon:-95.4472},IN=30,NEAR=40; // miles from the shop on I-45 in Spring
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const open=()=>{dr.hidden=false;document.documentElement.classList.add('adopen');requestAnimationFrame(()=>dr.classList.add('in'));setTimeout(()=>document.getElementById('adIn').focus(),320)};
+  const close=()=>{dr.classList.remove('in');document.documentElement.classList.remove('adopen');setTimeout(()=>dr.hidden=true,300);tab.focus()};
+  tab.onclick=open;dr.querySelectorAll('[data-x]').forEach(x=>x.onclick=close);
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!dr.hidden)close()});
+  const out=document.getElementById('adOut'),onHome=!!document.getElementById('price');
+  const priceHref=onHome?'#price':'index.html#price';
+  document.getElementById('adForm').onsubmit=async e=>{
+    e.preventDefault();let a=document.getElementById('adIn').value.trim();if(!a)return;
+    if(!/\b(tx|texas)\b/i.test(a))a+=', TX';
+    out.innerHTML='<p class="adwait">Checking your address…</p>';
+    try{
+      const r=await fetch('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&maxLocations=1&outFields=City&SingleLine='+encodeURIComponent(a));
+      const c=((await r.json()).candidates||[])[0];
+      if(!c){out.innerHTML='<div class="adres no"><b>We couldn\'t find that address.</b><p>Check the spelling or try your ZIP code.</p></div>';return}
+      const R=d=>d*Math.PI/180,dl=R(c.location.y-SHOP.lat),dn=R(c.location.x-SHOP.lon),h=Math.sin(dl/2)**2+Math.cos(R(SHOP.lat))*Math.cos(R(c.location.y))*Math.sin(dn/2)**2,mi=Math.round(7918*Math.asin(Math.sqrt(h)));
+      const where=esc(c.attributes&&c.attributes.City||c.address);
+      const map=`<div class="admap"><iframe src="https://maps.google.com/maps?q=${encodeURIComponent(c.address)}&t=k&z=18&output=embed" title="Satellite view of ${esc(c.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+      let res;
+      if(mi<=IN)res=`<div class="adres ok"><b>Yes, Josh comes to ${where}!</b><p>You're about ${mi} miles from us, well inside our service area. See your price and pick a time.</p><div class="cta"><a class="btn b-red" href="${priceHref}" data-go>See my price →</a><a class="btn b-line" href="sms:+12817900005">Text Josh</a></div></div>`;
+      else if(mi<=NEAR)res=`<div class="adres maybe"><b>You're just outside our usual area.</b><p>You're about ${mi} miles out. Josh often still makes the trip, so text him your address and what you need cleaned.</p><div class="cta"><a class="btn b-red" href="sms:+12817900005">Text Josh</a><a class="btn b-line" href="tel:+12817900005">Call 281-790-0005</a></div></div>`;
+      else res=`<div class="adres no"><b>That's outside our service area.</b><p>You're about ${mi} miles away, a little far for us. If you're cleaning a business or a large job, call and ask.</p><div class="cta"><a class="btn b-line" href="tel:+12817900005">Call 281-790-0005</a></div></div>`;
+      out.innerHTML=`<p style="margin:0 0 8px;font-weight:700">Is this your place?</p>${map}${res}`;
+      const go=out.querySelector('[data-go]');if(go&&onHome)go.onclick=()=>close();
+      try{const f=document.getElementById('fAddr');if(f&&!f.value)f.value=c.address}catch(x){}
+    }catch(err){out.innerHTML='<div class="adres no"><b>We couldn\'t check right now.</b><p>Text Josh your address and he\'ll let you know.</p><div class="cta"><a class="btn b-red" href="sms:+12817900005">Text Josh</a></div></div>'}
+  };
+})();
