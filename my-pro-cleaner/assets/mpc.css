@@ -387,3 +387,4 @@ html.adopen,html.adopen body{overflow:hidden}
 @media(min-width:1260px){.hd .lang{margin-left:0}.hd{gap:16px}.hd nav{gap:18px}}
 .bax-g>*{min-width:0}
 @media(max-width:360px){.hd{gap:8px}.lang{padding:6px 8px;font-size:12.5px}.hd .logo img,.hd .brand img{max-width:120px}}
+.adtip{font-size:14px;color:var(--mut);margin:8px 0 0}

@@ -155,19 +155,24 @@ document.querySelectorAll('.rtabs button').forEach(b=>b.addEventListener('click'
     if(!/\b(tx|texas)\b/i.test(a))a+=', TX';
     out.innerHTML='<p class="adwait">'+T('Checking your address…','Revisando su dirección…')+'</p>';
     try{
-      const r=await fetch('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&maxLocations=1&outFields=City&SingleLine='+encodeURIComponent(a));
+      const r=await fetch('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&maxLocations=1&outFields=City,Addr_type,Postal&SingleLine='+encodeURIComponent(a));
       const c=((await r.json()).candidates||[])[0];
       if(!c){out.innerHTML='<div class="adres no"><b>'+T('We couldn\'t find that address.','No encontramos esa dirección.')+'</b><p>'+T('Check the spelling or try your ZIP code.','Revise cómo se escribe o pruebe con su código postal.')+'</p></div>';return}
       const R=d=>d*Math.PI/180,dl=R(c.location.y-SHOP.lat),dn=R(c.location.x-SHOP.lon),h=Math.sin(dl/2)**2+Math.cos(R(SHOP.lat))*Math.cos(R(c.location.y))*Math.sin(dn/2)**2,mi=Math.round(7918*Math.asin(Math.sqrt(h)));
       const where=esc(c.attributes&&c.attributes.City||c.address);
-      const map=`<div class="admap"><iframe src="https://maps.google.com/maps?q=${encodeURIComponent(c.address)}&t=k&z=18&output=embed" title="${T('Satellite view of ','Vista satelital de ')}${esc(c.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
+      const at=(c.attributes&&c.attributes.Addr_type)||'',exact=/PointAddress|StreetAddress|Subaddress|StreetInt/.test(at)&&!/^\s*\d{5}\s*(,\s*tx)?\s*$/i.test(a);
+      const zip=(c.attributes&&c.attributes.Postal)||(a.match(/\b\d{5}\b/)||[''])[0];
+      const mq=exact?c.address:(zip?zip+' '+(c.attributes&&c.attributes.City||'')+' TX':c.address);
+      const map=`<div class="admap"><iframe src="https://maps.google.com/maps?q=${encodeURIComponent(mq)}&t=${exact?'k':'m'}&z=${exact?18:12}&output=embed" title="${exact?T('Satellite view of ','Vista satelital de '):T('Map of ','Mapa de ')}${esc(mq)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`;
       let res;
       if(mi<=IN)res=ES?`<div class="adres ok"><b>¡Sí, Josh va a ${where}!</b><p>Está a unas ${mi} millas de nosotros, bien dentro de nuestra zona. Vea su precio y elija un horario.</p><div class="cta"><a class="btn b-red" href="${priceHref}" data-go>Ver mi precio →</a><a class="btn b-line" href="sms:+12817900005">Escríbale a Josh</a></div></div>`:`<div class="adres ok"><b>Yes, Josh comes to ${where}!</b><p>You're about ${mi} miles from us, well inside our service area. See your price and pick a time.</p><div class="cta"><a class="btn b-red" href="${priceHref}" data-go>See my price →</a><a class="btn b-line" href="sms:+12817900005">Text Josh</a></div></div>`;
       else if(mi<=NEAR)res=ES?`<div class="adres maybe"><b>Está justo afuera de nuestra zona habitual.</b><p>Está a unas ${mi} millas. Muchas veces Josh sí hace el viaje, así que mándele por texto su dirección y lo que necesita limpiar.</p><div class="cta"><a class="btn b-red" href="sms:+12817900005">Escríbale a Josh</a><a class="btn b-line" href="tel:+12817900005">Llamar al 281-790-0005</a></div></div>`:`<div class="adres maybe"><b>You're just outside our usual area.</b><p>You're about ${mi} miles out. Josh often still makes the trip, so text him your address and what you need cleaned.</p><div class="cta"><a class="btn b-red" href="sms:+12817900005">Text Josh</a><a class="btn b-line" href="tel:+12817900005">Call 281-790-0005</a></div></div>`;
       else res=ES?`<div class="adres no"><b>Eso está fuera de nuestra zona de servicio.</b><p>Está a unas ${mi} millas, un poco lejos para nosotros. Si es un negocio o un trabajo grande, llame y pregunte.</p><div class="cta"><a class="btn b-line" href="tel:+12817900005">Llamar al 281-790-0005</a></div></div>`:`<div class="adres no"><b>That's outside our service area.</b><p>You're about ${mi} miles away, a little far for us. If you're cleaning a business or a large job, call and ask.</p><div class="cta"><a class="btn b-line" href="tel:+12817900005">Call 281-790-0005</a></div></div>`;
-      out.innerHTML=`<p style="margin:0 0 8px;font-weight:700">${T('Is this your place?','¿Es esta su casa?')}</p>${map}${res}`;
+      const head=exact?T('Is this your place?','¿Es esta su casa?'):(zip?T('Your area: ','Su zona: ')+esc(zip)+(c.attributes&&c.attributes.City?' · '+where:''):T('Your area','Su zona'));
+      const tip=exact?'':`<p class="adtip">${T('Want to see your home? Type your street address.','¿Quiere ver su casa? Escriba su dirección completa.')}</p>`;
+      out.innerHTML=`<p style="margin:0 0 8px;font-weight:700">${head}</p>${map}${tip}${res}`;
       const go=out.querySelector('[data-go]');if(go&&onHome)go.onclick=()=>close();
-      try{const f=document.getElementById('fAddr');if(f&&!f.value)f.value=c.address}catch(x){}
+      try{const f=document.getElementById('fAddr');if(f&&!f.value&&exact)f.value=c.address}catch(x){}
     }catch(err){out.innerHTML=T('<div class="adres no"><b>We couldn\'t check right now.</b><p>Text Josh your address and he\'ll let you know.</p><div class="cta"><a class="btn b-red" href="sms:+12817900005">Text Josh</a></div></div>','<div class="adres no"><b>No pudimos revisar en este momento.</b><p>Mándele su dirección a Josh por texto y él le dirá.</p><div class="cta"><a class="btn b-red" href="sms:+12817900005">Escríbale a Josh</a></div></div>')}
   };
 })();
