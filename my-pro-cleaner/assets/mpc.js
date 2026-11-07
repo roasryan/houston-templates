@@ -143,6 +143,11 @@ document.querySelectorAll('.rtabs button').forEach(b=>b.addEventListener('click'
   const close=()=>{dr.classList.remove('in');document.documentElement.classList.remove('adopen');setTimeout(()=>dr.hidden=true,300);tab.focus()};
   tab.onclick=open;dr.querySelectorAll('[data-x]').forEach(x=>x.onclick=close);
   addEventListener('keydown',e=>{if(e.key==='Escape'&&!dr.hidden)close()});
+  // swipe left anywhere on the drawer to close it
+  {const pan=dr.querySelector('.adpanel'),scr=dr.querySelector('.adscrim');let x0=0,y0=0,dx=0,t0=0,on=false,lock=null;
+   dr.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;x0=e.touches[0].clientX;y0=e.touches[0].clientY;dx=0;t0=Date.now();on=true;lock=null},{passive:true});
+   dr.addEventListener('touchmove',e=>{if(!on)return;const mx=e.touches[0].clientX-x0,my=e.touches[0].clientY-y0;if(lock===null&&(Math.abs(mx)>8||Math.abs(my)>8))lock=Math.abs(mx)>Math.abs(my)*1.2?'x':'y';if(lock!=='x')return;dx=Math.min(0,mx);pan.style.transition='none';scr.style.transition='none';pan.style.transform=`translateX(${dx}px)`;scr.style.opacity=String(1+dx/pan.offsetWidth)},{passive:true});
+   dr.addEventListener('touchend',()=>{if(!on)return;on=false;pan.style.transition='';scr.style.transition='';const fast=dx<-40&&Date.now()-t0<250;if(lock==='x'&&(dx<-pan.offsetWidth*.28||fast)){pan.style.transform='';scr.style.opacity='';close()}else{pan.style.transform='';scr.style.opacity=''}});}
   const out=document.getElementById('adOut'),onHome=!!document.getElementById('price');
   const priceHref=onHome?'#price':HOME+'#price';
   document.getElementById('adForm').onsubmit=async e=>{

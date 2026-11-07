@@ -381,6 +381,9 @@ html.adopen,html.adopen body{overflow:hidden}
 .lang{font-weight:700;font-size:14px;text-decoration:none;color:inherit;border:1.5px solid rgba(22,32,74,.18);border-radius:999px;padding:7px 13px;white-space:nowrap;margin-left:auto}
 .hd .lang ~ .ph,.hd .lang ~ .menu-btn,.hd .lang ~ .btn{margin-left:0}
 .lang .lg-s{display:none}
-@media(max-width:560px){.lang .lg-l{display:none}.lang .lg-s{display:inline}.lang{padding:7px 11px}}
+@media(max-width:560px){.lang{padding:7px 11px;font-size:13.5px}}
+.adpanel{touch-action:pan-y}
 @media(max-width:1259px){.hd nav{display:none}}
 @media(min-width:1260px){.hd .lang{margin-left:0}.hd{gap:16px}.hd nav{gap:18px}}
+.bax-g>*{min-width:0}
+@media(max-width:360px){.hd{gap:8px}.lang{padding:6px 8px;font-size:12.5px}.hd .logo img,.hd .brand img{max-width:120px}}
