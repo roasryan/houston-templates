@@ -383,8 +383,8 @@ html.adopen,html.adopen body{overflow:hidden}
 .lang .lg-s{display:none}
 @media(max-width:560px){.lang{padding:7px 11px;font-size:13.5px}}
 .adpanel{touch-action:pan-y}
-@media(max-width:1259px){.hd nav{display:none}}
-@media(min-width:1260px){.hd .lang{margin-left:0}.hd{gap:16px}.hd nav{gap:18px}}
+@media(max-width:1099px){.hd nav{display:none}}
+@media(min-width:1100px){.hd .lang{margin-left:0}.hd{gap:16px}.hd nav{gap:22px}}
 .bax-g>*{min-width:0}
 @media(max-width:360px){.hd{gap:8px}.lang{padding:6px 8px;font-size:12.5px}.hd .logo img,.hd .brand img{max-width:120px}}
 .adtip{font-size:14px;color:var(--mut);margin:8px 0 0}
