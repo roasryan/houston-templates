@@ -1798,3 +1798,6 @@ html{background-image:url(engrave.svg)!important;background-size:600px 600px!imp
 /* Oct 29: Overview tables fit on phones */
 #owner .ixt td:first-child{white-space:normal;min-width:96px}
 @media (max-width:600px){#owner .ixt-num th:nth-child(2),#owner .ixt-num td:nth-child(2),#owner .ixt-num th:nth-child(3),#owner .ixt-num td:nth-child(3),#owner .ixt-num th:nth-child(4),#owner .ixt-num td:nth-child(4),#owner .ixt-num th:nth-child(6),#owner .ixt-num td:nth-child(6){display:none}#owner .ixt th,#owner .ixt td{padding:8px 4px}}
+
+/* required contact fields */
+label[for=iName]::after,label[for=iPhone]::after,label[for=iEmail]::after,label[for=iAddr]::after,label[for=aName]::after,label[for=aPhone]::after,label[for=aEmail]::after,label[for=aAddr]::after{content:" *";color:#B3261E;font-weight:700}
