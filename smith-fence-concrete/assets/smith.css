@@ -1,11 +1,11 @@
-/* Smith Fence & Concrete: evergreen + cedar theme (loads after site.css and clear3.css) */
+/* Smith Fence & Concrete: concrete + cedar theme (loads after site.css and clear3.css) */
 :root{
-  --lx-bg:#F4EFE6; --lx-card:#FFFCF6; --lx-text:#18241E; --lx-soft:#56615A;
-  --lx-hair:#E1D7C5; --lx-hi:#9C5530; --hi-ink:#7E4325;
+  --lx-bg:#F2EFEA; --lx-card:#FFFDF9; --lx-text:#22201D; --lx-soft:#5E5953;
+  --lx-hair:#DAD3C7; --lx-hi:#9C5530; --hi-ink:#7E4325;
   --hivis:#9C5530; --sodium:#9C5530; --on-sodium:#FFF8EF;
   --display:'Fraunces',Georgia,'Times New Roman',serif;
   --lx-edge:0 0 0 1px #E1D7C5,0 1px 2px rgba(24,36,30,.05),0 22px 44px -28px rgba(24,36,30,.35);
-  --ev:#1E3A2F; --ev2:#2B4C3E; --cedar:#9C5530; --cedar-l:#D9A066; --paper2:#EDE5D6;
+  --ev:#3A3734; --ev2:#2B2926; --cedar:#9A5A31; --cedar-l:#D2A06E; --paper2:#E6E1D8;
 }
 body{background:var(--lx-bg)}
 h1,h2,h3,.h1,.h2{font-family:var(--display)!important;letter-spacing:-.01em!important;font-weight:600!important}
@@ -31,14 +31,14 @@ footer a,.foot a{color:#F3D7B5!important}
 #area input{flex:1 1 220px;min-height:54px;font-size:18px;padding:0 16px;border:2px solid var(--lx-hair);border-radius:14px;background:#fff;color:var(--lx-text)}
 #area input:focus{outline:3px solid rgba(156,85,48,.35);border-color:var(--cedar)}
 #area .ares{border-radius:16px;padding:16px 18px;font-size:17px;line-height:1.45}
-#area .ares.ok{background:#E4EFE7;color:#173B28}
-#area .ares.maybe{background:#F6EADB;color:#5A3416}
+#area .ares.ok,.iarea.ok{background:#E9EFE4;color:#243A1C}
+#area .ares.maybe,.iarea.maybe{background:#F6EADB;color:#5A3416}
 #area .ares b{display:block;font-family:var(--display);font-size:24px;margin-bottom:4px}
 #area .alist{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
 #area .alist li{background:var(--paper2);border-radius:999px;padding:6px 12px;font-size:15px;color:var(--lx-text)}
 
 /* owner phone notification (demo): what Chris sees when a customer books or asks */
-.oping{position:fixed;top:16px;right:16px;z-index:9999;width:min(380px,calc(100vw - 32px));background:rgba(24,36,30,.97);color:#F4EFE6;border-radius:22px;padding:14px 16px 16px;box-shadow:0 24px 60px -20px rgba(0,0,0,.55);font:15px/1.4 'Inter',system-ui,sans-serif;animation:opIn .35s cubic-bezier(.2,.9,.3,1.2) both}
+.oping{position:fixed;top:16px;right:16px;z-index:9999;width:min(380px,calc(100vw - 32px));background:rgba(43,41,38,.97);color:#F4EFE6;border-radius:22px;padding:14px 16px 16px;box-shadow:0 24px 60px -20px rgba(0,0,0,.55);font:15px/1.4 'Inter',system-ui,sans-serif;animation:opIn .35s cubic-bezier(.2,.9,.3,1.2) both}
 .oping .oph{display:flex;align-items:center;gap:8px;font-size:13px;color:#BFC9C2;margin-bottom:8px}
 .oping .oph i{width:22px;height:22px;border-radius:6px;background:var(--cedar);display:grid;place-items:center;font-style:normal;color:#fff;font-weight:700;font-size:12px}
 .oping .oph span{margin-left:auto}
@@ -53,7 +53,7 @@ footer a,.foot a{color:#F3D7B5!important}
 @media (prefers-reduced-motion:reduce){.oping{animation:none}}
 
 /* evergreen hero */
-.khero2{background:radial-gradient(1200px 500px at 85% -10%,rgba(217,160,102,.18),transparent 60%),linear-gradient(180deg,#1E3A2F 0%,#18302A 100%)!important;color:#F4EFE6;padding-top:clamp(28px,5vw,64px)!important;padding-bottom:clamp(32px,6vw,72px)!important;margin-bottom:8px}
+.khero2{background:radial-gradient(1100px 520px at 88% -12%,rgba(210,160,110,.22),transparent 62%),linear-gradient(180deg,#3A3734 0%,#2B2926 100%)!important;color:#F4EFE6;padding-top:clamp(28px,5vw,64px)!important;padding-bottom:clamp(32px,6vw,72px)!important;margin-bottom:8px}
 .khero2 h1{color:#F7F1E6!important}
 .khero2 h1::after{content:"";display:block;width:84px;height:4px;border-radius:4px;background:var(--cedar-l);margin-top:18px}
 .khero2 .kqbook span,.khero2 .kx-left>p,.khero2 .kxcap,.khero2 figcaption{color:#D6DDD8!important}
@@ -70,3 +70,18 @@ html body .khero2 .kxact,html body .khero2 .kxact div{color:#D6DDD8!important}
 html body .khero2 .kxact b{color:#F7F1E6!important}
 html body #kxAct #kxStart,html body #kxAct #kxDone{color:#D6DDD8!important}
 html body #kxAct #kxStart b,html body #kxAct #kxDone b{color:#F7F1E6!important;-webkit-text-fill-color:#F7F1E6!important}
+
+/* header matches the hero */
+html body .bar,html body .bar.solid{background:#2B2926!important;border-bottom:1px solid rgba(210,160,110,.25)!important;box-shadow:none!important}
+html body .bar .logo,html body .bar .qi,html body .bar .menu-btn{color:#F5EFE6!important}
+html body .bar .qi-main{color:#F3D7B5!important}
+html body .bar .menu-btn{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.18)!important}
+html body .bar .menu-btn svg,html body .bar .menu-btn path{stroke:#F5EFE6!important}
+/* buttons on the dark hero */
+html body .khero2 .btn.btn-line,html body .khero2 .btn.btn-line.light{background:transparent!important;color:#FFF8EF!important;border:1.5px solid rgba(255,248,239,.75)!important}
+html body .khero2 .btn.btn-line:hover{border-color:#D2A06E!important;color:#F3D7B5!important}
+html body .btn-line:not(.light){background:#FFFDF9!important;color:#22201D!important;border:1.5px solid #CFC6B8!important}
+/* booking address check */
+.iarea{margin:6px 0 0;border-radius:12px;padding:10px 12px;font-size:15px;line-height:1.4}
+html body .iwhen,html body .isum,html body .ipicked{background:#EFE7DA!important;color:#22201D!important}
+html body .qinq,html body .aclist li:hover,html body .aclist li[aria-selected=true]{background:#EFE7DA!important}

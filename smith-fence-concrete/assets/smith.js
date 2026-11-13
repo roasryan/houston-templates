@@ -21,15 +21,15 @@
   }
   window.smithAreaCheck=check;
   function initArea(){
-    var f=document.getElementById('aForm');if(!f)return;
-    var out=document.getElementById('aRes');
+    var f=document.getElementById('areaForm');if(!f)return;
+    var out=document.getElementById('areaRes');
     f.addEventListener('submit',function(e){e.preventDefault();
-      var r=check(document.getElementById('aQ').value);if(!r){out.hidden=true;return}
+      var r=check(document.getElementById('areaQ').value);if(!r){out.hidden=true;return}
       out.hidden=false;
       if(r.ok){out.className='ares ok';out.innerHTML='<b>Yes, we come to '+esc(r.town)+'.</b>Free on-site estimates'+(r.zip?' in '+esc(r.zip):'')+'. Pick a time and we’ll measure and price it in writing.';
-        var b=document.getElementById('aBook');b.hidden=false}
+        var b=document.getElementById('areaBook');b.hidden=false}
       else{out.className='ares maybe';out.innerHTML='<b>That’s just outside our usual area.</b>Text us your address. For bigger jobs we often still come out.';
-        document.getElementById('aBook').hidden=true}
+        document.getElementById('areaBook').hidden=true}
     });
   }
   /* Phone-style alert: shows what the owner gets when a customer books or asks a question */
@@ -53,5 +53,15 @@
     n.querySelector('button').onclick=function(){n.remove()};
     document.body.appendChild(n);setTimeout(function(){if(n.isConnected)n.remove()},14000);
   };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initArea);else initArea();
+  /* same check inside the booking form, on the address field */
+  function initBookArea(){
+    var a=document.getElementById('iAddr');if(!a||a.dataset.areaBound)return;a.dataset.areaBound='1';
+    var n=document.createElement('p');n.className='iarea';n.hidden=true;n.setAttribute('aria-live','polite');a.insertAdjacentElement('afterend',n);
+    var run=function(){var v=a.value;if(!/\b\d{5}\b/.test(v)&&v.length<8){n.hidden=true;return}var r=check(v);if(!r){n.hidden=true;return}
+      n.hidden=false;if(r.ok){n.className='iarea ok';n.textContent='✓ We serve '+r.town+'. Your free estimate is on us.'}
+      else if(r.zip){n.className='iarea maybe';n.textContent='That ZIP is just outside our usual area. Book anyway and we’ll text you to confirm.'}else{n.hidden=true}};
+    a.addEventListener('input',run);a.addEventListener('blur',run);a.addEventListener('change',run);
+  }
+  function boot(){initArea();initBookArea();setInterval(initBookArea,1500)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
