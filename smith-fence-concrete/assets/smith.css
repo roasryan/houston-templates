@@ -1,0 +1,72 @@
+/* Smith Fence & Concrete: evergreen + cedar theme (loads after site.css and clear3.css) */
+:root{
+  --lx-bg:#F4EFE6; --lx-card:#FFFCF6; --lx-text:#18241E; --lx-soft:#56615A;
+  --lx-hair:#E1D7C5; --lx-hi:#9C5530; --hi-ink:#7E4325;
+  --hivis:#9C5530; --sodium:#9C5530; --on-sodium:#FFF8EF;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --lx-edge:0 0 0 1px #E1D7C5,0 1px 2px rgba(24,36,30,.05),0 22px 44px -28px rgba(24,36,30,.35);
+  --ev:#1E3A2F; --ev2:#2B4C3E; --cedar:#9C5530; --cedar-l:#D9A066; --paper2:#EDE5D6;
+}
+body{background:var(--lx-bg)}
+h1,h2,h3,.h1,.h2{font-family:var(--display)!important;letter-spacing:-.01em!important;font-weight:600!important}
+h1{font-size:clamp(40px,7vw,76px)!important;line-height:1.02!important}
+h2{line-height:1.08!important}
+.btn-main{background:var(--cedar)!important;color:#FFF8EF!important;border-color:var(--cedar)!important;box-shadow:0 10px 24px -12px rgba(156,85,48,.65)!important}
+.btn-main:hover{background:#86472A!important}
+.btn-line{border-color:var(--ev)!important;color:var(--ev)!important}
+.btn-line.light{border-color:rgba(255,248,239,.6)!important;color:#FFF8EF!important}
+.sec.alt{background:var(--paper2)}
+.chips button[aria-checked="true"],.chips button[aria-pressed="true"],.chips .on{background:var(--ev)!important;color:#FFF8EF!important;border-color:var(--ev)!important}
+#estimate .eout{background:var(--ev)!important}
+#estimate input[type=range]{accent-color:var(--cedar)}
+/* evergreen band behind the hero */
+.hero,.khero,header+main>section:first-child{position:relative}
+/* footer */
+footer,.foot{background:var(--ev)!important;color:#E9E2D4!important}
+footer a,.foot a{color:#F3D7B5!important}
+
+/* ZIP / area checker */
+#area .abox{background:var(--lx-card);border-radius:22px;box-shadow:var(--lx-edge);padding:24px;max-width:760px;display:grid;gap:14px}
+#area .arow{display:flex;gap:10px;flex-wrap:wrap}
+#area input{flex:1 1 220px;min-height:54px;font-size:18px;padding:0 16px;border:2px solid var(--lx-hair);border-radius:14px;background:#fff;color:var(--lx-text)}
+#area input:focus{outline:3px solid rgba(156,85,48,.35);border-color:var(--cedar)}
+#area .ares{border-radius:16px;padding:16px 18px;font-size:17px;line-height:1.45}
+#area .ares.ok{background:#E4EFE7;color:#173B28}
+#area .ares.maybe{background:#F6EADB;color:#5A3416}
+#area .ares b{display:block;font-family:var(--display);font-size:24px;margin-bottom:4px}
+#area .alist{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+#area .alist li{background:var(--paper2);border-radius:999px;padding:6px 12px;font-size:15px;color:var(--lx-text)}
+
+/* owner phone notification (demo): what Chris sees when a customer books or asks */
+.oping{position:fixed;top:16px;right:16px;z-index:9999;width:min(380px,calc(100vw - 32px));background:rgba(24,36,30,.97);color:#F4EFE6;border-radius:22px;padding:14px 16px 16px;box-shadow:0 24px 60px -20px rgba(0,0,0,.55);font:15px/1.4 'Inter',system-ui,sans-serif;animation:opIn .35s cubic-bezier(.2,.9,.3,1.2) both}
+.oping .oph{display:flex;align-items:center;gap:8px;font-size:13px;color:#BFC9C2;margin-bottom:8px}
+.oping .oph i{width:22px;height:22px;border-radius:6px;background:var(--cedar);display:grid;place-items:center;font-style:normal;color:#fff;font-weight:700;font-size:12px}
+.oping .oph span{margin-left:auto}
+.oping b{display:block;font-size:16px;color:#fff;margin-bottom:2px}
+.oping p{margin:2px 0;color:#E4DED2}
+.oping .opa{display:flex;gap:8px;margin-top:12px}
+.oping .opa a,.oping .opa button{flex:1;min-height:44px;border-radius:12px;border:0;font:600 15px 'Inter',system-ui,sans-serif;display:grid;place-items:center;text-decoration:none;cursor:pointer}
+.oping .opa a{background:var(--cedar);color:#fff}
+.oping .opa button{background:rgba(255,255,255,.12);color:#F4EFE6}
+.oping .opn{font-size:12px;color:#9FB0A6;margin-top:10px}
+@keyframes opIn{from{opacity:0;transform:translateY(-18px) scale(.97)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.oping{animation:none}}
+
+/* evergreen hero */
+.khero2{background:radial-gradient(1200px 500px at 85% -10%,rgba(217,160,102,.18),transparent 60%),linear-gradient(180deg,#1E3A2F 0%,#18302A 100%)!important;color:#F4EFE6;padding-top:clamp(28px,5vw,64px)!important;padding-bottom:clamp(32px,6vw,72px)!important;margin-bottom:8px}
+.khero2 h1{color:#F7F1E6!important}
+.khero2 h1::after{content:"";display:block;width:84px;height:4px;border-radius:4px;background:var(--cedar-l);margin-top:18px}
+.khero2 .kqbook span,.khero2 .kx-left>p,.khero2 .kxcap,.khero2 figcaption{color:#D6DDD8!important}
+.khero2 .kx-left b,.khero2 strong{color:#F7F1E6}
+.khero2 .kx{box-shadow:0 30px 60px -30px rgba(0,0,0,.6)!important;border:1px solid rgba(255,255,255,.08)}
+.khero2 [class*="card"],.khero2 aside{box-shadow:0 30px 60px -28px rgba(0,0,0,.55)!important}
+header,.top,.khead{backdrop-filter:saturate(1.2) blur(8px)}
+html body .khero2 .kx-left h1,html body .khero2 h1#h1{color:#F7F1E6!important}
+html body .khero2 .kx-left p,html body .khero2 .kx-left p *{color:#D6DDD8!important}
+html body .khero2 .kx-left p b,html body .khero2 .kx-left p strong{color:#F7F1E6!important}
+html body .khero2 .kx-left .kxnudge{color:#18241E!important}
+@media (max-width:700px){html body .khero2{padding-top:112px!important}}
+html body .khero2 .kxact,html body .khero2 .kxact div{color:#D6DDD8!important}
+html body .khero2 .kxact b{color:#F7F1E6!important}
+html body #kxAct #kxStart,html body #kxAct #kxDone{color:#D6DDD8!important}
+html body #kxAct #kxStart b,html body #kxAct #kxDone b{color:#F7F1E6!important;-webkit-text-fill-color:#F7F1E6!important}

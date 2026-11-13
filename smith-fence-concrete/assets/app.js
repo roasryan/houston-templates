@@ -85,8 +85,8 @@ function upsert(o){const p=digits(o.phone);let c=p?byPhone(p):(o.email?DB.custom
   ['name','addr','msg','source'].forEach(k=>{if(o[k]&&(!c[k]||k!=='source'))c[k]=o[k]});if(o.photos&&o.photos.length)c.photos=(c.photos||[]).concat(o.photos);
   if(o.appt){c.appt=o.appt;if(stageIx(c.stage)<1)c.stage='booked';c.show.schedule=true}
   if(o.club){c.club=o.club;c.show.club=true}
-  c.fresh=true;save();return c}
-const ownerNote=m=>toast(m||'Sent to the owner’s phone.');
+  c.fresh=true;save();if(window.ownerPing)try{window.ownerPing(o,c)}catch(x){}return c}
+const ownerNote=m=>{if(!window.ownerPing)toast(m||'Sent to the owner’s phone.')};
 
 /* ---------- customer side: login + stage-aware portal ---------- */
 function loginSheet(){const close=open(`<div class="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="lH"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3 id="lH">Customer login</h3><button class="btn btn-line btn-sm" type="button" data-close>Close</button></div>
@@ -307,7 +307,7 @@ const crewText=m=>`sms:${m.phone?'+1'+digits(m.phone):''}${/iPhone|iPad|Mac/i.te
 function crewEdit(mid,fresh){const m=(DB.crew||[]).find(x=>x.id===mid);if(!m)return;const p=Object.assign({photos:true,phone:true,status:true,allJobs:false},m.perms||{});let code=m.code||newCrewCode();
   const close=open(sheetWrap('ceH',fresh?'Crew app for '+esc(m.name):esc(m.name),`
     <div class="two"><div class="field"><label for="ceN">Name</label><input id="ceN" value="${esc(m.name)}"></div><div class="field"><label for="ceR">Role</label><input id="ceR" value="${esc(m.role||'')}" list="cmrl"></div></div>
-    <div class="field"><label for="ceP">Mobile (to text them the link)</label><input id="ceP" type="tel" inputmode="tel" value="${esc(m.phone||'')}" placeholder="(713) 555-0123"></div>
+    <div class="field"><label for="ceP">Mobile (to text them the link)</label><input id="ceP" type="tel" inputmode="tel" value="${esc(m.phone||'')}" placeholder="(936) 555-0123"></div>
     <label class="oswitch big"><input type="checkbox" id="ceOn" ${m.active!==false?'checked':''}><span></span><b>Crew app</b><small>Off locks them out right away.</small></label>
     <div class="ccode-box"><span>Their code</span><b id="ceC">${esc(code)}</b><button class="btn btn-line btn-sm" type="button" id="ceNew">New code</button></div>
     <h3 class="osec">What they can do</h3>
