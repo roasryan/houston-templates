@@ -28,6 +28,7 @@
       out.hidden=false;
       if(r.ok){out.className='ares ok';out.innerHTML='<b>Yes, we come to '+esc(r.town)+'.</b>Free on-site estimates'+(r.zip?' in '+esc(r.zip):'')+'. Pick a time and we’ll measure and price it in writing.';
         var b=document.getElementById('areaBook');b.hidden=false}
+      else if(!r.zip){out.className='ares maybe';out.innerHTML='<b>Add your ZIP code.</b>Type it at the end of your address, like 77301, and we’ll check right away.';document.getElementById('areaBook').hidden=true}
       else{out.className='ares maybe';out.innerHTML='<b>That’s just outside our usual area.</b>Text us your address. For bigger jobs we often still come out.';
         document.getElementById('areaBook').hidden=true}
     });

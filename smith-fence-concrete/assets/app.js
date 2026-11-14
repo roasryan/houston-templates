@@ -1152,20 +1152,21 @@ const AV=(()=>{const KEY='smith-avail1';
 
 
 /* owner screen: prices used by the instant estimate on the homepage (demo: saved on this device) */
-window.priceEd=function(){var D=window.SMITH_PRICES_DEF;if(!D)return'';var P=D;try{var s=JSON.parse(localStorage.getItem('smith-prices')||'null');if(s)P=Object.assign({},D,s)}catch(e){}
-  var n=(id,v)=>`<input id="${id}" type="number" min="0" step="1" value="${v}" style="width:90px;min-height:44px;font-size:17px;padding:0 8px;border:2px solid var(--oline,#ccc);border-radius:10px">`;
+window.priceEd=function(){var D=window.SMITH_PRICES_DEF;if(!D)return'';var P=D;try{var s=JSON.parse(localStorage.getItem('smith-prices2')||'null');if(s)P=Object.assign({},D,s)}catch(e){}
+  var n=(id,v)=>`<input id="${id}" type="number" min="0" step="0.25" value="${v}" style="width:84px;min-height:44px;font-size:17px;padding:0 8px;border:2px solid var(--oline,#ccc);border-radius:10px">`;
   var row=(lab,id,lo,hi,unit)=>`<div class="avrow2"><b>${lab}</b><span class="avt">$${n(id+'L',lo)}<i>to</i>$${n(id+'H',hi)}<i>${unit}</i></span></div>`;
-  return`<section class="ocard"><h3>Your prices</h3><p class="muted">These set the instant price range customers see on your website. Change them any time.</p><div class="avweek">
-  ${Object.keys(P.fence).map(k=>row(P.fence[k][0],'pf_'+k,P.fence[k][1],P.fence[k][2],'per ft')).join('')}
+  return`<section class="ocard"><h3>Your prices</h3><p class="muted">These set the price range customers build on your website. Change them any time.</p><div class="avweek">
+  <h4 style="margin:6px 0">Fence, per foot (6 ft tall)</h4>${Object.keys(P.fence).map(k=>row(P.fence[k][0],'pf_'+k,P.fence[k][1],P.fence[k][2],'per ft')).join('')}
   ${row('Walk gate','pg_w',P.walk[0],P.walk[1],'each')}${row('Double drive gate','pg_d',P.drive[0],P.drive[1],'each')}
-  ${row('Old fence removal (0 = price on site)','pt',P.tear[0],P.tear[1],'per ft')}
-  <div class="avrow2"><b>8 ft fence costs more by</b><span class="avt">${n('p8',Math.round((P.h8-1)*100))}<i>%</i></span></div>
-  ${Object.keys(P.concrete).map(k=>row(P.concrete[k][0],'pc_'+k,P.concrete[k][1],P.concrete[k][2],'per sq ft')).join('')}
-  ${row('Remove old concrete','pr',P.remove[0],P.remove[1],'per job')}</div></section>`};
+  ${row('Old fence removal','pt',P.tear[0],P.tear[1],'per ft')}${row('Stain and seal','ps',P.stain[0],P.stain[1],'per sq ft')}
+  <div class="avrow2"><b>8 ft fence costs more by</b><span class="avt">${n('p8',Math.round((P.height[8]-1)*100))}<i>%</i></span></div>
+  <h4 style="margin:12px 0 6px">Concrete, per sq ft (4 in)</h4>${Object.keys(P.conc).map(k=>row(P.conc[k][0],'pc_'+k,P.conc[k][1],P.conc[k][2],'per sq ft')).join('')}
+  <div class="avrow2"><b>6 in concrete costs more by</b><span class="avt">${n('p6',Math.round((P.thick6-1)*100))}<i>%</i></span></div>
+  ${row('Remove old concrete','pr',P.remove[0],P.remove[1],'per sq ft')}</div></section>`};
 window.savePrices=function(){var D=window.SMITH_PRICES_DEF;if(!D||!document.getElementById('p8'))return;var g=id=>Math.max(0,+document.getElementById(id).value||0),pr=id=>{var l=g(id+'L'),h=g(id+'H');return[Math.min(l,h),Math.max(l,h)]};
-  var P={fence:{},concrete:{},walk:pr('pg_w'),drive:pr('pg_d'),tear:pr('pt'),remove:pr('pr'),h8:1+g('p8')/100};
-  Object.keys(D.fence).forEach(k=>{P.fence[k]=[D.fence[k][0]].concat(pr('pf_'+k))});Object.keys(D.concrete).forEach(k=>{P.concrete[k]=[D.concrete[k][0]].concat(pr('pc_'+k))});
-  try{localStorage.setItem('smith-prices',JSON.stringify(P))}catch(e){}};
+  var P={fence:{},conc:{},walk:pr('pg_w'),drive:pr('pg_d'),tear:pr('pt'),stain:pr('ps'),remove:pr('pr'),height:{4:D.height[4],6:1,8:1+g('p8')/100},thick6:1+g('p6')/100};
+  Object.keys(D.fence).forEach(k=>{P.fence[k]=[D.fence[k][0]].concat(pr('pf_'+k))});Object.keys(D.conc).forEach(k=>{P.conc[k]=[D.conc[k][0]].concat(pr('pc_'+k))});
+  try{localStorage.setItem('smith-prices2',JSON.stringify(P))}catch(e){}};
 /* owner screen: Availability (live: saved to the backend with the owner PIN) */
 function oAvail(){const S=AV.S,DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const T=[];for(let m=5*60;m<=21*60;m+=30)T.push(AV.toHHMM(m));

@@ -85,3 +85,14 @@ html body .btn-line:not(.light){background:#FFFDF9!important;color:#22201D!impor
 .iarea{margin:6px 0 0;border-radius:12px;padding:10px 12px;font-size:15px;line-height:1.4}
 html body .iwhen,html body .isum,html body .ipicked{background:#EFE7DA!important;color:#22201D!important}
 html body .qinq,html body .aclist li:hover,html body .aclist li[aria-selected=true]{background:#EFE7DA!important}
+/* CTA rows: Book + Text us side by side */
+.ctarow,.kxact .row,.hcta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+html body .khero2 .btn-text{background:transparent!important;color:#FFF8EF!important;border:1.5px solid rgba(255,248,239,.75)!important}
+html body .btn-text:not(.khero2 .btn-text){background:#FFFDF9!important;color:#22201D!important;border:1.5px solid #CFC6B8!important}
+/* Text/Call drop-down: readable on its white card */
+html body .tcpop .btn-main{color:#FFF8EF!important}
+html body .tcpop .btn-line,html body .tcpop .btn-line.light{background:#FFFDF9!important;color:#22201D!important;border:1.5px solid #CFC6B8!important}
+html body .tcpop .btn-line span{color:#22201D!important}
+html body .tcpop small{color:#5E5953!important}
+html body .btn-main{color:#FFF8EF!important}
+html body #estimate .eout h3{color:#F5EFE6!important}
