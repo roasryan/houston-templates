@@ -42,7 +42,7 @@
       var d=new Date(o.appt.t);lines.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+' · '+(o.appt.slot||o.appt.time||''))}
     else if(/inquiry|Website/i.test(src)){title='New question from your website'}
     else if(/Review/i.test(src)){title='Private feedback from a customer'}
-    else if(o.club){title='New plan sign-up'}
+    else if(o.club){title='New maintenance sign-up'}else if(/Referral/.test(src)){title='New referral'}
     var ph=String(o.phone||'').replace(/\D/g,'').slice(-10);if(ph.length===10)ph='('+ph.slice(0,3)+') '+ph.slice(3,6)+'-'+ph.slice(6);
     lines.unshift(esc(o.name||'A customer')+(ph?' · '+esc(ph):''));
     if(o.addr)lines.push(esc(o.addr));
@@ -63,6 +63,20 @@
       else if(r.zip){n.className='iarea maybe';n.textContent='That ZIP is just outside our usual area. Book anyway and we’ll text you to confirm.'}else{n.hidden=true}};
     a.addEventListener('input',run);a.addEventListener('blur',run);a.addEventListener('change',run);
   }
-  function boot(){initArea();initBookArea();setInterval(initBookArea,1500)}
+
+  /* referral form (demo: saved on this device, and the owner gets the text alert) */
+  function initRefer(){
+    var f=document.getElementById('refForm');if(!f||f.dataset.b)return;f.dataset.b='1';
+    var v=function(i){return(document.getElementById(i).value||'').trim()};
+    f.addEventListener('submit',function(e){e.preventDefault();var err=document.getElementById('rErr'),ok=document.getElementById('rDone');
+      var you=v('rYou'),yp=v('rYouP').replace(/\D/g,''),them=v('rThem'),tp=v('rThemP').replace(/\D/g,'');
+      if(!you||!them||yp.length<10||tp.length<10){err.hidden=false;ok.hidden=true;return}err.hidden=true;
+      try{var L=JSON.parse(localStorage.getItem('smith-refs')||'[]');L.push({you:you,yp:yp,them:them,tp:tp,need:v('rNeed'),t:Date.now()});localStorage.setItem('smith-refs',JSON.stringify(L))}catch(x){}
+      if(window.ownerPing)window.ownerPing({name:them,phone:tp,msg:'Referred by '+you+(v('rNeed')?' · Needs: '+v('rNeed'):''),source:'Referral'},{});
+      ok.hidden=false;ok.textContent='Thanks, '+you.split(' ')[0]+'! We’ll reach out to '+them.split(' ')[0]+' and let you know when they book.';f.reset()});
+    document.getElementById('rShare').addEventListener('click',function(){var n=v('rYou')||'a neighbor';var u=location.origin+location.pathname+'?ref='+encodeURIComponent(n)+'#inspect';
+      var b=this;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){b.textContent='Link copied'},function(){prompt('Copy your link:',u)})});
+  }
+  function boot(){initArea();initBookArea();initRefer();setInterval(initBookArea,1500)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();

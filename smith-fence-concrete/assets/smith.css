@@ -96,3 +96,14 @@ html body .tcpop .btn-line span{color:#22201D!important}
 html body .tcpop small{color:#5E5953!important}
 html body .btn-main{color:#FFF8EF!important}
 html body #estimate .eout h3{color:#F5EFE6!important}
+/* referral program */
+#refer .rgrid{display:grid;gap:18px;max-width:1100px}
+@media(min-width:960px){#refer .rgrid{grid-template-columns:.8fr 1.2fr;align-items:start}}
+#refer .rsteps{margin:0;padding:0;list-style:none;counter-reset:r;display:grid;gap:12px}
+#refer .rsteps li{counter-increment:r;position:relative;padding:16px 16px 16px 64px;background:var(--lx-card);border-radius:16px;box-shadow:var(--lx-edge);font-size:16px;line-height:1.45;color:var(--lx-soft)}
+#refer .rsteps li b{display:block;color:var(--lx-text);font-size:17px}
+#refer .rsteps li::before{content:counter(r);position:absolute;left:16px;top:16px;width:34px;height:34px;border-radius:50%;background:var(--cedar);color:#FFF8EF;display:grid;place-items:center;font:700 17px var(--display)}
+#refer .rbox{background:var(--lx-card);border-radius:20px;box-shadow:var(--lx-edge);padding:20px;display:grid;gap:12px}
+#refer .rbox input{width:100%;min-height:50px;font-size:17px;padding:0 14px;border:2px solid var(--lx-hair);border-radius:12px;background:#fff}
+#refer .rerr{color:#B3261E;margin:0}#refer .rdone{background:#E9EFE4;color:#243A1C;border-radius:12px;padding:12px;margin:0}
+html body .hstep h2{max-width:none!important}html body .hnum{color:#FFF8EF!important}

@@ -7,7 +7,7 @@ const M=window.Motion||null;
 /* ================= CLIENT SETTINGS: the only block to change per client (see SETUP.md) =================
    backend: the client's Google Apps Script web app URL (/exec). Leads, owner alerts, the booking calendar and GoHighLevel all go through it.
    Leave either empty and the site falls back to demo mode (leads stay on this device, free map services). */
-const SITE_PLAN={"name": "Stain & Seal Plan", "price": "$69/mo", "perks": ["Stain and seal every 2 years (up to 200 LF)", "Spring fence check", "10% off repairs"]};const CFG={"biz": "Smith Fence & Concrete", "city": "Conroe", "tz": "America/Chicago", "lat": 30.3119, "lon": -95.4561, "backend": ""};
+const SITE_PLAN={"name": "Yearly Fence Check-Up", "price": "$149/yr", "perks": ["One visit a year: tighten gates, hinges and latches", "Re-set up to 2 leaning posts", "Photo report of anything to watch"]};const CFG={"biz": "Smith Fence & Concrete", "city": "Conroe", "tz": "America/Chicago", "lat": 30.3119, "lon": -95.4561, "backend": ""};
 
 const HOME=document.getElementById('hero')?'':'index.html';
 /* the photo sits exactly under the real header height (in-app browsers and notches change it) */
@@ -35,7 +35,7 @@ const SMS={
   hero:'Hi Smith Fence, I’d like to book a free estimate.',
   leak:'Hi Smith Fence, I need help today.',
   story:'Hi Smith Fence, I have a question.',
-  club:'Hi Smith Fence, I have a question about the Stain & Seal Plan.',
+  club:'Hi Smith Fence, I have a question about the Fence Check-Up.',
   footer:'Hi Smith Fence, I have a question.'};
 const smsBody=el=>el.dataset.body||SMS[el.dataset.sms]||SMS.fab;
 $$('[data-phone]').forEach(e=>e.textContent=BIZ_PRETTY);
@@ -59,7 +59,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-sms]');if(
 
 
 
-const OWN_PLANS=["Stain & Seal Plan", "Fence Care Plus"];const OWN_KIND="project";const GROWTH={"model": "pct", "stages": ["New", "Contacted", "Consult booked", "Estimate given", "Signed"], "unit": "project", "units": "projects", "offerPh": "e.g. Free fence measure + quote this week", "react": "Hi {first}, it's {biz}. We're running {offer} for past customers until {deadline}. Want me to book you a time? Reply STOP to opt out.", "pct": 6, "pkg": false, "note": ""};const OWN_SVCS=["New fences", "Fence repair", "Gates", "Concrete driveways", "Patios and slabs", "Staining and sealing"];
+const OWN_PLANS=["Fence Check-Up", "Storm Check"];const OWN_KIND="project";const GROWTH={"model": "pct", "stages": ["New", "Contacted", "Consult booked", "Estimate given", "Signed"], "unit": "project", "units": "projects", "offerPh": "e.g. Free fence measure + quote this week", "react": "Hi {first}, it's {biz}. We're running {offer} for past customers until {deadline}. Want me to book you a time? Reply STOP to opt out.", "pct": 6, "pkg": false, "note": ""};const OWN_SVCS=["New fences", "Fence repair", "Gates", "Concrete driveways", "Patios and slabs", "Staining and sealing"];
 /* ---------- CRM data: one small store shared by the website, the owner view and the customer portal ---------- */
 /* Demo: saved in this browser only. Live: the same shape moves to a database + texting service. */
 const DAY=864e5,NOW=Date.now();
@@ -470,7 +470,7 @@ function detailsPage(c){const close=open(sheetWrap('dtH','Details',`<div class="
   $('#dgo').onclick=()=>{c.name=$('#dn').value.trim()||c.name;const p=digits($('#dp').value);if(p.length===10)c.phone=p;c.email=$('#de').value.trim();c.addr=$('#da').value.trim();c.source=$('#ds').value.trim()||c.source;c.notes=$('#dno').value;save();close();custSheet(c.id);toast('Saved.')}}
 function portalPage(c){const s=c.show=c.show||{},j=c.portal?ensureJob(c):null;
   const has={schedule:!!(c.appt||visitsOf(c).length),report:!!c.report,estimate:!!(c.estimate&&c.estimate.status!=='draft'),updates:!!(c.updates&&c.updates.length),invoice:!!(c.invoice&&c.invoice.status!=='draft'),materials:!!(c.matPlan&&c.matPlan.length),club:!!c.club};
-  const lab={schedule:'Visit times and who’s coming',report:'Free estimate report',estimate:'Estimate (they can approve it)',updates:'Job photos and updates',invoice:'Invoice with Pay button',materials:'What’s going on the job (no prices)',club:'Stain & Seal Plan plan'};
+  const lab={schedule:'Visit times and who’s coming',report:'Free estimate report',estimate:'Estimate (they can approve it)',updates:'Job photos and updates',invoice:'Invoice with Pay button',materials:'What’s going on the job (no prices)',club:'Fence Check-Up plan'};
   const close=open(sheetWrap('ppH','Customer portal',`<label class="oswitch big"><input type="checkbox" id="ppOn" ${c.portal?'checked':''}><span></span><b>${c.portal?'On':'Off'}</b><small>${esc(first(c.name))} gets their own page: visit times, crew photos, approvals and bills.</small></label>
     ${c.portal?`<div class="ocard2 opin"><span class="okick">Their PIN</span><b class="opin-n">${j.pin}</b><small>${j.lang==='es'?'Reads it in Español':'Reads it in English'}</small></div>
       <div class="obtns"><a class="ob ob-main" href="${smsTo(c.phone,portalInvite(c))}">${oi('chat')}Text link + PIN</a>${c.email?`<a class="ob ob-line" href="mailto:${esc(c.email)}?subject=${encodeURIComponent(j.lang==='es'?'Su proyecto con Smith Fence & Concrete':'Your Smith Fence & Concrete project')}&body=${encodeURIComponent(portalInvite(c))}">${oi('mail')}Email it</a>`:''}<button class="ob ob-line" type="button" id="ppCopy">Copy link</button><button class="ob ob-line" type="button" id="ppPrev">See it as ${esc(first(c.name))}</button><button class="ob ob-line" type="button" id="ppPin">New PIN</button></div>
@@ -1279,7 +1279,7 @@ function bindAvail(){const S=AV.S;let view=new Date();view.setDate(1);
 
 /* ---------- header menu, thumb bar, club ---------- */
 $('#menuBtn').onclick=()=>{const close=open(`<div class="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mH"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3 id="mH">Menu</h3><button class="btn btn-line btn-sm" type="button" data-close>Close</button></div>
-    <nav class="menu"><button class="btn-main" type="button" data-go="start">${/\/(index\.html)?$/.test(location.pathname)?"Book a free estimate":"Have an estimator come out"}</button><div class="mtwo"><a href="#" data-sms="fab">Text us</a><a href="${(document.querySelector('a[href^=tel]')||{}).href||'#'}">Call</a></div><details class="msvc"><summary>Services</summary><div><a href="wood-fence-installation.html">New fences</a><a href="fence-repair.html">Fence repair</a><a href="fence-gate-installation.html">Gates</a><a href="concrete-driveway-installation.html">Concrete driveways</a><a href="concrete-patio-installation.html">Patios and slabs</a><a href="fence-staining-and-sealing.html">Staining and sealing</a></div></details><a href="${HOME}#club">Stain &amp; Seal Plan</a><a href="${HOME}#faq">Questions</a><button type="button" data-go="ask">Ask a question</button><button class="mlogin" type="button" data-go="login">Customer login</button></nav></div></div>`,'#layer .menu .btn-main');
+    <nav class="menu"><button class="btn-main" type="button" data-go="start">${/\/(index\.html)?$/.test(location.pathname)?"Book a free estimate":"Have an estimator come out"}</button><div class="mtwo"><a href="#" data-sms="fab">Text us</a><a href="${(document.querySelector('a[href^=tel]')||{}).href||'#'}">Call</a></div><details class="msvc"><summary>Services</summary><div><a href="wood-fence-installation.html">New fences</a><a href="fence-repair.html">Fence repair</a><a href="fence-gate-installation.html">Gates</a><a href="concrete-driveway-installation.html">Concrete driveways</a><a href="concrete-patio-installation.html">Patios and slabs</a><a href="fence-staining-and-sealing.html">Staining and sealing</a></div></details><a href="${HOME}#club">Fence Check-Up</a><a href="${HOME}#faq">Questions</a><button type="button" data-go="ask">Ask a question</button><button class="mlogin" type="button" data-go="login">Customer login</button></nav></div></div>`,'#layer .menu .btn-main');
   refreshSms(document);
   $$('#layer [data-go]').forEach(x=>x.addEventListener('click',()=>{const g=x.dataset.go;close();if(g==='start')startSheet();if(g==='login')loginSheet();if(g==='ask'&&window.openAsk)openAsk('s0')}))};
 addEventListener('scroll',()=>{const i=$('#inspect');const r=i?i.getBoundingClientRect():null;$('#thumbbar').classList.toggle('on',scrollY>120&&!(r&&r.top<innerHeight&&r.bottom>0))},{passive:true});
@@ -1599,7 +1599,7 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-start],#iOpen,a
   f.addEventListener('submit',ev=>{ev.preventDefault();const nm=$('#rvN').value.trim(),t=$('#rvT').value.trim();if(!t){$('#rvE').textContent='Write a short note first.';$('#rvE').hidden=false;return}
     upsert({name:nm||'Customer',msg:'Private feedback: '+t,source:'Review page'});save();f.hidden=true;$('#rvOk').hidden=false})}}
 /* ---------- kit: membership sign-up ---------- */
-{const PL=[{"name": "Stain & Seal Plan", "price": "$69/mo", "perks": ["Stain and seal every 2 years (up to 200 LF)", "Spring fence check", "10% off repairs"]}, {"name": "Fence Care Plus", "price": "$89/mo", "perks": ["Everything in Stain & Seal", "Up to 2 post re-sets a year after storms", "Priority repair after wind events"]}],NA=true;
+{const PL=[{"name": "Yearly Fence Check-Up", "price": "$149/yr", "perks": ["One visit a year: tighten gates, hinges and latches", "Re-set up to 2 leaning posts", "Photo report of anything to watch"]}, {"name": "Storm Check", "price": "$99/yr", "perks": ["Free visit after a named storm or hard freeze", "First in line for repairs", "10% off any fence or concrete repair"]}],NA=true;
 $$('[data-join]').forEach(b=>b.onclick=()=>{const p=PL[+b.dataset.join];const close=open(`<div class="scrim"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="jH"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3 id="jH">Join ${esc(p.name)}</h3><button class="btn btn-line btn-sm" type="button" data-close>Close</button></div>
     <p class="muted">${esc(p.price)}. We set up your first visit right after.</p>
     <div class="field"><label for="jn">Your name</label><input id="jn" autocomplete="name"></div><div class="field"><label for="jp">Mobile number</label><input id="jp" type="tel" inputmode="tel" autocomplete="tel"></div><div class="field"><label for="jm">Email</label><input id="jm" type="email" inputmode="email" autocomplete="email"></div>${NA?'<div class="field"><label for="ja">Home address</label><input id="ja" autocomplete="street-address"></div>':''}
