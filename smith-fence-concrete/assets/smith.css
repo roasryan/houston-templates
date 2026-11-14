@@ -107,3 +107,22 @@ html body #estimate .eout h3{color:#F5EFE6!important}
 #refer .rbox input{width:100%;min-height:50px;font-size:17px;padding:0 14px;border:2px solid var(--lx-hair);border-radius:12px;background:#fff}
 #refer .rerr{color:#B3261E;margin:0}#refer .rdone{background:#E9EFE4;color:#243A1C;border-radius:12px;padding:12px;margin:0}
 html body .hstep h2{max-width:none!important}html body .hnum{color:#FFF8EF!important}
+/* referral pop-up */
+.rdlg{position:fixed;inset:0;z-index:9000;display:grid;place-items:center;padding:16px}
+.rdlg[hidden]{display:none!important}
+.rscrim{position:absolute;inset:0;background:rgba(34,32,29,.55)}
+.rcard{position:relative;width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--lx-card);border-radius:22px;padding:24px;box-shadow:0 30px 70px -20px rgba(0,0,0,.5)}
+.rcard h2{margin:4px 0 8px;font-size:clamp(26px,4vw,34px)}
+.rkick{margin:0;font:700 13px var(--body,inherit);letter-spacing:.08em;text-transform:uppercase;color:var(--cedar)}
+.rsub{margin:0 0 14px;color:var(--lx-soft);font-size:16px;line-height:1.5}
+.rcard fieldset{border:0;margin:0 0 10px;padding:0}.rcard legend{font:700 15px var(--body,inherit);margin-bottom:6px;color:var(--lx-text)}
+.rcard .two{display:grid;gap:10px;grid-template-columns:1fr}@media(min-width:560px){.rcard .two{grid-template-columns:1fr 1fr}}
+.rcard input{width:100%;min-height:50px;font-size:17px;padding:0 14px;border:2px solid var(--lx-hair);border-radius:12px;background:#fff;box-sizing:border-box}
+.rcard label{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
+.rcard .btn-main{width:100%;margin-top:6px}
+.rx{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;border:0;background:#EFE9E0;font-size:26px;line-height:1;cursor:pointer;color:var(--lx-text)}
+.rerr{color:#B3261E;margin:6px 0}.rfine{font-size:13px;color:var(--lx-soft);margin:10px 0 0}
+.rdone b{display:block;font:600 26px var(--display);margin-bottom:6px}.rdone p{color:var(--lx-soft);margin:0 0 14px}
+label[for=rYou]::after,label[for=rYouE]::after,label[for=rThem]::after,label[for=rThemE]::after{content:" *";color:#B3261E;font-weight:700}
+@media(max-width:420px){html body .bar .qbar .qi{padding-left:8px!important;padding-right:8px!important;font-size:14px!important}}
+html body .rcard input{color:#22201D!important;-webkit-text-fill-color:#22201D}html body .rcard input::placeholder{color:#9A938A;-webkit-text-fill-color:#9A938A}

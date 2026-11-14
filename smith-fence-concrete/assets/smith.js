@@ -64,19 +64,41 @@
     a.addEventListener('input',run);a.addEventListener('blur',run);a.addEventListener('change',run);
   }
 
-  /* referral form (demo: saved on this device, and the owner gets the text alert) */
-  function initRefer(){
-    var f=document.getElementById('refForm');if(!f||f.dataset.b)return;f.dataset.b='1';
-    var v=function(i){return(document.getElementById(i).value||'').trim()};
-    f.addEventListener('submit',function(e){e.preventDefault();var err=document.getElementById('rErr'),ok=document.getElementById('rDone');
-      var you=v('rYou'),yp=v('rYouP').replace(/\D/g,''),them=v('rThem'),tp=v('rThemP').replace(/\D/g,'');
-      if(!you||!them||yp.length<10||tp.length<10){err.hidden=false;ok.hidden=true;return}err.hidden=true;
-      try{var L=JSON.parse(localStorage.getItem('smith-refs')||'[]');L.push({you:you,yp:yp,them:them,tp:tp,need:v('rNeed'),t:Date.now()});localStorage.setItem('smith-refs',JSON.stringify(L))}catch(x){}
-      if(window.ownerPing)window.ownerPing({name:them,phone:tp,msg:'Referred by '+you+(v('rNeed')?' · Needs: '+v('rNeed'):''),source:'Referral'},{});
-      ok.hidden=false;ok.textContent='Thanks, '+you.split(' ')[0]+'! We’ll reach out to '+them.split(' ')[0]+' and let you know when they book.';f.reset()});
-    document.getElementById('rShare').addEventListener('click',function(){var n=v('rYou')||'a neighbor';var u=location.origin+location.pathname+'?ref='+encodeURIComponent(n)+'#inspect';
-      var b=this;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){b.textContent='Link copied'},function(){prompt('Copy your link:',u)})});
+  /* referral pop-up: opens from the header, the menu and the referral section on any page */
+  function refModal(){
+    var d=document.getElementById('refDlg');if(d)return d;
+    d=document.createElement('div');d.id='refDlg';d.className='rdlg';d.hidden=true;
+    d.innerHTML='<div class="rscrim" data-rclose></div><div class="rcard" role="dialog" aria-modal="true" aria-labelledby="rdH">'+
+      '<button class="rx" type="button" data-rclose aria-label="Close">×</button>'+
+      '<p class="rkick">Referral · $100 thank-you</p><h2 id="rdH">Refer a friend or family member</h2>'+
+      '<p class="rsub">Helping someone find a fence or concrete company? Add their name and email. We’ll reach out, give them a free estimate and tell them you sent them. When they book a job, you get $100.</p>'+
+      '<form id="refForm" novalidate><fieldset><legend>Your info</legend><div class="two"><div class="field"><label for="rYou">Your name</label><input id="rYou" autocomplete="name"></div><div class="field"><label for="rYouE">Your email</label><input id="rYouE" type="email" autocomplete="email"></div></div></fieldset>'+
+      '<fieldset><legend>Who are you referring?</legend><div class="two"><div class="field"><label for="rThem">Their name</label><input id="rThem"></div><div class="field"><label for="rThemE">Their email</label><input id="rThemE" type="email"></div></div>'+
+      '<div class="two"><div class="field"><label for="rThemP">Their mobile (optional)</label><input id="rThemP" type="tel" placeholder="(936) 555-0123"></div><div class="field"><label for="rNeed">What do they need? (optional)</label><input id="rNeed" placeholder="New fence, driveway, repair..."></div></div></fieldset>'+
+      '<p class="rerr" id="rErr" hidden></p><button class="btn btn-main" type="submit">Send referral</button><p class="rfine">We only use their info to offer a free estimate. One $100 reward per new customer who completes a paid job.</p></form>'+
+      '<div class="rdone" id="rDone" hidden></div></div>';
+    document.body.appendChild(d);
+    var v=function(i){return(document.getElementById(i).value||'').trim()},em=function(x){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(x)};
+    d.querySelectorAll('[data-rclose]').forEach(function(x){x.addEventListener('click',closeRef)});
+    document.getElementById('refForm').addEventListener('submit',function(e){e.preventDefault();var err=document.getElementById('rErr');
+      var you=v('rYou'),ye=v('rYouE'),them=v('rThem'),te=v('rThemE'),miss=[];
+      if(!you)miss.push('your name');if(!em(ye))miss.push('your email');if(!them)miss.push('their name');if(!em(te))miss.push('their email');
+      if(miss.length){err.hidden=false;err.textContent='Please add '+miss.join(', ')+'.';return}err.hidden=true;
+      try{var L=JSON.parse(localStorage.getItem('smith-refs')||'[]');L.push({you:you,ye:ye,them:them,te:te,tp:v('rThemP'),need:v('rNeed'),t:Date.now()});localStorage.setItem('smith-refs',JSON.stringify(L))}catch(x){}
+      if(window.ownerPing)window.ownerPing({name:them,phone:v('rThemP'),addr:te,msg:'Referred by '+you+' ('+ye+')'+(v('rNeed')?' · Needs: '+v('rNeed'):''),source:'Referral'},{});
+      this.hidden=true;var ok=document.getElementById('rDone');ok.hidden=false;
+      ok.innerHTML='<b>Thanks, '+esc(you.split(' ')[0])+'!</b><p>We’ll email '+esc(them.split(' ')[0])+' about a free estimate and let you know at '+esc(ye)+' when they book.</p><button class="btn btn-line btn-text" type="button" id="rAgain">Refer someone else</button>';
+      document.getElementById('rAgain').onclick=function(){document.getElementById('refForm').reset();document.getElementById('refForm').hidden=false;ok.hidden=true;document.getElementById('rThem').focus()}});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!d.hidden)closeRef()});
+    return d;
   }
+  var lastFocus=null;
+  function openRef(){var d=refModal();lastFocus=document.activeElement;d.hidden=false;document.documentElement.classList.add('imopen');setTimeout(function(){var f=document.getElementById('rYou');f&&f.focus()},50)}
+  function closeRef(){var d=document.getElementById('refDlg');if(!d)return;d.hidden=true;document.documentElement.classList.remove('imopen');if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+  window.openRef=openRef;
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-refer]');if(!b)return;e.preventDefault();
+    var c=document.querySelector('#layer [data-close]');if(c&&b.closest('#layer'))c.click();openRef()});
+  function initRefer(){if(/[?&]refer\b/.test(location.search)||location.hash==='#refer-now')openRef()}
   function boot(){initArea();initBookArea();initRefer();setInterval(initBookArea,1500)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
