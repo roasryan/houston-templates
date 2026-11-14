@@ -1242,6 +1242,7 @@ function bindAvail(){const S=AV.S;let view=new Date();view.setDate(1);
     $$('#iForm .bad').forEach(x=>x.classList.remove('bad'));
     if(bad){err.hidden=false;err.textContent={'#iName':'Add your name.','#iPhone':'Add your 10-digit mobile number.','#iEmail':'Add your email.','#iAddr':'Add the property address.','#iIssue':'Pick at least one thing you need.'}[bad];if(bad==='#iIssue'){$('#iJobs').classList.add('bad');$('#iJobs').scrollIntoView({block:'center'});return}$(bad).classList.add('bad');$(bad).focus();return}
     
+    const est=window.smithEst&&$('#iEstC')&&$('#iEstC').checked?window.smithEst:null;if(est)D.issue+=' · Price estimate: '+est.sum+', '+est.range;
     if(!selD||!selS){iStep(1);$('#iErr1').textContent='Pick a day and a time.';$('#iErr1').hidden=false;return}
     err.hidden=true;const appt={t:selD.getTime(),time:selS,slot:AV.label(selS),confirmed:false};const smsOk=best==='Text'&&!!($('#iSms')&&$('#iSms').checked);
     const btn=f.querySelector('.ibtn'),bt=btn.textContent;let sent=false;
@@ -1515,7 +1516,7 @@ $$('.langsw').forEach(a=>a.addEventListener('click',()=>{try{localStorage.setIte
    Any address box (website forms, quote, sign-ups, owner app) is checked against the same free address finder the type-ahead uses.
    It must resolve to a house/building address (house number + street), not just a street, city or ZIP.
    A main button (Send / Save / Book / Next) next to an unchecked address waits for the check; a bad address stops it with a plain message. */
-const ADDR_SEL='input[autocomplete="street-address"],input[data-addr],#rmAddr,#iAddr,#qAddr,#aAddr,#ja,#oaddr,#aa,#da';
+const ADDR_SEL='input[autocomplete="street-address"]:not(#areaQ),input[data-addr],#rmAddr,#iAddr,#qAddr,#aAddr,#ja,#oaddr,#aa,#da';
 const ADDR_GEO='https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates';
 const ADDR_OK_TYPES=['PointAddress','Subaddress','StreetAddress','StreetAddressExt'];
 const addrCache=new Map();

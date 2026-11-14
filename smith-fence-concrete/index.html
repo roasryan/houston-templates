@@ -36,7 +36,7 @@
       <div class="kxcmp" role="slider" tabindex="0" aria-label="Drag to compare before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span class="ct b">Before</span><span class="ct a">After</span><i></i></div></div>
      <div class="kxact" id="kxAct">
       <div id="kxStart"><b>Drag to rebuild.</b>New fence, new concrete.</div>
-      <div id="kxDone" hidden><b>Built straight and built to last.</b><div class="row"><button class="btn btn-main" type="button" data-start>Book a free estimate</button><a class="btn btn-line light" href="#estimate">See prices</a><a class="btn btn-line btn-text" href="sms:+19363144451" data-sms="cta">Text us</a></div><button class="linkbtn" type="button" id="kxReset">Start over</button></div>
+      <div id="kxDone" hidden><b>Built straight and built to last.</b><div class="row"><a class="btn btn-main" href="#estimate" data-est-go>See your estimated price</a></div><button class="linkbtn" type="button" id="kxReset">Start over</button></div>
       <div id="kxFixed" hidden><b></b><div class="row"><button class="btn btn-main" type="button" data-start>Book a free estimate</button><a class="btn btn-line btn-text" href="sms:+19363144451" data-sms="cta">Text us</a></div><button class="linkbtn" type="button" id="kxAgain">Start over</button></div>
       <div class="kxtray" id="kxTray" aria-live="polite"></div></div></div>
    <aside class="tform" id="inspect" aria-labelledby="iH">
@@ -55,6 +55,7 @@
               <div class="field"><label for="iEmail">Email</label><input id="iEmail" aria-required="true" type="email" inputmode="email" autocomplete="email"></div>
               <div class="field"><label for="iAddr">Property address</label><input id="iAddr" aria-required="true" autocomplete="street-address" placeholder="Street, city, ZIP"></div>
               <div class="field"><span class="flabel" id="iIssueL">What do you need? Pick all that apply</span><input type="hidden" id="iIssue"><div class="chips ijobs" id="iJobs" role="group" aria-label="What do you need"><button type="button" aria-pressed="false" data-ij="New fence">New fence</button><button type="button" aria-pressed="false" data-ij="Fence repair">Fence repair</button><button type="button" aria-pressed="false" data-ij="Gate">Gate</button><button type="button" aria-pressed="false" data-ij="Driveway">Driveway</button><button type="button" aria-pressed="false" data-ij="Patio or slab">Patio or slab</button><button type="button" aria-pressed="false" data-ij="Sidewalk or walkway">Sidewalk or walkway</button><button type="button" aria-pressed="false" data-ij="Stain and seal">Stain and seal</button><button type="button" aria-pressed="false" data-ij="Not sure, just check it">Not sure, just check it</button></div></div>
+              <div class="field ipest" id="iEst"></div>
               <div class="field"><span class="flabel">Best way to reach you</span><div class="chips" id="iBest" role="radiogroup" aria-label="Best way to reach you"><button type="button" role="radio" aria-checked="true" data-best="Text">Text</button><button type="button" role="radio" aria-checked="false" data-best="Call">Call</button><button type="button" role="radio" aria-checked="false" data-best="Email">Email</button></div></div>
               <label class="smsc" id="iSmsC"><input type="checkbox" id="iSms"> <span>Text me about my free estimate from Smith Fence &amp; Concrete (confirmation, reminder, time changes). Optional, not required to book. About 1–4 texts per request, no marketing. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. <a href="sms-terms.html" target="_blank">SMS terms</a> · <a href="privacy.html" target="_blank">Privacy</a></span></label><p class="catnote" style="display:block;margin:10px 0 2px;padding:9px 12px;border-radius:10px;font-size:13.5px;line-height:1.45;background:rgba(127,127,127,.13);border-left:3px solid currentColor;opacity:.92">Catalog demo: confirmation texts and emails, reminders and the owner CRM are turned on for your business during your discovery call. This demo won’t text or email you.</p>
               <p class="err" id="iErr" role="alert" hidden></p>
@@ -95,6 +96,7 @@
 #estimate .eout .btn{width:100%;justify-content:center}
 #estimate .eout .btn-line{background:transparent!important;color:#FFF8EF!important;border:1.5px solid rgba(255,248,239,.7)!important}
 #estimate [hidden]{display:none!important}
+#estimate{scroll-margin-top:96px}
 </style>
 <h2 id="eH">Build your price in a minute</h2>
 <p class="lede">Add a fence, concrete, or both. Change the style, size and extras and watch your range update. Then we measure for free and give you the exact price in writing.</p>
@@ -128,7 +130,7 @@
  <ul id="eLines"></ul>
  <div class="etot" id="eTot">$0</div>
  <p>Typical Houston-area 2026 prices, for planning. Your exact price comes in writing after a free on-site measure.</p>
- <button class="btn btn-main" type="button" data-start id="eBook">Book my free estimate</button>
+ <button class="btn btn-main" type="button" data-start id="eBook">Schedule an onsite estimate</button>
  <a class="btn btn-line" id="eText" href="sms:+19363144451">Text us about this estimate</a>
 </aside>
 </div>
@@ -164,9 +166,12 @@
   $('eBook').dataset.pick=st.fence?'New fence':(st.type==='patio'?'Patio or slab':st.type==='walk'?'Sidewalk or walkway':st.type==='slab'?'Patio or slab':'Driveway');
   var body='Hi, I got a price range on your site: '+sum.join(' + ')+', about '+$('eTot').textContent+'. Can you come measure?';
   $('eText').href='sms:+19363144451?&body='+encodeURIComponent(body);
+  window.smithEst=L.length?{sum:sum.join(' + '),range:$('eTot').textContent,lines:L.map(function(l){return l[0]+': '+money(l[1])+' – '+money(l[2])})}:null;
+  if(window.smithEstRender)window.smithEstRender();
  }
  var E=document.getElementById('estimate');
- E.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||!E.contains(b))return;
+ E.addEventListener('input',function(){window.smithEstTouched=true});E.addEventListener('change',function(){window.smithEstTouched=true;window.smithEstRender&&window.smithEstRender()});
+ E.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||!E.contains(b))return;window.smithEstTouched=true;
   if(b.dataset.add){var k=b.dataset.add;st[k]=!st[k];if(!st.fence&&!st.conc)st[k]=true;draw();return}
   if(b.dataset.st){var o=$(b.dataset.st);o.value=o.textContent=String(Math.max(0,Math.min(6,(+o.textContent||0)+(+b.dataset.d))));draw();return}
   var g=b.parentElement&&b.parentElement.id;if(!b.dataset.v)return;

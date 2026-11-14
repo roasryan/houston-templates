@@ -24,7 +24,8 @@
     var f=document.getElementById('areaForm');if(!f)return;
     var out=document.getElementById('areaRes');
     f.addEventListener('submit',function(e){e.preventDefault();
-      var r=check(document.getElementById('areaQ').value);if(!r){out.hidden=true;return}
+      var q=document.getElementById('areaQ').value.trim();var r=check(q);if(!r){out.hidden=true;houseMap(null);return}
+      houseMap(/^\s*\d+\s+[A-Za-z]/.test(q)&&!/^\s*\d{5}\s*$/.test(q)?q:null);
       out.hidden=false;
       if(r.ok){out.className='ares ok';out.innerHTML='<b>Yes, we come to '+esc(r.town)+'.</b>Free on-site estimates'+(r.zip?' in '+esc(r.zip):'')+'. Pick a time and we’ll measure and price it in writing.';
         var b=document.getElementById('areaBook');b.hidden=false}
@@ -33,6 +34,25 @@
         document.getElementById('areaBook').hidden=true}
     });
   }
+  /* address typed in "Do we come to you?": show the house from above (ZIP only: no map) */
+  function houseMap(addr){var f=document.getElementById('areaMap'),out=document.getElementById('areaRes');
+    if(!addr){if(f)f.remove();return}
+    if(!f){f=document.createElement('figure');f.id='areaMap';f.className='amap areamap';out.insertAdjacentElement('beforebegin',f)}
+    f.innerHTML='<div class="amapf"><iframe src="https://maps.google.com/maps?q='+encodeURIComponent(addr)+'&t=k&z=19&output=embed" title="Satellite view of '+esc(addr)+'" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><figcaption>'+esc(addr)+'</figcaption>';
+    var b=document.getElementById('areaBook');if(b)b.dataset.addr=addr}
+  document.addEventListener('click',function(e){var b=e.target.closest('#areaBook');if(!b||!b.dataset.addr)return;var a=document.getElementById('iAddr');if(a&&!a.value)a.value=b.dataset.addr},true);
+  /* booking form: let them add the price they built */
+  window.smithEstRender=function(){var box=document.getElementById('iEst');if(!box)return;var E=window.smithEst,on=E&&window.smithEstTouched;
+    var was=document.getElementById('iEstC');var keep=was?was.checked:true;
+    box.innerHTML=on?'<span class="flabel">Your price estimate</span><label class="iestc"><input type="checkbox" id="iEstC"'+(keep?' checked':'')+'> <span>Send my estimate with this booking<b>'+esc(E.sum)+'</b><em>'+esc(E.range)+'</em></span></label><a class="iestl" href="#estimate" data-est-go data-est-close>Change my estimate</a>'
+      :'<span class="flabel">Want a price range first? (optional)</span><a class="btn btn-line btn-sm iestb" href="#estimate" data-est-go data-est-close>Build your estimate</a>'};
+  /* one click to the price builder, even while photos above it are still loading */
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-est-go],a[href="#estimate"]');if(!a)return;var t=document.getElementById('estimate');if(!t)return;e.preventDefault();
+    if(a.hasAttribute('data-est-close')&&window.closeInspect)window.closeInspect();
+    var go=function(sm){t.scrollIntoView({behavior:sm?'smooth':'auto',block:'start'})};
+    setTimeout(function(){go(true);try{history.replaceState(null,'','#estimate')}catch(x){}
+      [500,1100].forEach(function(ms){setTimeout(function(){var y=t.getBoundingClientRect().top;if(Math.abs(y-96)>40)go(false)},ms)})},a.hasAttribute('data-est-close')?280:0)});
+
   /* Phone-style alert: shows what the owner gets when a customer books or asks a question */
   window.ownerPing=function(o,c){
     if(location.hash==='#owner'||document.body.classList.contains('owner-on'))return;
@@ -99,6 +119,6 @@
   document.addEventListener('click',function(e){var b=e.target.closest('[data-refer]');if(!b)return;e.preventDefault();
     var c=document.querySelector('#layer [data-close]');if(c&&b.closest('#layer'))c.click();openRef()});
   function initRefer(){if(/[?&]refer\b/.test(location.search)||location.hash==='#refer-now')openRef()}
-  function boot(){initArea();initBookArea();initRefer();setInterval(initBookArea,1500)}
+  function boot(){window.smithEstRender&&window.smithEstRender();initArea();initBookArea();initRefer();setInterval(initBookArea,1500)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();

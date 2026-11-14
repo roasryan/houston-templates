@@ -126,3 +126,16 @@ html body .hstep h2{max-width:none!important}html body .hnum{color:#FFF8EF!impor
 label[for=rYou]::after,label[for=rYouE]::after,label[for=rThem]::after,label[for=rThemE]::after{content:" *";color:#B3261E;font-weight:700}
 @media(max-width:420px){html body .bar .qbar .qi{padding-left:8px!important;padding-right:8px!important;font-size:14px!important}}
 html body .rcard input{color:#22201D!important;-webkit-text-fill-color:#22201D}html body .rcard input::placeholder{color:#9A938A;-webkit-text-fill-color:#9A938A}
+/* Nov 14: house preview in the area check, estimate in the booking form */
+.areamap{margin:14px 0 10px;border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.12);background:#fff}
+.areamap .amapf{aspect-ratio:16/9;width:100%}.areamap iframe{width:100%;height:100%;border:0;display:block}
+.areamap figcaption{padding:9px 12px;font-size:14px;font-weight:600}
+.ipest .iestc{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1.5px solid rgba(0,0,0,.15);border-radius:12px;cursor:pointer}
+.ipest .iestc input{width:20px;height:20px;margin-top:2px;flex:none}
+.ipest .iestc b{display:block;margin-top:4px}.ipest .iestc em{display:block;font-style:normal;font-weight:700;font-size:18px}
+.ipest .iestl{display:inline-block;margin-top:8px;font-size:14px;font-weight:600}
+.ipest .iestb{margin-top:4px}
+#iEst .iestc{background:#FFFDF8!important;color:#1F2A33!important;box-shadow:none!important}
+#iEst .iestc span,#iEst .iestc b,#iEst .iestc em{color:#1F2A33!important}
+#iEst .iestc input[type=checkbox]{all:revert;width:20px;height:20px;margin:3px 0 0;flex:none;accent-color:#9A5530}
+#iEst .iestl{color:#9A5530!important}
