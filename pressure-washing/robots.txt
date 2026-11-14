@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://roasryan.github.io/houston-templates/pressure-washing/sitemap.xml
+Sitemap: https://catalog.unplannedco.com/pressure-washing/sitemap.xml

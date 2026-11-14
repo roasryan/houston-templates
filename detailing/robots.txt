@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://roasryan.github.io/houston-templates/detailing/sitemap.xml
+Sitemap: https://catalog.unplannedco.com/detailing/sitemap.xml

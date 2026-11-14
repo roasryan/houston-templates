@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://roasryan.github.io/houston-templates/smith-fence-concrete/sitemap.xml
+Sitemap: https://catalog.unplannedco.com/smith-fence-concrete/sitemap.xml

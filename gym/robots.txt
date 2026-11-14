@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://roasryan.github.io/houston-templates/gym/sitemap.xml
+Sitemap: https://catalog.unplannedco.com/gym/sitemap.xml

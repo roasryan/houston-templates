@@ -49,7 +49,7 @@
 <div class="card"><h2 style="margin:0">Latest sign-ups</h2><ul class="qlist" id="mList"></ul></div></div>
 <div class="tent"><h2>A free appetizer, on us</h2><p>Pick any starter on the menu (up to $17) on your next dinner with us.</p><div class="tq"></div><p>Scan with your phone camera</p><p style="font-size:14px">One per guest. Dine-in only. Good for 14 days after you sign up. Not valid with other offers.</p></div></main>
 <script src="assets/qrcode.js"></script><script>
-const $=s=>document.querySelector(s);const BACKEND="",BIZ="Magnolia & Mesquite Kitchen",OFFER={"name": "Free appetizer", "days": 14, "url": "https://roasryan.github.io/houston-templates/restaurant/offer.html?src=table"},PFX="krestaur";
+const $=s=>document.querySelector(s);const BACKEND="",BIZ="Magnolia & Mesquite Kitchen",OFFER={"name": "Free appetizer", "days": 14, "url": "https://catalog.unplannedco.com/restaurant/offer.html?src=table"},PFX="krestaur";
 const post=o=>fetch(BACKEND,{method:'POST',body:JSON.stringify(o)}).then(r=>r.json());
 const day=d=>new Date(d).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
 /* demo mode: same rules as offers.gs, kept in this browser */
