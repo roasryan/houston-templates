@@ -1,11 +1,188 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Website Catalog · Houston Business Demos</title><meta name="robots" content="noindex">
-<style>body{margin:0;font:16px/1.5 system-ui,sans-serif;background:#15191B;color:#E8ECEA;padding:24px 16px}h1{margin:0 0 6px}p{color:#A3AEB3;margin:0 0 20px}ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-width:1200px}a{display:flex;flex-direction:column;gap:4px;color:inherit;text-decoration:none;background:#1E2427;border:1px solid #333D42;border-radius:14px;overflow:hidden;padding-bottom:12px}img{width:100%;aspect-ratio:16/9;object-fit:cover}b,span{padding:0 12px}span{color:#A3AEB3;font-size:14px}</style><script>(function(){if(!/(^|\.)roasryan\.github\.io$/.test(location.hostname))return;
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Website Catalog · Unplanned &amp; Co.</title><meta name="robots" content="noindex"><meta name="theme-color" content="#FAF9F6">
+<meta name="description" content="28 working demo websites for Houston businesses. Book a visit like a customer, see the owner app, then get a free 15-minute Growth Audit.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap">
+<style>
+:root{--bg:#FAF9F6;--paper:#FFFFFF;--line:#E6E2DA;--line2:#D9D4CA;--text:#15171C;--soft:#5B616C;--mute:#8A8F98;--accent:#B5821F;--ok:#2F8A5B;--sand:#F3EEE5;--sage:#E7EFE9;--sky:#E6EDF6;--bad:#B3412E;
+--display:'Inter Tight','Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;--body:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+--shadow:0 1px 2px rgba(20,22,28,.06),0 12px 32px -12px rgba(20,22,28,.18);color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}a{color:inherit}:focus-visible{outline:3px solid #2563EB;outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left))}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.025em;line-height:1.08;margin:0;text-wrap:balance}
+h1{font-size:clamp(36px,5.6vw,64px);font-weight:800}h2{font-size:clamp(28px,3.8vw,44px);font-weight:750}h3{font-size:20px;font-weight:700;letter-spacing:-.015em}
+p{margin:0}.eyebrow{font:600 13px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.lede{color:var(--soft);font-size:18px;max-width:640px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 22px;border-radius:12px;border:1px solid transparent;font:600 16px/1 var(--body);text-decoration:none;cursor:pointer;transition:transform .15s,background .15s}
+.btn-main{background:var(--text);color:#fff;box-shadow:0 6px 16px -6px rgba(20,22,28,.5)}.btn-main:hover{background:#000;transform:translateY(-1px)}
+.btn-line{background:var(--paper);color:var(--text);border-color:var(--line2)}.btn-line:hover{border-color:var(--text)}
+header{position:sticky;top:0;z-index:20;background:rgba(250,249,246,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font:700 18px var(--display);text-decoration:none}.logo i{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--text);color:#fff;font:800 16px var(--display);font-style:normal}
+header .btn{min-height:42px;padding:0 16px;font-size:15px}
+section{padding-block:72px}.hero{padding-block:56px 24px}
+.hero .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.note{margin-top:18px;font-size:14px;color:var(--mute);max-width:640px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.filters button{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);background:var(--paper);font:600 14px var(--body);color:var(--soft);cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--text);border-color:var(--text);color:#fff}
+.cat{list-style:none;padding:0;margin:24px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.cat a{display:block;text-decoration:none;transition:transform .2s}.cat a:hover{transform:translateY(-3px)}
+.win{background:var(--paper);border:1px solid var(--line2);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.win .chrome{display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-bottom:1px solid var(--line);background:#FBFAF8}
+.win .chrome i{width:9px;height:9px;border-radius:50%;background:#E3DED5}
+.win .chrome em{margin-left:8px;flex:1;max-width:200px;height:18px;border-radius:6px;background:#F1EEE8;font:500 11px/18px var(--body);font-style:normal;color:var(--mute);padding-left:8px;white-space:nowrap;overflow:hidden}
+.win img{aspect-ratio:900/562;width:100%;object-fit:cover;object-position:top}
+.meta{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:12px;padding-inline:4px}.meta b{font-weight:600}.meta span{color:var(--mute);font-size:13.5px;text-align:right}
+.cat li[hidden]{display:none}
+.alt{background:var(--paper);border-block:1px solid var(--line)}
+.tries{list-style:none;padding:0;margin:36px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;counter-reset:t}
+.tries li{border:1px solid var(--line);border-radius:18px;padding:22px;background:var(--bg)}
+.tries li::before{counter-increment:t;content:counter(t,decimal-leading-zero);font:700 30px/1 var(--display);color:var(--accent)}
+.tries b{display:block;font:700 18px/1.25 var(--display);margin:12px 0 6px}.tries span{color:var(--soft);font-size:15.5px}
+.leaks{display:grid;gap:14px;margin-top:36px}
+.leak{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--paper)}
+.leak>div{padding:22px 24px}.leak .pr{background:#FBF4F1}.leak .fx{background:var(--sage)}
+.leak small{display:block;font:700 12px var(--body);letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}.leak .pr small{color:var(--bad)}.leak .fx small{color:var(--ok)}
+.leak b{display:block;font:700 19px/1.25 var(--display);margin-bottom:6px}.leak span{color:var(--soft);font-size:15.5px}
+.stat{margin-top:22px;font-size:15px;color:var(--soft)}.stat a{color:var(--soft)}
+.quiz{margin-top:32px;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:26px;max-width:760px}
+.quiz label{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16.5px}
+.quiz label:last-of-type{border-bottom:0}.quiz input{width:22px;height:22px;margin-top:2px;flex:none;accent-color:var(--text)}
+.qres{margin-top:18px;padding:18px;border-radius:14px;background:var(--sand)}.qres b{display:block;font:700 20px var(--display);margin-bottom:4px}.qres .btn{margin-top:14px}
+.offer{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;margin-top:36px;align-items:start}
+.stack{list-style:none;padding:0;margin:0;background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.stack li{display:flex;gap:14px;padding:18px 22px;border-bottom:1px solid var(--line)}.stack li:last-child{border:0}
+.stack svg{flex:none;margin-top:3px}.stack b{display:block;font-weight:700}.stack span{color:var(--soft);font-size:15.5px}
+.guar{display:grid;gap:12px}.guar div{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:var(--paper)}.guar b{display:block;font:700 17px var(--display)}.guar span{color:var(--soft);font-size:15px}
+.final{text-align:center}.final .lede{margin-inline:auto}.final .btn{margin-top:26px}
+.final small{display:block;margin-top:14px;color:var(--mute);font-size:14px}
+footer{padding:28px 0 40px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}footer a{color:var(--mute)}
+@media (max-width:960px){.cat{grid-template-columns:1fr 1fr}.tries{grid-template-columns:1fr 1fr}.offer{grid-template-columns:1fr}}
+@media (max-width:620px){section{padding-block:52px}.cat{grid-template-columns:1fr}.tries{grid-template-columns:1fr}.leak{grid-template-columns:1fr}header .btn span{display:none}.hero .row .btn{flex:1 1 100%}}
+</style>
+<script>(function(){if(!/(^|\.)(roasryan\.github\.io|unplannedco\.com)$/.test(location.hostname))return;
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','1999334720737913');fbq('track','PageView');
 var g=document.createElement('script');g.async=1;g.src='https://www.googletagmanager.com/gtag/js?id=G-FD8HK4RJEN';document.head.appendChild(g);
 window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','G-FD8HK4RJEN');
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a');if(!a)return;
 if(a.classList.contains('cta')){try{fbq('trackCustom','CatalogToAudit');gtag('event','catalog_to_audit')}catch(x){}return}
-var n=(a.querySelector('span')||{}).textContent||a.href;try{fbq('track','ViewContent',{content_name:n,content_category:'catalog_demo'});gtag('event','demo_open',{trade:n})}catch(x){}},true);})();</script>
-<style>.cta-bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;max-width:1200px;margin:0 0 18px;padding:14px 16px;border-radius:14px;background:#F2B544;color:#17130A}.cta-bar b{padding:0;font-size:16px}.cta-bar span{padding:0;color:#3A2F1A;font-size:14px;display:block}a.cta{display:inline-block;background:#17130A;color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:700;white-space:nowrap}.legal{margin-top:22px;font-size:12.5px}.legal a{display:inline;background:none;border:0;padding:0;color:#A3AEB3;text-decoration:underline}</style></head>
-<body><h1>Website catalog</h1><div class="cta-bar"><div><b>Free to try. Open your trade and click around like a customer would.</b><span>Like one? I'll custom-make it for your business, with your photos, services and service area.</span></div><a class="cta" href="https://unplannedco.com/?utm_source=catalog&amp;utm_medium=referral&amp;utm_campaign=catalog_bar#apply">Get a free Growth Audit</a></div><p>Houston demo sites built on the same system, one per trade. The companies are made up. Each site has booking, an owner app (add #owner to the link), a customer portal and a team screen. Bookings save on your device in this catalog.</p><p class="catnote" style="display:block;margin:10px 0 2px;padding:9px 12px;border-radius:10px;font-size:13.5px;line-height:1.45;background:rgba(127,127,127,.13);border-left:3px solid currentColor;opacity:.92">Catalog demo: confirmation texts and emails, reminders and the owner CRM are turned on for your business during your discovery call. This demo won’t text or email you.</p><ul><li><a href="auto-repair/"><img src="auto-repair/img/hx-auto-repair-a-m.webp" alt="" loading="lazy"><b>Bayou City Auto Care</b><span>Auto repair shop</span></a></li><li><a href="barbershop/"><img src="barbershop/img/hx-barbershop-a-m.webp" alt="" loading="lazy"><b>Third Ward Fade Co.</b><span>Barbershop</span></a></li><li><a href="catering/"><img src="catering/img/hx-catering-a-m.webp" alt="" loading="lazy"><b>Silver Spoon Gulf Coast Catering</b><span>Catering</span></a></li><li><a href="cleaning/"><img src="cleaning/img/hx-cleaning-a-m.webp" alt="" loading="lazy"><b>Bayou Sparkle Home Cleaning</b><span>House cleaning &amp; maid service</span></a></li><li><a href="dental-implants/"><img src="dental-implants/img/hx-dental-implants-b-m.webp" alt="" loading="lazy"><b>Bayou City Implant Center</b><span>Dental implant clinic</span></a></li><li><a href="detailing/"><img src="detailing/img/dt-pethair-a-m.webp" alt="" loading="lazy"><b>Gulf Coast Gloss Mobile Detailing</b><span>Mobile auto detailing</span></a></li><li><a href="electrical/"><img src="electrical/img/hx-electrical-a-m.webp" alt="" loading="lazy"><b>Lone Star Current Electric</b><span>Electrical</span></a></li><li><a href="fencing-concrete/"><img src="fencing-concrete/img/hx-fencing-concrete-a-m.webp" alt="" loading="lazy"><b>Lone Star Line &amp; Slab</b><span>Fencing &amp; concrete</span></a></li><li><a href="food-truck/"><img src="food-truck/img/hx-food-truck-a-m.webp" alt="" loading="lazy"><b>Bayou Birria Co.</b><span>Food truck</span></a></li><li><a href="foundation-repair/"><img src="foundation-repair/img/hx-foundation-repair-b-m.webp" alt="" loading="lazy"><b>Clayline Foundation Repair</b><span>Foundation repair</span></a></li><li><a href="generators/"><img src="generators/img/hx-generators-a-m.webp" alt="" loading="lazy"><b>Gulf Coast Standby Power</b><span>Standby generators</span></a></li><li><a href="gym/"><img src="gym/img/hx-gym-a-m.webp" alt="" loading="lazy"><b>Bayou Strength &amp; Conditioning</b><span>Gym &amp; personal training studio</span></a></li><li><a href="hair-salon/"><img src="hair-salon/img/hx-hair-salon-a-m.webp" alt="" loading="lazy"><b>Magnolia &amp; Main Hair Studio</b><span>Hair salon</span></a></li><li><a href="handyman/"><img src="handyman/img/hx-handyman-a-m.webp" alt="" loading="lazy"><b>Bayou City Fix-It Co.</b><span>Handyman</span></a></li><li><a href="hvac/"><img src="hvac/img/hx-hvac-a-m.webp" alt="" loading="lazy"><b>Gulf Breeze Air &amp; Heat</b><span>HVAC (heating &amp; air)</span></a></li><li><a href="landscaping/"><img src="landscaping/img/hx-landscaping-a-m.webp" alt="" loading="lazy"><b>Bayou Green Lawn &amp; Landscape</b><span>Landscaping &amp; lawn care</span></a></li><li><a href="massage-spa/"><img src="massage-spa/img/hx-massage-spa-a-m.webp" alt="" loading="lazy"><b>Cypress Creek Massage &amp; Day Spa</b><span>Massage studio &amp; day spa</span></a></li><li><a href="med-spa/"><img src="med-spa/img/hx-med-spa-b-m.webp" alt="" loading="lazy"><b>Riverstone Aesthetics &amp; Wellness</b><span>Med spa</span></a></li><li><a href="moving/"><img src="moving/img/hx-moving-a-m.webp" alt="" loading="lazy"><b>Magnolia City Movers</b><span>Moving company</span></a></li><li><a href="nail-salon/"><img src="nail-salon/img/hx-nail-salon-a-m.webp" alt="" loading="lazy"><b>Lotus Bay Nail Lounge</b><span>Nail salon</span></a></li><li><a href="pest-control/"><img src="pest-control/img/hx-pest-control-a-m.webp" alt="" loading="lazy"><b>Lone Star Shield Pest &amp; Termite</b><span>Pest control &amp; termite</span></a></li><li><a href="plumbing/"><img src="plumbing/img/hx-plumbing-a-m.webp" alt="" loading="lazy"><b>Bayou City Plumbing Co.</b><span>Plumbing</span></a></li><li><a href="pool-service/"><img src="pool-service/img/hx-pool-service-a-m.webp" alt="" loading="lazy"><b>Clearwater Bayou Pool Co.</b><span>Pool service</span></a></li><li><a href="pressure-washing/"><img src="pressure-washing/img/hx-pressure-washing-a-m.webp" alt="" loading="lazy"><b>Gulf Coast Clean Exteriors</b><span>Pressure washing &amp; window cleaning</span></a></li><li><a href="remodeling/"><img src="remodeling/img/hx-remodeling-a-m.webp" alt="" loading="lazy"><b>Heights &amp; Hearth Remodeling</b><span>Remodeling</span></a></li><li><a href="restaurant/"><img src="restaurant/img/hx-restaurant-a-m.webp" alt="" loading="lazy"><b>Magnolia &amp; Mesquite Kitchen</b><span>Restaurant</span></a></li><li><a href="https://roasryan.github.io/ridgeline-demo/"><img src="https://roasryan.github.io/ridgeline-demo/img/ht_new-m.webp" alt="" loading="lazy"><b>Ridgeline Roofing</b><span>Roofing (instant roof quote)</span></a></li><li><a href="towing/"><img src="towing/img/hx-towing-a-m.webp" alt="" loading="lazy"><b>Lone Star Hook &amp; Haul Towing</b><span>Towing &amp; roadside</span></a></li></ul><p class="legal">This page uses Meta and Google cookies to measure visits. <a href="https://unplannedco.com/privacy.html">Privacy</a></p></body></html>
+var m=a.querySelector('.meta b');if(!m)return;try{fbq('track','ViewContent',{content_name:m.textContent,content_category:'catalog_demo'});gtag('event','demo_open',{trade:m.textContent})}catch(x){}},true);})();</script>
+</head><body>
+<header><div class="wrap"><a class="logo" href="https://unplannedco.com/"><i>U</i>Unplanned &amp; Co.</a><a class="btn btn-main cta" href="https://unplannedco.com/?utm_source=catalog&amp;utm_medium=referral&amp;utm_campaign=catalog_v2#demo">Free Growth Audit<span>&nbsp;· 15 min</span></a></div></header>
+<main>
+<section class="hero"><div class="wrap">
+ <p class="eyebrow">Website catalog · 28 live demos</p>
+ <h1>Click around a site that books jobs for your trade.</h1>
+ <p class="lede">Book a visit the way your customers would. See the text the owner gets. Then picture it with your name, your photos and your service area.</p>
+ <div class="row"><a class="btn btn-main" href="#trades">Find my trade</a><a class="btn btn-line cta" href="https://unplannedco.com/?utm_source=catalog&amp;utm_medium=referral&amp;utm_campaign=catalog_v2#demo">Get my free Growth Audit</a></div>
+ <p class="note">These are demo businesses. Texts, emails and reminders are switched off here, so nothing is sent. Bookings stay on your device.</p>
+ <div class="filters" role="group" aria-label="Filter by type"><button type="button" aria-pressed="true" data-f="all">All 28</button><button type="button" aria-pressed="false" data-f="home">Home services</button><button type="button" aria-pressed="false" data-f="beauty">Health &amp; beauty</button><button type="button" aria-pressed="false" data-f="auto">Auto</button><button type="button" aria-pressed="false" data-f="food">Food</button></div>
+ <ul class="cat" id="trades">
+<li data-g="home"><a href="https://roasryan.github.io/ridgeline-demo/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>roofing-demo</em></div><img src="cat/roofing.webp" width="900" height="562" alt="Roofing (instant roof quote) demo site" loading="lazy"></div><div class="meta"><b>Roofing (instant roof quote)</b><span>Ridgeline Roofing</span></div></a></li>
+<li data-g="home"><a href="hvac/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>hvac-demo</em></div><img src="cat/hvac.webp" width="900" height="562" alt="HVAC (heating &amp; air) demo site" loading="lazy"></div><div class="meta"><b>HVAC (heating &amp; air)</b><span>Gulf Breeze Air &amp; Heat</span></div></a></li>
+<li data-g="home"><a href="plumbing/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>plumbing-demo</em></div><img src="cat/plumbing.webp" width="900" height="562" alt="Plumbing demo site" loading="lazy"></div><div class="meta"><b>Plumbing</b><span>Bayou City Plumbing Co.</span></div></a></li>
+<li data-g="home"><a href="electrical/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>electrical-demo</em></div><img src="cat/electrical.webp" width="900" height="562" alt="Electrical demo site" loading="lazy"></div><div class="meta"><b>Electrical</b><span>Lone Star Current Electric</span></div></a></li>
+<li data-g="home"><a href="foundation-repair/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>foundation-repair-demo</em></div><img src="cat/foundation-repair.webp" width="900" height="562" alt="Foundation repair demo site" loading="lazy"></div><div class="meta"><b>Foundation repair</b><span>Clayline Foundation Repair</span></div></a></li>
+<li data-g="home"><a href="fencing-concrete/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>fencing-concrete-demo</em></div><img src="cat/fencing-concrete.webp" width="900" height="562" alt="Fencing &amp; concrete demo site" loading="lazy"></div><div class="meta"><b>Fencing &amp; concrete</b><span>Lone Star Line &amp; Slab</span></div></a></li>
+<li data-g="home"><a href="remodeling/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>remodeling-demo</em></div><img src="cat/remodeling.webp" width="900" height="562" alt="Remodeling demo site" loading="lazy"></div><div class="meta"><b>Remodeling</b><span>Heights &amp; Hearth Remodeling</span></div></a></li>
+<li data-g="home"><a href="generators/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>generators-demo</em></div><img src="cat/generators.webp" width="900" height="562" alt="Standby generators demo site" loading="lazy"></div><div class="meta"><b>Standby generators</b><span>Gulf Coast Standby Power</span></div></a></li>
+<li data-g="home"><a href="pool-service/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>pool-service-demo</em></div><img src="cat/pool-service.webp" width="900" height="562" alt="Pool service demo site" loading="lazy"></div><div class="meta"><b>Pool service</b><span>Clearwater Bayou Pool Co.</span></div></a></li>
+<li data-g="home"><a href="landscaping/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>landscaping-demo</em></div><img src="cat/landscaping.webp" width="900" height="562" alt="Landscaping &amp; lawn care demo site" loading="lazy"></div><div class="meta"><b>Landscaping &amp; lawn care</b><span>Bayou Green Lawn &amp; Landscape</span></div></a></li>
+<li data-g="home"><a href="pest-control/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>pest-control-demo</em></div><img src="cat/pest-control.webp" width="900" height="562" alt="Pest control &amp; termite demo site" loading="lazy"></div><div class="meta"><b>Pest control &amp; termite</b><span>Lone Star Shield Pest &amp; Termite</span></div></a></li>
+<li data-g="home"><a href="pressure-washing/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>pressure-washing-demo</em></div><img src="cat/pressure-washing.webp" width="900" height="562" alt="Pressure washing &amp; window cleaning demo site" loading="lazy"></div><div class="meta"><b>Pressure washing &amp; window cleaning</b><span>Gulf Coast Clean Exteriors</span></div></a></li>
+<li data-g="home"><a href="handyman/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>handyman-demo</em></div><img src="cat/handyman.webp" width="900" height="562" alt="Handyman demo site" loading="lazy"></div><div class="meta"><b>Handyman</b><span>Bayou City Fix-It Co.</span></div></a></li>
+<li data-g="home"><a href="cleaning/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>cleaning-demo</em></div><img src="cat/cleaning.webp" width="900" height="562" alt="House cleaning &amp; maid service demo site" loading="lazy"></div><div class="meta"><b>House cleaning &amp; maid service</b><span>Bayou Sparkle Home Cleaning</span></div></a></li>
+<li data-g="home"><a href="moving/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>moving-demo</em></div><img src="cat/moving.webp" width="900" height="562" alt="Moving company demo site" loading="lazy"></div><div class="meta"><b>Moving company</b><span>Magnolia City Movers</span></div></a></li>
+<li data-g="beauty"><a href="med-spa/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>med-spa-demo</em></div><img src="cat/med-spa.webp" width="900" height="562" alt="Med spa demo site" loading="lazy"></div><div class="meta"><b>Med spa</b><span>Riverstone Aesthetics &amp; Wellness</span></div></a></li>
+<li data-g="beauty"><a href="dental-implants/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>dental-implants-demo</em></div><img src="cat/dental-implants.webp" width="900" height="562" alt="Dental implant clinic demo site" loading="lazy"></div><div class="meta"><b>Dental implant clinic</b><span>Bayou City Implant Center</span></div></a></li>
+<li data-g="beauty"><a href="hair-salon/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>hair-salon-demo</em></div><img src="cat/hair-salon.webp" width="900" height="562" alt="Hair salon demo site" loading="lazy"></div><div class="meta"><b>Hair salon</b><span>Magnolia &amp; Main Hair Studio</span></div></a></li>
+<li data-g="beauty"><a href="barbershop/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>barbershop-demo</em></div><img src="cat/barbershop.webp" width="900" height="562" alt="Barbershop demo site" loading="lazy"></div><div class="meta"><b>Barbershop</b><span>Third Ward Fade Co.</span></div></a></li>
+<li data-g="beauty"><a href="nail-salon/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>nail-salon-demo</em></div><img src="cat/nail-salon.webp" width="900" height="562" alt="Nail salon demo site" loading="lazy"></div><div class="meta"><b>Nail salon</b><span>Lotus Bay Nail Lounge</span></div></a></li>
+<li data-g="beauty"><a href="massage-spa/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>massage-spa-demo</em></div><img src="cat/massage-spa.webp" width="900" height="562" alt="Massage studio &amp; day spa demo site" loading="lazy"></div><div class="meta"><b>Massage studio &amp; day spa</b><span>Cypress Creek Massage &amp; Day Spa</span></div></a></li>
+<li data-g="beauty"><a href="gym/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>gym-demo</em></div><img src="cat/gym.webp" width="900" height="562" alt="Gym &amp; personal training studio demo site" loading="lazy"></div><div class="meta"><b>Gym &amp; personal training studio</b><span>Bayou Strength &amp; Conditioning</span></div></a></li>
+<li data-g="food"><a href="restaurant/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>restaurant-demo</em></div><img src="cat/restaurant.webp" width="900" height="562" alt="Restaurant demo site" loading="lazy"></div><div class="meta"><b>Restaurant</b><span>Magnolia &amp; Mesquite Kitchen</span></div></a></li>
+<li data-g="food"><a href="catering/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>catering-demo</em></div><img src="cat/catering.webp" width="900" height="562" alt="Catering demo site" loading="lazy"></div><div class="meta"><b>Catering</b><span>Silver Spoon Gulf Coast Catering</span></div></a></li>
+<li data-g="food"><a href="food-truck/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>food-truck-demo</em></div><img src="cat/food-truck.webp" width="900" height="562" alt="Food truck demo site" loading="lazy"></div><div class="meta"><b>Food truck</b><span>Bayou Birria Co.</span></div></a></li>
+<li data-g="auto"><a href="auto-repair/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>auto-repair-demo</em></div><img src="cat/auto-repair.webp" width="900" height="562" alt="Auto repair shop demo site" loading="lazy"></div><div class="meta"><b>Auto repair shop</b><span>Bayou City Auto Care</span></div></a></li>
+<li data-g="auto"><a href="detailing/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>detailing-demo</em></div><img src="cat/detailing.webp" width="900" height="562" alt="Mobile auto detailing demo site" loading="lazy"></div><div class="meta"><b>Mobile auto detailing</b><span>Gulf Coast Gloss Mobile Detailing</span></div></a></li>
+<li data-g="auto"><a href="towing/"><div class="win"><div class="chrome"><i></i><i></i><i></i><em>towing-demo</em></div><img src="cat/towing.webp" width="900" height="562" alt="Towing &amp; roadside demo site" loading="lazy"></div><div class="meta"><b>Towing &amp; roadside</b><span>Lone Star Hook &amp; Haul Towing</span></div></a></li>
+ </ul>
+</div></section>
+
+<section class="alt"><div class="wrap">
+ <p class="eyebrow">What to try</p>
+ <h2>Four things to click on any demo.</h2>
+ <ul class="tries">
+  <li><b>Book a visit</b><span>Pick a day and time. It takes about a minute, the same as it would for your customers.</span></li>
+  <li><b>Ask a question</b><span>Send one through the Ask button. In a live build, you get it by text right away.</span></li>
+  <li><b>Open the owner app</b><span>Add #owner to the end of the link. See your bookings, leads and schedule in one place.</span></li>
+  <li><b>Check the customer portal</b><span>Your customers see their visit, photos and invoice without calling you.</span></li>
+ </ul>
+</div></section>
+
+<section><div class="wrap">
+ <p class="eyebrow">Where jobs leak out</p>
+ <h2>Most companies don't need more leads first. They need to stop losing the ones they pay for.</h2>
+ <div class="leaks">
+  <div class="leak"><div class="pr"><small>The problem</small><b>Calls you can't answer</b><span>You're on a roof, under a sink or with a client. They call the next name on Google.</span></div><div class="fx"><small>How we fix it</small><b>Missed call, text sent</b><span>Every missed call gets a text back in under a minute, so the customer waits for you instead of calling someone else.</span></div></div>
+  <div class="leak"><div class="pr"><small>The problem</small><b>Ad leads nobody answers fast</b><span>A paid lead sits in an inbox for hours, and they book the company that called first.</span></div><div class="fx"><small>How we fix it</small><b>60-second alerts</b><span>New leads text your phone right away, with their name, number and what they need.</span></div></div>
+  <div class="leak"><div class="pr"><small>The problem</small><b>A site that only "informs"</b><span>No way to book, no price range, no text button. People leave to find one that does.</span></div><div class="fx"><small>How we fix it</small><b>Book in 60 seconds</b><span>Online booking, price ranges and a text button on every page. Try it on any demo above.</span></div></div>
+  <div class="leak"><div class="pr"><small>The problem</small><b>Jobs scattered everywhere</b><span>Texts, notebooks, three apps. Things slip and reviews never get asked for.</span></div><div class="fx"><small>How we fix it</small><b>One owner app</b><span>Bookings, leads and follow-ups in one place. It plugs into what you already use, like Housecall Pro or Jobber.</span></div></div>
+ </div>
+ <p class="stat">Speed matters. Companies that reached an online lead within an hour were about 7 times more likely to qualify it than ones that waited longer. <a href="https://hbr.org/2011/03/the-short-life-of-online-sales-leads" target="_blank" rel="noopener">Harvard Business Review</a></p>
+
+ <div class="quiz" id="quiz">
+  <h3>Quick check: where is your business leaking?</h3>
+  <p class="stat" style="margin-top:6px">Tick what's true today.</p>
+  <div style="margin-top:10px">
+   <label><input type="checkbox" data-q> Every missed call gets a text back within a few minutes.</label>
+   <label><input type="checkbox" data-q> Customers can book a visit on my site without calling.</label>
+   <label><input type="checkbox" data-q> I know how many booked jobs my ads brought in last month.</label>
+   <label><input type="checkbox" data-q> I ask every happy customer for a Google review.</label>
+   <label><input type="checkbox" data-q> I follow up with every estimate that didn't book.</label>
+  </div>
+  <div class="qres" id="qres" aria-live="polite"></div>
+ </div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+ <p class="eyebrow">The free Growth Audit</p>
+ <h2>15 minutes. We find the leaks and show you the fix.</h2>
+ <div class="offer">
+  <ul class="stack">
+   <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F8A5B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><div><b>We mystery-shop your business</b><span>We send a test lead and call, then show you how fast you answered.</span></div></li>
+   <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F8A5B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><div><b>Your leak list</b><span>Where jobs slip out today, from your site to your follow-up.</span></div></li>
+   <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F8A5B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><div><b>A demo for your trade</b><span>See the system working for a business like yours.</span></div></li>
+   <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F8A5B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><div><b>Your growth plan, yours to keep</b><span>Whether you hire us or not.</span></div></li>
+  </ul>
+  <div class="guar">
+   <div><b>Setup fee back guarantee</b><span>We set a booked-appointment target together for your first 60 days. Miss it and you get your full setup fee back, in writing.</span></div>
+   <div><b>Live in 21 days</b><span>Or $100 off for every day we're late.</span></div>
+   <div><b>You own it</b><span>Your domain, site, ad accounts and customer list stay yours.</span></div>
+   <div><b>One company per trade per area</b><span>We won't build the same system for your competitor down the road.</span></div>
+  </div>
+ </div>
+</div></section>
+
+<section class="final"><div class="wrap">
+ <h2>Want this for your business?</h2>
+ <p class="lede">For Houston companies doing $150k+ a year. Apply, pick a time, and we'll show you where your jobs leak out.</p>
+ <a class="btn btn-main cta" href="https://unplannedco.com/?utm_source=catalog&amp;utm_medium=referral&amp;utm_campaign=catalog_v2#demo">Get my free Growth Audit</a>
+ <small>15 minutes on video · one company per trade per area</small>
+</div></section>
+</main>
+<footer><div class="wrap">Demo businesses are made up. This page uses Meta and Google cookies to measure visits. <a href="https://unplannedco.com/privacy.html">Privacy</a> · <a href="https://unplannedco.com/">unplannedco.com</a></div></footer>
+<script>
+(function(){var F=document.querySelectorAll('.filters button'),L=document.querySelectorAll('#trades li');
+F.forEach(function(b){b.onclick=function(){F.forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});L.forEach(function(li){li.hidden=b.dataset.f!=='all'&&li.dataset.g!==b.dataset.f})}});
+var Q=document.querySelectorAll('[data-q]'),R=document.getElementById('qres');
+function score(){var y=0;Q.forEach(function(q){if(q.checked)y++});var n=Q.length-y;
+R.innerHTML=n===0?'<b>No leaks you know of. Nice.</b><span>The audit can still check your speed with a real test lead.</span><br><a class="btn btn-main cta" href="https://unplannedco.com/?utm_source=catalog&amp;utm_medium=referral&amp;utm_campaign=catalog_v2#demo">Get my free Growth Audit</a>'
+:'<b>'+n+' possible leak'+(n>1?'s':'')+' found.</b><span>Each one is jobs you already paid to get. We\'ll show you how to close '+(n>1?'them':'it')+' in your free audit.</span><br><a class="btn btn-main cta" href="https://unplannedco.com/?utm_source=catalog&amp;utm_medium=referral&amp;utm_campaign=catalog_v2#demo">Show me how to fix '+(n>1?'them':'it')+'</a>'}
+Q.forEach(function(q){q.addEventListener('change',score)});score();})();
+</script>
+</body></html>
