@@ -648,7 +648,8 @@ function rcptHtml(c,o){const t=T(),d=new Date(o.date||Date.now()),bars=Array.fro
     ${o.paid?`<p class="rc-stamp">${t.paidStamp}</p>`:''}
     <div class="rc-bar">${bars}</div><p class="rc-no">${esc(o.no)}</p><p class="rc-thx">${t.rcptKeep}</p></div></article>`}
 /* services stay inside the portal (Oct 22, Ryan): set price = add to the open bill in one tap; no price = free estimate request */
-const svcPrice=n=>{const v=(DB.svcPrices||{})[n];return +v>0?+v:0};
+/* Nov 14 (Ryan): no hard price pitch in More from us for field jobs: always a free estimate */
+const svcPrice=n=>{if(PK.kind!=='appt'&&!PK.atShop)return 0;const v=(DB.svcPrices||{})[n];return +v>0?+v:0};
 const svcState=(c,n)=>{const r=((c.job||{}).svcReq||[]).filter(x=>x.name===n).pop();return r?r.kind:''};
 function svcSheet(c,i){const t=T(),x=(PK.services||[])[i];if(!x)return;const pr=svcPrice(x.t),st=svcState(c,x.t);
   const cl=sheet(`<p class="pk">${t.svcK}</p><h2>${esc(x.t)}</h2>${x.d?`<p class="pm">${esc(x.d)}</p>`:''}
@@ -865,9 +866,15 @@ function log(text){const c=C;c.job.log=(c.job.log||[]).concat([{t:Date.now(),tex
   /* live: also POST {action:'portal'} to the backend so the owner gets an alert (backend v9, next step) */}
 function signSheet(title,o,done){const t=T();const cl=sheet(`<h2>${esc(title)}</h2>${o.title&&o.title!==title?`<p class="pm">${esc(o.title)}</p>`:''}${o.price!=null?`<p class="price big"><b>${usd(o.price)}</b></p>`:""}<label class="pfield"><span>${t.signL}</span><input id="sgN" autocomplete="name" value=""></label><p class="pin-err" id="sgE" role="alert"></p><div class="prow"><button type="button" class="pbtn pbtn-main" id="sgGo">${I.check}${t.signBtn}</button><button type="button" class="pbtn pbtn-line" data-close>${t.notNow}</button></div>`,'#sgN');
   $('#sgGo').onclick=()=>{const n=$('#sgN').value.trim();if(n.length<3){$('#sgE').textContent=t.signErr;return}cl();done(n)}}
-function ics(v){if(!v)return;const p=x=>String(x).padStart(2,'0'),f=ms=>{const d=new Date(ms);return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'T'+p(d.getHours())+p(d.getMinutes())+'00'};
+/* Nov 14 (Ryan): "Add to my calendar" puts the visit on their Google Calendar; Apple/Outlook still get the .ics file */
+function ics(v){if(!v)return;const txt=icsFile(v,true);if(!txt)return;const g=k=>{const m=txt.match(new RegExp('\\r\\n'+k+':([^\\r]*)'));return m?m[1].replace(/\\,/g,','):''};
+  const z=s=>{const d=new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8),+s.slice(9,11),+s.slice(11,13));return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')};
+  const url='https://calendar.google.com/calendar/render?'+new URLSearchParams({action:'TEMPLATE',text:g('SUMMARY'),dates:z(g('DTSTART'))+'/'+z(g('DTEND')),location:g('LOCATION'),details:'Your visit details and updates: '+location.href.split('#')[0]}).toString();
+  const t=T(),cl=sheet(`<h2>${esc(t.addCal)}</h2><p class="pm">${esc(g('SUMMARY'))}</p><div class="prow"><a class="pbtn pbtn-main" href="${url}" target="_blank" rel="noopener" id="gcalGo">${I.cal}Google Calendar</a><button type="button" class="pbtn pbtn-line" id="icsGo">Apple or Outlook</button></div>`,'#gcalGo');
+  $('#gcalGo').addEventListener('click',()=>setTimeout(cl,300));$('#icsGo').onclick=()=>{icsFile(v);cl()}}
+function icsFile(v,dry){if(!v)return;const p=x=>String(x).padStart(2,'0'),f=ms=>{const d=new Date(ms);return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'T'+p(d.getHours())+p(d.getMinutes())+'00'};
   const a=at(v.date,v.from),b=v.to?at(v.date,v.to):a+36e5,txt=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Magnolia & Mesquite//Portal//EN','BEGIN:VEVENT','UID:'+v.id+'@ridgeline','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(a),'DTEND:'+f(b),'SUMMARY:Magnolia & Mesquite Kitchen: '+(T().vt[v.type]||''),'LOCATION:'+(C.addr||'').replace(/,/g,'\\,'),'END:VEVENT','END:VCALENDAR'].join('\r\n');
-  const u=URL.createObjectURL(new Blob([txt],{type:'text/calendar'})),l=document.createElement('a');l.href=u;l.download='ridgeline-visit.ics';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
+  if(dry)return txt;const u=URL.createObjectURL(new Blob([txt],{type:'text/calendar'})),l=document.createElement('a');l.href=u;l.download='ridgeline-visit.ics';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 
 /* live refresh: when the owner changes something in another tab on this device, update without a reload */
 addEventListener('storage',e=>{if(LIVE||e.key!=='krestaur-db'||!unlocked())return;try{const n=JSON.parse(e.newValue||'null');if(!n)return;DB=n;const c=(DB.customers||[]).find(x=>x.id===JOB);if(c){Object.keys(C).forEach(k=>delete C[k]);Object.assign(C,c);DB.customers[DB.customers.indexOf(c)]=C;portal()}}catch(x){}});
